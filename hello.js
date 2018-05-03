@@ -145,7 +145,7 @@ class PrimaryStudent extends Student {  //继承用extend
 
 
 ////////////////////////////////////////////////////////////
-
+浏览器对象：
 /************************************************/
 // 获取浏览器窗口的大小：（除去工具栏，菜单栏，状态栏）
 'use strict';
@@ -208,3 +208,55 @@ document
 document对象表示当前页面。
 document的title属性是从HTML文档中的<title>xxx</title>读取的，但是可以动态改变
 document.title = '努力学习JavaScript!';  // 这是title
+document.getElementByID, ByTagName
+document.cookie; //读取当前页面的cookie
+为了确保安全，服务器端在设置Cookie时，应该始终坚持使用httpOnly
+
+
+
+history
+back()
+forward()
+新手开始设计Web页面时喜欢在登录页登录成功时调用history.back()，试图回到登录前的页面。这是一种错误的方法。
+任何情况，你都不应该使用history这个对象了。
+
+
+
+DOM操作：
+/************************************************/
+方法一：
+document.getElementById()
+document.getElementsByTagName()
+document.getElementsByClassName()
+
+
+// 先定位ID为'test-div'的节点，再返回其内部所有class包含red的节点：
+var reds = document.getElementById('test-div').getElementsByClassName('red');
+
+// 获取节点test下的所有直属子节点:
+var cs = test.children;
+
+// 获取节点test下第一个、最后一个子节点：
+var first = test.firstElementChild;
+var last = test.lastElementChild;
+
+
+方法二：
+使用querySelector()和querySelectorAll()
+注意：低版本的IE<8不支持querySelector和querySelectorAll。IE8仅有限支持：
+
+// 通过querySelector获取ID为q1的节点：
+var q1 = document.querySelector('#q1');
+
+// 通过querySelectorAll获取q1节点内的符合条件的所有节点：
+var ps = q1.querySelectorAll('div.highlighted > p')
+
+
+/*
+严格地讲，我们这里的DOM节点是指Element，但是DOM节点实际上是Node，
+在HTML中，Node包括Element、Comment、CDATA_SECTION等很多种，以及根节点Document类型，
+但是，绝大多数时候我们只关心Element，也就是实际控制页面结构的Node，其他类型的Node忽略即可。
+根节点Document已经自动绑定为全局变量document。
+*/
+
+
