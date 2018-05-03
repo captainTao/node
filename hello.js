@@ -2,6 +2,9 @@
 
 // 面向对象编程
 
+
+//类名的第一个字母要大写，以便区分普通函数：
+
 /************************************************/
 // 1.通过现成对象创建：
 // obj.__proto__在低版本中的IE不支持
@@ -110,3 +113,98 @@ function createStudent(props) {
 }
 
 /************************************************/
+
+
+// class 继承：ES6才支持
+
+/*class不能普及用，现在用还早了点，因为不是所有的主流浏览器都支持ES6的class。如果一定要现在就用上，就需要一个工具把class代码转换为传统的prototype代码，可以试试Babel这个工具。*/
+class Student {
+    constructor(name) {
+        this.name = name;
+    }
+
+    hello() {
+        alert('Hello, ' + this.name + '!');
+    }
+}
+
+var xiaoming = new Student('小明');
+xiaoming.hello();
+
+
+class PrimaryStudent extends Student {  //继承用extend
+    constructor(name, grade) {
+        super(name); // 记得用super调用父类的构造方法!
+        this.grade = grade;
+    }
+
+    myGrade() {
+        alert('I am at grade ' + this.grade);
+    }
+}
+
+
+////////////////////////////////////////////////////////////
+
+/************************************************/
+// 获取浏览器窗口的大小：（除去工具栏，菜单栏，状态栏）
+'use strict';
+// 可以调整浏览器窗口大小试试:
+console.log('window inner size: ' + window.innerWidth + ' x ' + window.innerHeight);
+
+window对象有innerWidth和innerHeight属性，可以获取浏览器窗口的内部宽度和高度。
+还有一个outerWidth和outerHeight属性，可以获取浏览器窗口的整个宽高。
+
+
+
+navigator对象表示浏览器的信息，最常用的属性包括：
+
+navigator.appName：浏览器名称；  // chrome为：appName = Netscape
+navigator.appVersion：浏览器版本；
+navigator.language：浏览器设置的语言；
+navigator.platform：操作系统类型；
+navigator.userAgent：浏览器设定的User-Agent字符串。
+
+// navigator的信息可以很容易地被用户修改
+// 针对不同的浏览器正确的方法是充分利用JavaScript对不存在属性返回undefined的特性，直接用短路运算符||计算：
+var width = window.innerWidth || document.body.clientWidth;
+
+
+screen
+screen对象表示屏幕的信息，常用的属性有：
+
+screen.width：屏幕宽度，以像素为单位；
+screen.height：屏幕高度，以像素为单位；
+screen.colorDepth：返回颜色位数，如8、16、24。
+
+
+location
+location对象表示当前页面的URL信息。例如，一个完整的URL：
+
+//------http://www.example.com:8080/path/index.html?a=1&b=2#TOP
+
+可以用location.href获取。
+
+
+要获得URL各个部分的值，可以这么写：
+location.protocol; // 'http'
+location.host; // 'www.example.com'
+location.port; // '8080'
+location.pathname; // '/path/index.html'
+location.search; // '?a=1&b=2'
+location.hash; // 'TOP'
+要加载一个新页面，可以调用location.assign()。如果要重新加载当前页面，调用location.reload()方法非常方便。
+
+'use strict'
+if (confirm('重新加载当前页' + location.href + '?')) {
+    location.reload();
+} else {
+    location.assign('/'); // 设置一个新的URL地址
+}
+
+
+
+document
+document对象表示当前页面。
+document的title属性是从HTML文档中的<title>xxx</title>读取的，但是可以动态改变
+document.title = '努力学习JavaScript!';  // 这是title
