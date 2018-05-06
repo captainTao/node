@@ -224,10 +224,15 @@ forward()
 
 DOM操作：
 /************************************************/
-方法一：
+
+选择方法一：
 document.getElementById()
 document.getElementsByTagName()
 document.getElementsByClassName()
+
+document.getElementById()可以直接定位唯一的一个DOM节点。
+document.getElementsByTagName()和document.getElementsByClassName()总是返回一组DOM节点。
+
 
 
 // 先定位ID为'test-div'的节点，再返回其内部所有class包含red的节点：
@@ -241,13 +246,12 @@ var first = test.firstElementChild;
 var last = test.lastElementChild;
 
 
-方法二：
+选择方法二：
 使用querySelector()和querySelectorAll()
 注意：低版本的IE<8不支持querySelector和querySelectorAll。IE8仅有限支持：
 
 // 通过querySelector获取ID为q1的节点：
 var q1 = document.querySelector('#q1');
-
 // 通过querySelectorAll获取q1节点内的符合条件的所有节点：
 var ps = q1.querySelectorAll('div.highlighted > p')
 
@@ -259,4 +263,74 @@ var ps = q1.querySelectorAll('div.highlighted > p')
 根节点Document已经自动绑定为全局变量document。
 */
 
+///***********************************更新：
+1.innerHTML
+用innerHTML时要注意，是否需要写入HTML。如果写入的字符串是通过网络拿到了，要注意对字符编码来避免XSS攻击；
 
+2.innerText或textContent
+两者的区别在于读取属性时，innerText不返回隐藏元素的文本，而textContent返回所有文本。另外注意IE<9不支持textContent
+
+3.修改css：
+// 获取<p id="p-id">...</p>
+var p = document.getElementById('p-id');
+// 设置CSS:
+p.style.color = '#ff0000';
+p.style.fontSize = '20px';  //js不能识别font-size,这儿用驼峰命名法
+p.style.paddingTop = '2em';
+
+
+///***********************************插入：
+1.appendChild
+// 相当于移动了
+<!-- HTML结构 -->
+<p id="js">JavaScript</p>
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+</div>
+
+/// 命令：
+var
+    js = document.getElementById('js'),
+    list = document.getElementById('list');
+list.appendChild(js);
+
+
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+    <p id="js">JavaScript</p>
+</div>
+
+
+
+
+2. createElement + appendChild:
+// 0创建：
+var
+    list = document.getElementById('list'),
+    haskell = document.createElement('p');
+haskell.id = 'haskell';
+haskell.innerText = 'Haskell';
+list.appendChild(haskell);
+
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+    <p id="haskell">Haskell</p>
+</div>
+
+举个例子，下面的代码动态创建了一个<style>节点，然后把它添加到<head>节点的末尾，这样就动态地给文档添加了新的CSS定义：
+
+var d = document.createElement('style');
+d.setAttribute('type', 'text/css');
+d.innerHTML = 'p { color: red }';
+document.getElementsByTagName('head')[0].appendChild(d);
+
+
+///***********************************删除：
