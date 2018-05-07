@@ -221,7 +221,7 @@ forward()
 任何情况，你都不应该使用history这个对象了。
 
 
-
+////////////////////////////////////////////////////////////
 DOM操作：
 /************************************************/
 
@@ -309,6 +309,7 @@ list.appendChild(js);
 
 
 2. createElement + appendChild:
+
 // 0创建：
 var
     list = document.getElementById('list'),
@@ -325,7 +326,8 @@ list.appendChild(haskell);
     <p id="haskell">Haskell</p>
 </div>
 
-举个例子，下面的代码动态创建了一个<style>节点，然后把它添加到<head>节点的末尾，这样就动态地给文档添加了新的CSS定义：
+
+// 举个例子，下面的代码动态创建了一个<style>节点，然后把它添加到<head>节点的末尾，这样就动态地给文档添加了新的CSS定义：
 
 var d = document.createElement('style');
 d.setAttribute('type', 'text/css');
@@ -333,4 +335,96 @@ d.innerHTML = 'p { color: red }';
 document.getElementsByTagName('head')[0].appendChild(d);
 
 
+3.insertBefore
+parentElement.insertBefore(newElement, referenceElement);，子节点会插入到referenceElement之前。
+
+
+// 假定我们要把Haskell插入到Python之前：
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+</div>
+可以这么写：
+
+var
+    list = document.getElementById('list'),
+    ref = document.getElementById('python'),
+    haskell = document.createElement('p');
+haskell.id = 'haskell';
+haskell.innerText = 'Haskell';
+list.insertBefore(haskell, ref);
+
+
+新的HTML结构如下：
+
+<!-- HTML结构 -->
+<div id="list">
+    <p id="java">Java</p>
+    <p id="haskell">Haskell</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+</div>
+
+
+// 拿到所有的children:
+var
+    i, c,
+    list = document.getElementById('list');
+for (i = 0; i < list.children.length; i++) {
+    c = list.children[i]; // 拿到第i个子节点
+}
+
+
 ///***********************************删除：
+
+1.removeChild
+// 删除后还在内存中，可以随时添加到别的位置
+
+// 拿到待删除节点:
+var self = document.getElementById('to-be-removed');
+// 拿到父节点:
+var parent = self.parentElement;
+// 删除:
+var removed = parent.removeChild(self);
+removed === self; // true
+
+// 注意: children属性是一个只读属性，并且它在子节点变化时会实时更新。
+
+
+
+////////////////////////////////////////////////////////////
+操作表单：
+/************************************************/
+
+获取值：
+// <input type="text" id="email">
+var input = document.getElementById('email');
+input.value; // '用户输入的值'
+
+// <label><input type="radio" name="weekday" id="monday" value="1"> Monday</label>
+// <label><input type="radio" name="weekday" id="tuesday" value="2"> Tuesday</label>
+var mon = document.getElementById('monday');
+var tue = document.getElementById('tuesday');
+mon.value; // '1'
+tue.value; // '2'
+mon.checked; // true或者false，  获取用户是否勾选的值
+tue.checked; // true或者false
+
+
+设置值：
+设置值和获取值类似，对于text、password、hidden以及select，直接设置value就可以：
+
+// <input type="text" id="email">
+var input = document.getElementById('email');
+input.value = 'test@example.com'; // 文本框的内容已更新
+对于单选框和复选框，设置checked为true或false即可。
+
+
+HTML5控件：
+HTML5新增了大量标准控件，常用的包括date、datetime、datetime-local、color等，它们都使用<input>标签：
+<input type="date" value="2015-07-01">
+<input type="datetime-local" value="2015-07-01T02:03:04">
+<input type="color" value="#ff0000">
+不支持HTML5的浏览器无法识别新的控件，会把它们当做type="text"来显示。
