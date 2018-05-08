@@ -1,5 +1,14 @@
 'use strict';
 
+s = "1214141";
+s.endsWith('4');
+false
+
+/^[0-9]{3,10}/.test(s); // 正则匹配
+true
+
+/[^\s]{3,10}/.test(s);
+true
 // 面向对象编程
 
 
@@ -428,3 +437,95 @@ HTML5新增了大量标准控件，常用的包括date、datetime、datetime-loc
 <input type="datetime-local" value="2015-07-01T02:03:04">
 <input type="color" value="#ff0000">
 不支持HTML5的浏览器无法识别新的控件，会把它们当做type="text"来显示。
+
+
+
+提交表单：
+/************************************************/
+方式一：
+通过<form>元素的submit()方法提交一个表单，例如，响应一个<button>的click事件，在JavaScript代码中提交表单：
+
+<!-- HTML -->
+<form id="test-form">
+    <input type="text" name="test">
+    <button type="button" onclick="doSubmitForm()">Submit</button>
+</form>
+
+<script>
+function doSubmitForm() {
+    var form = document.getElementById('test-form');
+    // 可以在此修改form的input...
+    // 提交form:
+    form.submit();
+}
+</script>
+
+
+
+方式二：
+是响应<form>本身的onsubmit事件，在提交form时作修改：
+
+<!-- HTML -->
+<form id="test-form" onsubmit="return checkForm()">
+    <input type="text" name="test">
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+function checkForm() {
+    var form = document.getElementById('test-form');
+    // 可以在此修改form的input...
+    // 继续下一步:
+    return true;
+}
+</script>
+
+注意要return true来告诉浏览器继续提交，
+如果return false，浏览器将不会继续提交form，这种情况通常对应用户输入有误，提示用户错误信息后终止提交form。
+
+
+
+////////----<input type="hidden">的用法：
+
+// 
+<!-- HTML -->
+<form id="login-form" method="post" onsubmit="return checkForm()">
+    <input type="text" id="username" name="username">
+    <input type="password" id="input-password">   //这个没有name属性
+    <input type="hidden" id="md5-password" name="password">
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+function checkForm() {
+    var input_pwd = document.getElementById('input-password');
+    var md5_pwd = document.getElementById('md5-password');
+    // 把用户输入的明文变为MD5:
+    md5_pwd.value = toMD5(input_pwd.value);
+    // 继续下一步:
+    return true;
+}
+</script>
+
+note:
+注意到id为md5-password的<input>标记了name="password"，而用户输入的id为input-password的<input>没有name属性。
+
+没有name属性的<input>的数据不会被提交。
+
+
+操作文件：
+/************************************************/
+注意：
+当一个表单包含<input type="file">时，表单的enctype必须指定为multipart/form-data，method必须指定为post，
+浏览器才能正确编码并以multipart/form-data格式发送表单的数据。
+
+出于安全考虑，浏览器只允许用户点击<input type="file">来选择本地文件，用JavaScript对<input type="file">的value赋值是没有任何效果的。
+当用户选择了上传某个文件后，JavaScript也无法获得该文件的真实路径：
+
+当上传文件的时候，可以对文件的扩展名进行检查，防止无效的文件上传；
+var f = document.getElementById('test-file-upload');
+var filename = f.value; // 'C:\fakepath\test.png'
+if (!filename || !(filename.endsWith('.jpg') || filename.endsWith('.png') || filename.endsWith('.gif'))) {
+    alert('Can only upload image file.');
+    return false;
+}
