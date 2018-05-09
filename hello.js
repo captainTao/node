@@ -582,3 +582,143 @@ reader.readAsDataURL(file);
 reader.onload = function(e) {
     // 当文件读取完成后，自动调用此函数:
 };
+
+
+
+
+
+AJAX:
+/************************************************/
+
+'use strict';
+function success(text) {
+    var textarea = document.getElementById('test-response-text');
+    textarea.value = text;
+}
+
+function fail(code) {
+    var textarea = document.getElementById('test-response-text');
+    textarea.value = 'Error code: ' + code;
+}
+
+var request;
+if (window.XMLHttpRequest) {
+    request = new XMLHttpRequest();// 新建XMLHttpRequest对象，现代浏览器
+} else {
+    request = new ActiveXObject('Microsoft.XMLHTTP'); // 新建Microsoft.XMLHTTP对象，对于低版本的IE;
+}
+
+request.onreadystatechange = function () { // 状态发生变化时，函数被回调
+    if (request.readyState === 4) { // 请求是否成功完成
+        // 判断响应结果:
+        if (request.status === 200) {  // 是否有成功的响应
+            // 成功，通过responseText拿到响应的文本:
+            return success(request.responseText);
+        } else {
+            // 失败，根据响应码判断失败原因:
+            return fail(request.status);
+        }
+    } else {
+        // HTTP请求还在继续...
+    }
+}
+
+// 发送请求:
+request.open('GET', '/api/categories');
+request.send();
+
+alert('请求已发送，请等待响应...');
+
+//注意：
+XMLHttpRequest对象的open()方法有3个参数，第一个参数指定是GET还是POST，第二个参数指定URL地址，第三个参数指定是否使用异步，默认是true，所以不用写。
+注意，千万不要把第三个参数指定为false，否则浏览器将停止响应，直到AJAX请求完成。如果这个请求耗时10秒，那么10秒内你会发现浏览器处于“假死”状态。
+最后调用send()方法才真正发送请求。GET请求不需要参数，POST请求需要把body部分以字符串或者FormData对象传进去。
+
+
+
+
+安全限制(跨域):
+/************************************************/
+
+默认情况下，JavaScript在发送AJAX请求时，URL的域名必须和当前页面完全一致。
+
+// 跨域：
+用JavaScript无法请求外域（就是其他网站）的URL方法：
+一是通过Flash插件发送HTTP请求；
+二是通过在同源域名下架设一个代理服务器来转发，JavaScript负责把请求发送到代理服务器：
+'/proxy?url=http://www.sina.com.cn'
+方式三：JSONP，它有个限制，只能用GET请求，并且要求返回JavaScript
+JSONP通常以函数调用的形式返回，例如，返回JavaScript内容如下：
+foo('data');
+
+方式四：CORS
+如果浏览器支持HTML5，那么就可以一劳永逸地使用新的跨域策略：CORS了。
+CORS全称Cross-Origin Resource Sharing，是HTML5规范定义的如何跨域访问资源。
+
+成功与否：Access-Control-Allow-Origin是否包含本域;
+
+跨域能否成功，取决于对方服务器是否愿意给你设置一个正确的Access-Control-Allow-Origin
+这种跨域请求，称之为“简单请求”。
+简单请求包括GET、HEAD和POST（POST的Content-Type类型
+仅限application/x-www-form-urlencoded、multipart/form-data和text/plain），并且不能出现任何自定义头（例如，X-Custom: 12345），通常能满足90%的需求。
+由于以POST、PUT方式传送JSON格式的数据在REST中很常见，所以要跨域正确处理POST和PUT请求，服务器端必须正确响应OPTIONS请求。
+
+
+
+Promise:（ES6）
+/************************************************/
+
+Promise有各种开源实现，在ES6中被统一规范，由浏览器直接支持。先测试一下你的浏览器是否支持Promise：
+
+'use strict';
+new Promise(function () {});
+console.log('支持Promise!');
+
+
+canvas:
+/************************************************/
+var canvas = document.getElementById('test-canvas');
+if (canvas.getContext) {  // 在使用Canvas前，用canvas.getContext来测试浏览器是否支持Canvas：
+    console.log('你的浏览器支持Canvas!');
+} else {
+    console.log('你的浏览器不支持Canvas!');
+}
+
+
+'use strict';
+
+var
+    canvas = document.getElementById('test-shape-canvas'),
+    ctx = canvas.getContext('2d');
+// 绘图；
+ctx.clearRect(0, 0, 200, 200); // 擦除(0,0)位置大小为200x200的矩形，擦除的意思是把该区域变为透明
+ctx.fillStyle = '#dddddd'; // 设置颜色
+ctx.fillRect(10, 10, 130, 130); // 把(10,10)位置大小为130x130的矩形涂色
+// 利用Path绘制复杂路径:
+var path=new Path2D();
+path.arc(75, 75, 50, 0, Math.PI*2, true);
+path.moveTo(110,75);
+path.arc(75, 75, 35, 0, Math.PI, false);
+path.moveTo(65, 65);
+path.arc(60, 65, 5, 0, Math.PI*2, true);
+path.moveTo(95, 65);
+path.arc(90, 65, 5, 0, Math.PI*2, true);
+ctx.strokeStyle = '#0000ff';
+ctx.stroke(path);
+
+// 绘制文本：
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.shadowOffsetX = 2;
+ctx.shadowOffsetY = 2;
+ctx.shadowBlur = 2;
+ctx.shadowColor = '#666666';
+ctx.font = '24px Arial';
+ctx.fillStyle = '#333333';
+ctx.fillText('带阴影的文字', 20, 40);
+
+
+
+
+
+
+
