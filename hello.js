@@ -278,6 +278,16 @@ var ps = q1.querySelectorAll('div.highlighted > p')
 
 2.innerText或textContent
 两者的区别在于读取属性时，innerText不返回隐藏元素的文本，而textContent返回所有文本。另外注意IE<9不支持textContent
+innerText 打印标签之间的纯文本信息，会将标签过滤掉，低版本的火狐浏览器不支持，而是支持textContent
+
+function getText(element) {  
+    if(element.innerText) {  
+        return element.innerText;   //IE8及之前的浏览器支持，现在两者都支持  
+    }else {  
+        return element.textContent; //低版本的火狐支持  
+    }  
+}  
+
 
 3.修改css：
 // 获取<p id="p-id">...</p>
@@ -718,7 +728,106 @@ ctx.fillText('带阴影的文字', 20, 40);
 
 
 
+JQuery:
+/************************************************/
+
+
+JQ 过滤器（Filter）
+过滤器一般不单独使用，它通常附加在选择器上，帮助我们更精确地定位元素。观察过滤器的效果：
+$('ul.lang li'); // 选出JavaScript、Python和Lua 3个节点
+
+$('ul.lang li:first-child'); // 仅选出JavaScript
+$('ul.lang li:last-child'); // 仅选出Lua
+$('ul.lang li:nth-child(2)'); // 选出第N个元素，N从1开始
+$('ul.lang li:nth-child(even)'); // 选出序号为偶数的元素
+$('ul.lang li:nth-child(odd)'); // 选出序号为奇数的元素
 
 
 
+/*
+<!-- HTML结构 -->
+<ul class="lang">
+    <li class="js dy">JavaScript</li>
+    <li class="dy">Python</li>
+    <li id="swift">Swift</li>
+    <li class="dy">Scheme</li>
+    <li name="haskell">Haskell</li>
+</ul>
 
+*/
+
+// 查找
+find()
+var ul = $('ul.lang'); // 获得<ul>
+var dy = ul.find('.dy'); // 获得JavaScript, Python, Scheme
+var swf = ul.find('#swift'); // 获得Swift
+var hsk = ul.find('[name=haskell]'); // 获得Haskell
+
+// 父节点
+.parent()
+var a = $('#swift').parent('.red'); // 获得Swift的上层节点<ul>，同时传入过滤条件。如果ul不符合条件，返回空jQuery对象
+
+
+// 同级节点
+.next()
+.pre()
+
+swift.prev(); // Python
+swift.prev('.dy'); // Python
+
+
+// 过滤
+// 和函数式编程的map、filter类似，jQuery对象也有类似的方法。
+filter():
+var langs = $('ul.lang li'); // 拿到JavaScript, Python, Swift, Scheme和Haskell
+var a = langs.filter('.dy'); // 拿到JavaScript, Python, Scheme
+
+var langs = $('ul.lang li'); // 拿到JavaScript, Python, Swift, Scheme和Haskell
+langs.filter(function () {
+    return this.innerHTML.indexOf('S') === 0; // 返回S开头的节点 特别注意函数内部的this被绑定为DOM对象，不是jQuery对象
+}); // 拿到Swift, Scheme
+
+
+map():
+map().get()
+var langs = $('ul.lang li'); // 拿到JavaScript, Python, Swift, Scheme和Haskell
+var arr = langs.map(function () {
+    return this.innerHTML;
+}).get(); // 用get()拿到包含string的Array：['JavaScript', 'Python', 'Swift', 'Scheme', 'Haskell']
+
+如果一个jQuery对象如果包含了不止一个DOM节点，first()、last()和slice()方法可以返回一个新的jQuery对象，把不需要的DOM节点去掉：
+
+var langs = $('ul.lang li'); // 拿到JavaScript, Python, Swift, Scheme和Haskell
+var js = langs.first(); // JavaScript，相当于$('ul.lang li:first-child')
+var haskell = langs.last(); // Haskell, 相当于$('ul.lang li:last-child')
+var sub = langs.slice(2, 4); // Swift, Scheme, 参数和数组的slice()方法一致
+
+
+// 获取表单，变成key-value,然后序列化；
+var elts = {};
+form=$('#test-form :text, #test-form :password, #test-form input:checked, #test-form select')
+
+for(var i=0;i<form.length;i++){
+    elts[form[i].name]=form[i].value
+}
+json=JSON.stringify(elts)
+
+或者：
+var elts = {};
+$('#test-form :text, #test-form :password, #test-form input:checked, #test-form select').map(function () {
+    elts[this.name] = this.value;
+});
+json = JSON.stringify(elts);
+
+
+// ----------------------------JQ修改DOM:
+修改Text和HTML:
+
+<ul id="test-ul">
+    <li class="js">JavaScript</li>
+    <li name="book">Java &amp; JavaScript</li>
+</ul>
+
+// 有的浏览器只有innerHTML，有的浏览器支持innerText，有了jQuery对象，不需要考虑浏览器差异了，全部统一操作！
+$('#test-ul li[name=book]').text(); // 'Java & JavaScript'  // text()参数为空就是获取，有参数就是设置；
+$('#test-ul li[name=book]').html(); // 'Java &amp; JavaScript'
