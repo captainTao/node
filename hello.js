@@ -726,7 +726,7 @@ ctx.font = '24px Arial';
 ctx.fillStyle = '#333333';
 ctx.fillText('带阴影的文字', 20, 40);
 
-
+/////////////////////////////////////// JQuery----start ////////////////////////////////////
 
 JQuery:
 /************************************************/
@@ -822,12 +822,125 @@ json = JSON.stringify(elts);
 
 // ----------------------------JQ修改DOM:
 修改Text和HTML:
-
+/*
 <ul id="test-ul">
     <li class="js">JavaScript</li>
     <li name="book">Java &amp; JavaScript</li>
 </ul>
+*/
 
 // 有的浏览器只有innerHTML，有的浏览器支持innerText，有了jQuery对象，不需要考虑浏览器差异了，全部统一操作！
 $('#test-ul li[name=book]').text(); // 'Java & JavaScript'  // text()参数为空就是获取，有参数就是设置；
 $('#test-ul li[name=book]').html(); // 'Java &amp; JavaScript'
+
+修改css：
+$('#test-css li.dy>span').css('background-color', '#ffd351').css('color', 'red');
+
+var div = $('#test-div');
+div.css('color'); // '#000033', 获取CSS属性
+div.css('color', '#336699'); // 设置CSS属性
+div.css('color', ''); // 清除CSS属性
+为了和JavaScript保持一致，CSS属性可以用'background-color'和'backgroundColor'两种格式。
+
+
+css()方法将作用于DOM节点的style属性，具有最高优先级。如果要修改class属性，可以用jQuery提供的下列方法：
+
+var div = $('#test-div');
+div.hasClass('highlight'); // false， class是否包含highlight
+div.addClass('highlight'); // 添加highlight这个class
+div.removeClass('highlight'); // 删除highlight这个class
+
+
+
+显示和隐藏DOM:
+要隐藏一个DOM，我们可以设置CSS的display属性为none，利用css()方法就可以实现。
+不过，要显示这个DOM就需要恢复原有的display属性，这就得先记下来原有的display属性到底是block还是inline还是别的值。
+
+
+jQuery直接提供show()和hide()方法:
+var a = $('a[target=_blank]');
+a.hide(); // 隐藏
+a.show(); // 显示
+
+
+
+
+JQ获取DOM信息：
+无需要针对浏览器做适配
+/***********************************/
+// 浏览器可视窗口大小:
+$(window).width(); // 800
+$(window).height(); // 600
+
+// HTML文档大小:
+$(document).width(); // 800
+$(document).height(); // 3500
+
+// 某个div的大小:
+var div = $('#test-div');
+div.width(); // 600
+div.height(); // 300
+div.width(400); // 设置CSS属性 width: 400px，是否生效要看CSS是否有效
+div.height('200px'); // 设置CSS属性 height: 200px，是否生效要看CSS是否有效
+
+
+attr()和removeAttr()
+方法用于操作DOM节点的属性：
+
+// <div id="test-div" name="Test" start="1">...</div>
+var div = $('#test-div');
+div.attr('data'); // undefined, 属性不存在
+div.attr('name'); // 'Test'
+div.attr('name', 'Hello'); // div的name属性变为'Hello'
+div.removeAttr('name'); // 删除name属性
+div.attr('name'); // undefined
+
+
+
+prop()方法和attr()类似，
+但是HTML5规定有一种属性在DOM节点中可以没有值，只有出现与不出现两种，例如：
+
+<input id="test-radio" type="radio" name="test" checked value="1">
+等价于：
+<input id="test-radio" type="radio" name="test" checked="checked" value="1">
+
+attr()和prop()对于属性checked处理有所不同：
+var radio = $('#test-radio');
+radio.attr('checked'); // 'checked'
+radio.prop('checked'); // true
+
+prop()返回值更合理一些。不过，用is()方法判断更好：
+var radio = $('#test-radio');
+radio.is(':checked'); // true
+
+类似的属性还有selected，处理时最好用is(':selected')。
+
+
+操作表单
+/***********************************/
+对于表单元素，jQuery对象统一提供val()方法获取和设置对应的value属性：
+
+/*
+    <input id="test-input" name="email" value="">
+    <select id="test-select" name="city">
+        <option value="BJ" selected>Beijing</option>
+        <option value="SH">Shanghai</option>
+        <option value="SZ">Shenzhen</option>
+    </select>
+    <textarea id="test-textarea">Hello</textarea>
+*/
+var
+    input = $('#test-input'),
+    select = $('#test-select'),
+    textarea = $('#test-textarea');
+
+input.val(); // 'test'
+input.val('abc@example.com'); // 文本框的内容已变为abc@example.com
+
+select.val(); // 'BJ'
+select.val('SH'); // 选择框已变为Shanghai
+
+textarea.val(); // 'Hello'
+textarea.val('Hi'); // 文本区域已更新为'Hi'
+可见，一个val()就统一了各种输入框的取值和赋值的问题。
+/////////////////////////////////////// JQuery----end ////////////////////////////////////
