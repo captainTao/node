@@ -1039,4 +1039,129 @@ for (var i = 0; i<span.length; i++){
 </script>   
 </html>
 
+
+JQ事件:
+/***********************************/
+// 不需要对不同的浏览器的差异，Jq已经帮忙给适配了；
+/* HTML:
+ *
+ * <a id="test-link" href="#0">点我试试</a>
+ *
+ */
+
+// 获取超链接的jQuery对象:
+var a = $('#test-link');
+a.on('click', function () {  // on方法用来绑定一个事件，我们需要传入事件名称和对应的处理函数。
+    alert('Hello!');
+});
+
+// 简写：
+a.click(function () {
+    alert('Hello!');
+});
+
+
+jQuery能够绑定的事件主要包括：
+
+鼠标事件
+click: 鼠标单击时触发；
+dblclick：鼠标双击时触发；
+mouseenter：鼠标进入时触发；
+mouseleave：鼠标移出时触发；
+mousemove：鼠标在DOM内部移动时触发；
+hover：鼠标进入和退出时触发两个函数，相当于mouseenter加上mouseleave。
+
+键盘事件
+键盘事件仅作用在当前焦点的DOM上，通常是<input>和<textarea>。
+
+keydown：键盘按下时触发；
+keyup：键盘松开时触发；
+keypress：按一次键后触发。
+
+其他事件
+focus：当DOM获得焦点时触发；
+blur：当DOM失去焦点时触发；
+change：当<input>、<select>或<textarea>的内容改变时触发；
+submit：当<form>提交时触发；
+ready：当页面被载入并且DOM树完成初始化后触发。
+
+文档就绪事件：
+/*
+$(document).on('ready', function () {
+    $('#testForm).on('submit', function () {
+        alert('submit!');
+    });
+});
+
+//进化：
+$(document).ready(function () {
+// on('submit', function)也可以简化:
+$('#testForm).submit(function () {
+    alert('submit!');
+});
+});
+*/
+
+// 进化：
+$(function () {
+    // init...
+});
+
+
+可以反复绑定事件处理函数，它们会依次执行：
+
+$(function () {
+    console.log('init A...');
+});
+$(function () {
+    console.log('init B...');
+});
+$(function () {
+    console.log('init C...');
+});
+
+
+// 事件参数：
+
+$(function () {
+    $('#testMouseMoveDiv').mousemove(function (e) {  // e是事件；
+        $('#testMouseMoveSpan').text('pageX = ' + e.pageX + ', pageY = ' + e.pageY);
+    });
+});
+
+
+取消绑定：
+/***********************************/
+一个已被绑定的事件可以解除绑定，通过off('click', function)实现：
+
+function hello() {
+    alert('hello!');
+}
+
+a.click(hello); // 绑定事件
+
+// 10秒钟后解除绑定:
+setTimeout(function () {
+    a.off('click', hello);
+}, 10000);
+
+
+
+// note:需要特别注意的是，下面这种写法是无效的：
+
+// 绑定事件:
+a.click(function () {
+    alert('hello!');
+});
+
+// 解除绑定:
+a.off('click', function () {
+    alert('hello!');
+});
+这是因为两个匿名函数虽然长得一模一样，但是它们是两个不同的函数对象，off('click', function () {...})无法移除已绑定的第一个匿名函数。
+
+为了实现移除效果，可以使用off('click')一次性移除已绑定的click事件的所有处理函数。
+
+同理，无参数调用off()一次性移除已绑定的所有类型的事件处理函数。
+
 /////////////////////////////////////// JQuery----end ////////////////////////////////////
