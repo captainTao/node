@@ -1,0 +1,59 @@
+<!--需求：请再添加Pascal、Lua和Ruby，然后按字母顺序排序节点：-->
+<!DOCTYPE html>
+<html>  
+    <head>  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+    <title>JQ添加内容和排序</title>  
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-3.1.1.min.js"></script>
+    </head>   
+<body>   
+<div id="test-div">
+    <ul>
+        <li><span>JavaScript</span></li>
+        <li><span>Python</span></li>
+        <li><span>Swift</span></li>
+    </ul>
+</div>
+
+</body> 
+<script language="JavaScript" type="text/javascript">   
+var ul = $("#test-div>ul");
+ul.append("<li><span>Pascal</span></li>","<li><span>Lua</span></li>","<li><span>Ruby</span></li>");
+var li = $('#test-div>ul li'); //取出来的每个元素是DOM对象
+// var arr = obj.find("li");
+//此处用JavaScript的innerText来取值是说明JQ.find之后获得是JavaScript对象？用text()或html()会报错。
+li.sort((x,y) => {return (x.innerText>y.innerText)? 1:-1}); 
+ul.append(li);
+
+
+//单元测试：
+// 测试:
+(function () {
+    var s = $('#test-div>ul>li').map(function () {
+        return $(this).text();
+    }).get().join(',');
+    if (s === 'JavaScript,Lua,Pascal,Python,Ruby,Swift') {
+        console.log('测试通过!');
+    } else {
+        console.log('测试失败: ' + s);
+    }
+})();
+
+/*
+var ul = $('#test-div>ul');
+ul.append('<li><span>Pascal</span></li>');
+ul.append('<li><span>Lua</span></li>');
+ul.append('<li><span>Ruby</span></li>');
+
+var arr = [];
+var span = $('#test-div>ul span');
+for (var i = 0; i<span.length; i++){
+arr.push(span[i].innerText); //这儿不能用html()，因为是一个dom对象，可以用innerHtml,innerText
+}
+arr.sort();
+for (var i = 0; i<span.length; i++){
+ span[i].innerText = arr[i];
+}
+*/
+</script>   
+</html>

@@ -231,7 +231,7 @@ forward()
 
 
 ////////////////////////////////////////////////////////////
-DOM操作：
+DOM方法操作：
 /************************************************/
 
 选择方法一：
@@ -866,7 +866,7 @@ a.show(); // 显示
 
 
 JQ获取DOM信息：
-无需要针对浏览器做适配
+// 无需要针对浏览器做适配
 /***********************************/
 // 浏览器可视窗口大小:
 $(window).width(); // 800
@@ -916,7 +916,7 @@ radio.is(':checked'); // true
 类似的属性还有selected，处理时最好用is(':selected')。
 
 
-操作表单
+操作表单:
 /***********************************/
 对于表单元素，jQuery对象统一提供val()方法获取和设置对应的value属性：
 
@@ -943,4 +943,100 @@ select.val('SH'); // 选择框已变为Shanghai
 textarea.val(); // 'Hello'
 textarea.val('Hi'); // 文本区域已更新为'Hi'
 可见，一个val()就统一了各种输入框的取值和赋值的问题。
+
+
+JQ修改DOM:
+/***********************************/
+// append()
+//增加（节点不在文章当中）或者移动（节点已经存在文章当中）：
+
+<div id="test-div">
+    <ul>
+        <li><span>JavaScript</span></li>
+        <li><span>Python</span></li>
+        <li><span>Swift</span></li>
+    </ul>
+</div>
+
+var ul = $('#test-div>ul');
+ul.append('<li><span>Haskell</span></li>');  // 除此之外可以用jq html,DOM的方法为appendChild();
+
+
+
+// append()还可以传入原始的DOM对象，jQuery对象和函数对象：
+
+// 创建DOM对象:
+var ps = document.createElement('li');
+ps.innerHTML = '<span>Pascal</span>';
+// 添加DOM对象:
+ul.append(ps);
+
+// 添加jQuery对象:
+ul.append($('#scheme'));
+
+// 添加函数对象:
+ul.append(function (index, html) {
+    return '<li><span>Language - ' + index + '</span></li>';
+});
+
+
+// append()把DOM添加到最后，prepend()则把DOM添加到最前。
+
+// 同级节点可以用after()或者before()方法。
+var js = $('#test-div>ul>li:first-child');
+js.after('<li><span>Lua</span></li>');
+
+// 删除节点；（一个或者多个）
+var li = $('#test-div>ul>li');
+li.remove(); // 所有<li>全被删除
+
+
+//-------------------------------实践：
+
+<!--需求：请再添加Pascal、Lua和Ruby，然后按字母顺序排序节点：-->
+<!DOCTYPE html>
+<html>  
+    <head>  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+    <title>JQ添加内容和排序</title>  
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-3.1.1.min.js"></script>
+    </head>   
+<body>   
+<div id="test-div">
+    <ul>
+        <li><span>JavaScript</span></li>
+        <li><span>Python</span></li>
+        <li><span>Swift</span></li>
+    </ul>
+</div>
+
+</body> 
+<script language="JavaScript" type="text/javascript">   
+var ul = $("#test-div>ul");
+ul.append("<li><span>Pascal</span></li>","<li><span>Lua</span></li>","<li><span>Ruby</span></li>");
+var li = $('#test-div>ul li'); //取出来的每个元素是DOM对象
+// var arr = obj.find("li");
+//此处用JavaScript的innerText来取值是说明JQ.find之后获得是JavaScript对象？用text()或html()会报错。
+li.sort((x,y) => {return (x.innerText>y.innerText)? 1:-1}); 
+ul.append(li);
+
+/*
+var ul = $('#test-div>ul');
+ul.append('<li><span>Pascal</span></li>');
+ul.append('<li><span>Lua</span></li>');
+ul.append('<li><span>Ruby</span></li>');
+
+var arr = [];
+var span = $('#test-div>ul span');
+for (var i = 0; i<span.length; i++){
+arr.push(span[i].innerText); //这儿不能用html()，因为是一个dom对象，可以用innerHtml,innerText
+}
+arr.sort();
+for (var i = 0; i<span.length; i++){
+ span[i].innerText = arr[i];
+}
+*/
+</script>   
+</html>
+
 /////////////////////////////////////// JQuery----end ////////////////////////////////////
