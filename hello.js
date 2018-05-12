@@ -597,7 +597,7 @@ reader.onload = function(e) {
 
 
 
-AJAX:
+DOM  AJAX:
 /************************************************/
 
 'use strict';
@@ -1164,4 +1164,209 @@ a.off('click', function () {
 
 同理，无参数调用off()一次性移除已绑定的所有类型的事件处理函数。
 
+
+事件触发条件：
+/***********************************/
+// 监控文本框的内容改动：
+
+var input = $('#test-input');
+input.change(function () {
+    console.log('changed...');
+});
+
+// 但是，如果用JavaScript代码去改动文本框的值，将不会触发change事件：
+
+var input = $('#test-input');
+input.val('change it!'); // 无法触发change事件
+input.change(); // 直接调用无参数的change(),手动来触发
+// input.change()相当于input.trigger('change')，它是trigger()方法的简写。
+
+浏览器安全限制:
+/***********************************/
+在浏览器中，有些JavaScript代码只有在用户触发下才能执行，例如，window.open()函数：
+
+// 无法弹出新窗口，将被浏览器屏蔽:
+$(function () {
+    window.open('/');
+});
+
+
+// 作业：
+
+选项：全选，全不选，反选：
+
+
+
+JQ动画:
+/***********************************/
+//括号中的参数为：毫秒，或者slow ,fast
+show() / hide() / toggle()
+slideUp() / slideDown() / slidetoggle()
+fadeIn() / fadeOut()  /fadeToggle()
+
+
+// 自定义动画：
+animate()  // 接受三个参数：动画，时间，回调
+
+var div = $('#test-animate');
+div.animate({
+    opacity: 0.25,
+    width: '256px',
+    height: '256px'
+}, 3000, function () {
+    console.log('动画已结束');
+    // 恢复至初始状态:
+    $(this).css('opacity', '1.0').css('width', '128px').css('height', '128px');
+});
+
+
+// 串行动画：
+var div = $('#test-animates');
+// 动画效果：slideDown - 暂停 - 放大 - 暂停 - 缩小
+div.slideDown(2000)
+   .delay(1000)  //暂停
+   .animate({
+       width: '256px',
+       height: '256px'
+   }, 2000)
+   .delay(1000)
+   .animate({
+       width: '128px',
+       height: '128px'
+   }, 2000);
+}
+
+为什么有的动画没有效果
+你可能会遇到，有的动画如slideUp()根本没有效果。这是因为jQuery动画的原理是逐渐改变CSS的值，如height从100px逐渐变为0。
+但是很多不是block性质的DOM元素，对它们设置height根本就不起作用，所以动画也就没有效果。
+
+此外，jQuery也没有实现对background-color的动画效果，用animate()设置background-color也没有效果。这种情况下可以使用CSS3的transition实现动画效果。
+
+
+
+JQ  AJAX:
+/************************************************/
+
+jQuery在全局对象jQuery（也就是$）绑定了ajax()函数，可以处理AJAX请求。ajax(url, settings)函数需要接收一个URL和一个可选的settings对象，常用的选项如下：
+
+async：是否异步执行AJAX请求，默认为true，千万不要指定为false；
+
+method：发送的Method，缺省为'GET'，可指定为'POST'、'PUT'等；
+
+contentType：发送POST请求的格式，默认值为'application/x-www-form-urlencoded; charset=UTF-8'，也可以指定为text/plain、application/json；
+
+data：发送的数据，可以是字符串、数组或object。如果是GET请求，data将被转换成query附加到URL上，如果是POST请求，根据contentType把data序列化成合适的格式；
+
+headers：发送的额外的HTTP头，必须是一个object；
+
+dataType：接收的数据格式，可以指定为'html'、'xml'、'json'、'text'等，缺省情况下根据响应的Content-Type猜测
+
+
+
+var jqxhr = $.ajax('/api/categories', {
+    dataType: 'json'
+}).done(function (data) {
+    ajaxLog('成功, 收到的数据: ' + JSON.stringify(data));
+}).fail(function (xhr, status) {
+    ajaxLog('失败: ' + xhr.status + ', 原因: ' + status);
+}).always(function () {
+    ajaxLog('请求完成: 无论成功或失败都会调用');
+});
+
+
+//get: jq会自动拼接url
+var jqxhr = $.get('/path/to/resource', {
+    name: 'Bob Lee',
+    check: 1
+});
+
+//post:
+var jqxhr = $.post('/path/to/resource', {
+    name: 'Bob Lee',
+    check: 1
+});
+
+//getJSON:
+由于JSON用得越来越普遍，所以jQuery也提供了getJSON()方法来快速通过GET获取一个JSON对象：
+
+var jqxhr = $.getJSON('/path/to/resource', {
+    name: 'Bob Lee',
+    check: 1
+}).done(function (data) {
+    // data已经被解析为JSON对象了
+});
+
+//安全限制:
+jQuery的AJAX完全封装的是JavaScript的AJAX操作，所以它的安全限制和前面讲的用JavaScript写AJAX完全一样。
+
+如果需要使用JSONP，可以在ajax()中设置jsonp: 'callback'，让jQuery实现JSONP跨域加载数据。
+
+
+编写jQ插件：
+/************************************************/
+//通过扩展$.fn对象实现的
+// highlight插件：
+$.fn.highlight1 = function () {
+    // this已绑定为当前jQuery对象:
+    this.css('backgroundColor', '#fffceb').css('color', '#d85030');
+    return this; //为什么最后要return this;？因为jQuery对象支持链式操作，我们自己写的扩展方法也要能继续链式下去
+}
+
+$('span.hl').highlight1().slideDown(); //链式传递
+
+//--------------------------------------------
+// 方法名中要自己传递参数；options为传入对象
+$.fn.highlight2 = function (options) {
+    // 要考虑到各种情况:
+    // options为undefined
+    // options只有部分key
+    var bgcolor = options && options.backgroundColor || '#fffceb';   // a||b = a;
+    var color = options && options.color || '#d85030';
+    this.css('backgroundColor', bgcolor).css('color', color);
+    return this;
+}
+// 调用：
+$('#test-highlight2 span').highlight2({
+    backgroundColor: '#00f8e6',
+    color: '#ffffff'
+});
+//--------------------------------------------
+
+
+jQuery提供的辅助方法$.extend(target, obj1, obj2, ...)，它把多个object对象的属性合并到第一个target对象中，遇到同名属性，总是使用靠后的对象的值，也就是越往后优先级越高：
+
+// 把默认值和用户传入的options合并到对象{}中并返回:
+var opts = $.extend({}, {
+    backgroundColor: '#00a8e6',
+    color: '#ffffff'
+}, options);
+
+//--------------------------------------------
+// highlight最终版：
+$.fn.highlight = function (options) {
+    // 合并默认值和用户设定值:
+    var opts = $.extend({}, $.fn.highlight.defaults, options);
+    this.css('backgroundColor', opts.backgroundColor).css('color', opts.color);
+    return this;
+}
+
+// 程序设定默认值:
+$.fn.highlight.defaults = {
+    color: '#d85030',
+    backgroundColor: '#fff8de'
+}
+// 用户设定默认值：或者缺省处理；
+$.fn.highlight.defaults.color = '#fff';
+$.fn.highlight.defaults.backgroundColor = '#000';
+// 调用：
+$('xx').highlight({
+    color: '#d85037'
+});
+//--------------------------------------------
+最终，我们得出编写一个jQuery插件的原则：
+
+给$.fn绑定函数，实现插件的代码逻辑；
+插件函数最后要return this;以支持链式调用；
+插件函数要有默认值，绑定在$.fn.<pluginName>.defaults上；
+用户在调用时可传入设定值以便覆盖默认值。
 /////////////////////////////////////// JQuery----end ////////////////////////////////////
