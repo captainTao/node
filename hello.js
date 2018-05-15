@@ -734,14 +734,35 @@ JQuery:
 
 JQ 过滤器（Filter）
 过滤器一般不单独使用，它通常附加在选择器上，帮助我们更精确地定位元素。观察过滤器的效果：
+/*
+<!-- HTML结构 -->
+<div class="testing">
+    <ul class="lang">
+        <li class="lang-javascript">JavaScript</li>
+        <li class="lang-python">Python</li>
+        <li class="lang-lua">Lua</li>
+    </ul>
+</div>
+*/
 $('ul.lang li'); // 选出JavaScript、Python和Lua 3个节点
-
 $('ul.lang li:first-child'); // 仅选出JavaScript
 $('ul.lang li:last-child'); // 仅选出Lua
 $('ul.lang li:nth-child(2)'); // 选出第N个元素，N从1开始
 $('ul.lang li:nth-child(even)'); // 选出序号为偶数的元素
 $('ul.lang li:nth-child(odd)'); // 选出序号为奇数的元素
 
+$("li").css("color","#afafaf"); 
+$("li:first").css("color","red"); 
+$("li:last").css("color","green");
+$("li:odd").css("color","blue");
+$("li:eq(3)").css("color","red");
+$("tr:odd").css("background-color","#7f7f7f");
+$("tr:even").css("background-color","#afafaf"); 
+
+// contains包含文本内容
+$("div:contains('学习')").css("border","1px solid red");
+// has 是否包含另外 jQuery包装集
+$("div:has('p')").css("color","red");
 
 
 /*
