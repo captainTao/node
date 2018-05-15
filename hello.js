@@ -833,13 +833,20 @@ json = JSON.stringify(elts);
 $('#test-ul li[name=book]').text(); // 'Java & JavaScript'  // text()参数为空就是获取，有参数就是设置；
 $('#test-ul li[name=book]').html(); // 'Java &amp; JavaScript'
 
-修改css：
+
+JQ修改css：
+/************************************************/
 $('#test-css li.dy>span').css('background-color', '#ffd351').css('color', 'red');
 
 var div = $('#test-div');
 div.css('color'); // '#000033', 获取CSS属性
 div.css('color', '#336699'); // 设置CSS属性
 div.css('color', ''); // 清除CSS属性
+
+$("div").css({"width":"50px",
+             "height":"50px"});  //设置两个属性
+
+
 为了和JavaScript保持一致，CSS属性可以用'background-color'和'backgroundColor'两种格式。
 
 
@@ -862,6 +869,22 @@ var a = $('a[target=_blank]');
 a.hide(); // 隐藏
 a.show(); // 显示
 
+
+JQ和DOM互转：
+/************************************************/
+// 详细见JQ文件夹
+$("#bt03").click(
+    function()
+    {//DOM对象转为JQuery
+       var nowp=document.getElementById("p2"); 
+       var jq_nowp=$(nowp);//$(DOM对象)
+       jq_nowp.html("哈哈哈");
+    }
+    );   
+$("#bt04").click(function(){
+    var nowp=$("#p2")[0];//对象[0] 从JQ对象中获取DOM对象
+    nowp.innerHTML="我是DOM改的!!!!";
+})  ;   
 
 
 
@@ -916,7 +939,7 @@ radio.is(':checked'); // true
 类似的属性还有selected，处理时最好用is(':selected')。
 
 
-操作表单:
+JQ操作表单:
 /***********************************/
 对于表单元素，jQuery对象统一提供val()方法获取和设置对应的value属性：
 
@@ -1128,6 +1151,25 @@ $(function () {
         $('#testMouseMoveSpan').text('pageX = ' + e.pageX + ', pageY = ' + e.pageY);
     });
 });
+
+JQ bind函数用法：
+/***********************************/
+$(document).ready(function(){
+    $("#bt01").bind("click",function(){
+        $("#divmsg").hide();
+    });
+    //也可以如下写
+    // $("#bt01").click(function(){
+    //     $("#divmsg").hide();
+    // });
+    $("#bt02").bind("click",function(){
+        $("#divmsg").show();
+    })
+    $("#bt03").bind("click",function(){
+        $("#divmsg").html("你好 baidu"); 
+    });
+});
+
 
 
 取消绑定：
