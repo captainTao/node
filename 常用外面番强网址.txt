@@ -1,0 +1,29 @@
+设计师用的网址：
+https://www.behance.net/
+https://dribbble.com/
+https://www.shutterstock.com/home
+
+
+Xxx webstie:pornhub
+-------------------------------
+refer link:
+https://www.diycode.cc/topics/738
+
+VPS和ECS的区别：https://www.diycode.cc/topics/738
+VPS提供商：Vultr.com
+节点：洛杉矶，东京
+
+putty客户端
+ss安装：
+ss一键安装脚本：https://teddysun.com/486.html
+Chrome插件——SwitchyOmega
+
+优化：
+加速软件： 锐速+centos
+
+网络进阶：
+BBR脚本
+FinalSpeed: 双边加速
+Snapshot
+
+
