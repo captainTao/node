@@ -1,0 +1,654 @@
+Q&A:
+1.ll 查看文件，过滤文件名
+root@captain:~# ll /etc/sh
+shadow            shadow-           shadowsocks.json  shells
+
+2.ip addr 和ifconfig, ipconfig, curl ip.cn
+
+
+3.chmod +x shadowsocksR.sh 与数字的区别
+
+
+
+RAM，ROM
+闪存：ROM
+内存: RAM
+网关，子网掩码，ICMP,DNS
+
+///////////////////////////////////////////////////////////////////linux操作
+
+linux常用：
+--------------------------------
+
+root@captain:~# 
+cat /etc/shadowsocks.json     // ss json配置
+vim /etc/shadowsocks.json
+
+!cat  :上次的cat命令
+cat id_rsa.pub | pbcopy       // copy 对应文件内容
+
+
+
+/etc/init.d/shadowsocks start   // start ss
+/etc/init.d/shadowsocks restart  // 重启ss
+/etc/init.d/iptables stop    //关闭防火墙（iptables）  
+service firewalld stop     // 关闭防火墙
+
+
+查看系统版本：
+> lsb_release -a
+
+
+
+查看文件属性：
+> ll
+> ll /etc/sh    // 类似ls
+
+查看文件的可视大小：-h可视， -a:所有
+> du -ah
+
+> virsh list --all: //查看运行的虚拟机 
+
+ip地址：
+--------------
+ip addr  :ip地址。ifconfig    // mac
+curl ip.cn : 当前ip地址
+
+
+> watch 
+-------------------
+http://www.cnblogs.com/peida/archive/2012/12/31/2840241.html
+watch -n 1 -d netstat -ant  // 每隔1s高亮显示网络链接数的变化情况
+切换终端: ctrl + x
+退出watch: ctrl + g
+watch -n 1 -d 'pstree|grep http' // 每隔一秒高亮显示http链接数的变化情况,监听内容用引号括起来
+watch 'netstat -an | grep:21 | \ grep<模拟攻击客户机的IP>| wc -l'  // 实时查看模拟攻击客户机建立起来的连接数
+watch -d 'ls -l|grep scf'  // 监测当前目录中 scf' 的文件的变化
+watch -n 10 'cat /proc/loadavg' //10秒一次输出系统的平均负载
+
+
+wangsirlemon@c77:~$ watch -h
+
+Usage:
+ watch [options] command
+
+Options:
+  -b, --beep             beep if command has a non-zero exit
+  -c, --color            interpret ANSI color and style sequences
+  -d, --differences[=<permanent>]
+                         highlight changes between updates
+  -e, --errexit          exit if command has a non-zero exit
+  -g, --chgexit          exit when output from command changes
+  -n, --interval <secs>  seconds to wait between updates
+  -p, --precise          attempt run command in precise intervals
+  -t, --no-title         turn off header
+  -x, --exec             pass command to exec instead of "sh -c"
+
+ -h, --help     display this help and exit
+ -v, --version  output version information and exit
+
+
+
+
+> netstat:
+------------------- 
+https://linux.cn/article-2434-1.html
+netstat -tnlup | grep 端口号         //查看tcp,udp端口和进程业务
+netstat -lntp          //查看正在监听端口情况
+netstat -nltp
+netstat –apn | grep 8080  // 8080为端口号
+netstat -lntpu   
+netstat -ltpe   //tcp监听的拥有者
+netstat -rn     //禁用路由解析的路由信息
+netstat -i     //打印网络接口信息
+netstat -atnp | grep ESTA  //获得active状态的链接
+watch -d -n0 "netstat -atnp | grep ESTA"  //配合watch命令监听active状态的链接
+
+/*
+netstat - 打印网络连接、路由表、连接的数据统计、伪装连接以及广播域成员。
+-a: 所有
+-u: udp
+-t: tcp
+-l: listen,正在监听
+-n: 禁用域名解析，即：查找每个ip地址对应主机名
+-p: 进程名pid
+-e: 进程拥有者，相比查看进程，进程拥有者更有用 user ,
+-ep: e一般配合p使用
+note: -n, -e一起使用，user列的属性是用户的id号，不是用户名
+-r: 打印内核路由信息
+-i: 打印网络接口信息
+-ie： i一般配合e使用，可以输出用户友好的信息,信息和ifconfig内容一致；
+-c: 持续输出信息
+-g: 输出ipv4,ipv6的多播组信息
+
+*/ 
+
+
+> grep:
+------------------
+cat vsftpd.conf | grep -v '^#'   // 查看xx.conf文件中首字符不是#的行
+
+grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
+1、-v是grep排除的参数，例如查询除了包含ABC的行，例如cat a.txt|grep -v 'ABC'
+2、^代表行首，$代表行尾。 ^$是空行的意思
+3、^#表示首字母为#的行，linux里的文件，#号开头一般都是注释内容
+4、grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
+查询/etc/rsyslog.conf文件，但是不包含空行和注释行
+
+
+
+查看进程：
+https://www.cnblogs.com/liuzhengliang/p/4609632.html
+---------------------------------------
+1、ps 命令用于查看当前正在运行的进程。
+grep 是搜索
+例如： ps -ef | grep java
+表示查看所有进程里 CMD 是 java 的进程信息
+
+2、ps -aux | grep java
+ps-aux 显示所有状态
+ps -aux | grep xx
+ps -aux | grep java，或者直接：
+ps -aux | grep pid 查看
+
+3. kill 命令用于终止进程
+例如： kill -9 [PID]
+-9 表示强迫进程立即停止
+通常用 ps 查看进程 PID ，用 kill 命令终止进程
+
+
+
+启动和关闭服务：
+---------------------------------------
+启动服务：(sudo下：)  https://www.cnblogs.com/Berryxiong/p/6193281.html
+1.service+服务名称 + start/stop/restart     对服务进行启动
+2.直接执行某个服务自己的管理脚本 + start/stop/restart
+
+NO.1:
+[berry@berry:practice] service vpnagentd status
+vpnagentd is stopped 
+[berry@berry:practice] sudo service vpnagentd start
+Starting up Cisco AnyConnect Secure Mobility Client Agent
+[berry@berry:practice] service vpnagentd status
+vpnagentd (pid 7000) is running
+[berry@berry:practice] service vpnagentd restart
+Shutting down Cisco AnyConnect Secure Mobility Client Agent
+Starting up Cisco AnyConnect Secure Mobility Client Agent
+[berry@berry:practice] service vpnagentd status
+vpnagentd (pid 7020) is running
+
+
+NO.2:
+/etc/init.d/vpnagentd start
+/etc/init.d/vpnagentd stop
+/etc/init.d/vpnagentd restart
+
+
+[berry@berry:practice] service vpnagentd status
+vpnagentd (pid 7393) is running
+[berry@berry:practice] sudo /etc/init.d/vpnagentd stop
+Shutting down Cisco AnyConnect Secure Mobility Client Agent
+[berry@berry:practice] service vpnagentd status
+vpnagentd is stopped 
+[berry@berry:practice] sudo /etc/init.d/vpnagentd start
+Starting up Cisco AnyConnect Secure Mobility Client Agent
+[berry@berry:practice] service vpnagentd status
+vpnagentd (pid 7707) is running
+[berry@berry:practice] sudo netstat -anp | grep 7707
+tcp        0      0 127.0.0.1:29754         0.0.0.0:*               LISTEN      7707/vpnagentd  
+unix  2      [ ]         DGRAM                    78741    7707/vpnagentd      
+[berry@berry:practice]
+------------------------------------
+
+> df
+查看磁盘空间占用情况：
+-----------------------------------
+df
+df -lh :可视图看大小
+df -h :可视图看大小
+df -ah: 全部文件系统的使用情况
+df -i: 显示inode信息
+df -k: 以字节显示区块的占用情况
+df -m: 以MB来显示文件的系统信息
+df -T: 查看文件类型-type
+df -t ext4: 只查看ext4这种文件类型
+df -x ext4: 查看排除ext4类型外的其他类型文件
+df -T -x ext4
+df -T -t ext4
+df --help:
+
+
+> scp
+-----------------------------------
+1、从服务器上下载文件
+scp username@servername:/path/filename /var/www/local_dir（本地目录）
+
+ 例如scp root@192.168.0.101:/var/www/test.txt  把192.168.0.101上的/var/www/test.txt 的文件下载到/var/www/local_dir（本地目录）
+
+
+2、上传本地文件到服务器
+scp /path/filename username@servername:/path   
+
+例如scp /var/www/test.php  root@192.168.0.101:/var/www/  把本机/var/www/目录下的test.php文件上传到192.168.0.101这台服务器上的/var/www/目录中
+
+ 
+
+3、从服务器下载整个目录
+scp -r username@servername:/var/www/remote_dir/（远程目录） /var/www/local_dir（本地目录）
+
+例如:scp -r root@192.168.0.101:/var/www/test  /var/www/  
+
+4、上传目录到服务器
+scp  -r local_dir username@servername:remote_dir
+例如：scp -r test  root@192.168.0.101:/var/www/   把当前目录下的test目录上传到服务器的/var/www/ 目录
+
+
+
+
+ftp服务器搭建：
+---------------------------
+win:  https://blog.csdn.net/EXLsunshine/article/details/29181465
+linux:  http://www.cnblogs.com/chenmh/p/5365274.html
+        https://www.jianshu.com/p/4f988e70e85b
+centos:  https://blog.csdn.net/zyw_java/article/details/75212608
+默认启动端口为21：
+
+****安装ftp****
+which vsftpd #检测是否已经安装vsftpd
+sudo apt-get install vsftpd
+或者：
+yum install -y vsftpd
+
+netstat -lntp | grep 21  // ftp启动后都在21端口监听
+
+此时ftp已经可以访问了： ftp://35.234.6.119
+
+****更改启动状态****
+sudo service vsftpd start #开启ftp服务
+service vsftpd status #查看FTP的状态
+sudo service vsftpd stop #停止ftp服务
+sudo service vsftpd restart #重启ftp服务
+sudo /etc/init.d/vsftpd restart #倘若上面的不行就使用路径的形式直接执行
+sudo pkill vsftpd #有时候停止失败就干掉吧
+
+
+wangsirlemon@c77:/$ cat /etc/vsftpd.conf | grep -v '^#'
+listen=NO
+listen_ipv6=YES
+anonymous_enable=NO   #允许匿名用户
+local_enable=YES   #允许使用本地账号登录
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+secure_chroot_dir=/var/run/vsftpd/empty
+pam_service_name=vsftpd
+rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+ssl_enable=NO
+
+
+root@c77:~# useradd ftpuser  //创建一个用户
+root@c77:~# usermod -s /sbin/nologin ftpuser  // 限制该用户只能ftp服务器访问，不能直接登录服务器
+root@c77:~# passwd ftpuser   // 设置用户的访问密码
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+root@c77:~# mkdir -p /data/ftp/pub      // 在/data中创建相关的目录,/data/ftp 为主目录, 该目录不可上传文件;/data/ftp/pub 文件只能上传到该目录下
+root@c77:~# echo "Welcome to wangsirlemon FTP service." > /data/ftp/welcome.txt  //创建登录欢迎文件
+root@c77:~# chmod a-w /data/ftp && chmod 777 -R /data/ftp/pub   // 设置访问权限
+root@c77:~# usermod -d /data/ftp ftpuser  // 设置为用户的主目录
+
+
+> traceroute
+------------------------------
+http://man.linuxde.net/traceroute
+traceroute www.baidu.com          // 默认参数为-q, 默认三次探测数据包向每个网关发送三个数据包，网关响应返回的时间
+traceroute www.google.com
+
+-d：使用Socket层级的排错功能；
+-f<存活数值>：设置第一个检测数据包的存活数值TTL的大小；
+-F：设置勿离断位；
+-g<网关>：设置来源路由网关，最多可设置8个；
+-i<网络界面>：使用指定的网络界面送出数据包；
+-I：使用ICMP回应取代UDP资料信息；
+-m<存活数值>：设置检测数据包的最大存活数值TTL的大小；
+-n：直接使用IP地址而非主机名称； 禁用DNS解析，以ip格式输出数据。
+-p<通信端口>：设置UDP传输协议的通信端口；
+-r：忽略普通的Routing Table，直接将数据包送到远端主机上。
+-s<来源地址>：设置本地主机送出数据包的IP地址；
+-t<服务类型>：设置检测数据包的TOS数值；
+-v：详细显示指令的执行过程；
+-w<超时秒数>：设置等待远端主机回报的时间；
+-x：开启或关闭数据包的正确性检验。
+
+traceroute -q 4 www.58.com // 向每个网关发送四个数据包，网关响应返回的时间
+
+
+> lsof
+-------------------------
+http://www.cnblogs.com/peida/archive/2013/02/26/2932972.html
+
+lsof: 列出当前系统打开的文件的工具
+lsof [参数][文件]   // root用户执行
+lsof -n | grep deleted  // 查看已经删除的文件，空间有没有释放，没有的话kill掉pid   // kill -9 pid
+
+-a 列出打开文件存在的进程
+lsof -c mysql = lsof | grep myself
+-c<进程名> 列出指定进程所打开的文件 command
+-g  列出GID号进程详情
+-d<文件号> 列出占用该文件号的进程
++d<目录>  列出目录下被打开的文件
++D<目录>  递归列出目录下被打开的文件
+-n<目录>  列出使用NFS的文件
+-i<条件>  列出符合条件的进程。（4、6、协议、:端口、 @ip ）
+lsof -p 1       // 通过某个进程号显示该进行打开的文件
+lsof -p 1,2,3   // 列出多个进程号对应的文件信息
+lsof -p ^1      // 列出除了某个进程号，其他进程号所打开的文件信息
+-p<进程号> 列出指定进程号所打开的文件 pid:  
+-u  列出UID号进程详情 user
+-h 显示帮助信息
+-v 显示版本信息
+lsof -i: 端口号,列出所有的网络连接   
+lsof -i tcp: 列出所有tcp 网络连接信息
+lsof -i udp: 列出所有udp 网络连接信息
+lsof -i :3306: 列出谁在使用某个端口
+lsof -i udp:55: 列出谁在使用某个特定的udp端口
+lsof -a -u root -i: 列出某个用户的所有活跃的网络端口
+lsof -N: 列出所有网络文件系统
+lsof -u: 域名socket文件
+lsof -g 5555: 某个用户组所打开的文件信息
+lsof -d description(like 2): 根据文件描述列出对应的文件信息
+例如： lsof  -d  txt      lsof  -d  1     lsof  -d  2
+// 0表示标准输入，1表示标准输出，2表示标准错误，从而可知：所以大多数应用程序所打开的文件的 FD 都是从 3 开始
+lsof -d 2-3     // 根据文件描述范围列出文件信息
+lsof -c sshd -a -d txt     // 列出COMMAND列中包含字符串" sshd"，且文件描符的类型为txt的文件信息
+lsof -i 4 -a -p 1234    // 列出被进程号为1234的进程所打开的所有IPV4 network files
+lsof -i @peida.linux:20,21,22,25,53,80  -r  3  
+// 列出目前连接主机peida.linux上端口为：20，21，22，25，53，80相关的所有文件信息，且每隔3秒不断的执行lsof指令
+
+
+查看当前用户
+-------------------------
+> w: 查看当前用户
+> who: 查看主机上的用户 
+> whoami: 查看当前登录的用户是谁
+> lastlog | head -n 5: 查看主机上的用户
+
+/////////////////////////////////////////////////////////////////// ss开始
+
+openwrt:
+https://cokebar.info/archives/664
+
+墙外配置refer：
+https://suiyuanjian.com/124.html                // google vps搭建
+http://godjose.com/2017/06/14/new-article/      // google vps参考
+
+ss故障排除：
+https://doub.io/ss-jc39/
+
+站长ping工具：
+http://ping.chinaz.com/
+
+
+进入准备工作：
+
+/***********************************/ 更新常用软件
+sudo –i
+更新系统（两行命令分开执行，第二步等待时间较长，会出现####和进度百分百，耐心等）
+
+apt update
+apt upgrade
+查看当前内核版本
+
+uname -a
+然后你会发现发现版本低于 4.9
+安装新内核
+
+apt install linux-image-4.10.0-20
+卸载旧内核
+
+apt autoremove
+启用新内核
+
+update-grub
+重启
+
+Reboot
+验证内核版本
+
+uname –r
+看到如下类似如下回显，版本号为4.10.0-20-generic
+
+
+sudo apt-get update
+
+/***********************************/ 配置ssh
+
+google vps默认配置的密码登录和root登录为关闭状态，默认只能使用ssh，如需要开启，需要配置：https://mapgun.com/archives/2235
+
+1.生成ssh key;
+ssh-keygen -t [rsa|dsa]                      // 默认用此方法  refer: https://blog.csdn.net/dongwuming/article/details/9705595
+ssh-keygen -t rsa -f gcloud                  // 生成gcloud 名字的钥匙
+ssh-keygen -t rsa -C "578628438@qq.com"      // git使用
+
+2.在服务器中添加 public key, 并chmod 600 和 设置.ssh目录权限  
+
+$ echo "" > ~/.ssh/authorized_keys   // server key location,非root用户下
+$ chmod 600 authorized_keys
+$ chmod 700 .ssh    //可选
+
+3.ssh链接：
+
+wanghaitao-MacBook:.ssh captain$
+> ssh -i gcloud wangsirlemon@335.197.144.67  // 使用指定公钥登录
+
+wanghaitao-MacBook:~ captain$ 
+> ssh wangsirlemon@35.229.253.255  //默认公钥登录
+> ssh -p 8989 wangsirlemon@35.229.253.255  //用端口号登录
+
+
+wanghaitao-MacBook:.ssh captain$
+> ssh-keygen -t rsa -f gcloud                    // 生成gcloud 
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in gcloud.
+Your public key has been saved in gcloud.pub.
+The key fingerprint is:
+SHA256:FVeLkoIDD4ayNqSzg/Z7gCK6srdwXvUhGGD6rp0/KBY captain@wanghaitao-MacBook.local
+The key's randomart image is:
++---[RSA 2048]----+
+|  o.+     . ...  |
+|.+.o + .   + . . |
+|+o  . + . + . .  |
+|++   o . o .     |
+|oo+ . o S        |
+|*E . . o .       |
+|*.=.o   .        |
+|+Bo+..           |
+|*==++.           |
++----[SHA256]-----+
+
+wanghaitao-MacBook:.ssh captain$
+> cat gcloud.pub 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVH6uhFMGlFKoN7XUdTHKEus77mCOvpkfz3rbXkee9WLPjpY1rBgDMhqZcco7Klmwoy1CaOmdBRlvs70ySXok72937hLvUshHoGqevwW+hpu3/5P+5fQXXMfNnFxkj7PE08pk8EkDoYUsu/JnN7qex3IH7Ps4iRQHuePdgFe/eUzLqHgzsTtsuEIYL64rDG2qs/jfWHqWeRvmxMiTr/bSm2uA9CJ/ebSW5N9rcEcJt+G/78cF+efUYCNz3pRQ5iimsp2aH5mUkDoWOOWNPh9j7biaZoN6fjleDMx9V6nxtEHmdwUN8JexUI74z/76hQOiqA4wGSTL0BMjJpfTitM3T captain@wanghaitao-MacBook.local
+
+
+wangsirlemon@instance-static:~$ cd .ssh
+wangsirlemon@instance-static:~/.ssh$ ls -al
+total 8
+drwx------ 2 wangsirlemon wangsirlemon 4096 Jul 17 08:56 .
+drwxr-xr-x 5 wangsirlemon wangsirlemon 4096 Jul 17 08:43 ..
+
+wangsirlemon@instance-static:~/.ssh$                     // 在server生成key
+> echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVH6uhFMGlFKoN7XUdTHKEus77mCOvpkfz3rbXkee9WLPjpY1rBgDMhqZcco7Klmwoy1CaOmdBRlvs70ySX
+ok72937hLvUshHoGqevwW+hpu3/5P+5fQXXMfNnFxkj7PE08pk8EkDoYUsu/JnN7qex3IH7Ps4iRQHuePdgFe/eUzLqHgzsTtsuEIYL64rDG2qs/jfWHqWeRvmxMiTr/bSm2uA9CJ/ebSW5N9rcEcJt+G/78cF+efUYC
+Nz3pRQ5iimsp2aH5mUkDoWOOWNPh9j7biaZoN6fjleDMx9V6nxtEHmdwUN8JexUI74z/76hQOiqA4wGSTL0BMjJpfTitM3T captain@wanghaitao-MacBook.local" > authorized_keys
+
+wangsirlemon@instance-static:~/.ssh$ chmod 600 authorized_keys 
+
+
+mine:
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > ~/.ssh/authorized_keys
+
+
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > authorized_keys
+
+
+XShell连接服务器
+--------------------
+https://51.ruyo.net/2144.html
+Google Cloud 自带的SSH工具非常好用了。如果你想本地连接上去管理，也是可以的~
+
+首先使用自动SSH连接上去，然后 sudo -i切换到 root
+
+vi /etc/ssh/sshd_config 
+#修改以下内容即可
+ 
+#允许密码登录 将注释去掉
+PermitRootLogin yes
+ 
+#修改成 yes
+PasswordAuthentication no
+ 
+#重启SSH即可
+/etc/init.d/sshd restart
+
+/***********************************/ 安装ss
+1.切换用户：
+sudo -i    // sudo su
+
+2.安装ssr
+wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
+chmod +x shadowsocksR.sh
+./shadowsocksR.sh 2>&1 | tee shadowsocksR.log
+
+3.bbr加速
+wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+
+
+验证bbr： 
+https://teddysun.com/489.html/comment-page-7
+--------------------
+uname -r:
+一般显示为最新版就ok
+
+sysctl net.ipv4.tcp_available_congestion_control        // bbr状态检测
+返回值出现：
+net.ipv4.tcp_available_congestion_control = bbr cubic reno
+或者为：
+net.ipv4.tcp_available_congestion_control = reno cubic bbr
+
+sysctl net.core.default_qdisc
+返回值为：
+net.core.default_qdisc = fq
+
+lsmod | grep bbr
+返回值有 tcp_bbr 模块即说明 bbr 已启动。注意：并不是所有的 VPS 都会有此返回值，若没有也属正常。
+
+
+
+ss问题排查：
+https://shadowsocks.org/en/download/clients.html      //ss webstie
+https://doub.io/ss-jc39/
+
+①启动Shadowsocks服务端：service supervisord start
+②关闭Shadowsocks服务端：service supervisord stop
+③重启shadowsocks服务端：service supervisord restart
+
+
+netstat -lntp
+/etc/init.d/shadowsocks start   // start   
+/etc/init.d/shadowsocks restart  // 重启ss
+
+/***********************************/ 安装ipsec
+
+https://github.com/hwdsl2/setup-ipsec-vpn
+
+apt-get update && apt-get dist-upgrade  and reboot
+wget https://git.io/vpnsetup -O vpnsetup.sh && sudo sh vpnsetup.sh
+
+================================================
+
+
+
+ss 配置:
+root@c77:~# cat /etc/shadowsocks.json 
+
+服务器端口：默认为 8989
+密码：默认为 teddysun.com
+加密方式：默认为 aes-256-cfb
+协议（Protocol）：默认为 origin
+混淆（obfs）：默认为 plain
+--------------------------------------
+
+
+
+================================================
+
+
+================================================
+
+================================================
+
+
+/***********************************/ 安装outliner
+outline配置IOS客户端 server:
+https://steemit.com/cn/@zhijun/outline
+
+git: https://github.com/Jigsaw-Code/outline-server
+
+server run:
+bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)"
+
+
+
+
+
+/////////////////////////////////////////////////////////////////// 重拾linux
+
+linux服务器踩点网站：
+www.netcraft.com
+
+必须分区：根分区，swap分区（最大为内存的2倍）
+推荐分区：boot分区（200M左右）
+给每个分区要分配挂载点
+/dev/hd
+/dev/sd
+/dev/cdrom,sr0
+/dev/fd：软盘
+/dev/lp：打印机
+/dev/usb/lp： usb打印机
+/dev/mouse
+
+ifconfig eth0 192.168.2.223 //配置eth0的ip
+
+/bin/
+/sbin/
+/usr/bin/
+/user/sbin/：超级用户
+/boot/：启动文件
+/dev/：设备文件
+/etc/：配置文件
+/home/
+/lib/: 系统调用的函数库保存位置
+/lost+found/:系统以外崩溃和关机，产生的碎片, fsck工具
+/mnt/：挂载目录
+/media/：挂载目录
+/mnt/：挂载目录
+/misc/：挂载目录
+/opt/：三方安装软件保存位置，但一般放在/usr/local目录中
+/proc/:虚拟文件系统，cpu,filesystem
+/sys/:虚拟文件系统，内核相关的信息
+/root/:超级用户目录
+/srv/:服务数据目录
+/tmp/:最好每次开机把改目录清空
+/usr/: 类似于windows中windows目录
+/var/:缓存，日志，
+
+服务器：
+不关机，只能重启，重启时应该关闭服务
+访问高峰运行时，不要运行高负载命令
+远程配置防火墙的时，不要把自己踢出服务器
+
