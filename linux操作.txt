@@ -247,6 +247,7 @@ scp  -r local_dir username@servername:remote_dir
 
 ftp服务器搭建：
 ---------------------------
+也可见：onenote笔记 /linux/ftp
 win:  https://blog.csdn.net/EXLsunshine/article/details/29181465
 linux:  http://www.cnblogs.com/chenmh/p/5365274.html
         https://www.jianshu.com/p/4f988e70e85b
@@ -655,4 +656,94 @@ ifconfig eth0 192.168.2.223 //配置eth0的ip
 5.密码规范并定期更新
 6.合理分配权限
 7.定期备份重要数据和日志
+
+
+mkdir -p /tmp/little/bodu /tmp/little/cang: -p可以连续创建不存在的目录,可以连续跟进多个目录
+cd, pwd
+..上一级目录，.是当前目录
+rmdir:  删除空目录 (windows中的del )
+cp -rp: 
+-r为复制目录, -p为复制文件的属性，也可以同时复制多个目录；复制目录同时可以更名
+mv 源 目的: 更名
+
+清除屏幕： ctrl + r或者clear 
+rm -rf
+
+
+查看文件：
+------------------
+touch "program files":创建文件最好不要空格，有空格则用引号引起来
+nano:
+cat -n
+tac xx:倒序查看
+more xx.txt:,q退出，只能往下翻，不能往回翻
+less xx.txt:查看内容，也可以用向上，下，pageup,pagedown来查看，/来搜索关键词跟vi类似，q退出
+head -n 10 xx.txt:前10行：默认查看10行
+tail -n 7 xx.txt:后面10行:默认查看10行; -f:动态显示文件末尾内容
+
+
+locate .profile : 定位文件
+df -lh
+lsb_release -a
+free -h:查看内存信息
+
+
+shutdown:
+--------------
+shutdown now  立刻关机
+shutdown +5   5分钟后关机
+shutdown 23:10  设置系统在23点10分时关机
+shutdown -r now  立刻关闭系统并重新启动
+
+reboot:
+----------------
+reboot  -f：强制重新开机，不调用shutdown指令的功能；
+reboot  -i：在重开机之前，先关闭所有网络界面；
+reboot  -n：重开机之前不检查是否有未结束的程序； 
+reboot -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件
+
+管道，grep
+----------------
+ls -al | more
+
+
+ps
+-----------------
+-aux
+-a：显示所有用户的进程
+-u：显示用户名和启动时间
+-x：显示 没有控制终端的进程
+-e：显示所有进程，包括没有控制终端的进程
+-l：长格式显示
+-w：宽行显示，可以使用多个w进行加宽显示
+
+file:
+--------------------
+判断文件类型
+
+
+vi/vim
+--------------------
+gg
+G
+H
+M
+L
+h,j,k,l,
+
+0
+$
+
+dd
+pp
+r－－－－－修改光标所在的字符
+S－－－－－删除光标所在的列，并进入输入模式
+
+i
+o
+
+:set nu
+:set nonu
+:n
+
 
