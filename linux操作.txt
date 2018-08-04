@@ -663,7 +663,8 @@ mkdir -p tt/tt1
 cd, pwd
 ..上一级目录，.是当前目录
 rmdir:  删除空目录 (windows中的del )
-cp -rp: 
+
+cp -rp /tmp/bb  /tsd/kh: 
 -r为复制目录, -p为复制文件的属性，也可以同时复制多个目录；复制目录同时可以更名
 mv 源 目的: 更名
 
@@ -859,8 +860,8 @@ ls -i:
 
 chmod:
 -----------------
-chmod [ugo][+-=][rwx] 文件目录： u:sudo,root
-chmod g+w,o-r sys.bakfile: 同时操作多个权限
+chmod [ugoa][+-=][rwx] 文件目录： u:sudo,root
+chmod g+w,o-r sys.bakfile: 同时操作多个权限 
 chmod g=rwx sys.bak
 chmod 700 sys.bak ：一般操作习惯用数字来表示
 532： r-x-wx-w-
@@ -872,3 +873,54 @@ note:
 3.r: ls;                       cat/more/less/head/tail
   w: touch/mkdir/rmdir/rm;     vim/vi
   x: cd;                       script cmd
+
+
+chown:
+----------------
+-R：递归
+改变所有者
+useradd   谁创建这个文件，谁就是这个文件的拥有者，组的缺省值为创建者owner
+
+chgrp:
+---------------
+改变所属组
+groupadd
+
+umask:
+---------------
+$ :umask -S
+u=rwx,g=rwx,o=rx    // linux默认文件创建权限：drwxr-xr-x
+-rw-r--r--          // linux默认创建的文件是不具备执行的属性
+$ :umask
+0002    //777-002=755
+umask 023        更改缺省值
+
+
+find:
+---------------
+find[范围][条件]
+find / -name init   //名字为init，为精准搜索， / 为根目录的意思
+find /etc -name *init*    //文件名包含init，*为通配符，类正则
+find /etc -name init？？？   //三个?代表三个字符，？为单个字符 
+find /etc -iname *init*    //-iname不区分大小写
+
+
+find  /etc -size +204800 
+// 查找大于100M的文件，1个数据块为512字节，0.5k; 100M=102400KB=204800块，数据块为linux存储的最小字节；
+// 数字前面+为大于，-为小于,等于前面没有符号
+
+find /etc -user xxxx:按用户查找
+
+find /etc -cmin -5  //查找5min内被修改过的文件和目录,-5为5分钟内，+5为超过5分钟
+-amin   :访问时间access
+-cmin   :文件属性changes
+-mmin   :文件内容modify
+
+find /etc -size +163840 -a -size -204800   : -a为连接符，且的关系；查找大于80M,小于100M的文件； -o为或
+
+find /etc -name init -exec ls -l {} \;      :查看init文件并显示其详细信息 
+-exec/-ok为执行，-ok的区别是会询问是否操作，用y,n来确认    {} \;是固定格式,  
+
+find /etc -name init* -a -type d   :查看名字以init开头的目录
+-type : 文件类型，f文件，d目录，l为链接文件
+
