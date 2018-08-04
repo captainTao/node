@@ -924,3 +924,5 @@ find /etc -name init -exec ls -l {} \;      :查看init文件并显示其详细�
 find /etc -name init* -a -type d   :查看名字以init开头的目录
 -type : 文件类型，f文件，d目录，l为链接文件
 
+-inum: i节点查找
+find . -inum 31531 -exec rm {} \; //以i节点查找然后删除，用于删除一些无法打印出来的奇怪字符的文件
