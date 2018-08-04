@@ -431,7 +431,7 @@ google vps默认配置的密码登录和root登录为关闭状态，默认只能
 1.生成ssh key;
 ssh-keygen -t [rsa|dsa]                      // 默认用此方法  refer: https://blog.csdn.net/dongwuming/article/details/9705595
 ssh-keygen -t rsa -f gcloud                  // 生成gcloud 名字的钥匙
-ssh-keygen -t rsa -C "578628438@qq.com"      // git使用
+ssh-keygen -t rsa -C "578628438@qq.com"      // 使用
 
 2.在服务器中添加 public key, 并chmod 600 和 设置.ssh目录权限  
 
@@ -726,30 +726,110 @@ file:
 
 vi/vim
 --------------------
+https://www.cnblogs.com/yangjig/p/6014198.html
 0|^, $ 单行
 gg, G, XG 多行
 (,) 句
 {,} 段
 
-H
-M
-L
+H,M,L  -------光标定位
 h,j,k,l,
+9k,12j
 
-0
-$
+dd,D  :删除行,行内容
+dG :
+dgg :
+pp :粘贴行
 
-dd,D
-pp
-r－－－－－修改光标所在的字符
-S－－－－－删除光标所在的列，并进入输入模式
+r :改光标所在的字符
+x :删除光标字符
+X ：删除光标左边字符
+S ：删除光标所在的列，并进入输入模式
+J :删除换行符
 
-i
-o
 
-:set nu
+v,v  V,V  ctrl+v,ctrl+v -------选中区域
+ggVG 选中全部的文本， 其中gg为跳到行首，V选中整行，G末尾
+
+选中之后可以进行：d删,y复制,p粘贴,（不选中，默认一行）
+"+y    复制到系统剪贴板(也就是vim的+寄存器） 
+"+p   从系统剪贴板粘贴 
+
+u :撤销，U是撤销一行的全部操作
+ctrl+r :重做
+. :重复上一次动作
+
+/?搜索
+
+i :插入
+o :下面另起一行
+O :上面另起一行 
+:w filename  另存为
+
+:set nu  :行定位
 :set nonu
 :n
+
+ctrl + g :统计行信息
+g ctrl+g字数统计
+
+
+mac配置vim
+--------------------------
+https://blog.csdn.net/yuanmengong886/article/details/52914714
+https://www.jianshu.com/p/9fa9bedc259a
+主题：https://vimcolors.com/
+cp  /usr/share/vim/vimrc  ~/.vimrc
+cp  /usr/share/vim/vimrc  ~/.vimrc
+
+"如下为自定义设置
+set autoindent        " 自动对齐
+set number            " 显示行号
+set hlsearch          " 高亮搜索结果
+set wrap              " 自动换行
+set incsearch         " 立即高亮显示当前匹配
+set ignorecase        " 忽略大小写
+set showmatch         " 高亮显示对应的括号
+
+set confirm           " 在处理未保存或只读文件的时候，弹出确认
+set tabstop=4         " Tab键的宽度
+set cursorline        " 突出显示当前行 
+"set cursorcolumn      " 突出显示当前列
+set clipboard+=unnamed   " 共享剪贴板
+
+" 语法高亮
+syntax on          
+set fileencodings=utf-8,gb2312,gbk,cp936,latin-1
+set fileencoding=utf-8
+set termencoding=utf-8
+set fileformat=unix
+set encoding=utf-8
+
+" 配色方案
+" default,delek,murphy
+colorscheme default
+" 指定配色方案是256色
+set t_Co=256
+set wildmenu
+
+" C风格的对齐方式
+set cindent
+set completeopt=longest,menu
+
+" 文件被改动时自动载入
+set autoread
+" 顶部底部保持3行距离
+set scrolloff=3
+
+" 代码补全
+set completeopt=preview,menu
+" 设置字体
+set guifont=Menlo:h16:cANSI
+
+"syntax enable         " 语法高亮
+"set nu!               " 显示行号
+"设置光标样式为竖线vertical bar
+" Change cursor shape between insert and normal mode in iTerm2.app
 
 
 
