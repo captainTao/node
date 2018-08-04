@@ -659,6 +659,7 @@ ifconfig eth0 192.168.2.223 //配置eth0的ip
 
 
 mkdir -p /tmp/little/bodu /tmp/little/cang: -p可以连续创建不存在的目录,可以连续跟进多个目录
+mkdir -p tt/tt1
 cd, pwd
 ..上一级目录，.是当前目录
 rmdir:  删除空目录 (windows中的del )
@@ -677,10 +678,11 @@ nano:
 cat -n
 tac xx:倒序查看
 more xx.txt:,q退出，只能往下翻，不能往回翻
-less xx.txt:查看内容，也可以用向上，下，pageup,pagedown来查看，/来搜索关键词跟vi类似，q退出
+less xx.txt:查看内容，也可以用向上，下，pageup,pagedown来查看，/来搜索关键词跟vi类似，q退出,n匹配下一个字符
 head -n 10 xx.txt:前10行：默认查看10行
 tail -n 7 xx.txt:后面10行:默认查看10行; -f:动态显示文件末尾内容
-
+printenv
+emacs
 
 locate .profile : 定位文件
 df -lh
@@ -724,8 +726,11 @@ file:
 
 vi/vim
 --------------------
-gg
-G
+0|^, $ 单行
+gg, G, XG 多行
+(,) 句
+{,} 段
+
 H
 M
 L
@@ -734,7 +739,7 @@ h,j,k,l,
 0
 $
 
-dd
+dd,D
 pp
 r－－－－－修改光标所在的字符
 S－－－－－删除光标所在的列，并进入输入模式
@@ -758,3 +763,32 @@ PORWARD链：处理转发数据包。
 PREROUTING链：用于目标地址转换（DNAT）。
 POSTOUTING链：用于源地址转换（SNAT）。
 
+ln:
+---------------------
+ln -s /etc/issue.bak issue.bak.soft 
+软连接：类似win的快捷方式,文件以l开头,权限为lrwxrwxrwx,所有用户可读写执行,字节大小为一个快捷方式大小，很小；
+ln /etc/issue.bak issue.bak.hard
+硬连接：就是程序的执行,类似拷贝，即使原文件删除，依然可以访问 ,不能跨分区，不能对目录进行使用，文件属性与原文件保持一致,类似cp -p，会同步更新：一般做备份用,
+
+echo "xxx" >> /etc/host   : 在文件末尾进行追加
+
+ls -i:
+-------------
+每一个文件有一个id, -i可以查看，如果是硬链接，则两个文件的id一致，更新一个文件的同时，也会更新另外一个文件
+
+
+chmod:
+-----------------
+chmod [ugo][+-=][rwx] 文件目录： u:sudo,root
+chmod g+w,o-r sys.bakfile: 同时操作多个权限
+chmod g=rwx sys.bak
+chmod 700 sys.bak ：一般操作习惯用数字来表示
+532： r-x-wx-w-
+chmod -R 700 /tmp: -R为递归，包括目录和目录中的文件
+
+note:
+1.删除一个文件不是对一个文件有写的权限，而是对这个文件所在的目录有写的权限
+2.一般rx的权限是成对出现的；写和非写的权限
+3.r: ls;                       cat/more/less/head/tail
+  w: touch/mkdir/rmdir/rm;     vim/vi
+  x: cd;                       script cmd
