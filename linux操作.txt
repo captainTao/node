@@ -383,6 +383,7 @@ https://cokebar.info/archives/664
 
 墙外配置refer：
 https://suiyuanjian.com/124.html                // google vps搭建
+https://teddysun.com/357.html                   //秋水一键脚本，更新到2018-6-1
 http://godjose.com/2017/06/14/new-article/      // google vps参考
 
 ss故障排除：
@@ -560,8 +561,11 @@ https://doub.io/ss-jc39/
 
 
 netstat -lntp
+/etc/init.d/shadowsocks staus  // ss状态
 /etc/init.d/shadowsocks start   // start   
 /etc/init.d/shadowsocks restart  // 重启ss
+./shadowsocks-libev.sh uninstall   //卸载ss,需要在root中
+
 
 /***********************************/ 安装ipsec
 
@@ -925,4 +929,4 @@ find /etc -name init* -a -type d   :查看名字以init开头的目录
 -type : 文件类型，f文件，d目录，l为链接文件
 
 -inum: i节点查找
-find . -inum 31531 -exec rm {} \; //以i节点查找然后删除，用于删除一些无法打印出来的奇怪字符的文件
+find . -inum 31531 -exec rm {} \; //以i节点查找然后删除，用于删除一些无法打印出来的奇怪字符的文件  
