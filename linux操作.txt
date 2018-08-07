@@ -99,11 +99,12 @@ netstat -nltp
 netstat –apn | grep 8080  // 8080为端口号
 netstat -lntpu   
 netstat -ltpe   //tcp监听的拥有者
-netstat -rn     //禁用路由解析的路由信息
+netstat -rn     //禁用路由解析的路由信息, -r为路由,查看本机路由表
 netstat -i     //打印网络接口信息
 netstat -atnp | grep ESTA  //获得active状态的链接
 watch -d -n0 "netstat -atnp | grep ESTA"  //配合watch命令监听active状态的链接
 
+端口号位1024以上的端口都是随机分配的端口
 /*
 netstat - 打印网络连接、路由表、连接的数据统计、伪装连接以及广播域成员。
 -a: 所有
@@ -121,6 +122,7 @@ note: -n, -e一起使用，user列的属性是用户的id号，不是用户名
 -c: 持续输出信息
 -g: 输出ipv4,ipv6的多播组信息
 
+service network restart :重启网络服务
 */ 
 
 
@@ -699,12 +701,39 @@ shutdown +5   5分钟后关机
 shutdown 23:10  设置系统在23点10分时关机
 shutdown -r now  立刻关闭系统并重新启动
 
+shutdown -c :取消前一个关机命令
+shutdown -h :关机
+shutdown -r :重启    推荐使用shutdown 来重启
+
+halt
+poweroff   直接断电
+init 0     这些都是关机命令
+
 reboot:
 ----------------
 reboot  -f：强制重新开机，不调用shutdown指令的功能；
 reboot  -i：在重开机之前，先关闭所有网络界面；
 reboot  -n：重开机之前不检查是否有未结束的程序； 
 reboot -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件
+init 6 :重启
+
+系统运行级别：
+---------------
+cat /etc/inittab
+0  关机
+1  单用户（通win的安全模式，启动最小的服务）
+2  不完全多用户，不含NFS（网络文件系统）服务，类似：文件共享
+3  完全多用户
+4  未分配
+5  图形界面
+6  重启
+
+id:3:initdefault:     //修改系统默认的运行级别
+runlevel              //查询系统运行级别
+wangsirlemon@c77:~$ runlevel
+N 5                   // N为上一次运行的级别，N标识null, 5表示当前的运行级别
+ 
+
 
 管道，grep
 ----------------
@@ -1041,13 +1070,26 @@ wangsirl pts/0    182.150.28.13    07:25    1.00s  0.11s  0.00s w
 //WHAT: 当前CPU在执行什么命令
 
 
-
+==============================
 压缩和解压：
+.gz        gzip        gunzip(gzip -d)
+.tar       tar -cf     tar -xf
+.tar.gz    tar-zcf     tar -zxf
+.zip       zip -r      unzip
+.bz2       bzip2       bunzip2
+.tar.bz2   tar -cjf    tar -xjf
+
+
+gzip:
 -----------------
 .gz .zip(最古老的)
+
 rm -rf *   ：删除当前目录下所有文件
 
-gzip 目录名  ：只能压缩文件,不能压缩目录，跟win不一样，且不保存原文件
+gzip xx.tar  ：只能压缩文件,不能压缩目录，跟win不一样，且不保存原文件
+gzip test.tar
+
+解压缩：
 gunzip  xxx.xx
 gzip -d  xxx.xx  
 
@@ -1055,17 +1097,123 @@ gzip -d  xxx.xx
 tar:
 -------------------------
 压缩：
-1.先用tar打包，再用gzip来打包
+1.先用tar打包目录，再用gzip来打包
 2.-z :打包和压缩一起做
 
-tar -cvf 压缩后的名字.tar 目录    ：-v表示详细信息，这个可以打包目录和文件,-c为打包的意思，-z就是打包和压缩一起做了
-gizp  xxx.tar
+tar -cvf 压缩后的名字.tar 目录    :-v表示详细信息，这个可以打包目录和文件,-c为打包的意思，-z就是打包和压缩一起做了
+gzip  janpan.tar                :压缩janpan.tar，会生成一个压缩包
 
-tar -zcf xx.tar path   :一般用这个命令比较多，不用显示详细信息
+压缩：
+tar -zcf janpan.tar.gz Japan : //打包和压缩一起做了,-v只能加在中间，不能加在末尾
+tar -jcf janpan.tar.bz2 Japan  //用tar来压缩gz
 
 解压：
+tar -zxf xx.tar   :一般用这个命令比较多，不用显示详细信息
+tar -jxf janpan.tar.bz2   //用tar来解压gz
+
+参数：
 -x :解包
+-c :打包
 -f :指定解压文件 
--z :解压缩
-tar -zxf Janpan.tar.gz
+-z :打包/解包，压缩一起做
+-v :详细信息
+-j :打包成bzip2格式 
+
+
+zip:
+------------------------
+win,linux,mac都兼容; 会保留原文件
+zip [-r] [压缩后的文件名] [文件和目录]   : -r表示压缩目录；
+
+unzip 文件目录名字  ：打包；zip文件也可以用tar来解压, 和进行压缩
+
+
+bzip2:
+-------------------
+gzip的升级，压缩率很高，大文件一般推荐这种
+-k :相对于gzip多了一个-k的选项，意思是保留原文件
+
+压缩：
+bzip2 [-k] test.tar.gz  : //他是压缩一个打包好的文件，不是目录
+tar -cjvf janpan.tar.bz2 Japan  //用tar来压缩gz
+
+解压：
+bunzip2 [-k] janpan.tar.bz2
+tar -xjvf janpan.tar.bz2   //用tar来解压gz,只能解压tar压缩后的gz
+
+
+
+网络命令：
+===================================
+dig:
+--------------------
+
+
+write:
+--------------------
+write lingzhiling
+给用户发信息，ctrl + D 结束，用户在线才能发信息,可以用w查看谁登陆了
+
+
+wall:
+--------------------
+(write all):发送广播信息
+wall shengchao is a honest man!
+给所有用户发信息，所有用户都能收到，包括自己。
+
+ping -c:
+-------------------
+
+ifconfig
+
+ifconfig eth0 192.168.2.223 //配置eth0的ip
+
+
+mail:
+----------------
+mail 用户: 发邮件，可以用户不在线,ctrl + D结束并发送
+用户登陆，并输入mail可以查看邮件列表； 输入序列号查看邮件内容； 删除邮件：d 序列号；重查看邮件列表 h； 退出mail,q键
+
+
+last:查看所有用户的登陆信息
+lastlog:知道每个用户(包括没有登录过的用户)的最后一次登陆的信息
+lastlog -u uid(用户的uid):可以查看指定用户的信息
+--------------
+
+traceroute:
+---------------
+
+netstat:
+---------------
+tcp：电话
+udp: 发短信
+
+netstat -tlun ：查看监听的端口
+netstat -an  ：查看正在建立连接的端口
+netstat -rn  :查看网关地址
+
+
+setup:
+---------------
+在redhat系列的linux上面才可用，unix不能用
+
+mount:
+---------------
+mount [-t 文件系统] 设备文件名 挂载点
+mkdir  /mnt/cdrom    :挂载的前一步一般会先在mnt目录下创建一个空目录
+mount -t iso9660  /dev/sr0 /mnt/cdrom    ：光盘的系统一般都为iso9660
+umount /dev/sr0    :退出挂载的目录，然后再执行卸载光盘
+
+
+logout:
+-----------------
+退出登录
+服务器操作完或者远程登录后，一定要logout
+
+
+
+
+
+
+
 
