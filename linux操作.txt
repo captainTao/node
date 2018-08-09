@@ -1242,6 +1242,34 @@ logout:
 
 
 
+rpm,yum
+------------------
+一个为本地，一个为在线安装
+
+1.先挂载安装镜像
+2.进入目录：rpm -ivh xxxx.rpm
+3.升级： rpm -Uvh xxxx.rpm
+4.卸载： rpm -e  httpd(包名) //只写包名，不用写全名；不会卸载依赖
+rpm -q httpd   //查看httpd安装没有，并列出信息
+rpm -qa  //显示所有的安装包
+rpm -qi httpd  // 显示安装包的详细信息
+rpm -ql httpd   //显示安装的位置
+rpm -V httpd   //校验指定的包中文件
+
+本地和在线安装包都可以用yum 来进行管理
+
+
+readhat系列(centos)有setup命令
+service network restart :重启网络服务
+yum list：列出安装
+yum -y update 包名：更新
+yum -y remove 包名：卸载
+yum grouplist
+yum groupinstall 组名：
+yum groupremove 组名：
+
+
+
 
 
 
