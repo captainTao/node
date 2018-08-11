@@ -27,7 +27,10 @@ vim /etc/shadowsocks.json
 !cat  :上次的cat命令
 cat id_rsa.pub | pbcopy       // copy 对应文件内容
 
-
+查看ssh的服务是否开启
+netstat -lntp | grep -i sshd
+获取sshd
+apt-get install openssh-server  //apt, wget:下载
 
 /etc/init.d/shadowsocks start   // start ss
 /etc/init.d/shadowsocks restart  // 重启ss
@@ -45,7 +48,8 @@ service firewalld stop     // 关闭防火墙
 > ll /etc/sh    // 类似ls
 
 查看文件的可视大小：-h可视， -a:所有
-> du -ah
+> du -ah :个别文件的值
+> du -sh :加和的总值
 
 > virsh list --all: //查看运行的虚拟机 
 
@@ -53,7 +57,7 @@ ip地址：
 --------------
 ip addr  :ip地址。ifconfig    // mac
 curl ip.cn : 当前ip地址
-
+curl cip.cc
 
 > watch 
 -------------------
@@ -140,6 +144,14 @@ grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
 
 grep -i multiuser /etc/inittab      grep是在文件的内容中查找，查找multiuser， -i是不区分大小写，
 
+grep lili /etc/passwd
+
+
+切换用户：
+---------------------
+su -- lili 切换到lili用户
+su -- root 切换到root用户
+
 
 查看进程：
 https://www.cnblogs.com/liuzhengliang/p/4609632.html
@@ -188,20 +200,12 @@ NO.2:
 /etc/init.d/vpnagentd restart
 
 
-[berry@berry:practice] service vpnagentd status
-vpnagentd (pid 7393) is running
-[berry@berry:practice] sudo /etc/init.d/vpnagentd stop
-Shutting down Cisco AnyConnect Secure Mobility Client Agent
-[berry@berry:practice] service vpnagentd status
-vpnagentd is stopped 
-[berry@berry:practice] sudo /etc/init.d/vpnagentd start
-Starting up Cisco AnyConnect Secure Mobility Client Agent
-[berry@berry:practice] service vpnagentd status
-vpnagentd (pid 7707) is running
-[berry@berry:practice] sudo netstat -anp | grep 7707
-tcp        0      0 127.0.0.1:29754         0.0.0.0:*               LISTEN      7707/vpnagentd  
-unix  2      [ ]         DGRAM                    78741    7707/vpnagentd      
-[berry@berry:practice]
+linux下：
+/etc/rc.d/init.d/httpd start
+service http start  // 红帽系统的专用
+
+源码包用service管理
+RPM包只能用绝对路径启动服务
 ------------------------------------
 
 > df
@@ -573,6 +577,9 @@ https://github.com/hwdsl2/setup-ipsec-vpn
 apt-get update && apt-get dist-upgrade  and reboot
 wget https://git.io/vpnsetup -O vpnsetup.sh && sudo sh vpnsetup.sh
 
+
+/***********************************/终端翻墙
+https://www.jianshu.com/p/99c5c675fe47
 ================================================
 
 
@@ -737,7 +744,22 @@ N 5                   // N为上一次运行的级别，N标识null, 5表示当�
 
 管道，grep
 ----------------
-ls -al | more
+ls -al | more  且
+ls -al && less  接着
+lskk || pwd  或者
+
+
+输入输出重定向：
+-----------------
+输出重定向：
+ls -l /tmp > /tmp.msg   >  为写入
+data >> /tmp.msg        >> 为追加
+
+输入重定向:
+wall < /etc/motd 将motd文件信息进行广播
+
+错误的输出重定向：
+cp -R /usr /backup/usr.bak 2 >/back.error  将拷贝的错误信息存入到/back.error中
 
 
 ps
@@ -916,6 +938,7 @@ POSTOUTING链：用于源地址转换（SNAT）。
 
 ln:
 ---------------------
+link:
 ln -s /etc/issue.bak issue.bak.soft 
 软连接：类似win的快捷方式,文件以l开头,权限为lrwxrwxrwx,所有用户可读写执行,字节大小为一个快捷方式大小，很小；
 ln /etc/issue.bak issue.bak.hard
@@ -1066,6 +1089,9 @@ man cd/if/pwd: 可以查看内置的命令
 help if
 help umask
 
+history:
+--------------
+查看历史记录命令
 
 查看当前用户
 ------------------------
@@ -1178,6 +1204,7 @@ dig:
 --------------------
 
 
+通信命令：
 write:
 --------------------
 write lingzhiling
@@ -1234,13 +1261,19 @@ mount -t iso9660  /dev/sr0 /mnt/cdrom    ：光盘的系统一般都为iso9660
 umount /dev/sr0    :退出挂载的目录，然后再执行卸载光盘
 
 
+mkdir /mnt/cdrom
+mount /dev/cdrom /mnt/cdrom
+cd /mnt/cdrom
+
+
 logout:
 -----------------
 退出登录
 服务器操作完或者远程登录后，一定要logout
 
-
-
+nslookup
+-----------------
+域名解析：
 
 rpm,yum
 ------------------
@@ -1256,6 +1289,35 @@ rpm -qi httpd  // 显示安装包的详细信息
 rpm -ql httpd   //显示安装的位置
 rpm -V httpd   //校验指定的包中文件
 
+
+安装：
+[root@localhost ~]# rpm -ivh sudo-1.7.2pl-5.el5. 5.el5 .rpm    
+-i  安装所选择的一个或多个软件包
+-H  用“#”显示完成的进度
+-q  查询软件包系统或所选择的一个或多个软件包 
+-e 删除所有选择的一个或多个软件包 
+-u 把一个已经安装好的软件包升级到新版本 
+-v 验证已安装或已选择的一个或多个软件包
+[root@localhost ~]# rpm -ivh sudo   查询sudo软件包是否被安装
+ 
+其他选项：
+--excludedocs
+不安装软件包中的文档文件
+--prefix PATH
+将软件包安装到由PATH指定的路径下
+--test
+只对安装时行测试，并不实际安装
+--replacepkgs 
+覆盖安装，假如我们不小心删除掉了安装包里的某些软件，这个参数就非常有用了
+-U 
+在参数中加入大写的U可以对软件进行升级
+[root@localhost ~]# rpm -Uvh sudo-1.7.2pl-5.el5. 5.el5 .rpm
+ 
+卸载：
+注意：如果其它软件包有依赖关系，卸载时会产生提示信息，可使用--nodeps强行卸载
+[root@localhost ~]# rpm -e --nodeps sudo   但是一般不推荐这样用，我们可以先卸载依赖的软件包然后再卸载。
+
+
 本地和在线安装包都可以用yum 来进行管理
 
 
@@ -1267,8 +1329,47 @@ yum -y remove 包名：卸载
 yum grouplist
 yum groupinstall 组名：
 yum groupremove 组名：
+yum install          安装
+yum check-update     检测升级
+yum update           升级
+yum list             软件包查询
+yum info             软件包信息
+yum remove           卸载
+yum -help 
+man yum              帮助 
+
+源码包
+保存位置：/usr/local/src
+安装位置：/usr/local
+
+上传文件在win中往linux传： wincp软件(ssh + scp)
+./configure 软件配置与检查
+make :编译
+make install :编译安装
+make clean :清空编译文件
+
+webmin
+------------------
+webmin是linux中的图形文件管理后台  
 
 
+
+
+用户组：
+---------------
+/etc/passwd
+/etc/shadow是存放用户密码的（密文形式存放）
+
+UID:
+0:超级用户
+1-499：系统用户(伪用户)
+500-65535：普通用户
+
+
+/home/用户名:普通用户
+/root/：超级用户
+
+/bin/bash/ : shell
 
 
 
