@@ -5,15 +5,23 @@ shadow            shadow-           shadowsocks.json  shells
 
 2.ip addr 和ifconfig, ipconfig, curl ip.cn
 
-
 3.chmod +x shadowsocksR.sh 与数字的区别
 
+4.删除，文件名用正则表达式
 
 
 RAM，ROM
 闪存：ROM
 内存: RAM
 网关，子网掩码，ICMP,DNS
+
+
+谷歌DNS:
+8.8.8.8
+8.8.4.4:53
+
+114.114.114.114，1.2.4.8
+114.114.114.114,208.67.222.222:443,8.8.8.8
 
 ///////////////////////////////////////////////////////////////////linux操作
 
@@ -953,7 +961,7 @@ ls -i:
 
 chmod:
 -----------------
-chmod [ugoa][+-=][rwx] 文件目录： u:sudo,root
+chmod [ugoa][+-=][rwx] 文件目录： u:user, g:group, o:other, a:all
 chmod g+w,o-r sys.bakfile: 同时操作多个权限 
 chmod g=rwx sys.bak
 chmod 700 sys.bak ：一般操作习惯用数字来表示
@@ -966,6 +974,10 @@ note:
 3.r: ls;                       cat/more/less/head/tail
   w: touch/mkdir/rmdir/rm;     vim/vi
   x: cd;                       script cmd
+
+
+chmod u(g)+s /bin/touch :给/bin/touch命令 设置userid或者groupid
+
 
 
 chown:
@@ -1020,10 +1032,6 @@ find /etc -name init* -a -type d   :查看名字以init开头的目录
 -inum: i节点查找
 find . -inum 31531 -exec rm {} \; //以i节点查找然后删除，用于删除一些无法打印出来的奇怪字符的文件  
 
-
-
-trace:
----------------------
 
 locate:
 ---------------------
@@ -1198,10 +1206,45 @@ tar -xjvf janpan.tar.bz2   //用tar来解压gz,只能解压tar压缩后的gz
 
 
 
-网络命令：
+网络管理命令：
 ===================================
+
+域名解析：（把域名解析成一个ip）
+nslookup
+-----------------
+nslookup domain [dns-server]
+nslookup facebook.com 8.8.8.8  //157.240.13.35
+
+或者直接输入nslookup
+nslookup baidu.com    //域名
+nslookup 220.181.57.216  //ip
+
+
 dig:
 --------------------
+比nslookup好用
+@<服务器地址>：指定进行域名解析的域名服务器；
+-b<ip地址>：当主机具有多个IP地址，指定使用本机的哪个IP地址向域名服务器发送域名查询请求；
+-f<文件名称>：指定dig以批处理的方式运行，指定的文件中保存着需要批处理查询的DNS任务信息；
+-P：指定域名服务器所使用端口号；
+-t<类型>：指定要查询的DNS数据类型；
+-x<IP地址>：执行逆向域名查询；
+-4：使用IPv4；
+-6：使用IPv6；
+-h：显示指令帮助信息。
+
+dig www.facebook.com @8.8.8.8 +short  //通过指定DNS解析得到的最终域名157.240.13.35
+dig +trace www.scnu.edu.com    //跟踪域名解析； https://blog.csdn.net/a583929112/article/details/66499771
+dig www.baidu.com  // CNAME是别名；A是address,ip; NS是服务器的主机名;在AUTHORITY SECTION里面的服务器主机名，都会在ADDITIONAL SECTION里给出该主机的IP地址。
+dig -t soa www.baidu.com  //解析域名的主从关系  soa:start of authority
+
+trace:
+--------------------
+源码位于：\kernel\trace\trace.c
+
+traceroute:
+--------------------
+refer to line:320
 
 
 通信命令：
@@ -1217,6 +1260,7 @@ wall:
 wall shengchao is a honest man!
 给所有用户发信息，所有用户都能收到，包括自己。
 
+
 ping -c:
 -------------------
 
@@ -1231,13 +1275,13 @@ mail 用户: 发邮件，可以用户不在线,ctrl + D结束并发送
 用户登陆，并输入mail可以查看邮件列表； 输入序列号查看邮件内容； 删除邮件：d 序列号；重查看邮件列表 h； 退出mail,q键
 
 
+last, lastlog, history
+----------------
 last:查看所有用户的登陆信息
 lastlog:知道每个用户(包括没有登录过的用户)的最后一次登陆的信息
 lastlog -u uid(用户的uid):可以查看指定用户的信息
---------------
 
-traceroute:
----------------
+
 
 netstat:
 ---------------
@@ -1271,9 +1315,7 @@ logout:
 退出登录
 服务器操作完或者远程登录后，一定要logout
 
-nslookup
------------------
-域名解析：
+
 
 rpm,yum
 ------------------
@@ -1372,6 +1414,5 @@ UID:
 /bin/bash/ : shell
 
 
-
-
+setUID
 
