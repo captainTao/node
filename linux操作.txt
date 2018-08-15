@@ -360,8 +360,16 @@ service firewalld stop     // 关闭防火墙
 
 
 查看系统版本：
-> lsb_release -a
+lsb_release -a
 
+cat /etc/issue      
+
+操作系统位数：
+getconf LONG_BIT     
+
+查看内存:
+free
+free -m
 
 查看文件属性：
 > ll
@@ -490,16 +498,24 @@ grep 是搜索
 例如： ps -ef | grep java
 表示查看所有进程里 CMD 是 java 的进程信息
 
+
 2、ps -aux | grep java
 ps-aux 显示所有状态
 ps -aux | grep xx
 ps -aux | grep java，或者直接：
 ps -aux | grep pid 查看
 
+
 3. kill 命令用于终止进程
 例如： kill -9 [PID]
 -9 表示强迫进程立即停止
 通常用 ps 查看进程 PID ，用 kill 命令终止进程
+
+
+> top
+-----------------------
+信息比ps更全
+man top
 
 
 > ps
@@ -853,13 +869,18 @@ halt
 poweroff   直接断电
 init 0     这些都是关机命令
 
+shutdown now  立刻关机
+shutdown +5   5分钟后关机
+shutdown 23:10  设置系统在23点10分时关机
+shutdown -r now  立刻关闭系统并重新启动
+
 
 > reboot:
 ----------------
 reboot  -f：强制重新开机，不调用shutdown指令的功能；
 reboot  -i：在重开机之前，先关闭所有网络界面；
 reboot  -n：重开机之前不检查是否有未结束的程序； 
-reboot -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件
+reboot  -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件
 init 6 :重启
 
 
@@ -903,6 +924,7 @@ cp -R /usr /backup/usr.bak 2 >/back.error  将拷贝的错误信息存入到/bac
 > file:
 --------------------
 判断文件类型
+file test.test
 
 
 > vi/vim
@@ -1574,3 +1596,105 @@ t=1
 [root@localhost test]# chmod  1755  abc
 
 
+
+/proc
+---------------------
+这个目录在内存中，所有进程都动态存放在这个目录
+cat /proc/cpuinfo       //cpu信息
+cat /proc/meminfo       //内存信息
+cat /proc/partitions    //分区信息
+
+
+进程优先级
+---------------------
+取值范围（-20,19）   -20为最高优先级，启动一个进程，默认优先级为0
+
+nice命令 
+指定程序的运行优先级
+格式：nice -n command
+例如：nice --5 command
+
+renice 命令
+改变一个正在运行的进程的优先级
+格式： renice n pid
+例如：renice -5 777
+
+[root@bogon cron]# ps -le
+[root@bogon cron]# renice -20  [PID]
+
+
+
+进程中止（挂起）和终止
+---------------------
+挂起（ctrl+z）即：stopped
+终止（ctrl+c）
+系统中有两种运行的进程，我们在前台是看不到的。一种是后台执行的命令，一种就是被暂停的;
+
+查看被挂起的进程（jobs）
+
+进程的恢复：
+恢复到前台继续运行（fg）
+恢复到后台继续运行（bg）
+
+
+
+计划任务：
+---------------------
+at  　　 安排作业在某一时刻执行一次
+batch   安排作业在系统负载不重时执行一次
+cron    安排周期性运行的作业crontab
+
+
+at格式：
+at 5:30pm
+at 17:30
+at 17:20 today
+at now+3 hours
+at now+180 minutes
+at 17:30 12.1.11
+at 17:30 1.11.12
+
+[root@bogon ~]# at now+5 minutes    5min后执行
+at> /usr/bin/wall < /etc/motd 　　做一个广播，把etc/motd 文件广播出去
+at> 　　　　　　　　　　　　　　    可以继续写其它的计划，用命令时最好写绝对路径，为了安全
+at> <EOT>
+job 2 at 2012-05-20 13:43 　　   ctrl+d保存计划并退出
+
+
+是否还担心我们的计划是否启动，通过下面两个命令查看at进程是否正常启动
+[root@bogon test]# at -l
+3 2012-05-20 13:57 a root
+[root@bogon test]# atq
+3 2012-05-20 13:57 a root
+
+如果真的没有启动的话，可以通过手工方式重新启动一下
+[root@bogon ~]# /etc/rc.d/init.d/atd start
+
+删除at计划任务
+[root@bogon test]# at -d
+
+查看at计划任务
+[root@bogon test]# ls /var/spool/at/
+
+batch用法通at
+ 
+
+
+crontab:
+---------------------
+案例：在上学的时候都有上机课，周一到周五，下午5点30上课结束。我们需要在5点30发一个通知，5点45自动关机。设定计划任务需要分两步完成，第一步提醒，第二步关机
+分钟　　 小时 　　 天　　 月　　  星期 　　 命令/脚本
+30　　   17 　　   * 　　 * 　　 1-5 　　 /usr/bin/wall < /hzh/test/guanji.wall
+45 　　  17　　    * 　　 * 　　 1-5 　　 /usr/bin/shudown -h now
+
+操作方法:
+[root@bogon test]#  crontab -e 　　 回车会进入一个vi文本中
+　　根据我上面介绍格式编写内容，然后保存退出
+crontab: installing new crontab 表示创建计划成功
+
+通过下面方式进行查看计划：
+[root@bogon test]# cd /var/spool/cron
+[root@bogon cron]# ls
+root
+[root@bogon cron]# cat root
+30 17 * * 1-5 /usr/bin/shudown -h now
