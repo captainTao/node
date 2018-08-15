@@ -15,6 +15,7 @@ RAM，ROM
 内存: RAM
 网关，子网掩码，ICMP,DNS
 
+/////////////////////////////////////////////////////////////////// 
 
 谷歌DNS:
 8.8.8.8
@@ -30,9 +31,12 @@ openDNS:
 208.67.220.220:443,208.67.220.222:443,208.67.222.222:443
 
 
+ipk文件用opkg install来安装
+
 dnsmasq:
 -------------
 https://wzyboy.im/post/874.html
+https://www.jianshu.com/p/1df2e506a546
 /etc/dnsmasq.conf    //配置文件地址
 /etc/dnsmasq.d
 /etc/resolv.conf    //设置本地DNS
@@ -42,371 +46,8 @@ pdnsd:
 -------------
 讲UDP的DNS请求转换为TCP进行发送；----替代方案：dnsforwarder
 
-///////////////////////////////////////////////////////////////////linux操作
 
-linux常用：
---------------------------------
-
-root@captain:~# 
-cat /etc/shadowsocks.json     // ss json配置
-vim /etc/shadowsocks.json
-
-!cat  :上次的cat命令
-cat id_rsa.pub | pbcopy       // copy 对应文件内容
-
-查看ssh的服务是否开启
-netstat -lntp | grep -i sshd
-获取sshd
-apt-get install openssh-server  //apt, wget:下载
-
-/etc/init.d/shadowsocks start   // start ss
-/etc/init.d/shadowsocks restart  // 重启ss
-/etc/init.d/iptables stop    //关闭防火墙（iptables）  
-service firewalld stop     // 关闭防火墙
-
-
-查看系统版本：
-> lsb_release -a
-
-
-
-查看文件属性：
-> ll
-> ll /etc/sh    // 类似ls
-
-查看文件的可视大小：-h可视， -a:所有
-> du -ah :个别文件的值
-> du -sh :加和的总值
-
-> virsh list --all: //查看运行的虚拟机 
-
-ip地址：
---------------
-ip addr  :ip地址。ifconfig    // mac
-curl ip.cn : 当前ip地址
-curl cip.cc
-
-> watch 
--------------------
-http://www.cnblogs.com/peida/archive/2012/12/31/2840241.html
-watch -n 1 -d netstat -ant  // 每隔1s高亮显示网络链接数的变化情况
-切换终端: ctrl + x
-退出watch: ctrl + g
-watch -n 1 -d 'pstree|grep http' // 每隔一秒高亮显示http链接数的变化情况,监听内容用引号括起来
-watch 'netstat -an | grep:21 | \ grep<模拟攻击客户机的IP>| wc -l'  // 实时查看模拟攻击客户机建立起来的连接数
-watch -d 'ls -l|grep scf'  // 监测当前目录中 scf' 的文件的变化
-watch -n 10 'cat /proc/loadavg' //10秒一次输出系统的平均负载
-
-
-wangsirlemon@c77:~$ watch -h
-
-Usage:
- watch [options] command
-
-Options:
-  -b, --beep             beep if command has a non-zero exit
-  -c, --color            interpret ANSI color and style sequences
-  -d, --differences[=<permanent>]
-                         highlight changes between updates
-  -e, --errexit          exit if command has a non-zero exit
-  -g, --chgexit          exit when output from command changes
-  -n, --interval <secs>  seconds to wait between updates
-  -p, --precise          attempt run command in precise intervals
-  -t, --no-title         turn off header
-  -x, --exec             pass command to exec instead of "sh -c"
-
- -h, --help     display this help and exit
- -v, --version  output version information and exit
-
-
-
-
-> netstat:
-------------------- 
-https://linux.cn/article-2434-1.html
-netstat -tnlup | grep 端口号         //查看tcp,udp端口和进程业务
-netstat -lntp          //查看正在监听端口情况
-netstat -nltp
-netstat –apn | grep 8080  // 8080为端口号
-netstat -lntpu   
-netstat -ltpe   //tcp监听的拥有者
-netstat -rn     //禁用路由解析的路由信息, -r为路由,查看本机路由表
-netstat -i     //打印网络接口信息
-netstat -atnp | grep ESTA  //获得active状态的链接
-watch -d -n0 "netstat -atnp | grep ESTA"  //配合watch命令监听active状态的链接
-
-端口号位1024以上的端口都是随机分配的端口
-/*
-netstat - 打印网络连接、路由表、连接的数据统计、伪装连接以及广播域成员。
--a: 所有
--u: udp
--t: tcp
--l: listen,正在监听
--n: 禁用域名解析，即：查找每个ip地址对应主机名
--p: 进程名pid
--e: 进程拥有者，相比查看进程，进程拥有者更有用 user ,
--ep: e一般配合p使用
-note: -n, -e一起使用，user列的属性是用户的id号，不是用户名
--r: 打印内核路由信息
--i: 打印网络接口信息
--ie： i一般配合e使用，可以输出用户友好的信息,信息和ifconfig内容一致；
--c: 持续输出信息
--g: 输出ipv4,ipv6的多播组信息
-
-service network restart :重启网络服务
-*/ 
-
-
-> grep:
-------------------
-cat vsftpd.conf | grep -v '^#'   // 查看xx.conf文件中首字符不是#的行
-
-grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
-1、-v是grep排除的参数，例如查询除了包含ABC的行，例如cat a.txt|grep -v 'ABC'
-2、^代表行首，$代表行尾。 ^$是空行的意思
-3、^#表示首字母为#的行，linux里的文件，#号开头一般都是注释内容
-4、grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
-查询/etc/rsyslog.conf文件，但是不包含空行和注释行
-5、-i标识不区分大小写
-
-grep -i multiuser /etc/inittab      grep是在文件的内容中查找，查找multiuser， -i是不区分大小写，
-
-grep lili /etc/passwd
-
-
-切换用户：
----------------------
-su -- lili 切换到lili用户
-su -- root 切换到root用户
-
-
-查看进程：
-https://www.cnblogs.com/liuzhengliang/p/4609632.html
----------------------------------------
-1、ps 命令用于查看当前正在运行的进程。
-grep 是搜索
-例如： ps -ef | grep java
-表示查看所有进程里 CMD 是 java 的进程信息
-
-2、ps -aux | grep java
-ps-aux 显示所有状态
-ps -aux | grep xx
-ps -aux | grep java，或者直接：
-ps -aux | grep pid 查看
-
-3. kill 命令用于终止进程
-例如： kill -9 [PID]
--9 表示强迫进程立即停止
-通常用 ps 查看进程 PID ，用 kill 命令终止进程
-
-
-
-启动和关闭服务：
----------------------------------------
-启动服务：(sudo下：)  https://www.cnblogs.com/Berryxiong/p/6193281.html
-1.service+服务名称 + start/stop/restart     对服务进行启动
-2.直接执行某个服务自己的管理脚本 + start/stop/restart
-
-NO.1:
-[berry@berry:practice] service vpnagentd status
-vpnagentd is stopped 
-[berry@berry:practice] sudo service vpnagentd start
-Starting up Cisco AnyConnect Secure Mobility Client Agent
-[berry@berry:practice] service vpnagentd status
-vpnagentd (pid 7000) is running
-[berry@berry:practice] service vpnagentd restart
-Shutting down Cisco AnyConnect Secure Mobility Client Agent
-Starting up Cisco AnyConnect Secure Mobility Client Agent
-[berry@berry:practice] service vpnagentd status
-vpnagentd (pid 7020) is running
-
-
-NO.2:
-/etc/init.d/vpnagentd start
-/etc/init.d/vpnagentd stop
-/etc/init.d/vpnagentd restart
-
-
-linux下：
-/etc/rc.d/init.d/httpd start
-service http start  // 红帽系统的专用
-
-源码包用service管理
-RPM包只能用绝对路径启动服务
-------------------------------------
-
-> df
-查看磁盘空间占用情况：
------------------------------------
-df
-df -lh :可视图看大小
-df -h :可视图看大小
-df -ah: 全部文件系统的使用情况
-df -i: 显示inode信息
-df -k: 以字节显示区块的占用情况
-df -m: 以MB来显示文件的系统信息
-df -T: 查看文件类型-type
-df -t ext4: 只查看ext4这种文件类型
-df -x ext4: 查看排除ext4类型外的其他类型文件
-df -T -x ext4
-df -T -t ext4
-df --help:
-
-
-> scp
------------------------------------
-1、从服务器上下载文件
-scp username@servername:/path/filename /var/www/local_dir（本地目录）
-
- 例如scp root@192.168.0.101:/var/www/test.txt  把192.168.0.101上的/var/www/test.txt 的文件下载到/var/www/local_dir（本地目录）
-
-
-2、上传本地文件到服务器
-scp /path/filename username@servername:/path   
-
-例如scp /var/www/test.php  root@192.168.0.101:/var/www/  把本机/var/www/目录下的test.php文件上传到192.168.0.101这台服务器上的/var/www/目录中
-
- 
-
-3、从服务器下载整个目录
-scp -r username@servername:/var/www/remote_dir/（远程目录） /var/www/local_dir（本地目录）
-
-例如:scp -r root@192.168.0.101:/var/www/test  /var/www/  
-
-4、上传目录到服务器
-scp  -r local_dir username@servername:remote_dir
-例如：scp -r test  root@192.168.0.101:/var/www/   把当前目录下的test目录上传到服务器的/var/www/ 目录
-
-
-
-
-ftp服务器搭建：
----------------------------
-也可见：onenote笔记 /linux/ftp
-win:  https://blog.csdn.net/EXLsunshine/article/details/29181465
-linux:  http://www.cnblogs.com/chenmh/p/5365274.html
-        https://www.jianshu.com/p/4f988e70e85b
-centos:  https://blog.csdn.net/zyw_java/article/details/75212608
-默认启动端口为21：
-
-****安装ftp****
-which vsftpd #检测是否已经安装vsftpd
-sudo apt-get install vsftpd
-或者：
-yum install -y vsftpd
-
-netstat -lntp | grep 21  // ftp启动后都在21端口监听
-
-此时ftp已经可以访问了： ftp://35.234.7.119
-
-****更改启动状态****
-sudo service vsftpd start #开启ftp服务
-service vsftpd status #查看FTP的状态
-sudo service vsftpd stop #停止ftp服务
-sudo service vsftpd restart #重启ftp服务
-sudo /etc/init.d/vsftpd restart #倘若上面的不行就使用路径的形式直接执行
-sudo pkill vsftpd #有时候停止失败就干掉吧
-
-
-wangsirlemon@c77:/$ cat /etc/vsftpd.conf | grep -v '^#'
-listen=NO
-listen_ipv6=YES
-anonymous_enable=NO   #允许匿名用户
-local_enable=YES   #允许使用本地账号登录
-dirmessage_enable=YES
-use_localtime=YES
-xferlog_enable=YES
-connect_from_port_20=YES
-secure_chroot_dir=/var/run/vsftpd/empty
-pam_service_name=vsftpd
-rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-ssl_enable=NO
-
-
-root@c77:~# useradd ftpuser  //创建一个用户
-root@c77:~# usermod -s /sbin/nologin ftpuser  // 限制该用户只能ftp服务器访问，不能直接登录服务器
-root@c77:~# passwd ftpuser   // 设置用户的访问密码
-Enter new UNIX password: 
-Retype new UNIX password: 
-passwd: password updated successfully
-root@c77:~# mkdir -p /data/ftp/pub      // 在/data中创建相关的目录,/data/ftp 为主目录, 该目录不可上传文件;/data/ftp/pub 文件只能上传到该目录下
-root@c77:~# echo "Welcome to wangsirlemon FTP service." > /data/ftp/welcome.txt  //创建登录欢迎文件
-root@c77:~# chmod a-w /data/ftp && chmod 777 -R /data/ftp/pub   // 设置访问权限
-root@c77:~# usermod -d /data/ftp ftpuser  // 设置为用户的主目录
-
-
-> traceroute
-------------------------------
-http://man.linuxde.net/traceroute
-traceroute www.baidu.com          // 默认参数为-q, 默认三次探测数据包向每个网关发送三个数据包，网关响应返回的时间
-traceroute www.google.com
-
--d：使用Socket层级的排错功能；
--f<存活数值>：设置第一个检测数据包的存活数值TTL的大小；
--F：设置勿离断位；
--g<网关>：设置来源路由网关，最多可设置8个；
--i<网络界面>：使用指定的网络界面送出数据包；
--I：使用ICMP回应取代UDP资料信息；
--m<存活数值>：设置检测数据包的最大存活数值TTL的大小；
--n：直接使用IP地址而非主机名称； 禁用DNS解析，以ip格式输出数据。
--p<通信端口>：设置UDP传输协议的通信端口；
--r：忽略普通的Routing Table，直接将数据包送到远端主机上。
--s<来源地址>：设置本地主机送出数据包的IP地址；
--t<服务类型>：设置检测数据包的TOS数值；
--v：详细显示指令的执行过程；
--w<超时秒数>：设置等待远端主机回报的时间；
--x：开启或关闭数据包的正确性检验。
-
-traceroute -q 4 www.58.com // 向每个网关发送四个数据包，网关响应返回的时间
-
-
-> lsof
--------------------------
-http://www.cnblogs.com/peida/archive/2013/02/26/2932972.html
-
-lsof: 列出当前系统打开的文件的工具
-lsof [参数][文件]   // root用户执行
-lsof -n | grep deleted  // 查看已经删除的文件，空间有没有释放，没有的话kill掉pid   // kill -9 pid
-
--a 列出打开文件存在的进程
-lsof -c mysql = lsof | grep myself
--c<进程名> 列出指定进程所打开的文件 command
--g  列出GID号进程详情
--d<文件号> 列出占用该文件号的进程
-+d<目录>  列出目录下被打开的文件
-+D<目录>  递归列出目录下被打开的文件
--n<目录>  列出使用NFS的文件
--i<条件>  列出符合条件的进程。（4、6、协议、:端口、 @ip ）
-lsof -p 1       // 通过某个进程号显示该进行打开的文件
-lsof -p 1,2,3   // 列出多个进程号对应的文件信息
-lsof -p ^1      // 列出除了某个进程号，其他进程号所打开的文件信息
--p<进程号> 列出指定进程号所打开的文件 pid:  
--u  列出UID号进程详情 user
--h 显示帮助信息
--v 显示版本信息
-lsof -i: 端口号,列出所有的网络连接   
-lsof -i tcp: 列出所有tcp 网络连接信息
-lsof -i udp: 列出所有udp 网络连接信息
-lsof -i :3306: 列出谁在使用某个端口
-lsof -i udp:55: 列出谁在使用某个特定的udp端口
-lsof -a -u root -i: 列出某个用户的所有活跃的网络端口
-lsof -N: 列出所有网络文件系统
-lsof -u: 域名socket文件
-lsof -g 5555: 某个用户组所打开的文件信息
-lsof -d description(like 2): 根据文件描述列出对应的文件信息
-例如： lsof  -d  txt      lsof  -d  1     lsof  -d  2
-// 0表示标准输入，1表示标准输出，2表示标准错误，从而可知：所以大多数应用程序所打开的文件的 FD 都是从 3 开始
-lsof -d 2-3     // 根据文件描述范围列出文件信息
-lsof -c sshd -a -d txt     // 列出COMMAND列中包含字符串" sshd"，且文件描符的类型为txt的文件信息
-lsof -i 4 -a -p 1234    // 列出被进程号为1234的进程所打开的所有IPV4 network files
-lsof -i @peida.linux:20,21,22,25,53,80  -r  3  
-// 列出目前连接主机peida.linux上端口为：20，21，22，25，53，80相关的所有文件信息，且每隔3秒不断的执行lsof指令
-
-
-
-
-/////////////////////////////////////////////////////////////////// ss开始
+///////////////////////////////////////////////////////////////////  ssr开始
 
 openwrt:
 https://cokebar.info/archives/664
@@ -547,7 +188,7 @@ PasswordAuthentication no
 #重启SSH即可
 /etc/init.d/sshd restart
 
-/***********************************/ 安装ss
+/***********************************/ 安装ssr
 1.切换用户：
 sudo -i    // sudo su
 
@@ -581,6 +222,44 @@ lsmod | grep bbr
 
 
 
+/***********************************/ 安装ipsec(手机端4g用)
+
+https://github.com/hwdsl2/setup-ipsec-vpn
+
+apt-get update && apt-get dist-upgrade  and reboot
+wget https://git.io/vpnsetup -O vpnsetup.sh && sudo sh vpnsetup.sh
+
+
+
+/***********************************/ 安装outliner(手机端4g用)
+outline配置IOS客户端 server:
+https://steemit.com/cn/@zhijun/outline
+
+git: https://github.com/Jigsaw-Code/outline-server
+
+server run:
+bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)"
+
+
+/***********************************/ss,ssr问题排查
+
+
+ss 服务端配置:
+root@c77:~# cat /etc/shadowsocks.json 
+
+ssr路由配置文件：
+cat /etc/config/shadowsocksr
+ip模式数据：/etc/china_ssr.txt
+GFW模式数据：/etc/dnsmasq.ssr/gfw_list.conf
+
+
+服务器端口：默认为 8989
+密码：默认为 teddysun.com
+加密方式：默认为 aes-256-cfb
+协议（Protocol）：默认为 origin
+混淆（obfs）：默认为 plain
+
+
 ss问题排查：
 https://shadowsocks.org/en/download/clients.html      //ss webstie
 https://doub.io/ss-jc39/
@@ -591,55 +270,396 @@ https://doub.io/ss-jc39/
 
 
 netstat -lntp
-/etc/init.d/shadowsocks staus  // ss状态
+/etc/init.d/shadowsocks status  // ss状态
 /etc/init.d/shadowsocks start   // start   
 /etc/init.d/shadowsocks restart  // 重启ss
 ./shadowsocks-libev.sh uninstall   //卸载ss,需要在root中
 
+--------------------------------------
 
-/***********************************/ 安装ipsec
+确认服务端是否开始UDP Relay:
+https://github.com/icymind/VRouter/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%90%AF-UDP-Relay
+方法1: 在命令行启动 ss-server 时加上 -u 参数
+方法2: 在 ss-server 的配置文件中添加"mode": "tcp_and_udp"
+验证：
+netstat -lnup
 
-https://github.com/hwdsl2/setup-ipsec-vpn
-
-apt-get update && apt-get dist-upgrade  and reboot
-wget https://git.io/vpnsetup -O vpnsetup.sh && sudo sh vpnsetup.sh
 
 
 /***********************************/终端翻墙
-https://www.jianshu.com/p/99c5c675fe47
-================================================
+
+
+///////////////////////////////////////////////////////////////////  ssr结束
 
 
 
-ss 配置:
-root@c77:~# cat /etc/shadowsocks.json 
+///////////////////////////////////////////////////////////////////  linux操作
 
-服务器端口：默认为 8989
-密码：默认为 teddysun.com
-加密方式：默认为 aes-256-cfb
-协议（Protocol）：默认为 origin
-混淆（obfs）：默认为 plain
---------------------------------------
+linux常用：
+--------------------------------
+
+root@captain:~# 
+cat /etc/shadowsocks.json     // ss json配置
+vim /etc/shadowsocks.json
+
+!cat  :上次的cat命令
+cat id_rsa.pub | pbcopy       // copy 对应文件内容
+
+查看ssh的服务是否开启
+netstat -lntp | grep -i sshd
+获取sshd
+apt-get install openssh-server  //apt, wget:下载
+
+/etc/init.d/shadowsocks start   // start ss
+/etc/init.d/shadowsocks restart  // 重启ss
+/etc/init.d/iptables stop    //关闭防火墙（iptables）  
+service firewalld stop     // 关闭防火墙
+
+
+查看系统版本：
+> lsb_release -a
+
+
+查看文件属性：
+> ll
+> ll /etc/sh    // 类似ls
+
+> du 
+-------------------
+查看文件的可视大小：-h可视， -a:所有
+> du -ah :个别文件的值
+> du -sh :加和的总值
+
+
+> virsh list --all: //查看运行的虚拟机 
+
+
+ip地址：
+--------------
+ip addr  :ip地址。ifconfig    // mac
+curl ip.cn : 当前ip地址
+curl cip.cc
+
+
+> watch 
+-------------------
+http://www.cnblogs.com/peida/archive/2012/12/31/2840241.html
+watch -n 1 -d netstat -ant  // 每隔1s高亮显示网络链接数的变化情况
+切换终端: ctrl + x
+退出watch: ctrl + g
+watch -n 1 -d 'pstree|grep http' // 每隔一秒高亮显示http链接数的变化情况,监听内容用引号括起来
+watch 'netstat -an | grep:21 | \ grep<模拟攻击客户机的IP>| wc -l'  // 实时查看模拟攻击客户机建立起来的连接数
+watch -d 'ls -l|grep scf'  // 监测当前目录中 scf' 的文件的变化
+watch -n 10 'cat /proc/loadavg' //10秒一次输出系统的平均负载
+
+
+wangsirlemon@c77:~$ watch -h
+
+Usage:
+ watch [options] command
+
+Options:
+  -b, --beep             beep if command has a non-zero exit
+  -c, --color            interpret ANSI color and style sequences
+  -d, --differences[=<permanent>]
+                         highlight changes between updates
+  -e, --errexit          exit if command has a non-zero exit
+  -g, --chgexit          exit when output from command changes
+  -n, --interval <secs>  seconds to wait between updates
+  -p, --precise          attempt run command in precise intervals
+  -t, --no-title         turn off header
+  -x, --exec             pass command to exec instead of "sh -c"
+
+ -h, --help     display this help and exit
+ -v, --version  output version information and exit
+
+
+> netstat
+------------------- 
+tcp：电话
+udp: 发短信
+
+netstat -tlun ：查看监听的端口
+netstat -an  ：查看正在建立连接的端口
+netstat -rn  :查看网关地址
+
+https://linux.cn/article-2434-1.html
+netstat -tnlup | grep 端口号         //查看tcp,udp端口和进程业务
+netstat -lntp          //查看正在监听端口情况
+netstat -nltp
+netstat –apn | grep 8080  // 8080为端口号
+netstat -lntpu   
+netstat -ltpe   //tcp监听的拥有者
+netstat -rn     //禁用路由解析的路由信息, -r为路由,查看本机路由表
+netstat -i     //打印网络接口信息
+netstat -atnp | grep ESTA  //获得active状态的链接
+watch -d -n0 "netstat -atnp | grep ESTA"  //配合watch命令监听active状态的链接
+
+端口号位1024以上的端口都是随机分配的端口
+/*
+netstat - 打印网络连接、路由表、连接的数据统计、伪装连接以及广播域成员。
+-a: 所有
+-u: udp
+-t: tcp
+-l: listen,正在监听
+-n: 禁用域名解析，即：查找每个ip地址对应主机名
+-p: 进程名pid
+-e: 进程拥有者，相比查看进程，进程拥有者更有用 user ,
+-ep: e一般配合p使用
+note: -n, -e一起使用，user列的属性是用户的id号，不是用户名
+-r: 打印内核路由信息
+-i: 打印网络接口信息
+-ie： i一般配合e使用，可以输出用户友好的信息,信息和ifconfig内容一致；
+-c: 持续输出信息
+-g: 输出ipv4,ipv6的多播组信息
+
+service network restart :重启网络服务
+*/ 
+
+
+> grep
+------------------
+cat vsftpd.conf | grep -v '^#'   // 查看xx.conf文件中首字符不是#的行
+
+grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
+1、-v是grep排除的参数，例如查询除了包含ABC的行，例如cat a.txt|grep -v 'ABC'
+2、^代表行首，$代表行尾。 ^$是空行的意思
+3、^#表示首字母为#的行，linux里的文件，#号开头一般都是注释内容
+4、grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
+查询/etc/rsyslog.conf文件，但是不包含空行和注释行
+5、-i标识不区分大小写
+
+grep -i multiuser /etc/inittab      grep是在文件的内容中查找，查找multiuser， -i是不区分大小写，
+
+> grep lili /etc/passwd
+lili:x:502:502::/home/lisi:/bin/bash    显示lili的ID为502
+
+
+查看进程：
+https://www.cnblogs.com/liuzhengliang/p/4609632.html
+---------------------------------------
+1、ps 命令用于查看当前正在运行的进程。
+grep 是搜索
+例如： ps -ef | grep java
+表示查看所有进程里 CMD 是 java 的进程信息
+
+2、ps -aux | grep java
+ps-aux 显示所有状态
+ps -aux | grep xx
+ps -aux | grep java，或者直接：
+ps -aux | grep pid 查看
+
+3. kill 命令用于终止进程
+例如： kill -9 [PID]
+-9 表示强迫进程立即停止
+通常用 ps 查看进程 PID ，用 kill 命令终止进程
 
 
 
-================================================
+启动和关闭服务：
+---------------------------------------
+启动服务：(sudo下：)  https://www.cnblogs.com/Berryxiong/p/6193281.html
+1.service+服务名称 + start/stop/restart     对服务进行启动
+2.直接执行某个服务自己的管理脚本 + start/stop/restart
+
+NO.1:
+[berry@berry:practice] service vpnagentd status
+vpnagentd is stopped 
+[berry@berry:practice] sudo service vpnagentd start
+Starting up Cisco AnyConnect Secure Mobility Client Agent
+[berry@berry:practice] service vpnagentd status
+vpnagentd (pid 7000) is running
+[berry@berry:practice] service vpnagentd restart
+Shutting down Cisco AnyConnect Secure Mobility Client Agent
+Starting up Cisco AnyConnect Secure Mobility Client Agent
+[berry@berry:practice] service vpnagentd status
+vpnagentd (pid 7020) is running
 
 
-================================================
+NO.2:
+/etc/init.d/vpnagentd start
+/etc/init.d/vpnagentd stop
+/etc/init.d/vpnagentd restart
 
-================================================
+
+linux下：
+/etc/rc.d/init.d/httpd start
+service http start  // 红帽系统的专用
+
+源码包用service管理
+RPM包只能用绝对路径启动服务
 
 
-/***********************************/ 安装outliner
-outline配置IOS客户端 server:
-https://steemit.com/cn/@zhijun/outline
 
-git: https://github.com/Jigsaw-Code/outline-server
+> df
+查看磁盘空间占用情况：
+-----------------------------------
+df
+df -lh :可视图看大小
+df -h :可视图看大小
+df -ah: 全部文件系统的使用情况
+df -i: 显示inode信息
+df -k: 以字节显示区块的占用情况
+df -m: 以MB来显示文件的系统信息
+df -T: 查看文件类型-type
+df -t ext4: 只查看ext4这种文件类型
+df -x ext4: 查看排除ext4类型外的其他类型文件
+df -T -x ext4
+df -T -t ext4
+df --help:
 
-server run:
-bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)"
 
+
+> scp
+-----------------------------------
+1、从服务器上下载文件
+scp username@servername:/path/filename /var/www/local_dir（本地目录）
+
+ 例如scp root@192.168.0.101:/var/www/test.txt  把192.168.0.101上的/var/www/test.txt 的文件下载到/var/www/local_dir（本地目录）
+
+
+2、上传本地文件到服务器
+scp /path/filename username@servername:/path   
+
+例如scp /var/www/test.php  root@192.168.0.101:/var/www/  把本机/var/www/目录下的test.php文件上传到192.168.0.101这台服务器上的/var/www/目录中
+
+ 
+
+3、从服务器下载整个目录
+scp -r username@servername:/var/www/remote_dir/（远程目录） /var/www/local_dir（本地目录）
+
+例如:scp -r root@192.168.0.101:/var/www/test  /var/www/  
+
+4、上传目录到服务器
+scp  -r local_dir username@servername:remote_dir
+例如：scp -r test  root@192.168.0.101:/var/www/   把当前目录下的test目录上传到服务器的/var/www/ 目录
+
+
+
+ftp服务器搭建：
+---------------------------
+也可见：onenote笔记 /linux/ftp
+win:  https://blog.csdn.net/EXLsunshine/article/details/29181465
+linux:  http://www.cnblogs.com/chenmh/p/5365274.html
+        https://www.jianshu.com/p/4f988e70e85b
+centos:  https://blog.csdn.net/zyw_java/article/details/75212608
+默认启动端口为21：
+
+****安装ftp****
+which vsftpd #检测是否已经安装vsftpd
+sudo apt-get install vsftpd
+或者：
+yum install -y vsftpd
+
+netstat -lntp | grep 21  // ftp启动后都在21端口监听
+
+此时ftp已经可以访问了： ftp://35.234.7.119
+
+****更改启动状态****
+sudo service vsftpd start #开启ftp服务
+service vsftpd status #查看FTP的状态
+sudo service vsftpd stop #停止ftp服务
+sudo service vsftpd restart #重启ftp服务
+sudo /etc/init.d/vsftpd restart #倘若上面的不行就使用路径的形式直接执行
+sudo pkill vsftpd #有时候停止失败就干掉吧
+
+
+wangsirlemon@c77:/$ cat /etc/vsftpd.conf | grep -v '^#'
+listen=NO
+listen_ipv6=YES
+anonymous_enable=NO   #允许匿名用户
+local_enable=YES   #允许使用本地账号登录
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+secure_chroot_dir=/var/run/vsftpd/empty
+pam_service_name=vsftpd
+rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+ssl_enable=NO
+
+
+root@c77:~# useradd ftpuser  //创建一个用户
+root@c77:~# usermod -s /sbin/nologin ftpuser  // 限制该用户只能ftp服务器访问，不能直接登录服务器
+root@c77:~# passwd ftpuser   // 设置用户的访问密码
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+root@c77:~# mkdir -p /data/ftp/pub      // 在/data中创建相关的目录,/data/ftp 为主目录, 该目录不可上传文件;/data/ftp/pub 文件只能上传到该目录下
+root@c77:~# echo "Welcome to wangsirlemon FTP service." > /data/ftp/welcome.txt  //创建登录欢迎文件
+root@c77:~# chmod a-w /data/ftp && chmod 777 -R /data/ftp/pub   // 设置访问权限
+root@c77:~# usermod -d /data/ftp ftpuser  // 设置为用户的主目录
+
+
+
+> traceroute
+------------------------------
+http://man.linuxde.net/traceroute
+traceroute www.baidu.com          // 默认参数为-q, 默认三次探测数据包向每个网关发送三个数据包，网关响应返回的时间
+traceroute www.google.com
+
+-d：使用Socket层级的排错功能；
+-f<存活数值>：设置第一个检测数据包的存活数值TTL的大小；
+-F：设置勿离断位；
+-g<网关>：设置来源路由网关，最多可设置8个；
+-i<网络界面>：使用指定的网络界面送出数据包；
+-I：使用ICMP回应取代UDP资料信息；
+-m<存活数值>：设置检测数据包的最大存活数值TTL的大小；
+-n：直接使用IP地址而非主机名称； 禁用DNS解析，以ip格式输出数据。
+-p<通信端口>：设置UDP传输协议的通信端口；
+-r：忽略普通的Routing Table，直接将数据包送到远端主机上。
+-s<来源地址>：设置本地主机送出数据包的IP地址；
+-t<服务类型>：设置检测数据包的TOS数值；
+-v：详细显示指令的执行过程；
+-w<超时秒数>：设置等待远端主机回报的时间；
+-x：开启或关闭数据包的正确性检验。
+
+traceroute -q 4 www.58.com // 向每个网关发送四个数据包，网关响应返回的时间
+
+
+
+> lsof
+-------------------------
+http://www.cnblogs.com/peida/archive/2013/02/26/2932972.html
+
+lsof: 列出当前系统打开的文件的工具
+lsof [参数][文件]   // root用户执行
+lsof -n | grep deleted  // 查看已经删除的文件，空间有没有释放，没有的话kill掉pid   // kill -9 pid
+
+-a 列出打开文件存在的进程
+lsof -c mysql = lsof | grep myself
+-c<进程名> 列出指定进程所打开的文件 command
+-g  列出GID号进程详情
+-d<文件号> 列出占用该文件号的进程
++d<目录>  列出目录下被打开的文件
++D<目录>  递归列出目录下被打开的文件
+-n<目录>  列出使用NFS的文件
+-i<条件>  列出符合条件的进程。（4、6、协议、:端口、 @ip ）
+lsof -p 1       // 通过某个进程号显示该进行打开的文件
+lsof -p 1,2,3   // 列出多个进程号对应的文件信息
+lsof -p ^1      // 列出除了某个进程号，其他进程号所打开的文件信息
+-p<进程号> 列出指定进程号所打开的文件 pid:  
+-u  列出UID号进程详情 user
+-h 显示帮助信息
+-v 显示版本信息
+lsof -i: 端口号,列出所有的网络连接   
+lsof -i tcp: 列出所有tcp 网络连接信息
+lsof -i udp: 列出所有udp 网络连接信息
+lsof -i :3306: 列出谁在使用某个端口
+lsof -i udp:55: 列出谁在使用某个特定的udp端口
+lsof -a -u root -i: 列出某个用户的所有活跃的网络端口
+lsof -N: 列出所有网络文件系统
+lsof -u: 域名socket文件
+lsof -g 5555: 某个用户组所打开的文件信息
+lsof -d description(like 2): 根据文件描述列出对应的文件信息
+例如： lsof  -d  txt      lsof  -d  1     lsof  -d  2
+// 0表示标准输入，1表示标准输出，2表示标准错误，从而可知：所以大多数应用程序所打开的文件的 FD 都是从 3 开始
+lsof -d 2-3     // 根据文件描述范围列出文件信息
+lsof -c sshd -a -d txt     // 列出COMMAND列中包含字符串" sshd"，且文件描符的类型为txt的文件信息
+lsof -i 4 -a -p 1234    // 列出被进程号为1234的进程所打开的所有IPV4 network files
+lsof -i @peida.linux:20,21,22,25,53,80  -r  3  
+// 列出目前连接主机peida.linux上端口为：20，21，22，25，53，80相关的所有文件信息，且每隔3秒不断的执行lsof指令
 
 
 
@@ -728,7 +748,7 @@ lsb_release -a
 free -h:查看内存信息
 
 
-shutdown:
+> shutdown:
 --------------
 shutdown now  立刻关机
 shutdown +5   5分钟后关机
@@ -743,7 +763,7 @@ halt
 poweroff   直接断电
 init 0     这些都是关机命令
 
-reboot:
+> reboot:
 ----------------
 reboot  -f：强制重新开机，不调用shutdown指令的功能；
 reboot  -i：在重开机之前，先关闭所有网络界面；
@@ -769,7 +789,7 @@ N 5                   // N为上一次运行的级别，N标识null, 5表示当�
  
 
 
-管道，grep
+> grep
 ----------------
 ls -al | more  且
 ls -al && less  接着
@@ -789,8 +809,9 @@ wall < /etc/motd 将motd文件信息进行广播
 cp -R /usr /backup/usr.bak 2 >/back.error  将拷贝的错误信息存入到/back.error中
 
 
-ps
+> ps
 -----------------
+https://www.cnblogs.com/fnng/archive/2012/05/20/2510641.html
 -aux
 -a：显示所有用户的进程
 -u：显示用户名和启动时间
@@ -798,13 +819,47 @@ ps
 -e：显示所有进程，包括没有控制终端的进程
 -l：长格式显示
 -w：宽行显示，可以使用多个w进行加宽显示
+PID :　    　进程号
+PPLD：　　 父进程的进程号
+TTY ：　　  进程启动的终端
+STAT ：　　进程当前状态（S休眠状态，D不可中断的休眠状态，R运行状态，Z僵死状态，T停止）
+NI ：　　      进程优先级
+TIME：　　   进程自从启动以后启用CPU的总时间
+COMMAND/CMD：进程的命令名
+USER：　　  用户名
+%CPU：　　 占用CPU时间和总时间的百分比
+%MEM：　　占用内存与系统内存总量的百分比
 
-file:
+
+> kill
+--------------------
+kill -l
+
+关闭进程：
+kill -s 9 [进程号]　　（强行关闭）
+kill -9   [进程号]　　（强行关闭）
+
+重启进程：
+kill -1  [进程号]　　（重启进程）
+# kill -1 3567 　　 重启PID为3567的进程
+
+关闭图形程序：
+
+关闭图形程序： xkill
+当你在终端下输入这个命令时，你的鼠标会变成一个小叉子，你只去点你想要关闭的窗口就可以关闭了
+
+其它：
+结束所有进程：    killall
+查找服务进程号：  pgrep  [服务名称]
+关闭进程：       pkill    [进程名称]
+
+
+> file:
 --------------------
 判断文件类型
 
 
-vi/vim
+> vi/vim
 --------------------
 https://www.cnblogs.com/yangjig/p/6014198.html
 0|^, $ 单行
@@ -952,9 +1007,9 @@ set guifont=Menlo:h16:cANSI
 " Change cursor shape between insert and normal mode in iTerm2.app
 
 
-
-iptables;
+> iptables
 ----------------------
+防火墙：
 http://man.linuxde.net/iptables
 iptables -L -n -v: 查看已经添加的规则
 INPUT链：处理输入数据包。
@@ -963,7 +1018,8 @@ PORWARD链：处理转发数据包。
 PREROUTING链：用于目标地址转换（DNAT）。
 POSTOUTING链：用于源地址转换（SNAT）。
 
-ln:
+
+> ln:
 ---------------------
 link:
 ln -s /etc/issue.bak issue.bak.soft 
@@ -971,14 +1027,19 @@ ln -s /etc/issue.bak issue.bak.soft
 ln /etc/issue.bak issue.bak.hard
 硬连接：就是程序的执行,类似拷贝，即使原文件删除，依然可以访问 ,不能跨分区，不能对目录进行使用，文件属性与原文件保持一致,类似cp -p，会同步更新：一般做备份用,
 
+
+> echo:
+-------------
+echo "xxx" > /etc/host   : 写入文件
 echo "xxx" >> /etc/host   : 在文件末尾进行追加
 
-ls -i:
+
+> ls -i:
 -------------
 每一个文件有一个id, -i可以查看，如果是硬链接，则两个文件的id一致，更新一个文件的同时，也会更新另外一个文件
 
 
-chmod:
+> chmod:
 -----------------
 chmod [ugoa][+-=][rwx] 文件目录： u:user, g:group, o:other, a:all
 chmod g+w,o-r sys.bakfile: 同时操作多个权限 
@@ -998,19 +1059,20 @@ note:
 chmod u(g)+s /bin/touch :给/bin/touch命令 设置userid或者groupid
 
 
-
-chown:
+> chown:
 ----------------
 -R：递归
 改变所有者
 useradd   谁创建这个文件，谁就是这个文件的拥有者，组的缺省值为创建者owner
 
-chgrp:
+
+> chgrp:
 ---------------
 改变所属组
 groupadd
 
-umask:
+
+> umask:
 ---------------
 $ :umask -S
 u=rwx,g=rwx,o=rx    // linux默认文件创建权限：drwxr-xr-x
@@ -1020,7 +1082,7 @@ $ :umask
 umask 023        更改缺省值
 
 
-find:
+> find:
 -----------------
 find[范围][条件]
 find / -name init   //名字为init，为精准搜索， / 为根目录的意思
@@ -1052,13 +1114,14 @@ find /etc -name init* -a -type d   :查看名字以init开头的目录
 find . -inum 31531 -exec rm {} \; //以i节点查找然后删除，用于删除一些无法打印出来的奇怪字符的文件  
 
 
-locate:
+> locate:
 ---------------------
 updatedb    :更新文件数据库，除开/tmp等存放临时文件的目录，不会收录
 locate xx.txt : 定期进行更新文件列表，如果需要查找刚刚创建的文件，则需要updatedb一下；find是现在立即查找‘
 locate -i xx :-i表示不区分大小写
 
-which/whereis:
+
+> which/whereis:
 ---------------------
 $ which cp
 /bin/cp  除了可以查看文件路径，还可以查看文件别名；/bin为普通权限，/sbin为root权限
@@ -1074,7 +1137,7 @@ wangsirlemon@c77:~$ whereis cp
 cp: /bin/cp /usr/share/man/man1/cp.1.gz     //后面为帮助文档，帮助文档一般在/usr/share目录下
 
 
-man:
+> man:
 -------------
 man ls
 man date
@@ -1086,7 +1149,8 @@ man查看文件,如果遇到命令和服务名字相同的，1为命令的帮助
 ~$ whereis passwd    ://列出了命令，服务，以及对应的帮助文档
 passwd: /usr/bin/passwd /etc/passwd /usr/share/man/man5/passwd.5.gz /usr/share/man/man1/passwd.1ssl.gz /usr/share/man/man1/passwd.1.gz
 
-whatis:
+
+> whatis:
 --------------
 简略查看帮助信息
 wangsirlemon@c77:~$ whatis passwd
@@ -1096,32 +1160,36 @@ passwd (5)           - the password file
 wangsirlemon@c77:~$ whatis ls
 ls (1)               - list directory contents
 
-apropos:
+> apropos:
 ---------------
 apropos services   :简略查看某个服务的帮助信息 //注意不用绝对路径
 
 
---help:
+> --help:
 ---------------
 touch --help
 
-info:
+
+> info:
 ---------------
 info info
 
-help:
+
+> help:
 ---------------
 help shell内置命令: ，如cd,umask
 man cd/if/pwd: 可以查看内置的命令
 help if
 help umask
 
-history:
+> history:
 --------------
 查看历史记录命令
 
+
+
 查看当前用户
-------------------------
+----------------
 > who: 查看主机上的用户 
 > w: 查看当前用户 -----查看用户的详细信息，比who更详细
 > whoami: 查看当前登录的用户是谁
@@ -1152,8 +1220,9 @@ wangsirl pts/0    182.150.28.13    07:25    1.00s  0.11s  0.00s w
 //WHAT: 当前CPU在执行什么命令
 
 
-==============================
+
 压缩和解压：
+==============================
 .gz        gzip        gunzip(gzip -d)
 .tar       tar -cf     tar -xf
 .tar.gz    tar-zcf     tar -zxf
@@ -1162,7 +1231,7 @@ wangsirl pts/0    182.150.28.13    07:25    1.00s  0.11s  0.00s w
 .tar.bz2   tar -cjf    tar -xjf
 
 
-gzip:
+> gzip:
 -----------------
 .gz .zip(最古老的)
 
@@ -1176,7 +1245,7 @@ gunzip  xxx.xx
 gzip -d  xxx.xx  
 
 
-tar:
+> tar:
 -------------------------
 压缩：
 1.先用tar打包目录，再用gzip来打包
@@ -1202,7 +1271,7 @@ tar -jxf janpan.tar.bz2   //用tar来解压gz
 -j :打包成bzip2格式 
 
 
-zip:
+> zip:
 ------------------------
 win,linux,mac都兼容; 会保留原文件
 zip [-r] [压缩后的文件名] [文件和目录]   : -r表示压缩目录；
@@ -1210,7 +1279,7 @@ zip [-r] [压缩后的文件名] [文件和目录]   : -r表示压缩目录；
 unzip 文件目录名字  ：打包；zip文件也可以用tar来解压, 和进行压缩
 
 
-bzip2:
+> bzip2:
 -------------------
 gzip的升级，压缩率很高，大文件一般推荐这种
 -k :相对于gzip多了一个-k的选项，意思是保留原文件
@@ -1227,9 +1296,9 @@ tar -xjvf janpan.tar.bz2   //用tar来解压gz,只能解压tar压缩后的gz
 
 网络管理命令：
 ===================================
-
 域名解析：（把域名解析成一个ip）
-nslookup
+
+> nslookup
 -----------------
 nslookup domain [dns-server]
 nslookup facebook.com 8.8.8.8  //157.240.13.35
@@ -1239,7 +1308,7 @@ nslookup baidu.com    //域名
 nslookup 220.181.57.216  //ip
 
 
-dig:
+> dig:
 --------------------
 比nslookup好用
 @<服务器地址>：指定进行域名解析的域名服务器；
@@ -1256,12 +1325,17 @@ dig www.facebook.com @8.8.8.8 +short  //通过指定DNS解析得到的最终域�
 dig +trace www.scnu.edu.com    //跟踪域名解析； https://blog.csdn.net/a583929112/article/details/66499771
 dig www.baidu.com  // CNAME是别名；A是address,ip; NS是服务器的主机名;在AUTHORITY SECTION里面的服务器主机名，都会在ADDITIONAL SECTION里给出该主机的IP地址。
 dig -t soa www.baidu.com  //解析域名的主从关系  soa:start of authority
+dig youtube.com @8.8.8.8 +tcp
+dig @192.168.10.1 -p 5353 google.com  //确认开启udp转发，ip为路由ip,端口为ss-tunnel端口
 
-trace:
+DNS 完美查询的流程就是： dnsmasq -> ChinaDNS -> ss-tunnel -> 国外DNS服务器(e.g: 8.8.8.8)。
+
+
+> trace:
 --------------------
 源码位于：\kernel\trace\trace.c
 
-traceroute:
+> traceroute:
 --------------------
 refer to line:320
 
@@ -1273,50 +1347,40 @@ write lingzhiling
 给用户发信息，ctrl + D 结束，用户在线才能发信息,可以用w查看谁登陆了
 
 
-wall:
+> wall:
 --------------------
 (write all):发送广播信息
 wall shengchao is a honest man!
 给所有用户发信息，所有用户都能收到，包括自己。
 
 
-ping -c:
+> ping
 -------------------
-
+ping -c xxx
 ifconfig
 
 ifconfig eth0 192.168.2.223 //配置eth0的ip
 
 
-mail:
+> mail:
 ----------------
 mail 用户: 发邮件，可以用户不在线,ctrl + D结束并发送
 用户登陆，并输入mail可以查看邮件列表； 输入序列号查看邮件内容； 删除邮件：d 序列号；重查看邮件列表 h； 退出mail,q键
 
 
-last, lastlog, history
+> last, lastlog, history
 ----------------
 last:查看所有用户的登陆信息
 lastlog:知道每个用户(包括没有登录过的用户)的最后一次登陆的信息
 lastlog -u uid(用户的uid):可以查看指定用户的信息
 
 
-
-netstat:
----------------
-tcp：电话
-udp: 发短信
-
-netstat -tlun ：查看监听的端口
-netstat -an  ：查看正在建立连接的端口
-netstat -rn  :查看网关地址
-
-
-setup:
+> setup:
 ---------------
 在redhat系列的linux上面才可用，unix不能用
 
-mount:
+
+> mount:
 ---------------
 mount [-t 文件系统] 设备文件名 挂载点
 mkdir  /mnt/cdrom    :挂载的前一步一般会先在mnt目录下创建一个空目录
@@ -1329,14 +1393,13 @@ mount /dev/cdrom /mnt/cdrom
 cd /mnt/cdrom
 
 
-logout:
+> logout:
 -----------------
 退出登录
 服务器操作完或者远程登录后，一定要logout
 
 
-
-rpm,yum
+> rpm,yum
 ------------------
 一个为本地，一个为在线安装
 
@@ -1382,6 +1445,8 @@ rpm -V httpd   //校验指定的包中文件
 本地和在线安装包都可以用yum 来进行管理
 
 
+> yum:
+---------------------------
 readhat系列(centos)有setup命令
 service network restart :重启网络服务
 yum list：列出安装
@@ -1405,14 +1470,17 @@ man yum              帮助 
 
 上传文件在win中往linux传： wincp软件(ssh + scp)
 ./configure 软件配置与检查
+
+> make
+------------------
 make :编译
 make install :编译安装
 make clean :清空编译文件
 
-webmin
-------------------
-webmin是linux中的图形文件管理后台  
 
+> webmin
+----------------
+webmin是linux中的图形文件管理后台  
 
 
 
@@ -1426,12 +1494,35 @@ UID:
 1-499：系统用户(伪用户)
 500-65535：普通用户
 
-
 /home/用户名:普通用户
 /root/：超级用户
 
-/bin/bash/ : shell
+/bin/bash/    :shell
+/bin/touch    :touch
 
 
-setUID
+
+切换用户：
+---------------------
+su -- lili 切换到lili用户
+su -- root 切换到root用户
+
+su -- wangsirlemon
+
+setUID=4
+# chmod  u+s /bin/touch       给touch设置一个UID
+# chmod  4755 /bin/touch      
+# chmod  u-s /bin/touch       取消UID
+# chmod  755  /bin/touch      
+
+setGID=2
+[root@localhost ~]# chmod  g+s /bin/touch  
+[root@localhost ~]# chmod  2755  /bin/touch
+
+站着位：
+t=1
+粘着位的授权方式：
+[root@localhost test]# chmod  o+t abc  
+[root@localhost test]# chmod  1755  abc
+
 
