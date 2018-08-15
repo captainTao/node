@@ -30,8 +30,8 @@ RAM，ROM
 openDNS:
 208.67.220.220:443,208.67.220.222:443,208.67.222.222:443
 
-
 ipk文件用opkg install来安装
+
 
 dnsmasq:
 -------------
@@ -41,6 +41,7 @@ https://www.jianshu.com/p/1df2e506a546
 /etc/dnsmasq.d
 /etc/resolv.conf    //设置本地DNS
 nameserver 127.0.0.1
+
 
 pdnsd:
 -------------
@@ -221,14 +222,12 @@ lsmod | grep bbr
 返回值有 tcp_bbr 模块即说明 bbr 已启动。注意：并不是所有的 VPS 都会有此返回值，若没有也属正常。
 
 
-
 /***********************************/ 安装ipsec(手机端4g用)
 
 https://github.com/hwdsl2/setup-ipsec-vpn
 
 apt-get update && apt-get dist-upgrade  and reboot
 wget https://git.io/vpnsetup -O vpnsetup.sh && sudo sh vpnsetup.sh
-
 
 
 /***********************************/ 安装outliner(手机端4g用)
@@ -242,8 +241,6 @@ bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-serve
 
 
 /***********************************/ss,ssr问题排查
-
-
 ss 服务端配置:
 root@c77:~# cat /etc/shadowsocks.json 
 
@@ -275,8 +272,9 @@ netstat -lntp
 /etc/init.d/shadowsocks restart  // 重启ss
 ./shadowsocks-libev.sh uninstall   //卸载ss,需要在root中
 
---------------------------------------
 
+UDP Relay
+--------------------------------------
 确认服务端是否开始UDP Relay:
 https://github.com/icymind/VRouter/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%90%AF-UDP-Relay
 方法1: 在命令行启动 ss-server 时加上 -u 参数
@@ -285,8 +283,8 @@ https://github.com/icymind/VRouter/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%
 netstat -lnup
 
 
-
 /***********************************/终端翻墙
+
 
 
 ///////////////////////////////////////////////////////////////////  ssr结束
@@ -763,6 +761,7 @@ halt
 poweroff   直接断电
 init 0     这些都是关机命令
 
+
 > reboot:
 ----------------
 reboot  -f：强制重新开机，不调用shutdown指令的功能；
@@ -770,6 +769,7 @@ reboot  -i：在重开机之前，先关闭所有网络界面；
 reboot  -n：重开机之前不检查是否有未结束的程序； 
 reboot -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件
 init 6 :重启
+
 
 系统运行级别：
 ---------------
