@@ -1698,3 +1698,36 @@ crontab: installing new crontab 表示创建计划成功
 root
 [root@bogon cron]# cat root
 30 17 * * 1-5 /usr/bin/shudown -h now
+
+
+> zsh
+---------------------
+chsh -s /bin/zsh         进入zsh,完全退出终端，再打开
+chsh -s /bin/bash        切回bash
+cat /etc/shells          查看装了哪些shell
+
+zsh语法高亮：
+https://www.cnblogs.com/weixuqin/p/7029177.html
+  
+1. brew install zsh-syntax-highlighting
+2. 根目录下vim .zshrc              
+3. 在.zshr中添加 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+4. 添加：source ~/.bash_profile
+5. source ~/.zshrc
+
+
+> echo
+---------------------
+echo $PATH
+
+
+> source
+---------------------
+
+
+> PS1
+---------------------
+https://www.cnblogs.com/cuoreqzt/p/5848209.html
+1. echo $PS1    \h:\W \u\$
+2. 在.bash_profile中配置 export PS1="\u \w$"
+
