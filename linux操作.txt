@@ -96,6 +96,9 @@ http://godjose.com/2017/06/14/new-article/      // google vps参考
 https://teddysun.com/486.html                   // SS一键安装脚本：
 https://teddysun.com/357.html                   // 秋水SS-libev一键脚本，更新到2018-6-1
 
+https://github.com/eeoa/OSGuide                 // openwrt+ss
+https://www.8dlive.com/post/307.html            // 3800折腾记
+
 
 参考网站：
 明月更新历史：http://www.right.com.cn/forum/thread-139399-1-1.html
@@ -872,7 +875,7 @@ shutdown -c :取消前一个关机命令
 shutdown -h :关机
 shutdown -r :重启    推荐使用shutdown 来重启
 
-halt
+halt       关机
 poweroff   直接断电
 init 0     这些都是关机命令
 
@@ -1380,6 +1383,7 @@ tar -xjvf janpan.tar.bz2   //用tar来解压gz,只能解压tar压缩后的gz
 -----------------
 nslookup domain [dns-server]
 nslookup facebook.com 8.8.8.8  //157.240.13.35
+nslookup -vc facebook.com 8.8.8.8 // -vc是强制使用tcp来查询DNS服务器
 
 或者直接输入nslookup
 nslookup baidu.com    //域名
@@ -1400,10 +1404,13 @@ nslookup 220.181.57.216  //ip
 -h：显示指令帮助信息。
 
 dig www.facebook.com @8.8.8.8 +short  //通过指定DNS解析得到的最终域名157.240.13.35
-dig +trace www.scnu.edu.com    //跟踪域名解析； https://blog.csdn.net/a583929112/article/details/66499771
+dig +trace www.scnu.edu.com    
+// 跟踪域名解析； https://blog.csdn.net/a583929112/article/details/66499771
+// https://blog.csdn.net/crazw/article/details/8986504
+
 dig www.baidu.com  // CNAME是别名；A是address,ip; NS是服务器的主机名;在AUTHORITY SECTION里面的服务器主机名，都会在ADDITIONAL SECTION里给出该主机的IP地址。
 dig -t soa www.baidu.com  //解析域名的主从关系  soa:start of authority
-dig youtube.com @8.8.8.8 +tcp
+dig youtube.com @8.8.8.8 +tcp    //使用tcp查询dns,但很多地方这种查询方式会被拦截
 dig @192.168.10.1 -p 5353 google.com  //确认开启udp转发，ip为路由ip,端口为ss-tunnel端口
 
 DNS 完美查询的流程就是： dnsmasq -> ChinaDNS -> ss-tunnel -> 国外DNS服务器(e.g: 8.8.8.8)。
@@ -1582,8 +1589,10 @@ UID:
 
 切换用户：
 ---------------------
-su -- lili 切换到lili用户
-su -- root 切换到root用户
+su root             临时提权到root用户
+su – root           切换到root用户
+su -- lili          切换到lili用户
+su -- root          切换到root用户
 
 su -- wangsirlemon
 
@@ -1739,6 +1748,11 @@ echo $PATH
 > source
 ---------------------
 
+
+> wc
+---------------------
+
+ctrl+alt+F1   命令行全屏模式
 
 > PS1
 ---------------------
