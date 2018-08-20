@@ -94,3 +94,36 @@ wanghaitao:~$: cat .zshrc
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.bash_profile
 PROMPT='wanghaitao:%c$: '
+
+
+
+//////////////////////////////////////////////////////////////
+
+wanghaitao:~$: cat .zshrc 
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.bash_profile
+PROMPT='wanghaitao:%c$: '
+
+
+//////////////////////////////////////////////////////////////
+
+wanghaitao:~$: cat .gitconfig
+[user]
+	name = captainTao
+	email = 578628438@qq.com
+[alias]
+	co = checkout
+	br = branch
+	st = status
+	ad = add -A
+	cm = commit -m
+	ps = push origin master	
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	
+//////////////////////////////////////////////////////////////
+
+wanghaitao:.pip$: cat pip.conf 
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+[install]
+trusted-host=mirrors.aliyun.com
