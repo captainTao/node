@@ -1,0 +1,96 @@
+wanghaitao:~$: cat .bash_profile 
+#配置brew环境
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
+export PATH="/usr/local/opt/python@2/bin:$PATH"
+
+#配置java环境
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+
+#配置android sdk环境
+export ANDROID_HOME=/Users/captain/library/android/sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/tools/bin
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+
+//////////////////////////////////////////////////////////////
+
+wanghaitao:~$: cat .vimrc 
+" Configuration file for vim
+set modelines=0		" CVE-2007-2438
+
+" Normally we use vim-extensions. If you want true vi-compatibility
+" remove change the following statements
+set nocompatible	" Use Vim defaults instead of 100% vi compatibility
+set backspace=2		" more powerful backspacing
+
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
+" Don't write backup file if vim is being called by "chpass"
+au BufWrite /private/etc/pw.* set nowritebackup nobackup
+
+let skip_defaults_vim=1
+
+
+"如下为自定义设置
+set autoindent        " 自动对齐
+set number            " 显示行号
+set hlsearch          " 高亮搜索结果
+set wrap              " 自动换行
+set incsearch         " 立即高亮显示当前匹配
+set ignorecase        " 忽略大小写
+set smartcase         " 如果有一个大写字母，则切换到大小写敏感查找
+set showmatch         " 高亮显示对应的括号
+
+set confirm           " 在处理未保存或只读文件的时候，弹出确认
+set tabstop=4         " Tab键的宽度
+set cursorline        " 突出显示当前行 
+"set cursorcolumn      " 突出显示当前列
+set clipboard+=unnamed   " 共享剪贴板
+
+" 语法高亮
+syntax on          
+set fileencodings=utf-8,gb2312,gbk,cp936,latin-1
+set fileencoding=utf-8
+set termencoding=utf-8
+set fileformat=unix
+set encoding=utf-8
+
+" 配色方案
+" default,delek,murphy
+colorscheme default
+" 指定配色方案是256色
+set t_Co=256
+set wildmenu
+
+" C风格的对齐方式
+set cindent
+set completeopt=longest,menu
+
+" 文件被改动时自动载入
+set autoread
+" 顶部底部保持3行距离
+set scrolloff=3
+
+" 代码补全
+set completeopt=preview,menu
+" 设置字体
+set guifont=Menlo:h16:cANSI
+
+"syntax enable         " 语法高亮
+"set nu!               " 显示行号
+"设置光标样式为竖线vertical bar
+" Change cursor shape between insert and normal mode in iTerm2.app
+
+
+//////////////////////////////////////////////////////////////
+
+wanghaitao:~$: cat .zshrc 
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.bash_profile
+PROMPT='wanghaitao:%c$: '
