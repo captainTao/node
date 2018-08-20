@@ -97,8 +97,15 @@ https://teddysun.com/486.html                   // SS一键安装脚本：
 https://teddysun.com/357.html                   // 秋水SS-libev一键脚本，更新到2018-6-1
 
 
-ss故障排除：
-https://doub.io/ss-jc39/
+参考网站：
+明月更新历史：http://www.right.com.cn/forum/thread-139399-1-1.html
+明月官方：https://www.myopenwrt.org/
+ssr路由安装: https://github.com/rapistor/
+ssr路由配置: https://github.com/ywb94/openwrt-ssr
+
+
+ss与ssr区别扫盲：https://doub.io/ss-jc10/
+ss故障排除： https://doub.io/ss-jc39/
 
 站长ping工具：
 http://ping.chinaz.com/
@@ -1092,6 +1099,7 @@ POSTOUTING链：用于源地址转换（SNAT）。
 link:
 ln -s /etc/issue.bak issue.bak.soft 
 软连接：类似win的快捷方式,文件以l开头,权限为lrwxrwxrwx,所有用户可读写执行,字节大小为一个快捷方式大小，很小；
+
 ln /etc/issue.bak issue.bak.hard
 硬连接：就是程序的执行,类似拷贝，即使原文件删除，依然可以访问 ,不能跨分区，不能对目录进行使用，文件属性与原文件保持一致,类似cp -p，会同步更新：一般做备份用,
 
@@ -1714,6 +1722,13 @@ https://www.cnblogs.com/weixuqin/p/7029177.html
 3. 在.zshr中添加 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 4. 添加：source ~/.bash_profile
 5. source ~/.zshrc
+
+
+.zshrc
+---------------------
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.bash_profile
+PROMPT='Captain:%c$: '       # c表示绝对路径，d表示相对路径
 
 
 > echo
