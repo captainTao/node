@@ -857,6 +857,7 @@ head -n 10 xx.txt:前10行：默认查看10行
 tail -n 7 xx.txt:后面10行:默认查看10行; -f:动态显示文件末尾内容
 printenv
 emacs
+nano
 
 locate .profile : 定位文件
 df -lh
@@ -1751,6 +1752,19 @@ echo $PATH
 
 > wc
 ---------------------
+格式：
+wc [选项]文件...
+wc -c list.txt
+grep -o wall list | wc -l         //在list文件中只匹配wall字符出现的次数
+
+参数：
+-c 统计字节数。
+-l 统计行数。
+-m 统计字符数。这个标志不能与 -c 标志一起使用。
+-w 统计字数。一个字被定义为由空白、跳格或换行字符分隔的字符串。
+-L 打印最长行的长度。
+--help 显示帮助信息
+--version 显示版本信息
 
 ctrl+alt+F1   命令行全屏模式
 
