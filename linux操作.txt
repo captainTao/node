@@ -1380,6 +1380,12 @@ tar -xjvf janpan.tar.bz2   //用tar来解压gz,只能解压tar压缩后的gz
 ===================================
 域名解析：（把域名解析成一个ip）
 
+
+> whois
+-----------------
+whois .baidu.com
+
+
 > nslookup
 -----------------
 nslookup domain [dns-server]
