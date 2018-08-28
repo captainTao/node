@@ -99,14 +99,6 @@ PROMPT='wanghaitao:%c$: '
 
 //////////////////////////////////////////////////////////////
 
-wanghaitao:~$: cat .zshrc 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.bash_profile
-PROMPT='wanghaitao:%c$: '
-
-
-//////////////////////////////////////////////////////////////
-
 wanghaitao:~$: cat .gitconfig
 [user]
 	name = captainTao
@@ -127,3 +119,28 @@ wanghaitao:.pip$: cat pip.conf
 index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 [install]
 trusted-host=mirrors.aliyun.com
+
+
+//////////////////////////////////////////////////////////////
+
+wanghaitao:~$: cat /etc/hosts
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+0.0.0.0 account.jetbrains.com
+199.193.116.104 astrill.com
+199.193.116.104 www.astrill.com
+199.193.116.104 members.astrill.com
+127.0.0.1 license.sublimehq.com
+127.0.0.1 license.sublimetext.comßß
+127.0.0.1 45.55.255.55
+127.0.0.1 45.55.41.223
+127.0.0.1       www.sublimetext.com
+127.0.0.1       license.sublimehq.com
+127.0.0.1 liveupdate.mac.sandai.net

@@ -1113,6 +1113,15 @@ ln /etc/issue.bak issue.bak.hard
 echo "xxx" > /etc/host   : 写入文件
 echo "xxx" >> /etc/host   : 在文件末尾进行追加
 
+wanghaitao:~$: echo -e 'ab\bc'       :\b删除
+ac
+wanghaitao:~$: echo -e 'a\tb\tc\nd\te\tf'      :\t tab \n换行
+a b c
+d e f
+wanghaitao:~$: echo -e '\x61\t\x62\t\x63\n\x64\t\x65\t\x66'    
+a b c
+d e f
+:\x表示16进制，后面可以跟两位16进制数； \0表示8进制,后面可以跟3位8进制数据
 
 > ls -i:
 -----------------
