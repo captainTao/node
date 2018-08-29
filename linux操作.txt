@@ -491,8 +491,9 @@ grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
 3、^#表示首字母为#的行，linux里的文件，#号开头一般都是注释内容
 4、grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
 查询/etc/rsyslog.conf文件，但是不包含空行和注释行
-5、-i标识不区分大小写
-
+5、-n输出行号
+6、--color==auto  搜索出的关键词用颜色显示
+7、-i标识不区分大小写
 grep -i multiuser /etc/inittab      grep是在文件的内容中查找，查找multiuser， -i是不区分大小写，
 
 > grep lili /etc/passwd
@@ -1122,6 +1123,15 @@ wanghaitao:~$: echo -e '\x61\t\x62\t\x63\n\x64\t\x65\t\x66'
 a b c
 d e f
 :\x表示16进制，后面可以跟两位16进制数； \0表示8进制,后面可以跟3位8进制数据
+
+
+
+> echo
+---------------------
+echo $PATH
+echo $env
+
+
 
 > ls -i:
 -----------------
@@ -1756,11 +1766,6 @@ source ~/.bash_profile
 PROMPT='Captain:%c$: '       # c表示绝对路径，d表示相对路径
 
 
-> echo
----------------------
-echo $PATH
-
-
 > source
 ---------------------
 
@@ -1783,12 +1788,12 @@ grep -o wall list | wc -l         //在list文件中只匹配wall字符出现的
 
 ctrl+alt+F1   命令行全屏模式
 
+
 > PS1
 ---------------------
 https://www.cnblogs.com/cuoreqzt/p/5848209.html
 1. echo $PS1    \h:\W \u\$
 2. 在.bash_profile中配置 export PS1="\u \w$"
-
 
 
 > pushd, popd
@@ -1806,5 +1811,24 @@ cd, pushd, popd
 [root@localhost etc]# popd
 ~/Desktop/shell_test
 [root@localhost shell_test]#
------
+
+
+
+> 历史命令调用
+---------------------
+上下箭头
+!n     冲突第n条历史命令
+!!     重复上一条命令
+!str   重复最后一条以str开头的命令
+
+
+> bash常用快捷键
+---------------------
+ctrl + A :移动光标到开头
+ctrl + E :移动光标到结尾
+ctrl + R :在历史记录中搜索
+
+ctrl + C（终止）, + D（退出）, + L（清屏）
+ctrl + U（剪切光标之前的命令）, + K（剪切光标之后的命令）
+ctrl + Y (粘贴ctrl+U或 ctrl+R的内容)
 
