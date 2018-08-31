@@ -1832,3 +1832,11 @@ ctrl + C（终止）, + D（退出）, + L（清屏）
 ctrl + U（剪切光标之前的命令）, + K（剪切光标之后的命令）
 ctrl + Y (粘贴ctrl+U或 ctrl+R的内容)
 
+
+sumblime快捷键
+---------------------
+ctrl + shift + d：快速复制
+ctrl + shift + k: 快速删除一行
+ctrl + shift + l: 竖线模式编辑
+ctrl + l: 快速选中
+ctrl + shift + 上下箭头：快速移动
