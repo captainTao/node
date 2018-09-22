@@ -85,9 +85,19 @@ BBR脚本
 FinalSpeed: 双边加速
 Snapshot
 
-------------------------------------------------
+------------------------------------------------  参考网址
+佐大论坛：http://www.openwrt.pro/
+
+dnsforwarder+SSR:
+https://nwindy.moe/lede-shadowsocksr/
+open-ssr:
+https://github.com/ywb94/openwrt-ssr
+https://github.com/eeoa/OSGuide
+
+
 ss+ChnRoute:
 https://cokebar.info/archives/664
+https://cokebar.info/archives/962
 
 
 搭建参考：
