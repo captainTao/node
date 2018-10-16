@@ -1,0 +1,75 @@
+3800:
+
+自己编译：
+sudo apt-get update
+sudo apt-get install g++ libncurses5-dev zlib1g-dev bison flex unzip autoconf gawk make gettext gcc binutils patch bzip2  asciidoc subversion sphinxsearch libtool sphinx-common libssl-dev git build-essential iptables ipset
+
+#匮乏的：
+
+libssl0.9.8 libz-dev texinfo sharutils ncurses-term zlib libpcre libmbedtls
+
+
+
+网址：
+https://cokebar.info/archives/664/comment-page-1#comments
+
+查看CPU型号：
+opkg print-architecture | awk '{print $2}'
+
+依赖ipk：
+http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/
+http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/
+
+************************************
+libgcc # target/cpu型号/package目录下
+libpthread # 同上
+ip-full # base
+ipset # base 无此包不能使用luci-app-shadowsocks
+      #      只能使用luci-app-shadowsocks-without-ipset 性能会下降
+iptables-mod-tproxy # base 无此包将无法代理UDP流量
+zlib # base      
+
+????
+http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/zlib_1.2.11-2_mips_24kc.ipk
+Configuring zlib
+************************************
+
+
+更新china-dns:
+wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
+
+dhcp中原来的解析文件地址：
+Resolve file
+/tmp/resolv.conf.auto
+
+应用ipk:
+http://openwrt-dist.sourceforge.net/packages/
+http://openwrt-dist.sourceforge.net/
+
+
+root@OpenWrt:~# opkg install ip-full ipset iptables-mod-tproxy libpthread
+Installing ip-full (4.16.0-8) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/ip-full_4.16.0-8_mips_24kc.ipk
+Installing libmnl (1.0.4-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/libmnl_1.0.4-1_mips_24kc.ipk
+Installing ipset (6.34-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/ipset_6.34-1_mips_24kc.ipk
+Installing kmod-nfnetlink (4.9.120-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/kmod-nfnetlink_4.9.120-1_mips_24kc.ipk
+Installing kmod-ipt-ipset (4.9.120-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/kmod-ipt-ipset_4.9.120-1_mips_24kc.ipk
+Installing libipset (6.34-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/libipset_6.34-1_mips_24kc.ipk
+Installing iptables-mod-tproxy (1.6.2-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/iptables-mod-tproxy_1.6.2-1_mips_24kc.ipk
+Installing kmod-ipt-tproxy (4.9.120-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/kmod-ipt-tproxy_4.9.120-1_mips_24kc.ipk
+Package libpthread (1.1.19-1) installed in root is up to date.
+Configuring libmnl.
+Configuring ip-full.
+Configuring kmod-nfnetlink.
+Configuring kmod-ipt-tproxy.
+Configuring kmod-ipt-ipset.
+Configuring libipset.
+Configuring ipset.
+Configuring iptables-mod-tproxy.
