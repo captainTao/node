@@ -30,15 +30,26 @@ RAM，ROM
 openDNS:
 208.67.220.220:443,208.67.220.222:443,208.67.222.222:443
 
+腾讯dns:
+119.29.29.29,182.254.116.116
+
+如果需要备用dns,在dns栏目填入两个dns,并用逗号隔开
+
+
 ipk文件用opkg install来安装
 
 
 dnsmasq:
 -------------
-https://wzyboy.im/post/874.html
-https://www.jianshu.com/p/1df2e506a546
-/etc/dnsmasq.conf    //配置文件地址
-/etc/dnsmasq.d
+https://wzyboy.im/post/874.html      //dnsmasq的作用
+https://www.jianshu.com/p/1df2e506a546      //配置dnsmasq
+
+验证dnsmasq配置：
+
+修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d
+/etc/dnsmasq.d目录下有两个文件：
+accelerated-domains.china.conf  dnsmasq_gfwlist.conf
+
 /etc/resolv.conf    //设置本地DNS
 nameserver 127.0.0.1
 
@@ -51,23 +62,23 @@ pdnsd:
 
 ///////////////////////////////////////////////////////////////////  ssr开始
 
-------------------------------------------------
-ss-server、ss-local、ss-tunnel、ss-redir 解释
-
-http://blog.miskcoo.com/2014/10/shadowsocks-proxy
+------------------------------------------------知识储备
+ss-server、ss-local(socks5)、ss-tunnel(udp relay)、ss-redir(ss) 解释
 https://www.zfl9.com/ss-redir.html
 
-ss-redir配置：
-https://www.bjwf125.com/?p=9
-ss-local配置：
-https://www.zfl9.com/ss-local.html
+ss与ssr区别扫盲：https://doub.io/ss-jc10/
+ss故障排除： https://doub.io/ss-jc39/
 
-------------------------------------------------
+
+设计师用的网址：
+https://www.behance.net/
+https://dribbble.com/
+https://www.shutterstock.com/home
+
+
 refer websties link:
 https://www.diycode.cc/topics/738        // vultr vps搭建
 https://blog.dreamtobe.cn/ss-and-vps/    // vultr vps优化
-https://medium.com/@zoomyale/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E7%BB%88%E6%9E%81%E5%A7%BF%E5%8A%BF-%E5%9C%A8-vultr-vps-%E4%B8%8A%E6%90%AD%E5%BB%BA-shadowsocks-fd57c807d97e  // 知识普及
-
 
 VPS和ECS的区别：https://www.diycode.cc/topics/738
 VPS提供商：Vultr.com
@@ -85,54 +96,57 @@ BBR脚本
 FinalSpeed: 双边加速
 Snapshot
 
+-------------------
+
+路由器软件包括两部分：
+
+处理TCP：
+ssr, ss-libev
+
+处理UDP
+dnsforwarder, dnscrypt-proxy
+dnsforwarder相当于DNS的隧道,
+而dnscrypt-proxy相当于UDP的shadowsocksr-libev
+
 ------------------------------------------------  参考网址
-佐大论坛：http://www.openwrt.pro/
+佐大论坛：（编译固件）http://www.openwrt.pro/
 
 dnsforwarder+SSR:
 https://nwindy.moe/lede-shadowsocksr/
-open-ssr:
+
+luci-ssr.ipk:  
 https://github.com/ywb94/openwrt-ssr
-https://github.com/eeoa/OSGuide
 
 
 ss+ChnRoute:
-https://cokebar.info/archives/664
-https://cokebar.info/archives/962
+https://cokebar.info/archives/664           // ss+chnRout
+https://cokebar.info/archives/962           // ss+gfw
 
 
-搭建参考：
+------------------------------------------------  搭建参考
+
 https://suiyuanjian.com/124.html                // google vps搭建（主）-ssr
-http://godjose.com/2017/06/14/new-article/      // google vps参考
-https://teddysun.com/486.html                   // SS一键安装脚本：
-https://teddysun.com/357.html                   // 秋水SS-libev一键脚本，更新到2018-6-1
+http://godjose.com/2017/06/14/new-article/      // google vps（参考）
+https://teddysun.com/486.html                   // SS一键四选一安装脚本：
 
-https://github.com/eeoa/OSGuide                 // openwrt+ss
-https://www.8dlive.com/post/307.html            // 3800折腾记
+https://cokebar.info/archives/664               // Shadowsocks + ChnRoute路由设置（主）
+https://teddysun.com/511.html                   // 秋水libev simple-obfs  
 
 
-参考网站：
+
+明月参考：
+-------------
 明月更新历史：http://www.right.com.cn/forum/thread-139399-1-1.html
 明月官方：https://www.myopenwrt.org/
 ssr路由安装: https://github.com/rapistor/
 ssr路由配置: https://github.com/ywb94/openwrt-ssr
 
 
-ss与ssr区别扫盲：https://doub.io/ss-jc10/
-ss故障排除： https://doub.io/ss-jc39/
-
-站长ping工具：
-http://ping.chinaz.com/
-
-设计师用的网址：
-https://www.behance.net/
-https://dribbble.com/
-https://www.shutterstock.com/home
-
-------------------------------------------------
+------------------------------------------------ 搭建流程
 
 
-进入准备工作：
-/***********************************/ 更新常用软件
+vps进入准备工作：
+/***********************************/  更新常用软件
 sudo –i
 更新系统（两行命令分开执行，第二步等待时间较长，会出现####和进度百分百，耐心等）
 
@@ -161,7 +175,7 @@ uname –r
 
 sudo apt-get update
 
-/***********************************/ 配置ssh
+/***********************************/  配置ssh
 
 google vps默认配置的密码登录和root登录为关闭状态，默认只能使用ssh，如需要开启，需要配置：https://mapgun.com/archives/2235
 
@@ -170,74 +184,39 @@ ssh-keygen -t [rsa|dsa]                      // 默认用此方法  refer: https
 ssh-keygen -t rsa -f gcloud                  // 生成gcloud 名字的钥匙
 ssh-keygen -t rsa -C "578628438@qq.com"      // 使用
 
-2.在服务器中添加 public key, 并chmod 600 和 设置.ssh目录权限  
 
+2.在服务器中添加 public key, 并chmod 600 和 设置.ssh目录权限  
 $ echo "" > ~/.ssh/authorized_keys   // server key location,非root用户下
 $ chmod 600 authorized_keys
 $ chmod 700 .ssh    //可选
 
-3.ssh链接：
 
-wanghaitao-MacBook:.ssh captain$
+3.ssh登录：
+> ssh wangsirlemon@35.229.253.255    // 默认公钥登录
+> ssh -p 8989 wangsirlemon@35.229.253.255   // 用端口号登录
+
 > ssh -i gcloud wangsirlemon@335.197.144.67  // 使用指定公钥登录
 
-wanghaitao-MacBook:~ captain$ 
-> ssh wangsirlemon@35.229.253.255  //默认公钥登录
-> ssh -p 8989 wangsirlemon@35.229.253.255  //用端口号登录
 
-
-wanghaitao-MacBook:.ssh captain$
-> ssh-keygen -t rsa -f gcloud                    // 生成gcloud 
-Generating public/private rsa key pair.
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
-Your identification has been saved in gcloud.
-Your public key has been saved in gcloud.pub.
-The key fingerprint is:
-SHA256:FVeLkoIDD4ayNqSzg/Z7gCK6srdwXvUhGGD6rp0/KBY captain@wanghaitao-MacBook.local
-The key's randomart image is:
-+---[RSA 2048]----+
-|  o.+     . ...  |
-|.+.o + .   + . . |
-|+o  . + . + . .  |
-|++   o . o .     |
-|oo+ . o S        |
-|*E . . o .       |
-|*.=.o   .        |
-|+Bo+..           |
-|*==++.           |
-+----[SHA256]-----+
-
-wanghaitao-MacBook:.ssh captain$
-> cat gcloud.pub 
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVH6uhFMGlFKoN7XUdTHKEus77mCOvpkfz3rbXkee9WLPjpY1rBgDMhqZcco7Klmwoy1CaOmdBRlvs70ySXok72937hLvUshHoGqevwW+hpu3/5P+5fQXXMfNnFxkj7PE08pk8EkDoYUsu/JnN7qex3IH7Ps4iRQHuePdgFe/eUzLqHgzsTtsuEIYL64rDG2qs/jfWHqWeRvmxMiTr/bSm2uA9CJ/ebSW5N9rcEcJt+G/78cF+efUYCNz3pRQ5iimsp2aH5mUkDoWOOWNPh9j7biaZoN6fjleDMx9V6nxtEHmdwUN8JexUI74z/76hQOiqA4wGSTL0BMjJpfTitM3T captain@wanghaitao-MacBook.local
-
-
-wangsirlemon@instance-static:~$ cd .ssh
-wangsirlemon@instance-static:~/.ssh$ ls -al
-total 8
-drwx------ 2 wangsirlemon wangsirlemon 4096 Jul 17 08:56 .
-drwxr-xr-x 5 wangsirlemon wangsirlemon 4096 Jul 17 08:43 ..
-
-wangsirlemon@instance-static:~/.ssh$                     // 在server生成key
+-------------------------------------
+wangsirlemon@instance-static:~/.ssh$                 // 在server生成 glocoud key
 > echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVH6uhFMGlFKoN7XUdTHKEus77mCOvpkfz3rbXkee9WLPjpY1rBgDMhqZcco7Klmwoy1CaOmdBRlvs70ySX
 ok72937hLvUshHoGqevwW+hpu3/5P+5fQXXMfNnFxkj7PE08pk8EkDoYUsu/JnN7qex3IH7Ps4iRQHuePdgFe/eUzLqHgzsTtsuEIYL64rDG2qs/jfWHqWeRvmxMiTr/bSm2uA9CJ/ebSW5N9rcEcJt+G/78cF+efUYC
 Nz3pRQ5iimsp2aH5mUkDoWOOWNPh9j7biaZoN6fjleDMx9V6nxtEHmdwUN8JexUI74z/76hQOiqA4wGSTL0BMjJpfTitM3T captain@wanghaitao-MacBook.local" > authorized_keys
-
-wangsirlemon@instance-static:~/.ssh$ chmod 600 authorized_keys 
 
 
 mine:
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > ~/.ssh/authorized_keys
 
-
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > authorized_keys
+
+wangsirlemon@instance-static:~/.ssh$ chmod 600 authorized_keys 
+
 
 
 XShell连接服务器
 --------------------
 https://51.ruyo.net/2144.html
-Google Cloud 自带的SSH工具非常好用了。如果你想本地连接上去管理，也是可以的~
 
 首先使用自动SSH连接上去，然后 sudo -i切换到 root
 
@@ -253,18 +232,25 @@ PasswordAuthentication no
 #重启SSH即可
 /etc/init.d/sshd restart
 
-/***********************************/ 安装ssr
+
+/***********************************/ 安装ss,bbr
+
 1.切换用户：
 sudo -i    // sudo su
 
-2.安装ssr
-wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
-chmod +x shadowsocksR.sh
-./shadowsocksR.sh 2>&1 | tee shadowsocksR.log
+2.安装ss,四选一，可以安装多个
+wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
+chmod +x shadowsocks-all.sh
+./shadowsocks-all.sh 2>&1 | tee shadowsocks-all.log
 
 3.bbr加速
 wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
+
+验证ss,obfs,udp
+--------------------
+nestat -lntpu
+ps -ef | grep -v grep | grep "server"
 
 验证bbr： 
 --------------------
@@ -287,6 +273,46 @@ lsmod | grep bbr
 返回值有 tcp_bbr 模块即说明 bbr 已启动。注意：并不是所有的 VPS 都会有此返回值，若没有也属正常。
 
 
+ss,ssr问题排查：
+--------------------------------------
+netstat -lntp   // root用户
+
+ss 服务端配置:
+cat /etc/shadowsocks.json
+cat /etc/shadowsocks-libev/config.json
+
+ssr路由配置文件：
+cat /etc/config/shadowsocksr
+cat /etc/config/shadowsocks
+
+ip模式数据：/etc/china_ssr.txt
+GFW模式数据：/etc/dnsmasq.ssr/gfw_list.conf
+
+
+ss问题排查：
+https://doub.io/ss-jc39/         //排查
+
+①启动Shadowsocks服务端：service supervisord start
+②关闭Shadowsocks服务端：service supervisord stop
+③重启shadowsocks服务端：service supervisord restart
+
+
+/etc/init.d/shadowsocks status  // ss状态
+/etc/init.d/shadowsocks start   // start   
+/etc/init.d/shadowsocks restart  // 重启ss
+./shadowsocks-libev.sh uninstall   //卸载ss,需要在root中
+
+
+UDP Relay
+--------------------------------------
+确认服务端是否开始UDP Relay:
+https://github.com/icymind/VRouter/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%90%AF-UDP-Relay
+方法1: 在命令行启动 ss-server 时加上 -u 参数
+方法2: 在 ss-server 的配置文件中添加"mode": "tcp_and_udp"
+验证：
+netstat -lnup
+iptables -A INPUT -p udp --dport 3389 -j ACCEPT
+
 /***********************************/ 安装ipsec(手机端4g用)
 
 https://github.com/hwdsl2/setup-ipsec-vpn
@@ -305,52 +331,152 @@ server run:
 bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)"
 
 
-/***********************************/ss,ssr问题排查
-ss 服务端配置:
-root@c77:~# cat /etc/shadowsocks.json 
+===============================================================
 
-ssr路由配置文件：
-cat /etc/config/shadowsocksr
-ip模式数据：/etc/china_ssr.txt
-GFW模式数据：/etc/dnsmasq.ssr/gfw_list.conf
+https://cokebar.info/archives/664
+---------------------------------------------------------------路由终端翻墙
 
-
-服务器端口：默认为 8989
-密码：默认为 teddysun.com
-加密方式：默认为 aes-256-cfb
-协议（Protocol）：默认为 origin
-混淆（obfs）：默认为 plain
+1.更新openwrt / lede固件
+2.路由设置ssh,更改lan口网域，确保正常上网
 
 
-ss问题排查：
-https://shadowsocks.org/en/download/clients.html      //ss webstie
-https://doub.io/ss-jc39/
+3.路由安装ipk
 
-①启动Shadowsocks服务端：service supervisord start
-②关闭Shadowsocks服务端：service supervisord stop
-③重启shadowsocks服务端：service supervisord restart
+a.方法一：一键脚本 （网络直连sourceforge.net和downloads.lede-project.org没有问题，可以试试ping不丢包）
 
-
-netstat -lntp
-/etc/init.d/shadowsocks status  // ss状态
-/etc/init.d/shadowsocks start   // start   
-/etc/init.d/shadowsocks restart  // 重启ss
-./shadowsocks-libev.sh uninstall   //卸载ss,需要在root中
+wget -qO- http://openwrt-dist.sourceforge.net/auto_install.sh | sh
+# 执行此步骤时候按照提示，选择安装shadowsocks,chinadns以及dns-forwarder
+opkg install ip-full iptables-mod-tproxy
 
 
-UDP Relay
---------------------------------------
-确认服务端是否开始UDP Relay:
-https://github.com/icymind/VRouter/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%90%AF-UDP-Relay
-方法1: 在命令行启动 ss-server 时加上 -u 参数
-方法2: 在 ss-server 的配置文件中添加"mode": "tcp_and_udp"
-验证：
-netstat -lnup
+b.方法二：先安装依赖包，然后安装ipk
+
+依赖列表：
+libgcc # target/cpu型号/package目录下
+libpthread # 同上
+ip-full # base
+ipset # base 无此包不能使用luci-app-shadowsocks
+      #      只能使用luci-app-shadowsocks-without-ipset 性能会下降
+iptables-mod-tproxy # base 无此包将无法代理UDP流量
+zlib # base
 
 
-/***********************************/终端翻墙
+对应下载地址：
+查看CPU型号：
+opkg print-architecture | awk '{print $2}'
+
+依赖ipk：
+http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/
+http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/
 
 
+应用ipk:
+http://openwrt-dist.sourceforge.net/packages/
+http://openwrt-dist.sourceforge.net/
+
+路由开始：
+
+opkg update
+opkg install ip-full ipset iptables-mod-tproxy libpthread
+（备注：自己看依赖中libgcc，zlib没有安装，网址说会自动从仓库安装）
+
+上面依赖装完后，需要下载下面的主程序：然后scp上传路由,opkg install安装
+shadowsocks-libev_x.x.x-x_xxxx.ipk
+dns-forwarder_x.x.x-x_xxxx.ipk
+ChinaDNS_x.x.x-x_xxxx.ipk
+luci-app-shadowsocks_x.x.x-x_all.ipk
+luci-app-chinadns_x.x.x-x_all.ipk
+luci-app-dns-forwarder_x.x.x-x_all.ipk
+
+4.luci-ss, chinadns, tcp fast open配置：
+a.luci-ss添加服务器
+obfs-local
+obfs=http;obfs-host=www.bing.com
+b.luci-ss设置访问控制
+c.更新chinadns
+wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
+d.更新完成后，记得重启ss
+e.配置代理(本地端口1080)
+f.额外优化：开启tcp fast open
+修改 /etc/sysctl.conf ，加入如下一行：
+net.ipv4.tcp_fastopen = 3
+然后执行如下命令生效：
+sysctl -p
+g.勾选服务器tcp fast open
+
+5.dns配置
+a.dns forwarder:
+port:5311
+address:127.0.0.1
+server:8.8.8.8
+
+b.chinadns:
+enable bidirectional filter
+port:5353
+address:0.0.0.0
+server: 114.114.114.114,127.0.0.1#5311
+
+c.dhcp/dns
+(TAB:general settings)dns forwardings: 127.0.0.1#5353
+(TAB:resolve and hosts files)enable ingnore resolve file (old path: /tmp/resolv.conf.auto)
+
+d.wan
+network-->interface-->wan-->edit-->advanced
+disable Use DNS servers advertised 
+Use custom DNS servers 127.0.0.1
+
+--------------至此已经能科学上网了
+6.dnsmasq
+gfwlist,china-list
+
+mkdir /etc/dnsmasq.d
+
+uci get dhcp.@dnsmasq[0].confdir 
+如果返回值为 uci: Entry not found 或者其他非  /etc/dnsmasq.d 的值，则执行：
+uci add_list dhcp.@dnsmasq[0].confdir=/etc/dnsmasq.d
+uci commit dhcp
+
+uci get dhcp.@dnsmasq[0].cachesize  //获取缓存条数
+如果返回值为 uci: Entry not found ，则执行（缓存条数酌情设置）：
+uci add_list dhcp.@dnsmasq[0].cachesize=10000
+uci commit dhcp
+如果返回值是一个数字，说明设置过该选项，但如果感觉小了，运行如下命令修改该值：
+uci set dhcp.@dnsmasq[0].cachesize=10000
+uci commit dhcp
+
+opkg install coreutils-base64 ca-certificates ca-bundle curl
+
+cd ~
+# China-List
+curl -L -o generate_dnsmasq_chinalist.sh https://github.com/cokebar/openwrt-scripts/raw/master/generate_dnsmasq_chinalist.sh
+chmod +x generate_dnsmasq_chinalist.sh
+# GfwList
+curl -L -o gfwlist2dnsmasq.sh https://github.com/cokebar/gfwlist2dnsmasq/raw/master/gfwlist2dnsmasq.sh
+chmod +x gfwlist2dnsmasq.sh
+
+# China-list  114可以换成ISP的dns,这样运营商分配最近的服务器
+sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -o /etc/dnsmasq.d/accelerated-domains.china.conf
+# GfwList
+sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -o /etc/dnsmasq.d/dnsmasq_gfwlist.conf
+# Restart dnsmasq
+/etc/init.d/dnsmasq restart
+完成后可自行查看 /etc/dnsmasq.d/accelerated-domains.china.conf 和文件，如有不需要的域名，注释掉或者删除即可
+PS：路由性能不好的，慎用China-List。
+
+------------------至此已经够用了
+后面部分为自定义chinalist和gfwlist
+这部分需要用dnsmasq-full替换掉dnsmasq
+opkg remove dnsmasq && opkg install dnsmasq-full
+
+
+验证dnsmasq配置：
+--------------------
+修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d
+/etc/dnsmasq.d目录下有两个文件：
+accelerated-domains.china.conf  dnsmasq_gfwlist.conf
+
+/etc/resolv.conf    //设置本地DNS
+nameserver 127.0.0.1
 
 ///////////////////////////////////////////////////////////////////  ssr结束
 
@@ -1429,6 +1555,7 @@ whois .baidu.com
 
 
 > nslookup
+查询dns，解析结果
 -----------------
 nslookup domain [dns-server]
 nslookup facebook.com 8.8.8.8  //157.240.13.35
@@ -1439,7 +1566,14 @@ nslookup baidu.com    //域名
 nslookup 220.181.57.216  //ip
 
 
+> ping
+查询dns响应时间以及稳定性
+--------------------
+ping 114.114.114.114
+
+
 > dig:
+查询dns,解析结果，解析时间
 --------------------
 比nslookup好用
 @<服务器地址>：指定进行域名解析的域名服务器；
@@ -1453,9 +1587,12 @@ nslookup 220.181.57.216  //ip
 -h：显示指令帮助信息。
 
 dig www.facebook.com @8.8.8.8 +short  //通过指定DNS解析得到的最终域名157.240.13.35
+
 dig +trace www.scnu.edu.com    
 // 跟踪域名解析； https://blog.csdn.net/a583929112/article/details/66499771
 // https://blog.csdn.net/crazw/article/details/8986504
+// https://blog.csdn.net/jiajiren11/article/details/80071312
+当域名不存在的时候，返回一条SOA记录
 
 dig www.baidu.com  // CNAME是别名；A是address,ip; NS是服务器的主机名;在AUTHORITY SECTION里面的服务器主机名，都会在ADDITIONAL SECTION里给出该主机的IP地址。
 dig -t soa www.baidu.com  //解析域名的主从关系  soa:start of authority
