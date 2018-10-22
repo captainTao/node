@@ -380,6 +380,33 @@ opkg update
 opkg install ip-full ipset iptables-mod-tproxy libpthread
 （备注：自己看依赖中libgcc，zlib没有安装，网址说会自动从仓库安装）
 
+root@OpenWrt:~# opkg install ip-full ipset iptables-mod-tproxy libpthread
+Installing ip-full (4.16.0-8) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/ip-full_4.16.0-8_mips_24kc.ipk
+Installing libmnl (1.0.4-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/libmnl_1.0.4-1_mips_24kc.ipk
+Installing ipset (6.34-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/ipset_6.34-1_mips_24kc.ipk
+Installing kmod-nfnetlink (4.9.120-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/kmod-nfnetlink_4.9.120-1_mips_24kc.ipk
+Installing kmod-ipt-ipset (4.9.120-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/kmod-ipt-ipset_4.9.120-1_mips_24kc.ipk
+Installing libipset (6.34-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/libipset_6.34-1_mips_24kc.ipk
+Installing iptables-mod-tproxy (1.6.2-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/iptables-mod-tproxy_1.6.2-1_mips_24kc.ipk
+Installing kmod-ipt-tproxy (4.9.120-1) to root...
+Downloading http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/kmod-ipt-tproxy_4.9.120-1_mips_24kc.ipk
+Package libpthread (1.1.19-1) installed in root is up to date.
+Configuring libmnl.
+Configuring ip-full.
+Configuring kmod-nfnetlink.
+Configuring kmod-ipt-tproxy.
+Configuring kmod-ipt-ipset.
+Configuring libipset.
+Configuring ipset.
+Configuring iptables-mod-tproxy.
+
 上面依赖装完后，需要下载下面的主程序：然后scp上传路由,opkg install安装
 shadowsocks-libev_x.x.x-x_xxxx.ipk
 dns-forwarder_x.x.x-x_xxxx.ipk
