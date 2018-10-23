@@ -122,6 +122,12 @@ ss+ChnRoute:
 https://cokebar.info/archives/664           // ss+chnRout
 https://cokebar.info/archives/962           // ss+gfw
 
+https://blog.csdn.net/lvshaorong/article/details/53230545          // openwrt无线中继，桥接，信号放大，访客网络
+1.有线转有线NAT-网络选LAN 
+2.有线转有线中继-网络选WAN 
+3.无线转无线中继-wifi scan
+4.无线转有线-从方式三种来中转
+.....
 
 ------------------------------------------------  搭建参考
 
