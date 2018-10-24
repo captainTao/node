@@ -2037,8 +2037,66 @@ ctrl + shift + 上下箭头：快速移动
 
 
 
-///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
+wifi toggle scheduled
+refer to :https://wiki.openwrt.org/doc/howto/cron
+
+on.sh
+----------
+#!/bin/sh
+uci set wireless.@wifi-device[0].disabled=0
+uci set wireless.@wifi-device[1].disabled=0
+wifi
+uci commit
+
+
+off.sh
+------------
+#!/bin/sh
+uci set wireless.@wifi-device[0].disabled=1
+uci set wireless.@wifi-device[1].disabled=1
+wifi
+uci commit
+
+
+scheduled input:
+------------------
+
+mine:
+
+0 1 * * 1-5 /etc/wifi/wifioff.sh
+0 7 * * 1-5 /etc/wifi/wifion.sh
+30 8 * * 1-5 /etc/wifi/wifioff.sh
+0 19 * * 1-5 /etc/wifi/wifion.sh
+0 2 * * 6,0 /etc/wifi/wifioff.sh
+0 7 * * 6,0 /etc/wifi/wifion.sh
+
+
+0 1 * * 1-5 wifi down
+0 7 * * 1-5 wifi up
+0 9 * * 1-5 wifi down
+0 19 * * 1-5 wifi up
+0 2 * * 6,0 wifi down
+0 7 * * 6,0 wifi up
+
+
+notice:
+1.There should be a end-of-line character on the last line of the crontab file. If in doubt, just leave an empty line at the end.
+
+2.f there is no crontab defined (i.e. /etc/crontabs/ is empty), then cron won't start! Make sure you already defined cron jobs before trying to start cron.
+
+/etc/init.d/cron start
+/etc/init.d/cron enable
+
+
+test:
+---------------
+16 21 * * 1-5 /etc/wifi/wifioff.sh
+18 21 * * 1-5 /etc/wifi/wifion.sh
+
+44 21 * * * wifi down
+46 21 * * * wifi up  
 
 
 
