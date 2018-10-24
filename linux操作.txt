@@ -2036,64 +2036,9 @@ ctrl + shift + 上下箭头：快速移动
 
 
 
-编译ipk
+
 ///////////////////////////////////////////////////////
-https://blog.csdn.net/lvshaorong/article/details/52931211
-https://nwindy.moe/lede-shadowsocksr/
 
-环境准备：
-sudo apt-get update
-sudo apt-get install build-essential asciidoc binutils bzip2 gawk gettext git subversion libssl-dev libncurses5-dev  patch unzip zlib1g-dev
-sudo apt-get install mercurial
-sudo apt-get install ccache
-
-xz -d  xxx.tar.xz
-tar xf xxx.tar
-
-# Clone 项目
-git clone https://github.com/AlexZhuo/openwrt-dnsforwarder/ package/dnsforwarder
-# 编译 po2lmo (如果有po2lmo可跳过)
-pushd package/dnsforwarder/tools/po2lmo
-make && sudo make install
-popd
-# 选择要编译的包 Network -> dnsforwarder
-make menuconfig
-# 开始编译
-make package/dnsforwarder/compile V=99
-
-
-ss:
-------------------
-cd ./OpenWrt-SDK-15.05-ar71xx-nand_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64/
-# 安装 feeds
-./scripts/feeds update packages
-./scripts/feeds install libpcre
-
-# 添加 feeds（ss v2.5.6之后的版本）
-git clone https://github.com/shadowsocks/openwrt-feeds.git package/feeds
-# 添加 feeds（ss 2.5.6版及之前，LEDE PandoraBox的SDK）
-git clone https://github.com/AlexZhuo/openwrt-feeds.git package/feeds
-=============先到这里暂停=============
-
-# 获取 Makefile
-git clone https://github.com/shadowsocks/openwrt-shadowsocks.git package/shadowsocks-libev
-# 选择要编译的包 Network -> shadowsocks-libev
-make menuconfig
-# 开始编译
-make package/shadowsocks-libev/compile V=99
-
-
-luci:
------------------
-git clone https://github.com/shadowsocks/luci-app-shadowsocks.git package/luci-app-shadowsocks
-# 编译 po2lmo (如果有po2lmo可跳过)
-pushd package/luci-app-shadowsocks/tools/po2lmo
-make && sudo make install
-popd
-# 选择要编译的包 LuCI -> 3. Applications
-make menuconfig
-# 开始编译
-make package/luci-app-shadowsocks/compile V=99
 
 
 
