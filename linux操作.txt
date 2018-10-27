@@ -1944,6 +1944,7 @@ cat /etc/shells          查看装了哪些shell
 
 zsh语法高亮：
 https://www.cnblogs.com/weixuqin/p/7029177.html
+https://www.jianshu.com/p/19c0a8890fe0
   
 1. brew install zsh-syntax-highlighting
 2. 根目录下vim .zshrc              
@@ -1954,6 +1955,8 @@ https://www.cnblogs.com/weixuqin/p/7029177.html
 
 .zshrc
 ---------------------
+https://www.jianshu.com/p/19c0a8890fe0
+
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.bash_profile
 PROMPT='Captain:%c$: '       # c表示绝对路径，d表示相对路径
@@ -1982,11 +1985,28 @@ grep -o wall list | wc -l         //在list文件中只匹配wall字符出现的
 ctrl+alt+F1   命令行全屏模式
 
 
-> PS1
+.bash .zsh
+> $PS1 $PS2
 ---------------------
 https://www.cnblogs.com/cuoreqzt/p/5848209.html
-1. echo $PS1    \h:\W \u\$
-2. 在.bash_profile中配置 export PS1="\u \w$"
+https://blog.csdn.net/dangyt123/article/details/53234273
+
+1. 打印现在所用的输出
+echo $PS1   默认 \h:\W \u\$
+echo $PS2   默认 >
+
+2.设置终端前缀的输出内容（一次性）
+PS1="\t\W"
+可用格式：
+\d–现在的系统日期
+\t–现在的系统时间
+\h–主机名
+\\# – 命令号（Comannd Number）
+\u–用户名
+\W–当前所在的路径
+\w–当前所在的完整路径
+
+2. 在.bash_profile中配置 export PS1="\u \w$"（永久）
 
 
 > pushd, popd
