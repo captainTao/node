@@ -2040,7 +2040,8 @@ ctrl + shift + 上下箭头：快速移动
 /////////////////////////////////////////////////////////////////
 
 wifi toggle scheduled
-refer to :https://wiki.openwrt.org/doc/howto/cron
+refer to :
+https://wiki.openwrt.org/doc/howto/cron
 
 on.sh
 ----------
