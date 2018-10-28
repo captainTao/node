@@ -1956,10 +1956,25 @@ https://www.jianshu.com/p/19c0a8890fe0
 .zshrc
 ---------------------
 https://www.jianshu.com/p/19c0a8890fe0
+http://blog.sina.com.cn/s/blog_71539d240101fh8s.html
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.bash_profile
-PROMPT='Captain:%c$: '       # c表示绝对路径，d表示相对路径
+#PROMPT='wanghaitao:%c$: '       # c表示绝对路径，d表示相对路径
+PROMPT="%* %c: "
+
+%u 用户名
+%c 目录的base
+%d 完整目录
+%% 为了显示%，需要用%进行转义。
+%t %T时间
+
+#开启颜色
+autoload -U colors && colors       
+#配置提示符模式。。 其实配置之前的PS1也是可以的 但是为了尊重说明文档。。。
+PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[green]%}%1|%~ %{$reset_color%}%#>"        
+#在行末显示上一命令的返回状态
+RPROMPT="[%{$fg_bold[yellow]%}%?%{$reset_color%}]"
 
 
 > source
