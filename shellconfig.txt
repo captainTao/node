@@ -111,7 +111,8 @@ alias grep="grep --color=auto"
 
 #开启颜色
 autoload -U colors && colors
-#在行末显示上一命令的返回状态                                                            15 RPROMPT="[%{$fg_bold[yellow]%}%?%{$reset_color%}]"
+#在行末显示上一命令的返回状态                                                            
+RPROMPT="[%{$fg_bold[yellow]%}%?%{$reset_color%}]"
 
 //////////////////////////////////////////////////////////////
 
