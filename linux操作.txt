@@ -1604,6 +1604,10 @@ nslookup 220.181.57.216  //ip
 --------------------
 ping 114.114.114.114
 
+> arping
+类似ping,发送ARP报文
+--------------------
+ping www.baidu.com
 
 > dig:
 查询dns,解析结果，解析时间
@@ -1641,8 +1645,6 @@ DNS 完美查询的流程就是： dnsmasq -> ChinaDNS -> ss-tunnel -> 国外DNS
 
 > traceroute:
 --------------------
-refer to line:320
-
 
 通信命令：
 write:
@@ -2074,7 +2076,7 @@ ctrl + shift + 上下箭头：快速移动
 
 /////////////////////////////////////////////////////////////////
 
-wifi toggle scheduled
+openwrt wifi toggle scheduled
 refer to :
 https://wiki.openwrt.org/doc/howto/cron
 
@@ -2133,6 +2135,35 @@ test:
 
 44 21 * * * wifi down
 46 21 * * * wifi up  
+
+
+/////////////////////////////////////////////////////////////////
+
+mac app反编译
+-------------------
+hopper disassembler
+
+refer to :
+http://bbs.iosre.com/t/hopper-mac/1428
+http://bbs.iosre.com/t/hopper-mac/1428
+
+
+thunder:
+---------
+a.搜索：
+ is
+b.定位文件，选择第一行汇编代码：执行：Modify -> Assemble Instruction，输入：mov eax, 0x1
+c.下一步输入ret,然后同样执行其他文件：
+
+//在x86汇编里，函数的返回值存放在eax寄存器里。1对应BOOL类型的YES
+//ret为return的意思
+1. -[LocalTask isValidLixianTask]
+2. -[UserController isVip]
+3. -[UserController isPlatinum]
+4. -[UserController isDiamond]
+
+d.定位：[AppDelegate applicationWillFinishLaunching:]直接在第一行执行ret
+e.File -> Produce New Executable
 
 
 
