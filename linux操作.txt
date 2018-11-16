@@ -2143,13 +2143,13 @@ mac app反编译
 -------------------
 hopper disassembler
 
+
+thunder:
+---------
 refer to :
 http://bbs.iosre.com/t/hopper-mac/1428
 http://bbs.iosre.com/t/hopper-mac/1428
 
-
-thunder:
----------
 a.搜索：
  is
 b.定位文件，选择第一行汇编代码：执行：Modify -> Assemble Instruction，输入：mov eax, 0x1
@@ -2166,4 +2166,12 @@ d.定位：[AppDelegate applicationWillFinishLaunching:]直接在第一行执行
 e.File -> Produce New Executable
 
 
-
+QQmusic:
+---------
+refer to :
+https://blog.csdn.net/pureszgd/article/details/73527714
+-[UrlAudioData currentSongRateType] ret 0
+-[DownloadTask currentSongRateType] ret 0
+-[DownloadInfo haveCheckDownloadRight] ret 1
+-[DownloadInfo haveDownloadRight] ret 1
+-[SongInfo isActionBitSet:forSwitch:] ret 1
