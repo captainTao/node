@@ -15,6 +15,9 @@ RAM，ROM
 内存: RAM
 网关，子网掩码，ICMP,DNS
 
+5.目前速度最快的还是SSR客户端加HAPROXY的服务器,国内的阿里云服务器架设haproxy再跳转到海外服务器
+6.ss+GoQuiet:goquiet是ss一个插件，可以将ss流量混淆为普通的https
+
 /////////////////////////////////////////////////////////////////// 
 
 谷歌DNS:
@@ -505,6 +508,10 @@ opkg remove dnsmasq && opkg install dnsmasq-full
 验证dnsmasq配置：
 --------------------
 修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d
+可知直接在/etc/dnsmasq.conf里添加一行设置这个值，单位是秒：
+min-cache-ttl=1800
+建议不要过大，3600以内吧，否则可能会有副作用
+
 /etc/dnsmasq.d目录下有两个文件：
 accelerated-domains.china.conf  dnsmasq_gfwlist.conf
 
