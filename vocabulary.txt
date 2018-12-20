@@ -1,4 +1,3 @@
-+----------------------------------
 assemble lagguage 汇编语言
 assemble line 装配线
 a decent sort of chap 一个正派的小伙
@@ -75,7 +74,7 @@ a feasible solution
 make a commitment
 a tempting job offer  .... attractive, absorbing
 confront with, 
-instrucitons for assembly
+instructions for assembly
 endure such pain
 actue sense of smell
 actue pancreatitis 急性胰腺炎
@@ -120,10 +119,501 @@ in advance
 adversting campaign
 civil procedure民事诉讼程序
 the road became rocky and steep
-steep hill/slope. 陡坡
+steep hill/slope/incline. 陡坡
 genuine leather/gold/diamond. 真皮/金/钻
-
-
-
-
-
+extension service 推广服务
+overtake,cut in, catch up with, to catch up
+fixed assets,固定资产
+asset management 资产管理
+intangible asset 无形资产
+long to do..
+neglect, ignore, oversight
+insult, abuse, despite,contumely
+according to statistics
+identity card, national/cultural identity
+self evident,不言而喻的，不证自明的
+detective story/film
+private detetive
+make a contribution to，做贡献
+intend, deliberate, designed, contained, conscious
+make a gesture,做手势
+high concentration,高浓度，高强度
+exchange rate汇率
+foreign exchange外汇
+stock exchange证券交易所
+professional knowledge/design/development
+fussy,critical,curious,picky
+manufacture process制造工艺
+permanent magnet永久磁铁
+permanent residence 长期居留
+permanent resident 永久性居民
+vary with 随..变化 /from 不同 /in 在..方面变化
+promising future/market
+service interupption 断电
+power interupption 断电
+cultural/chinese/industrial revolution
+divine service礼拜，祭礼
+silver screen
+transportation/carriage/traffic
+honesty,integrity,truth,veracity,righteousness
+switch on/off
+relevant information/experience
+gas/population explosion
+promotional material/activities/events
+rolling mill轧钢厂
+paper mill
+economic prosperity
+equivalent, subtancial, 
+on/ ahead of echedule
+generate profit/electricity
+overflow, spill over, flow over
+I'm not exaggerating
+energetic and resourceful
+coopertive relationship/system
+door handle 门把手
+in operation,生效运转
+plant, mill
+fatigue life
+corporate responsibility共同责任
+latic acid bacteria 乳酸菌
+pathogenic bacteria 病菌
+photosynthetic bacteria 光合细菌
+qualification certificate
+professional qualification
+qualification test
+distinct from
+in grain彻底
+grain size晶体大小
+core competetitiveness核心竞争力
+reluctant,unwilling,
+reluctant to help
+incentive mechanism激励机制
+groundwater recharge
+conform with
+a casual manner
+stale jokes
+needy, poor, indigent
+demonstic market
+sensible,
+evaluate, assess, appraise
+child bride童养媳
+persistence of vision视觉暂留
+solid state,固态
+prevail over胜过，占优势
+prevail on 说服，劝说
+prevail upon,说服，诱使
+social/legal/national consciousness
+social/public welfare
+wastewater treatment
+a range of 一系列，一套
+brand image品牌形象
+command prompt
+inquiry system/learning
+state council 国务院
+city council市会议
+sercurity concil 联合国安理会
+combine harvester联合收割机
+the territorial integrity of the country一个国家领土的完整
+moral integrity.气节，节操
+goverment regulation
+sense of responsibility责任感
+social responsibility社会责任感
+exhibition center/hall
+effective measure
+without measure,过分
+by implication.含蓄的，暗示
+characteristic curve
+bumper harvest / good harvest 丰收
+essential oil精油
+essential condition必要条件
+surgical instruments
+post a threat形成威胁
+raise money,筹钱，募捐
+backward area落后地区
+step backward
+backward contry
+reproductive age/system/tract[医]生殖系统
+gear transmission齿轮转动
+in expectation
+mass/bird migrations
+migration velocity 迁移速度
+a puzzling fact
+in evidence明显的
+academic atomosphere
+medical shcool医学院
+valid period有效期
+in the neighborhood of 在...附近，大约
+neighborhood park邻里公园
+sales agent代理商
+reach a consensus达成共识
+confirm in 使更坚定
+means of trasport 运输工具
+a strict teacher
+have a fling, have an affair with sb
+break a leg
+racial/sex/price discrimination
+intense competition
+intense emotion激情
+broad band
+sexually abused
+energy/power consumption
+deliver a speech
+music appreciation音乐鉴赏
+custom/brand loyalty
+insight, perception,penetration
+sieze the initiative
+on the occasion of 值此。。。之际
+inherited health
+prominent feature/character
+in the context of
+durable material
+have no conscience没良心
+a preimitive society
+appetite for 对。。。的欲望
+loss of appetite
+good appetite
+world economic forum
+merit and demerit
+the theory of evolution
+folk perscription偏方
+on the assumption that..
+sales are better than anticipated.
+opening/wedding/signing ceremony
+prevent, dispute
+canteen, mess, refectory
+in the circumstance..在..环境下
+in no circumstance..决不
+substantial savings/shareholder 巨额存款/大股东
+mutually benefical 双赢
+benefical owner受益人
+rival firms
+curb inflation 控制通货膨胀
+maintain world peace维持世界和平
+military confontation军事对峙
+bussiness scope营业范围
+within the scope of
+dominant role
+implement plan执行计划
+at a discount
+special discount
+discount price
+sympathy for
+in sympathy with
+bad mood
+in the mood 兴致勃勃
+complaint center
+interracial marriage
+mutual benefit
+academic research
+new/proccessing technique
+pull the trigger
+sustainable development/growth
+without exception 一律，无例外
+with the exception of
+rational design
+embarassed, awkward, abashed
+lengthy process 很长的过程
+standardize, normalize
+blood donation
+snack bar,小吃店
+go into exile流放
+in stock
+stock with 
+out of stock
+make a pledge/vow 宣誓
+cash pledge押金
+synthetic chemicals
+get a clue 得到线索
+clue on.提示
+in appearance
+elegant appearance美观大方
+fatal accident死亡事故
+young pioneer
+favorable film reviews正面影评
+superficial area表面积
+permanent/local resident
+artificial intelligence
+public security bureau
+bureau of statistics
+major in主修
+No littering,Penalty $500
+death penalty
+a management consultant
+consultant firm
+literature and art
+gradually her anxiety lessened
+task force特遣部队，小组
+air crash
+be deserving of应得
+questionnaire survey问卷调查
+an abundant supply of fresh water
+abundant rainfall
+abundant in
+self esteem
+the critics held him in high esteem as an actor.
+illegal income/activities/immigration
+under the influence酒醉的
+labor dispute 劳动/资争议
+in dispute
+dispute resolution调解纠纷
+beyond dispute无可争议的
+moral education/character/hazard  道德危机
+clinical application临床应用
+do you have a color preference?
+preference to sth
+preference for
+tax preference 税收优惠
+assignment problem 指派问题
+supervision and control
+technical/finacial supervision
+in an instant立刻马上
+quit smoking
+as a consequence of
+in consequence, conlusion, consequently
+cruelty, rigorousness
+exposure time
+sun exposure
+entertaining friends招待朋友
+access control
+have access to 可以利用，接近
+the negotiating table
+disappointing profit figures
+alternative energy
+be generous with/in 大方/乐于
+primary/middle/high/ school  university, institution of higher learning高等学校，senior high school高中
+primary stage初始阶段
+primary school
+from the standpoint of women, viewpoint, sentiment
+depressed area 贫穷地区
+depressed market萧条市场
+obstacle course 障碍训练
+gambling house/debts/ben 赌场，债务
+logic control
+theory, therapy 
+authoritative information/source  ../权威人士，来源
+smooth operation正常运转
+smooth muscle 平滑肌
+financial institution金融机构
+vehicle maintance 汽车保养
+motor vehicle机动车
+electic vehicle 电动车
+in the shade
+shade in 逐渐变成
+the rights of the individual
+individual income tax 个人所得税
+individual freedom
+contemporary literature/art
+the contemporary era当代
+opposite sex异性
+just the opposite正好相反，恰好相反
+specialize in ....(law)
+water content 含水量/ moisture content含湿量
+saint,rishi,philospher
+social unrest
+gas emission煤气泄漏
+take up occuptaiton就业
+larbor contract劳动合同
+a ban on beef imports禁止进口牛肉
+romantic fiction爱情小说
+science fiction
+horror fiction恐怖小说
+stranger than fiction 奇幻人生
+Mike has a strick upbringing家教很严
+preserve food 保存食物
+derive, deprive
+council,reconcil
+archive, achieve
+explain, explanation
+facilities, facilitate
+convey, survey
+This vaccine is already routinely used.
+administrative region行政区域
+administrative law 行政法
+special administrative region 特别行政区
+an ignorant and uneducated man 不学无术的人
+annual meeting年会
+annual report/production
+due for 应该得到
+due out 待发，待退
+archive file档案文件
+an incomparable view 无与伦比的景色
+a new perspective on life.对生活有个全新的看法
+historical perspective 历史展望
+in perspective正确地，符合透视法地
+perspective, prospect, foresight
+constitue a crime 构成犯罪
+vitally important
+dust removal 除尘（设备）
+in the dust 死了
+dust collector 吸尘器
+track and field 田径
+on track 走上正轨
+keep track 注意动向
+consumer confidence 消费信任度
+sophisticated software/equipment/technology
+fourier transform傅里叶变换
+in session 在开会，在上课
+brand/environmental awareness
+exhaust gas/system/emission 废气/排气系统/废气排放
+public praise口碑
+relative humidity/error/positon  相对湿度/..
+make a breakthrough
+breakthrough technology
+incidence angle 入射角，安装角
+start from scratch 白手起家
+up to scratch到达标准
+economic recession经济衰退
+a woman of extraordinary beauty
+improper behavior
+vital part 重要部位
+vital energy 生命力
+vital force 生机，生命力
+commencement date 生效日期
+fetch in 引来，招来
+fetch up 引起，到达
+fetch and carry 做杂务，打杂
+a clumsy waiter
+establishment of diplomatic relations.建立外交关系
+business establiment营业处所
+irregular menstruation 月经不调
+prevail, prevalent
+clinical psychologist临床心理学家
+cozy up to 奉承，取悦
+come over to the fire and cozy up a bit.
+photo gallary 图片库
+picture gallary 美术馆
+an enormous bunch of flowers.
+obtain employment.就业，找到工作
+obtain evidence取证
+relieve oneself大小便
+relieve stress
+relieve from 从..中解除
+an act of generosity.十分慷慨的行为
+an effectionate hug
+key issue,关键议题
+public administration.公共管理
+natural selection.物竞天择
+turn the tide.扭转局势，转变天气
+high tide.
+superior quality.上等货
+goverment grant.认为..理所当然
+take for granted.
+war of liberation 解放战争
+women's liberation 女权运动
+obeserve on 评论
+institute of technology.理工/技术学院
+designing insititute设计院
+school dormitory.学校宿舍
+an awful lot 经常
+an awful lot of 许多，大量的
+awful weather.气候恶劣
+in emergency
+emergency response
+stress on.对..的强调
+stress distribution.应力市场
+stress field 应力场
+launch vehicle 运载火箭
+product launch 产品发布会
+launch pad 发射台
+she remove herself reluctantly.
+remove oneself.
+engage in..从事于
+engage with.交战，与..接洽
+engage on 从事，开始
+drug trafficking 贩毒
+uncertain ...about.对..不肯定
+accommodate with  向..供应
+mature stage.产品的生命成熟期
+in contrast.比较起来
+by contrast.相比之下
+contrast with. 与..形成对比
+dental clinic 牙科诊所
+award ceremony.颁奖典礼
+the chemical composition of bleach
+chemical industry.化学工业
+consistent with 符合，与...一致
+consistent policy. 一贯政策
+renew, start over
+school dropout
+go sightseeing.去观光
+sightseeing tour观光旅游
+sightseeing bus 观光巴士
+great honor.殊荣
+in honor 为了纪念
+national honor
+in honor of ..向..致敬
+installment payment
+active ingredient.有效成分
+revenue and expenditure.收支
+in particular
+tumor cell肿瘤细胞
+under the sway of..
+under someone's sway.
+hold sway.统治，支配
+technical staff/personnel/support
+expert in ..在..方面是行家
+expert at.擅长
+imaginary line/number 虚线/数
+ancient/modern civilization
+warm embrace
+high/good performance
+performance evaluation.
+associate/adjunct professor.副教授
+full professor正教授
+choke point.瓶颈
+choke off.使闷死
+sex appeal.性感，吸引力
+appeal against.提出上诉
+heat preservation.保温
+submit appplications
+transaction cost交易成本
+insist on.坚持
+in the concrete.实际上，具体的
+virtual reality.虚拟现实
+in contact with.与..有联系
+phychological counseling.心里咨询/辅导
+for simplicity。为简单起见
+linear programing.线性规划
+dynamic programing.动态程序设计
+head coach主教练
+assistant coach 助理教练
+finacial/economic crisis
+crisis management
+go to the polls 去投票
+opinion poll选举投票
+he finally consent to go.
+informed consent.知情同意
+written consent.书面同意，同意书
+mutual consent 双方同意
+first rank 一流
+in the ranks 当兵
+in rank.成队列
+in collision
+inflation rate 通货膨胀率
+right to interpret.解释权
+house  arrest.软禁
+leisure time.业余时间
+at leisure。从容地，闲着地
+the personnel department 人事部
+department store.百货店
+state department.国务院
+sexual desire 性欲
+a burning desire.强烈的欲望
+optimal solution最优解
+have one's revenge.向...报复
+rental income
+market quotation.市场行情
+price quotation.报价
+quotation sheet.报价单
+last lap最后一圈
+chinese character汉子
+moral character.品德
+main character.主要人物
+to no avail无效，完全无用
+vanish away.消失
+massive retaliation 大规模报复
+care for pregnant women孕妇保健
+eliminate poverty/noise消除贫困，杂音
+terminal market农产品集散市场
+identical with..与..相同
+commit oneself.承诺，答应负责
