@@ -108,6 +108,7 @@ alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
 alias grep="grep --color=auto"
+alias rm='rm -i'
 
 #开启颜色
 autoload -U colors && colors
