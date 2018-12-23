@@ -46,7 +46,7 @@ dishonest, insincere, deceptive
 excessive sonsumption,过渡消费
 representative office 办事处
 legal representative 法定代理人
-underline,emphasize, stress, highlight
+underline,emphasize, stress, highlight, value
 tragic, tragedy, strategy
 this tragic incident underlines the need for immediate action
 reflect on,仔细考虑，思考
@@ -182,6 +182,9 @@ qualification certificate
 professional qualification
 qualification test
 distinct from
+distincted, incomparable, distinguished, prominent, capable, competent
+substantial, tremendous, abundant, plenty, massive, enormous, mass
+mechanical(adj), mechanic(n), mechanism(n), mechanics(n)
 in grain彻底
 grain size晶体大小
 core competetitiveness核心竞争力
@@ -301,6 +304,7 @@ sympathy for
 in sympathy with
 bad mood
 in the mood 兴致勃勃
+in no mood to do...
 complaint center
 interracial marriage
 mutual benefit
@@ -309,8 +313,8 @@ new/proccessing technique
 pull the trigger
 sustainable development/growth
 without exception 一律，无例外
-with the exception of
-rational design
+with the exception of 除了..情况
+rational design 合理的设计
 embarassed, awkward, abashed
 lengthy process 很长的过程
 standardize, normalize
@@ -655,3 +659,32 @@ places of historical interest.历史名胜
 annual bonus.年终分红
 level of modernization
 show one's individuality.展示个性
+fitness equipment健身器材
+fitness center 健身房
+absent from (work) 缺席 /旷工
+absent minded,健忘的
+antique brass 古铜色
+goverment intervention 政府干预
+surgical intervention 外科手术
+trace element 微量元素
+without trace 无踪无际的
+protest against 反对
+without protest 无异议的
+under protest 极不乐意的
+fishing tackle,渔具
+block and tackle.滑轮组
+tackle box 工具箱，钓鱼盒
+ministry of finace
+public finace 财政学
+international finace 
+financial (adj)
+in fine.最终
+monetary penaty。罚款
+expand market 扩大市场
+expand domestic demand 扩大内需
+spontanenous combustion 自燃   voluntary
+he was heavily in dedt
+no offense 无意冒犯
+take offense,生气
+criminal offense. 犯罪
+appealing design.造型优美
