@@ -671,7 +671,7 @@ trace element 微量元素
 without trace 无踪无际的
 protest against 反对
 without protest 无异议的
-under protest 极不乐意的
+under protest 极不乐意的, unwilling
 fishing tackle,渔具
 block and tackle.滑轮组
 tackle box 工具箱，钓鱼盒
@@ -683,7 +683,7 @@ in fine.最终
 monetary penaty。罚款
 expand market 扩大市场
 expand domestic demand 扩大内需
-spontanenous combustion 自燃   voluntary
+spontaneous combustion 自燃   ,voluntary
 he was heavily in dedt
 no offense 无意冒犯
 take offense,生气
@@ -695,8 +695,8 @@ oral english/cavity/communication  ../口腔/..
 make provison for 为..做好准备
 pernicious anemia 恶性贫血
 prestigious, celebrated, famous, renowned
-strenuous exercise
-trivial matters.
+strenuous exercise 剧烈运动
+trivial matters. 琐事
 conservative party,保守党
 the automobile industry,汽车工业
 central nervous system 中枢神经系统
@@ -713,3 +713,8 @@ deepen the reform深化改革
 negative, passive, inactive
 accelerate, accumulate.
 prescription, perception
+the window was sealed shut
+seal of 保证，证明
+general revision总复习
+slack season淡季
+slack off偷懒
