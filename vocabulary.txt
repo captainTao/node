@@ -1,5 +1,6 @@
 assemble lagguage 汇编语言
 assemble line 装配线
+assemble manifest 装配清单
 a decent sort of chap 一个正派的小伙
 calculable, foreseeable
 resemble, favor
@@ -59,7 +60,7 @@ first priority
 finanacial transactions
 point fo view,观点
 in view of ,鉴于，考虑到
-unwilling, reluctant, narrow
+unwilling, reluctant, narrow, loath/loth
 in harmony with 与..协调，一致
 derive from ,源于，出自
 put forward new proposal,  design proposal, to take a propsal,提出建议
@@ -183,7 +184,7 @@ professional qualification
 qualification test
 distinct from
 distincted, incomparable, distinguished, prominent, capable, competent
-substantial, tremendous, abundant, plenty, massive, enormous, mass
+substantial, tremendous, abundant, plenty, massive, enormous, mass, sufficient, ample, 
 mechanical(adj), mechanic(n), mechanism(n), mechanics(n)
 in grain彻底
 grain size晶体大小
@@ -644,7 +645,7 @@ direct proportion正比例
 conventional industries.传统行业
 detailed information/description/design
 simultaneous interpretation 同声传译
-judicial interpretation.司法解释
+judicial interpretation/system.司法解释
 behave yourself,行为规矩点
 infinite loop/space
 undervalue = make no account of
@@ -677,7 +678,7 @@ tackle box 工具箱，钓鱼盒
 ministry of finace
 public finace 财政学
 international finace 
-financial (adj)
+financial system/management/crisis
 in fine.最终
 monetary penaty。罚款
 expand market 扩大市场
@@ -687,4 +688,28 @@ he was heavily in dedt
 no offense 无意冒犯
 take offense,生气
 criminal offense. 犯罪
+commit the offense.认罪
 appealing design.造型优美
+metabolic disorder.代谢紊乱
+oral english/cavity/communication  ../口腔/..
+make provison for 为..做好准备
+pernicious anemia 恶性贫血
+prestigious, celebrated, famous, renowned
+strenuous exercise
+trivial matters.
+conservative party,保守党
+the automobile industry,汽车工业
+central nervous system 中枢神经系统
+specular reflection 镜面反射
+strange, peculiar, weird
+recycle bin垃圾桶
+mineral resources.矿藏
+sticky rice糯米
+sticky tape胶带
+sticky fingers小偷小摸的人
+meet/take up/rise to the challenge.接受挑战
+make generalizations about sth.对某事做概括
+deepen the reform深化改革
+negative, passive, inactive
+accelerate, accumulate.
+prescription, perception
