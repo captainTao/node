@@ -99,7 +99,7 @@ backery, tommy-shop
 seize, grasp, absorb,
 laundry service/ detergent/bag  ../洗衣粉/..
 a profound sense of guilt
-job/telephone/personl interview
+job/telephone/personal interview
 justice department 司法部门
 social justice 社会主义
 backup and restore
@@ -107,17 +107,17 @@ a familiar tune
 familiar with
 get familiar with
 familiar style简体，非正式文体
-investigate into
+investigate into  对...进行调查
 extracurricular activity,课外活动
 ease onself,自我安慰，泄愤
 at ease,安逸，自由自在
 with ease,熟练的，不费力的
-wildlife/water/soil/energy conservation
+wildlife/water/soil/energy conservation    ...保护
 the aviation industry 航空工业
 civil aviation 民用航空
 aviation safety 航空安全，飞行安全
 in advance
-adversting campaign
+adversting campaign  广告宣传活动
 civil procedure民事诉讼程序
 the road became rocky and steep
 steep hill/slope/incline. 陡坡
@@ -129,7 +129,7 @@ asset management 资产管理
 intangible asset 无形资产
 long to do..
 neglect, ignore, oversight
-insult, abuse, despite,contumely
+insult, abuse, despite, contumely
 according to statistics
 identity card, national/cultural identity
 self evident,不言而喻的，不证自明的
@@ -159,31 +159,33 @@ transportation/carriage/traffic
 honesty,integrity,truth,veracity,righteousness
 switch on/off
 relevant information/experience
-gas/population explosion
-promotional material/activities/events
+gas/population explosion 煤气/人口爆炸
+promotional material/activities/events 宣传资料，宣传片/促销活动/..活动
 rolling mill轧钢厂
 paper mill
-economic prosperity
-equivalent, subtancial, 
-on/ ahead of echedule
+plant, mill
+economic prosperity 经济繁荣
+common prosperity 共同富裕
+equivalent, substantial, 
+ahead of schedule 提前
+on schedule 准时
 generate profit/electricity
 overflow, spill over, flow over
 I'm not exaggerating
-energetic and resourceful
-coopertive relationship/system
+energetic and resourceful 精力充沛，足智多谋
+cooperative relationship/system 合作关系/制度
 door handle 门把手
 in operation,生效运转
-plant, mill
-fatigue life
+fatigue life 疲劳寿命
 corporate responsibility共同责任
-latic acid bacteria 乳酸菌
+lactic acid bacteria 乳酸菌
 pathogenic bacteria 病菌
 photosynthetic bacteria 光合细菌
 qualification certificate
 professional qualification
 qualification test
 distinct from
-distincted, incomparable, distinguished, prominent, capable, competent
+distinct, distinguishing, incomparable, distinguished, prominent, capable, competent
 substantial, tremendous, abundant, plenty, massive, enormous, mass, sufficient, ample, 
 mechanical(adj), mechanic(n), mechanism(n), mechanics(n)
 in grain彻底
@@ -198,7 +200,7 @@ a casual manner
 stale jokes
 needy, poor, indigent
 demonstic market
-sensible,
+sensible, resourceful
 evaluate, assess, appraise
 child bride童养媳
 persistence of vision视觉暂留
@@ -694,7 +696,7 @@ metabolic disorder.代谢紊乱
 oral english/cavity/communication  ../口腔/..
 make provison for 为..做好准备
 pernicious anemia 恶性贫血
-prestigious, celebrated, famous, renowned
+prestigious, celebrated, famous, distinguished, renowned
 strenuous exercise 剧烈运动
 trivial matters. 琐事
 conservative party,保守党
