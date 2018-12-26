@@ -137,6 +137,8 @@ detective story/film
 private detetive
 make a contribution to，做贡献
 intend, deliberate, designed, contained, conscious
+take time to deliberate 深思熟虑
+deliberate on 仔细研究
 make a gesture,做手势
 high concentration,高浓度，高强度
 exchange rate汇率
@@ -720,3 +722,4 @@ seal of 保证，证明
 general revision总复习
 slack season淡季
 slack off偷懒
+core/conmunicative competency/competence
