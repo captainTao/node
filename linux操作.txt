@@ -2079,6 +2079,22 @@ ctrl + l: 快速选中
 ctrl + shift + 上下箭头：快速移动
 
 
+查看ios log
+--------------------------
+http://www.cocoachina.com/ios/20170719/19933.html
+
+brew install libimobiledevice --HEAD
+idevicesyslog
+
+idevicesyslog >> iphone.log & 重定向文件
+用tail -f和grep查看log
+tail -f iphone.log
+tail -f iphone.log | grep 'QQ’  # 查看包含QQ的行
+
+Warning: libimobiledevice HEAD-3a37a4e_2 is already installed and up-to-date
+To reinstall HEAD_3, run `brew reinstall libimobiledevice`
+
+
 class-dump
 ---------------------
 http://stevenygard.com/projects/class-dump/

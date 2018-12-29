@@ -122,7 +122,7 @@ career advancement职业发展
 adversting campaign 广告宣传活动
 civil procedure 民事诉讼程序
 the road became rocky and steep
-steep hill/slope/incline. 陡坡
+steep hill/slope/incline. 陡坡, decline减少
 genuine leather/gold/diamond. 真皮/金/钻
 extension service 推广服务
 overtake,cut in, catch up with, to catch up
@@ -190,13 +190,13 @@ qualification certificate
 professional qualification
 qualification test
 distinct from
-distinct, distinguishing, incomparable, distinguished, prominent, capable, competent, dominant
+distinct, evident, conspicuous, distinguishing, incomparable, distinguished, prominent, capable, competent, dominant, excellent, influential
 a long and distinguishing career.
 dominant role 主要角色
 competitor, opponent, rival
 comment, commencement
 remain, maintain
-adversity, dilemma, diploma
+adversity, advisory, dilemma, diploma
 respire(v),inspire(v), breathe(v),breath(n)
 counsel(v,n.忠告建议), conseling(v,n.咨询服务) concil(n.会议)
 consistent(adj.一致性的), conscience(n.良心), consensus(n.一致, 合意), conscious(adj.意识清楚的), consciousness(n.意识), consent(v,n.同意)
@@ -207,7 +207,17 @@ migration/ai/, immigration/i/
 substantial, tremendous, abundant, plenty, massive, enormous, mass, sufficient, ample, adequate
 make adequate provision for their retirment.
 adequate consideration/preparation 充分考虑/准备
+considerable, considerate, consideration
+applicant, candidate.
 mechanical(adj), 机械的,力学的,呆板的 mechanic(adj,n), 手工的, 技工 mechanism(n), 机制原理 mechanics(n) 力学, 机械学
+surpass, overtake, exceed
+instant, instance
+dictate, dictator
+committee, commit, convict, commitment
+accompany, company 陪伴
+derive, deprive
+induce, temptation(n), tempting(adj), tempt(v), stimulate(v)
+assembly(n), assemble(adj)
 in grain 彻底
 a grain of 一粒
 grain size 晶体大小
