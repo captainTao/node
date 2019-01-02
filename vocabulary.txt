@@ -227,7 +227,7 @@ grain size 晶体大小
 core competetitiveness 核心竞争力
 reluctant,unwilling,
 reluctant to help
-incentive mechanism 激励机制, motivation
+incentive mechanism 激励机制, motivation， stimulate
 groundwater recharge
 a casual manner
 stale jokes
@@ -669,7 +669,7 @@ red planet 火星
 propose a toast.敬酒
 drink a toast .干杯
 french toast. 法式吐司
-a specious argument 貌似有理的证据
+a specious argument 貌似有理的证据, conspicuous显而易见的
 trade surplus.贸易顺差
 surplus value，剩余价值
 surplus heat余热
@@ -721,7 +721,7 @@ public finace 财政学
 international finace 
 financial system/management/crisis
 in fine.最终
-monetary penaty. 罚款
+monetary penaty/policy. 罚款/货币政策
 expand market 扩大市场
 expand domestic demand 扩大内需
 spontaneous combustion 自燃,  voluntary
@@ -765,10 +765,15 @@ rise above 克服
 a territorial dispute 领土争端
 an invincible army 无敌的军队
 He took advantage of me at my most vulnerable.
-
-
-
-
+sheer nonsense 一派胡言
+oil/gas pipeline 输油/气管道
+repository, warehouse, entrepot， stash
+etrepot trade转口贸易
+blood/water circulation
+on the carpet 在考虑中，在审议中
+a drinking binge.一番痛饮
+relevant, reveal, revelation.
+lash out.猛烈抨击，大肆挥霍
 
 
 --------------------------
