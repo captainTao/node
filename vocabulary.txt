@@ -138,7 +138,7 @@ self evident 不言而喻的, 不证自明的
 detective story/film
 private detetive
 make a contribution to，做贡献
-intend, deliberate, designed, contained, conscious
+intend, deliberate, mean to do, designed, contained, conscious,
 take time to deliberate 深思熟虑
 deliberate on 仔细研究
 make a gesture 做手势
@@ -196,7 +196,7 @@ dominant role 主要角色
 competitor, opponent, rival
 comment, commencement
 remain, maintain
-adversity, advisory, dilemma, diploma
+adversity, adversely, advisory, dilemma, diploma
 respire(v),inspire(v), breathe(v),breath(n)
 counsel(v,n.忠告建议), conseling(v,n.咨询服务) concil(n.会议)
 consistent(adj.一致性的), conscience(n.良心), consensus(n.一致, 合意), conscious(adj.意识清楚的), consciousness(n.意识), consent(v,n.同意)
@@ -212,10 +212,13 @@ applicant, candidate.
 mechanical(adj), 机械的,力学的,呆板的 mechanic(adj,n), 手工的, 技工 mechanism(n), 机制原理 mechanics(n) 力学, 机械学
 surpass, overtake, exceed
 instant, instance
+for instance, for example
 dictate, dictator
 committee, commit, convict, commitment
 accompany, company 陪伴
 derive, deprive
+invincible, convincible
+irritate, irrationality
 induce, temptation(n), tempting(adj), tempt(v), stimulate(v)
 assembly(n), assemble(adj)
 in grain 彻底
@@ -418,7 +421,7 @@ logic control 逻辑控制
 access control 访问控制
 have access to 可以利用，接近
 the negotiating table
-disappointing profit figures
+disappointing profit figures 令人失望的盈利数字
 alternative energy
 be generous with/in 大方/乐于
 primary/middle/high/ school  university, institution of higher learning高等学校，senior high school高中
@@ -683,6 +686,7 @@ conventional industries.传统行业
 detailed information/description/design
 simultaneous interpretation 同声传译
 judicial interpretation/system.司法解释
+judicial pratice 司法程序
 behave yourself,行为规矩点
 infinite loop/space
 undervalue = make no account of
@@ -760,7 +764,7 @@ envious look 嫉妒的眼神
 rise above 克服
 a territorial dispute 领土争端
 an invincible army 无敌的军队
-
+He took advantage of me at my most vulnerable.
 
 
 
