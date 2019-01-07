@@ -199,7 +199,8 @@ remain, maintain
 adversity, adversely, advisory, dilemma, diploma
 respire(v),inspire(v), breathe(v),breath(n)
 counsel(v,n.忠告建议), conseling(v,n.咨询服务) concil(n.会议)
-consistent(adj.一致性的), conscience(n.良心), consensus(n.一致, 合意), conscious(adj.意识清楚的), consciousness(n.意识), consent(v,n.同意)
+consistent(adj.一致性的), conscience(n.良心), consensus(n.一致, 合意), conscious(adj.意识清楚的), consciousness(n.意识), consent(v,n.同意), 
+conscientious(adj,勤勉认真的，细心负责的)
 setting, circumstance, context
 deliver, publicize
 resign，assign, reassign
@@ -442,6 +443,7 @@ motor vehicle机动车
 electic vehicle 电动车
 in the shade
 shade in 逐渐变成
+show one's individuality展示个性
 the rights of the individual
 individual income tax 个人所得税
 individual freedom
@@ -768,7 +770,7 @@ He took advantage of me at my most vulnerable.
 sheer nonsense 一派胡言
 oil/gas pipeline 输油/气管道
 repository, warehouse, entrepot， stash
-etrepot trade转口贸易
+entrepot trade转口贸易
 blood/water circulation
 on the carpet 在考虑中，在审议中
 a drinking binge.一番痛饮
@@ -793,6 +795,14 @@ carbon dioxide二氧化碳
 erose, eros, erosion
 erose leaves 参差不齐的落叶
 the problem of soil erosion水土流失的问题
+pirate software.盗版软件
+Steve can't hide his amusement. 忍俊不禁
+amusement park/center 游乐园、娱乐中心
+she is slender and stylish.
+virtual, virtue.
+diplomacy,diplomatic
+reproductive,reproduct
+
 
 --------------------------
 battery of 一组，一套
