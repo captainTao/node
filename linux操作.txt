@@ -11,8 +11,8 @@ shadow            shadow-           shadowsocks.json  shells
 
 
 RAM，ROM
-闪存：ROM
-内存: RAM
+闪存：ROM, read-only memory
+内存: RAM, random access memory
 网关，子网掩码，ICMP,DNS
 
 5.目前速度最快的还是SSR客户端加HAPROXY的服务器,国内的阿里云服务器架设haproxy再跳转到海外服务器
