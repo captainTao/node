@@ -416,6 +416,8 @@ Configuring libipset.
 Configuring ipset.
 Configuring iptables-mod-tproxy.
 
+note:上面依赖安装完成后，我进行手动上传了依赖，然后安装了ligbcc和zlib
+
 上面依赖装完后，需要下载下面的主程序：然后scp上传路由,opkg install安装
 shadowsocks-libev_x.x.x-x_xxxx.ipk
 dns-forwarder_x.x.x-x_xxxx.ipk
@@ -423,6 +425,7 @@ ChinaDNS_x.x.x-x_xxxx.ipk
 luci-app-shadowsocks_x.x.x-x_all.ipk
 luci-app-chinadns_x.x.x-x_all.ipk
 luci-app-dns-forwarder_x.x.x-x_all.ipk
+我这儿还需要安装obfs.
 
 4.luci-ss, chinadns, tcp fast open配置：
 a.luci-ss添加服务器
@@ -2128,6 +2131,24 @@ Usage: class-dump [options] <mach-o-file>
         --sdk-root     specify the full SDK root path (or use --sdk-ios/--sdk-mac for a shortcut)
 
 6. class-dump -H /Users/mac/Desktop/Payload/Kt.app -o /Users/mac/Desktop/Payload
+
+
+
+3800刷不死uboot：
+----------------------------------
+1.winscp登录路由器，放wndr3800.bin文件的temp文件下
+2.putty登录路由器
+3.cd /tmp，执行mtd -r write wndr3800.bin u-boot
+4.重启
+5.断电，按住复位键，插电，等10s以上进入不死界面
+
+
+
+3800刷原厂：
+----------------------------------
+1.直接在不死界面更新uboot.bin文件
+2.或者在路由器终端中执行mtd -r write uboot.bin u-boot
+
 
 /////////////////////////////////////////////////////////////////
 
