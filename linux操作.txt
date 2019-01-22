@@ -111,6 +111,11 @@ dnsforwarder, dnscrypt-proxy
 dnsforwarder相当于DNS的隧道,
 而dnscrypt-proxy相当于UDP的shadowsocksr-libev
 
+--------------------
+答疑：
+https://cokebar.info/archives/850
+google.com是响应ping操作的。ping不通是因为ping是ICMP协议，不是TCP/UDP；ss只代理TCP和UDP，所以ping是直连了。想要测试延迟可以用TCP ping工具，比如说psping。
+
 ------------------------------------------------  参考网址
 佐大论坛：（编译固件）http://www.openwrt.pro/
 
@@ -151,7 +156,7 @@ ssr路由安装: https://github.com/rapistor/
 ssr路由配置: https://github.com/ywb94/openwrt-ssr
 
 
------------------------------------------------- 搭建流程
+------------------------------------------------ 开始搭建
 
 
 vps进入准备工作：
@@ -343,6 +348,7 @@ bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-serve
 ===============================================================
 
 https://cokebar.info/archives/664
+http://openwrt-dist.sourceforge.net/
 ---------------------------------------------------------------路由终端翻墙
 
 1.更新openwrt / lede固件
@@ -500,16 +506,34 @@ sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -o /etc/dnsmasq.d/dnsmasq_gfwlist.con
 # Restart dnsmasq
 /etc/init.d/dnsmasq restart
 完成后可自行查看 /etc/dnsmasq.d/accelerated-domains.china.conf 和文件，如有不需要的域名，注释掉或者删除即可
+
 PS：路由性能不好的，慎用China-List。
 
-------------------至此已经够用了
+---------------------------------
+note:如果遇到gfwlist下载不下来请参考：https://github.com/cokebar/gfwlist2dnsmasq
+OpenWRT Usage
+( For LEDE 17.01/ OpenWrt 18.06 and later)
+To download gfwlist curl or wget is needed. Because the connection is HTTPS, if you use busybox wget, you need to install libustream-openssl or libustream-mbedtls to support it, otherwise use GNU wget.
+Because gfwlist is encoded by BASE64, base64 is needed to decode.
+
+# curl
+opkg update
+opkg install curl coreutils-base64
+# busybox wget (default by OpenWrt)
+opkg update
+opkg install libustream-mbedtls coreutils-base64
+# GNU wget
+opkg update
+opkg install wget coreutils-base64
+
+--------------------------------至此已经够用了
 后面部分为自定义chinalist和gfwlist
 这部分需要用dnsmasq-full替换掉dnsmasq
 opkg remove dnsmasq && opkg install dnsmasq-full
 
 
-验证dnsmasq配置：
---------------------
+验证dnsmasq配置以及其他优化：
+------------------------------
 修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d
 可知直接在/etc/dnsmasq.conf里添加一行设置这个值，单位是秒：
 min-cache-ttl=1800
@@ -521,6 +545,58 @@ accelerated-domains.china.conf  dnsmasq_gfwlist.conf
 /etc/resolv.conf    //设置本地DNS
 nameserver 127.0.0.1
 
+其他配置
+----------------------
+1.设置wifi定时任务
+2.设置更新ipk定时任务
+3.设置更新chinadns,gfwlist等定时任务
+4.脚本记得加执行权限chmod +x /root/ss_watchdog.sh
+
+
+定时更新ipk的脚本：
+autoupgrade.sh
+-----------------
+http://www.dammit.hk/opkg-%E5%85%A8%E9%83%A8%E6%9B%B4%E6%96%B0
+opkg list-upgradable | awk -F ' - ' '{print $1}' | xargs opkg upgrade > /tmp/upgrade.log
+
+https://cokebar.info/archives/930
+#!/bin/sh 
+opkg update
+for ipk in $(opkg list-upgradable | awk '$1!~/^kmod|^Multiple/{print $1}'); do
+  opkg upgrade $ipk
+done
+
+# 文件格式说明
+#  ——分钟 (0 - 59)
+# |  ——小时 (0 - 23)
+# | |  ——日   (1 - 31)
+# | | |  ——月   (1 - 12)
+# | | | |  ——星期 (0 - 7)（星期日=0或7）
+# | | | | |
+# * * * * * 被执行的命令
+  0 3 * * 6 /root/autoupgrade.sh
+
+
+ss重连接脚本：
+ss_watchdog.sh
+-----------------
+https://cokebar.info/archives/850
+#!/bin/sh
+
+LOGTIME=$(date "+%Y-%m-%d %H:%M:%S")
+wget --spider --quiet --tries=1 --timeout=10 https://www.facebook.com/
+if [ "$?" == "0" ]; then
+	echo '['$LOGTIME'] No Problem.'
+	exit 0
+else
+	wget --spider --quiet --tries=1 --timeout=10 https://www.baidu.com/
+	if [ "$?" == "0" ]; then
+		echo '['$LOGTIME'] Problem decteted, restarting shadowsocks.'
+		/etc/init.d/shadowsocks restart >/dev/null
+	else
+		echo '['$LOGTIME'] Network Problem. Do nothing.'
+	fi
+fi  
 ///////////////////////////////////////////////////////////////////  ssr结束
 
 
@@ -573,6 +649,15 @@ free -m
 
 
 > virsh list --all: //查看运行的虚拟机 
+
+
+shell sleep：
+-------------------
+https://blog.csdn.net/tiwoo/article/details/51094913
+#!/bin/sh
+command 1
+output=`command 2`
+command 3
 
 
 ip地址：
@@ -677,6 +762,27 @@ grep -i multiuser /etc/inittab      grep是在文件的内容中查找，查找m
 
 > grep lili /etc/passwd
 lili:x:502:502::/home/lisi:/bin/bash    显示lili的ID为502
+
+
+> sed, awk, cut, xargs
+---------------------------
+https://blog.csdn.net/he643042156/article/details/53197516
+>: adb shell ps | grep monkey                   
+shell     13870 579   1905284 28952          0 7f9987c1c8 R com.android.commands.monke
+>: adb shell ps | grep monkey | awk '{print $2}'| sed -n '1p'| cut -c 1-5 | xargs adb shell kill
+
+
+sed -n '2p' example.log  显示第二行
+sed '/he/d' example.log  删除内容有he字符的行，这个是复制一个文件，然后删除，而不会删除原来的文件；
+
+awk '{print $2}'是打印第2列的字符
+
+echo $PATH| cut -d ':' -f 1,3  以：进行域分割，然后输出第1，第3个的域
+/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home/bin:/usr/local/opt/python@2/bin
+
+cut -d
+cut -c 1-5 取一个字符串的第2到第5个字符串
+cut -c 2- 取字符串第2个到之后的字符串
 
 
 查看进程：
