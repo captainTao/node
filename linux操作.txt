@@ -2346,8 +2346,8 @@ test:
 16 21 * * 1-5 /etc/wifi/wifioff.sh
 18 21 * * 1-5 /etc/wifi/wifion.sh
 
-44 21 * * * wifi down
-46 21 * * * wifi up  
+00 1 * * * wifi down
+30 7 * * * wifi up  
 
 
 /////////////////////////////////////////////////////////////////
