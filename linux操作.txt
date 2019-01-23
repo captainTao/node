@@ -116,6 +116,14 @@ dnsforwarder相当于DNS的隧道,
 https://cokebar.info/archives/850
 google.com是响应ping操作的。ping不通是因为ping是ICMP协议，不是TCP/UDP；ss只代理TCP和UDP，所以ping是直连了。想要测试延迟可以用TCP ping工具，比如说psping。
 
+其他网友解答：
+第一项“让路由器本身走shadowsocks”设置好以后路由自身还是可能无法翻墙。我看了一下感觉是这样，虽然在WAN口设置里面已经把DNS修改为127.0.0.1，但是默认查询的端口是53且无法指定，而路由自身访问53端口的请求并没有转发到5353端口，所以不能返回正确的结果。
+这个问题造成的直接后果是无法访问openwrt-dist.sourceforge.net源更新软件包。一个简单的解决办法是修改/etc/dnsmasq.conf文件，在最后增加：
+server=/sourceforge.net/127.0.0.1#5353
+这样更新就没问题了。楼上有朋友说路由器ping google.com会受到污染，同样的道理，在/etc/dnsmasq.conf最后增加：
+server=/google.com/127.0.0.1#5353
+就可以了。只不过这个办法需要一条一条手工写进去，费点事。好在路由平时需要配置访问的也就那么几个被墙的站点，差哪个自己填上去就好了。
+
 ------------------------------------------------  参考网址
 佐大论坛：（编译固件）http://www.openwrt.pro/
 
@@ -363,8 +371,25 @@ wget -qO- http://openwrt-dist.sourceforge.net/auto_install.sh | sh
 # 执行此步骤时候按照提示，选择安装shadowsocks,chinadns以及dns-forwarder
 opkg install ip-full iptables-mod-tproxy
 
+此一键脚本的手动步骤：
+首先添加 a65535 的 gpg key，只有这样，第三方的包才能通过签名验证：
+wget -qO /tmp/openwrt-dist.pub http://openwrt-dist.sourceforge.net/openwrt-dist.pub
+opkg-key add /tmp/openwrt-dist.pub
+rm /tmp/openwrt-dist.pub
 
-b.方法二：先安装依赖包，然后安装ipk
+打开Luci，定位到“系统”-“软件包”-“配置”选项卡，在“自定义feeds”末尾加入两行并点击“提交”：
+请根据自己的CPU架构（可以执行 opkg print-architecture 查看，或者参考“发行版软件源”里的URL里的文本），将mips_24kc替换成相应的文本，最后点击提交。
+src/gz openwrt_dist http://openwrt-dist.sourceforge.net/packages/base/mips_24kc
+src/gz openwrt_dist_luci http://openwrt-dist.sourceforge.net/packages/luci
+
+路由执行：
+opkg update
+opkg install ip-full ipset iptables-mod-tproxy libpthread
+opkg install shadowsocks-libev luci-app-shadowsocks
+opkg install ChinaDNS luci-app-chinadns
+opkg install dns-forwarder luci-app-dns-forwarder
+
+b.方法二：手动安装,先安装依赖包，然后安装ipk
 
 依赖列表：
 libgcc # target/cpu型号/package目录下
@@ -384,13 +409,11 @@ opkg print-architecture | awk '{print $2}'
 http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/
 http://downloads.openwrt.org/releases/18.06.1/targets/ar71xx/generic/packages/
 
-
 应用ipk:
 http://openwrt-dist.sourceforge.net/packages/
 http://openwrt-dist.sourceforge.net/
 
 路由开始：
-
 opkg update
 opkg install ip-full ipset iptables-mod-tproxy libpthread
 （备注：自己看依赖中libgcc，zlib没有安装，网址说会自动从仓库安装）
@@ -424,7 +447,7 @@ Configuring iptables-mod-tproxy.
 
 note:上面依赖安装完成后，我进行手动上传了依赖，然后安装了ligbcc和zlib
 
-上面依赖装完后，需要下载下面的主程序：然后scp上传路由,opkg install安装
+上面依赖装完后，需要下载下面的主程序：然后winscp上传路由,opkg install安装
 shadowsocks-libev_x.x.x-x_xxxx.ipk
 dns-forwarder_x.x.x-x_xxxx.ipk
 ChinaDNS_x.x.x-x_xxxx.ipk
@@ -434,19 +457,26 @@ luci-app-dns-forwarder_x.x.x-x_all.ipk
 我这儿还需要安装obfs.
 
 4.luci-ss, chinadns, tcp fast open配置：
+
 a.luci-ss添加服务器
 obfs-local
 obfs=http;obfs-host=www.bing.com
+
 b.luci-ss设置访问控制
+
 c.更新chinadns
 wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
+
 d.更新完成后，记得重启ss
+
 e.配置代理(本地端口1080)
-f.额外优化：开启tcp fast open
+f
+.额外优化：开启tcp fast open
 修改 /etc/sysctl.conf ，加入如下一行：
 net.ipv4.tcp_fastopen = 3
 然后执行如下命令生效：
 sysctl -p
+
 g.勾选服务器tcp fast open
 
 5.dns配置
@@ -1256,7 +1286,10 @@ J :删除换行符
 v,v  V,V  ctrl+v,ctrl+v -------选中区域
 ggVG 选中全部的文本， 其中gg为跳到行首，V选中整行，G末尾
 
-选中之后可以进行：d删,y复制,p粘贴,（不选中，默认一行）
+选中之后可以进行：
+d删,
+y复制,
+p粘贴,（不选中，默认一行）
 "+y    复制到系统剪贴板(也就是vim的+寄存器） 
 "+p   从系统剪贴板粘贴 
 

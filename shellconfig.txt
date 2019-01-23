@@ -159,6 +159,6 @@ wanghaitao:~$: cat /etc/hosts
 127.0.0.1 license.sublimetext.comßß
 127.0.0.1 45.55.255.55
 127.0.0.1 45.55.41.223
-127.0.0.1       www.sublimetext.com
-127.0.0.1       license.sublimehq.com
+127.0.0.1 www.sublimetext.com
+127.0.0.1 license.sublimehq.com
 127.0.0.1 liveupdate.mac.sandai.net
