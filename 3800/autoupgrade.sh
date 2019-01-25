@@ -1,5 +1,12 @@
 #!/bin/sh
-# last update:2019/1/22,captain wang 
+# last update:2019/1/26,captain wang 
+# 备份原来的文件
+cp generate_dnsmasq_chinalist.sh ./backupfile
+cp gfwlist2dnsmasq.sh ./backupfile
+cp /etc/chinadns_chnroute.txt ./backupfile
+cp -r /etc/dnsmasq.d/. ./backupfile
+
+#更新所有ipk
 opkg update
 for ipk in $(opkg list-upgradable | awk '$1!~/^kmod|^Multiple/{print $1}'); do
 	opkg upgrade $ipk

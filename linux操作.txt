@@ -18,6 +18,13 @@ RAM，ROM
 5.目前速度最快的还是SSR客户端加HAPROXY的服务器,国内的阿里云服务器架设haproxy再跳转到海外服务器
 6.ss+GoQuiet:goquiet是ss一个插件，可以将ss流量混淆为普通的https
 
+> cp
+------------------
+拷贝一个文件夹下所有文件
+cp -r /etc/asl/ test  推荐这种
+cp -r /etc/asl/ ./test
+cp -r /etc/asl/. ./test
+
 /////////////////////////////////////////////////////////////////// 
 
 谷歌DNS:
