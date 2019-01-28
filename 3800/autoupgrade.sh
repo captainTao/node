@@ -1,12 +1,15 @@
 #!/bin/sh
 # last update:2019/1/26,captain wang 
+cd ~
 # 备份原来的文件
+echo "start to backup the previous file..."
 cp generate_dnsmasq_chinalist.sh ./backupfile
 cp gfwlist2dnsmasq.sh ./backupfile
 cp /etc/chinadns_chnroute.txt ./backupfile
 cp -r /etc/dnsmasq.d/. ./backupfile
 
 #更新所有ipk
+echo "start to update the latest ipk..."
 opkg update
 for ipk in $(opkg list-upgradable | awk '$1!~/^kmod|^Multiple/{print $1}'); do
 	opkg upgrade $ipk
@@ -14,11 +17,12 @@ done
 # 另外一种更新方法：
 # opkg list-upgradable | awk -F ' - ' '{print $1}' | xargs opkg upgrade
 
-cd ~
 # 更新chinadns
+echo "start to update chinadns..."
 wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
 /etc/init.d/shadowsocks restart
 
+echo "start to update China-list, GfwList..."
 # China-List
 curl -L -o generate_dnsmasq_chinalist.sh https://github.com/cokebar/openwrt-scripts/raw/master/generate_dnsmasq_chinalist.sh
 chmod +x generate_dnsmasq_chinalist.sh

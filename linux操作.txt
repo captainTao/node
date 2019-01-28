@@ -25,6 +25,14 @@ cp -r /etc/asl/ test  推荐这种
 cp -r /etc/asl/ ./test
 cp -r /etc/asl/. ./test
 
+
+
+> rm
+------------------
+删除文件下的所有文件
+rm *     文件夹下没有文件夹
+rm -r *   文件夹下有文件夹
+
 /////////////////////////////////////////////////////////////////// 
 
 谷歌DNS:
@@ -800,6 +808,23 @@ grep -i multiuser /etc/inittab      grep是在文件的内容中查找，查找m
 > grep lili /etc/passwd
 lili:x:502:502::/home/lisi:/bin/bash    显示lili的ID为502
 
+8、grep ".*" testfile 搜索所有字符
+9、grep "a\{n,m\}" testfile 匹配a字符n到m次
+10、grep "a\{n,\}"匹配至少n次
+11、grep "a\{n\}"匹配n次
+12、ls | grep  -n "a[b|d]b"  支持竖线
+13、ls | grep  -n "^a\w"
+
+
+grep正则表达式扩展
+-----------------
+https://www.cnblogs.com/pythonbz/p/6284190.html
+-E, egrep
+支持字符+,?
+ls -a | grep -E "ab\w+" 
+ls -a | egrep  "abb+"    egrep不带高亮
+ls -a | grep -E "a[d|c]"   egrep或者-E也支持竖线
+
 
 > sed, awk, cut, xargs
 ---------------------------
@@ -820,6 +845,67 @@ echo $PATH| cut -d ':' -f 1,3  以：进行域分割，然后输出第1，第3�
 cut -d
 cut -c 1-5 取一个字符串的第2到第5个字符串
 cut -c 2- 取字符串第2个到之后的字符串
+
+
+> xargs
+-----------------------
+http://man.linuxde.net/xargs
+http://www.cnblogs.com/wangqiguo/p/6464234.html
+-n
+cat test.txt | xargs 多行输出为单行
+cat test.txt | xargs -n3 每行为3个的多行，-n表示多行
+
+-d
+echo "nameXnameXnameXname" | xargs -dX  -d为自定义字符界，结果为name name name name
+echo "nameXnameXnameXname" | xargs -dX -n2  的结果为：
+name name
+name name
+
+-E/e
+echo '11 22 33 44 55' | xargs -E '33' echo 
+输出:(-E或者-e,'33'以前的参数，不能与-d混用，不然无效)
+11 22
+
+-p
+adb shell ps | grep "worker"|xargs -p adb shell kill  -p表示确认，输入y才继续执行，否则不执行
+echo '11@22@33' | xargs -p -d '@'  echo 
+
+-I {}
+复制所有图片文件到/data/images 目录下:
+ls *.jpg | xargs -n1 -I cp {} /data/images  
+rm删除多文件，可能有错误信息，用xargs去避免，xargs -0将\0作为定界符。
+find . -type f -name "*.log" -print0 | xargs -0 rm -f
+统计一个源代码目录中所有php文件的行数： 
+find . -type f -name "*.php" -print0 | xargs -0 wc -l
+查找所有的jpg 文件，并且压缩它们：
+find . -type f -name "*.jpg" -print | xargs tar -czvf images.tar.gz
+下载一个文件的所有连接
+cat url-list.txt | xargs wget -c
+
+-0
+-0表示以 '\0' 为分隔符，即是在结尾追加'\0'，在一行中显示，一般与find结合使用
+find . -name "*.txt"
+输出：
+./2.txt
+./3.txt
+./1.txt
+
+find . -name "*.txt" -print0
+输出：
+./2.txt./3.txt./1.txt
+
+删除文件路径中有空格的文件，比如a 3.txt, gg 4.txt, 因为空格会被rm拆分为两个两个文件。我们用\0来追加在字符的后面
+find ./desktop/test -name '*.txt' -print0 | xargs -0 rm  
+
+find /Users/captain/Desktop/test -name '*.txt'|cut -c 29- |xargs  echo
+输出
+arg1.txt arg2.txt arg3.txt
+
+xargs当做参数传递：
+1.kill `ps -ef | grep 'ddd'`
+2.for procid in $(ps -aux | grep "some search" | awk '{print $2}'); do kill -9 $procid; done
+3.ps -ef | grep 'ddd' | xargs kill
+xargs命令可以通过管道接受字符串，并将接收到的字符串通过空格分割成许多参数(默认情况下是通过空格分割) 然后将参数传递给其后面的命令，作为后面命令的命令行参数
 
 
 查看进程：
