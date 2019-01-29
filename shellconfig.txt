@@ -5,6 +5,7 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
 export PATH="/usr/local/opt/python@2/bin:$PATH"
+export PATH="/Users/captain/Desktop/:$PATH" #桌面程序追加到终端
 
 #配置java环境
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home
@@ -51,11 +52,11 @@ set incsearch         " 立即高亮显示当前匹配
 set ignorecase        " 忽略大小写
 set smartcase         " 如果有一个大写字母，则切换到大小写敏感查找
 set showmatch         " 高亮显示对应的括号
-
+set ruler             " 设置右下坐标
 set confirm           " 在处理未保存或只读文件的时候，弹出确认
 set tabstop=4         " Tab键的宽度
 set cursorline        " 突出显示当前行 
-"set cursorcolumn      " 突出显示当前列
+set cursorcolumn      " 突出显示当前列
 set clipboard+=unnamed   " 共享剪贴板
 
 " 语法高亮
@@ -93,6 +94,7 @@ set guifont=Menlo:h16:cANSI
 " Change cursor shape between insert and normal mode in iTerm2.app
 
 
+
 //////////////////////////////////////////////////////////////
 
 wanghaitao:~$: cat .zshrc 
@@ -109,6 +111,7 @@ alias ll='ls -l'
 alias la='ls -a'
 alias grep="grep --color=auto"
 alias rm='rm -i'
+alias lla='ls -al'
 
 #开启颜色
 autoload -U colors && colors
@@ -129,6 +132,9 @@ wanghaitao:~$: cat .gitconfig
 	cm = commit -m
 	ps = push origin master	
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lt = lg -1
+[color]
+	ui = true
 	
 //////////////////////////////////////////////////////////////
 
