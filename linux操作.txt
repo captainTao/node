@@ -1118,32 +1118,6 @@ root@c77:~# usermod -d /data/ftp ftpuser  // 设置为用户的主目录
 
 
 
-> traceroute
------------------------
-http://man.linuxde.net/traceroute
-traceroute www.baidu.com          // 默认参数为-q, 默认三次探测数据包向每个网关发送三个数据包，网关响应返回的时间
-traceroute www.google.com
-
--d：使用Socket层级的排错功能；
--f<存活数值>：设置第一个检测数据包的存活数值TTL的大小；
--F：设置勿离断位；
--g<网关>：设置来源路由网关，最多可设置8个；
--i<网络界面>：使用指定的网络界面送出数据包；
--I：使用ICMP回应取代UDP资料信息；
--m<存活数值>：设置检测数据包的最大存活数值TTL的大小；
--n：直接使用IP地址而非主机名称； 禁用DNS解析，以ip格式输出数据。
--p<通信端口>：设置UDP传输协议的通信端口；
--r：忽略普通的Routing Table，直接将数据包送到远端主机上。
--s<来源地址>：设置本地主机送出数据包的IP地址；
--t<服务类型>：设置检测数据包的TOS数值；
--v：详细显示指令的执行过程；
--w<超时秒数>：设置等待远端主机回报的时间；
--x：开启或关闭数据包的正确性检验。
-
-traceroute -q 4 www.58.com // 向每个网关发送四个数据包，网关响应返回的时间
-
-
-
 > lsof
 -----------------------
 http://www.cnblogs.com/peida/archive/2013/02/26/2932972.html
@@ -1926,8 +1900,39 @@ DNS 完美查询的流程就是： dnsmasq -> ChinaDNS -> ss-tunnel -> 国外DNS
 --------------------
 源码位于：\kernel\trace\trace.c
 
-> traceroute:
+
+> traceroute
+-----------------------
+http://man.linuxde.net/traceroute
+traceroute www.baidu.com          // 默认参数为-q, 默认三次探测数据包向每个网关发送三个数据包，网关响应返回的时间
+traceroute www.google.com
+
+-d：使用Socket层级的排错功能；
+-f<存活数值>：设置第一个检测数据包的存活数值TTL的大小；
+-F：设置勿离断位；
+-g<网关>：设置来源路由网关，最多可设置8个；
+-i<网络界面>：使用指定的网络界面送出数据包；
+-I：使用ICMP回应取代UDP资料信息；
+-m<存活数值>：设置检测数据包的最大存活数值TTL的大小；
+-n：直接使用IP地址而非主机名称； 禁用DNS解析，以ip格式输出数据。
+-p<通信端口>：设置UDP传输协议的通信端口；
+-r：忽略普通的Routing Table，直接将数据包送到远端主机上。
+-s<来源地址>：设置本地主机送出数据包的IP地址；
+-t<服务类型>：设置检测数据包的TOS数值；
+-v：详细显示指令的执行过程；
+-w<超时秒数>：设置等待远端主机回报的时间；
+-x：开启或关闭数据包的正确性检验。
+
+traceroute -q 4 www.58.com // 向每个网关发送四个数据包，网关响应返回的时间
+
+
+> mtr, tracert:
 --------------------
+-n  不用主机解释
+-c   发送多少个数据包
+--report  结果显示，并不动态显示
+mtr 35.187.145.66
+
 
 通信命令：
 write:
@@ -2406,6 +2411,103 @@ Usage: class-dump [options] <mach-o-file>
 6. class-dump -H /Users/mac/Desktop/Payload/Kt.app -o /Users/mac/Desktop/Payload
 
 
+mac app反编译
++-------------------------------------------
+hopper disassembler
+
+
+thunder:
+---------
+refer to :
+http://bbs.iosre.com/t/hopper-mac/1428
+http://bbs.iosre.com/t/hopper-mac/1428
+
+a.搜索：
+ is
+b.定位文件，选择第一行汇编代码：执行：Modify -> Assemble Instruction，输入：mov eax, 0x1
+c.下一步输入ret,然后同样执行其他文件：
+
+//在x86汇编里，函数的返回值存放在eax寄存器里。1对应BOOL类型的YES
+//ret为return的意思
+1. -[LocalTask isValidLixianTask]
+2. -[UserController isVip]
+3. -[UserController isPlatinum]
+4. -[UserController isDiamond]
+
+d.定位：[AppDelegate applicationWillFinishLaunching:]直接在第一行执行ret
+e.File -> Produce New Executable
+
+
+QQmusic:
+---------
+refer to :
+https://blog.csdn.net/pureszgd/article/details/73527714
+-[UrlAudioData currentSongRateType] ret 0
+-[DownloadTask currentSongRateType] ret 0
+-[DownloadInfo haveCheckDownloadRight] ret 1
+-[DownloadInfo haveDownloadRight] ret 1
+-[SongInfo isActionBitSet:forSwitch:] ret 1
++-------------------------------------------
+
+
+建立N2N VPN专网
+---------------------
+http://ju.outofmemory.cn/entry/336111
+
+config on OP
+- opkg update && opkg install n2n
+- vim /etc/config/n2n
+- /etc/init.d/n2n enable
+- /etc/init.d/n2n start
+
+config on MacOS
+- brew tap homebrew/cask
+- brew cask install tuntap
+
+
+shell进度条
+---------------------
+#!/bin/sh  
+b='' 
+for ((i=0;$i<=100;i+=2))  
+do  
+        printf "progress:[%-50s]%d%%\r" $b $i  
+        sleep 0.1  
+        b=#$b  
+done  
+echo
+
+
+
+
+/////////////////////////////////////////////////////////////////
+软路由：
+-------------------
+Intel 82559网卡
+intel 82576网卡
+97w的电源
+
+Tutorials：
+https://www.youtube.com/watch?v=GFLDe2ihT1U
+https://forum.openwrt.org/t/how-to-install-lede-on-x86/14601
+winpe cmd下执行：
+phsdiskwrite.exe -u lede.img
+或者在op系统中执行：
+dd if=/tmp/Lede-*.img of=/dev/sda
+
+x64 LEDE:
+https://firmware.koolshare.cn/LEDE_X64_fw867/
+
+X86 LEDE:
+https://downloads.openwrt.org/releases/17.01.4/targets/x86/64/combined-ext4.img.gz
+https://downloads.openwrt.org/releases/18.06.2/targets/x86/64/combined-ext4.img.gz
+
+
+支持路由：
+------------------
+TL-WDR4310
+https://item.taobao.com/item.htm?spm=a1z09.2.0.0.dcda2e8dQB88iz&id=541598037417&_u=nbh5k5e8fc3
+
 
 3800刷不死uboot：
 ----------------------------------
@@ -2454,9 +2556,8 @@ mtd刷机方法不常用，主要用来刷其它型号的固件，比如tp的431
 +-------------------------------------------------------------------------
 
 
-/////////////////////////////////////////////////////////////////
-
 openwrt wifi toggle scheduled
+------------------------------
 refer to :
 https://wiki.openwrt.org/doc/howto/cron
 
@@ -2516,42 +2617,6 @@ test:
 00 1 * * * wifi down
 30 7 * * * wifi up  
 
-
 /////////////////////////////////////////////////////////////////
 
-mac app反编译
--------------------
-hopper disassembler
 
-
-thunder:
----------
-refer to :
-http://bbs.iosre.com/t/hopper-mac/1428
-http://bbs.iosre.com/t/hopper-mac/1428
-
-a.搜索：
- is
-b.定位文件，选择第一行汇编代码：执行：Modify -> Assemble Instruction，输入：mov eax, 0x1
-c.下一步输入ret,然后同样执行其他文件：
-
-//在x86汇编里，函数的返回值存放在eax寄存器里。1对应BOOL类型的YES
-//ret为return的意思
-1. -[LocalTask isValidLixianTask]
-2. -[UserController isVip]
-3. -[UserController isPlatinum]
-4. -[UserController isDiamond]
-
-d.定位：[AppDelegate applicationWillFinishLaunching:]直接在第一行执行ret
-e.File -> Produce New Executable
-
-
-QQmusic:
----------
-refer to :
-https://blog.csdn.net/pureszgd/article/details/73527714
--[UrlAudioData currentSongRateType] ret 0
--[DownloadTask currentSongRateType] ret 0
--[DownloadInfo haveCheckDownloadRight] ret 1
--[DownloadInfo haveDownloadRight] ret 1
--[SongInfo isActionBitSet:forSwitch:] ret 1
