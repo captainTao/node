@@ -597,6 +597,15 @@ nameserver 127.0.0.1
 3.设置更新chinadns,gfwlist等定时任务
 4.脚本记得加执行权限chmod +x /root/ss_watchdog.sh
 
+mwan:
+---------------------
+https://www.polarxiong.com/archives/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE%E8%8B%8F%E5%B7%9E%E7%A7%BB%E5%8A%A8%E5%AE%BD%E5%B8%A6%E5%A4%9A%E6%8B%A8%E7%9A%84%E8%BF%87%E7%A8%8B.html
+https://www.right.com.cn/forum/thread-147109-1-1.html
+https://www.jianshu.com/p/9b00b7cfbd88
+opkg update
+opkg install mwan3 
+opkg install luci-app-mwan3 
+
 
 定时更新ipk的脚本：
 autoupgrade.sh
