@@ -2420,10 +2420,10 @@ Usage: class-dump [options] <mach-o-file>
 6. class-dump -H /Users/mac/Desktop/Payload/Kt.app -o /Users/mac/Desktop/Payload
 
 
+++++++++++++++++++++++++++++++++++++++++++++++++
 mac app反编译
-+-------------------------------------------
+---------------------
 hopper disassembler
-
 
 thunder:
 ---------
@@ -2456,7 +2456,7 @@ https://blog.csdn.net/pureszgd/article/details/73527714
 -[DownloadInfo haveCheckDownloadRight] ret 1
 -[DownloadInfo haveDownloadRight] ret 1
 -[SongInfo isActionBitSet:forSwitch:] ret 1
-+-------------------------------------------
+++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 建立N2N VPN专网
@@ -2487,8 +2487,24 @@ done
 echo
 
 mac允许安装三方来源
---------------------
+---------------------
 sudo spctl --master-disable
+
+
+dd：
+---------------------
+https://www.cnblogs.com/jikexianfeng/p/6103500.html
+1.将本地的/dev/hdb整盘备份到/dev/hdd
+#dd if=/dev/hdb of=/dev/hdd
+
+2.将/dev/hdb全盘数据备份到指定路径的image文件
+#dd if=/dev/hdb of=/root/image
+
+3.将备份文件恢复到指定盘
+#dd if=/root/image of=/dev/hdb
+
+lede-.img写入：需要原来是op系统
+dd if=/tmp/Lede-*.img of=/dev/sda
 
 /////////////////////////////////////////////////////////////////
 软路由：
@@ -2518,6 +2534,21 @@ https://downloads.openwrt.org/releases/18.06.2/targets/x86/64/combined-ext4.img.
 TL-WDR4310
 https://item.taobao.com/item.htm?spm=a1z09.2.0.0.dcda2e8dQB88iz&id=541598037417&_u=nbh5k5e8fc3
 
+NetGear R7500V2
+https://item.taobao.com/item.htm?spm=a230r.1.14.20.27cc2786DGX2EA&id=544968915427&ns=1&abbucket=11#detail
+CPU:1.4G双核
+RAM:256MB、淘宝显示为512MB
+ROM:128MB
+2.4G:1480M
+5G:800M
+
+NetGear R7800
+CPU:1.7G双核
+RAM:512MB
+ROM:128MB
+2.4G:1730M
+5G:800M
+面积：150m^2
 
 3800刷不死uboot：
 ----------------------------------
@@ -2538,6 +2569,9 @@ https://item.taobao.com/item.htm?spm=a1z09.2.0.0.dcda2e8dQB88iz&id=541598037417&
 3800配置:
 RAM:16M
 ROM:128M
+2.4G:300M
+5G:300M
+内置六根天线
 
 openwrt:
 凡包含factory字样的，是在原机界面上直接刷机用的，
