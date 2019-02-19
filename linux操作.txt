@@ -2525,8 +2525,10 @@ Virtualbox安装img:
 转换img文件为vdi,然后用已经存在的磁盘进行加载
 VBoxManage convertdd file.img file.vdi
 
+StarWind V2V Image Converter可以把img转换为vmdk,win中使用
 
-virtualbox安装op:
+
+virtualbox安装opt:
 -----------------
 https://blog.csdn.net/lvshaorong/article/details/80935503
 
@@ -2557,13 +2559,28 @@ Ctrl+d  关闭终端
 F11 全屏切换
 Ctrl+Alt+T 开启新的终端
 
+
+DLNA和Miracast
+
+NAS系统搭建
+----------------
+
+
 /////////////////////////////////////////////////////////////////
+
 软路由：
 -------------------
 http://koolshare.cn/thread-116123-1-1.html
 Intel 82559网卡
 intel 82576网卡
 97w的电源
+使用树莓派、Intel Atom平台（典型的N3160等）之类极其廉价的通用计算硬件来作为路由器。
+软路由，可以使用一般的PC系统来手动配置多个网络接口间的路由转发，较为傻瓜式的可以使用Windows的网络共享，
+复杂点的可以使用Linux下的iptables/dnsmasq等工具。
+更进一步的不局限于传统PC系统，使用虚拟机（VMware/Hyper-V/ESXi/VirtualBox等）来虚拟运行路由器系统都行。
+而且虚拟机方案可玩性很高，不仅可以挂路由器系统，还可以挂群晖等NAS系统以及普通PC系统，使之成为一个Homelab/家庭媒体中心。
+路由器系统实现基础路由功能以及$$、过滤广告、kms等，
+NAS系统/普通PC系统等更可以搭建NAS、私有云、离线下载、Git服务器、苹果的TimeMachine服务器等等。
 
 Tutorials：
 https://www.youtube.com/watch?v=GFLDe2ihT1U
