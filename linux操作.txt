@@ -2460,7 +2460,7 @@ https://blog.csdn.net/pureszgd/article/details/73527714
 
 
 建立N2N VPN专网
----------------------
+-------------------
 http://ju.outofmemory.cn/entry/336111
 
 config on OP
@@ -2475,7 +2475,7 @@ config on MacOS
 
 
 shell进度条
----------------------
+-------------------
 #!/bin/sh  
 b='' 
 for ((i=0;$i<=100;i+=2))  
@@ -2487,12 +2487,12 @@ done
 echo
 
 mac允许安装三方来源
----------------------
+-------------------
 sudo spctl --master-disable
 
 
 dd：
----------------------
+-------------------
 https://www.cnblogs.com/jikexianfeng/p/6103500.html
 1.将本地的/dev/hdb整盘备份到/dev/hdd
 #dd if=/dev/hdb of=/dev/hdd
@@ -2506,9 +2506,61 @@ https://www.cnblogs.com/jikexianfeng/p/6103500.html
 lede-.img写入：需要原来是op系统
 dd if=/tmp/Lede-*.img of=/dev/sda
 
+
+强制苹果手机重启：
+-------------------
+https://baijiahao.baidu.com/s?id=1609566833127582797&wfr=spider&for=pc
+iPhone 7 以前的机型，同时按住“电源键”+“Home键”，直到 iPhone 出现白苹果的图示为止。
+
+iPhone 7 / 7 Plus 机型，按住“电源键”以及“降低音量键”持续几秒，直到出现Apple白苹果的图示为止。
+
+iPhone 8、iPhone 8 Plus机型，先按下“增大音量”按键，再按下“降低音量”按键，接着，持续按住电源键，直到 Apple 白苹果图示出现。
+
+iPhone X，先按一下“增大音量键”，再按一下“降低音量键”，接着长按右侧的电源键约达10秒左右，直到屏幕出现白苹果的图示为止
+
+
+
+Virtualbox安装img:
+-------------------
+转换img文件为vdi,然后用已经存在的磁盘进行加载
+VBoxManage convertdd file.img file.vdi
+
+
+virtualbox安装op:
+-----------------
+https://blog.csdn.net/lvshaorong/article/details/80935503
+
+
+unbuntu终端中移动光标位置：
+-------------------
+Ctrl+a  光标移动到开始位置
+Ctrl+e  光标移动到最末尾
+Ctrl+b  向回移动光标
+Ctrl+f  向前移动光标
+
+删除
+Ctrl+k  删除此处至末尾的所有内容
+Ctrl+u  删除此处至开始的所有内容
+
+删除单个
+Ctrl+d  删除当前字符
+Ctrl+h  删除当前字符前一个字符
+Ctrl+w  删除此处到左边的单词
+
+复制粘贴
+Ctrl+y  粘贴由Ctrl+u， Ctrl+d， Ctrl+w删除的单词
+Ctrl+&  恢复 ctrl+h 或者 ctrl+d 或者 ctrl+w 删除的内容
+
+Ctrl+l  相当于clear，即清屏
+Ctrl+c  终止进程/命令
+Ctrl+d  关闭终端
+F11 全屏切换
+Ctrl+Alt+T 开启新的终端
+
 /////////////////////////////////////////////////////////////////
 软路由：
 -------------------
+http://koolshare.cn/thread-116123-1-1.html
 Intel 82559网卡
 intel 82576网卡
 97w的电源
