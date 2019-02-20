@@ -234,21 +234,17 @@ $ chmod 700 .ssh    //可选
 
 > ssh -i gcloud wangsirlemon@335.197.144.67  // 使用指定公钥登录
 
+4.ssh问题排查：
+如果ping通了仍然不能使用SSH进行连接
+在虚拟机终端运行
+service iptables stop  //关闭防火墙  
+service sshd start     //启动 SSHD 服务  
 
--------------------------------------
-wangsirlemon@instance-static:~/.ssh$                 // 在server生成 glocoud key
-> echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVH6uhFMGlFKoN7XUdTHKEus77mCOvpkfz3rbXkee9WLPjpY1rBgDMhqZcco7Klmwoy1CaOmdBRlvs70ySX
-ok72937hLvUshHoGqevwW+hpu3/5P+5fQXXMfNnFxkj7PE08pk8EkDoYUsu/JnN7qex3IH7Ps4iRQHuePdgFe/eUzLqHgzsTtsuEIYL64rDG2qs/jfWHqWeRvmxMiTr/bSm2uA9CJ/ebSW5N9rcEcJt+G/78cF+efUYC
-Nz3pRQ5iimsp2aH5mUkDoWOOWNPh9j7biaZoN6fjleDMx9V6nxtEHmdwUN8JexUI74z/76hQOiqA4wGSTL0BMjJpfTitM3T captain@wanghaitao-MacBook.local" > authorized_keys
-
-
-mine:
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > ~/.ssh/authorized_keys
-
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > authorized_keys
-
-wangsirlemon@instance-static:~/.ssh$ chmod 600 authorized_keys 
-
+如果出现Service不存在的情况，说明sshd服务未安装。
+安装并启用sshd
+sudo apt-get install openssh-server
+service sshd start
+再次连接即可
 
 
 XShell连接服务器
@@ -268,6 +264,21 @@ PasswordAuthentication no
  
 #重启SSH即可
 /etc/init.d/sshd restart
+
+
+-------------------------------------
+wangsirlemon@instance-static:~/.ssh$                 // 在server生成 glocoud key
+> echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVH6uhFMGlFKoN7XUdTHKEus77mCOvpkfz3rbXkee9WLPjpY1rBgDMhqZcco7Klmwoy1CaOmdBRlvs70ySX
+ok72937hLvUshHoGqevwW+hpu3/5P+5fQXXMfNnFxkj7PE08pk8EkDoYUsu/JnN7qex3IH7Ps4iRQHuePdgFe/eUzLqHgzsTtsuEIYL64rDG2qs/jfWHqWeRvmxMiTr/bSm2uA9CJ/ebSW5N9rcEcJt+G/78cF+efUYC
+Nz3pRQ5iimsp2aH5mUkDoWOOWNPh9j7biaZoN6fjleDMx9V6nxtEHmdwUN8JexUI74z/76hQOiqA4wGSTL0BMjJpfTitM3T captain@wanghaitao-MacBook.local" > authorized_keys
+
+
+mine:
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > ~/.ssh/authorized_keys
+
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > authorized_keys
+
+wangsirlemon@instance-static:~/.ssh$ chmod 600 authorized_keys 
 
 
 /***********************************/ 安装ss,bbr
@@ -2456,6 +2467,11 @@ https://blog.csdn.net/pureszgd/article/details/73527714
 -[DownloadInfo haveCheckDownloadRight] ret 1
 -[DownloadInfo haveDownloadRight] ret 1
 -[SongInfo isActionBitSet:forSwitch:] ret 1
+
+
+百度网盘
+----------
+https://www.52pojie.cn/thread-694011-1-1.html
 ++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -2587,6 +2603,7 @@ reboot -f
 若想恢复到系统的初始状态，则：
 一次性擦除指令，firstboot. 退出telnet后系统会关闭telnet，开启ssh，恢复成功。
 
+
 /////////////////////////////////////////////////////////////////
 
 软路由：
@@ -2611,7 +2628,7 @@ phsdiskwrite.exe -u lede.img
 或者在op系统中执行：
 dd if=/tmp/Lede-*.img of=/dev/sda
 
-x64 LEDE:
+x64 LEDE koolshare:
 https://firmware.koolshare.cn/LEDE_X64_fw867/
 
 X86 LEDE:
@@ -2754,3 +2771,13 @@ test:
 /////////////////////////////////////////////////////////////////
 
 
+子网访问父网的局域网
+-------------------
+https://gist.github.com/willwhui/eb4df8c41110f0c10286001be19bb12e
+http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1095
+~: route  /route -n
+~: route add -net 192.168.1.0 netmask 255.255.255.0 gw 192.168.31.231
+//* 目的ip=192.168.10.0，掩码：255.255.255.0，下一跳：路由器Y自身ip
+a.把父网和子网的掩码都改成255.255.0.0  （LAN口设置）
+b.最简单的就是 在两个路由器上分别配置指向对面的静态路由
+c.还可以用其他协议啊，比如OSPF，RIPV2这些
