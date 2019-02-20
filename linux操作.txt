@@ -611,7 +611,7 @@ opkg install luci-app-mwan3
 autoupgrade.sh
 -----------------
 http://www.dammit.hk/opkg-%E5%85%A8%E9%83%A8%E6%9B%B4%E6%96%B0
-opkg list-upgradable | awk -F ' - ' '{print $1}' | xargs opkg upgrade > /tmp/upgrade.log
+opkg update && opkg list-upgradable | awk -F ' - ' '{print $1}' | xargs opkg upgrade > /tmp/upgrade.log
 
 https://cokebar.info/archives/930
 #!/bin/sh 
@@ -2565,6 +2565,27 @@ DLNA和Miracast
 NAS系统搭建
 ----------------
 
+
+uci命令
+----------------
+https://blog.csdn.net/wsclinux/article/details/48176241
+进入后mount可以看到root是不给写的，所以还要解锁下，先映射root盘
+mount_root
+
+忘记密码只需要用这个命令
+passwd
+
+忘记了路由器ip用这个复位
+uci get network.lan.ipaddr
+
+JFFS2 分区安装了太多包太多软件，你想要重置，用这个会清楚整个jfss2区的数据，相当于恢复工厂设置。（这东西很好就是恢复出厂设置）。
+mtd -r erase rootfs_data
+
+现在做完你想做的事情了，只需要这个进行重启。
+reboot -f
+
+若想恢复到系统的初始状态，则：
+一次性擦除指令，firstboot. 退出telnet后系统会关闭telnet，开启ssh，恢复成功。
 
 /////////////////////////////////////////////////////////////////
 
