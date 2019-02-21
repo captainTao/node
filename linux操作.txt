@@ -77,6 +77,10 @@ pdnsd:
 将UDP的DNS请求转换为TCP进行发送；----替代方案：dnsforwarder
 
 
+vpn:tinc ZeroTier
+通道：obfs proxy
+防火墙链路：network-->firewall
+需要安装：loading balance
 
 ///////////////////////////////////////////////////////////////////  ssr开始
 
@@ -602,20 +606,33 @@ accelerated-domains.china.conf  dnsmasq_gfwlist.conf
 nameserver 127.0.0.1
 
 其他配置
-----------------------
+-----------------
 1.设置wifi定时任务
 2.设置更新ipk定时任务
 3.设置更新chinadns,gfwlist等定时任务
 4.脚本记得加执行权限chmod +x /root/ss_watchdog.sh
+5.添加mwan
+6.添加usb printer
+7.添加ftp服务器
+8.添加Aria2配置
+9.添加eMule设置
+10.VPN:N2N-v2-vpn,openvpn,Ipsecvpn,pptpvpn
 
 mwan:
----------------------
+-----------------
 https://www.polarxiong.com/archives/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE%E8%8B%8F%E5%B7%9E%E7%A7%BB%E5%8A%A8%E5%AE%BD%E5%B8%A6%E5%A4%9A%E6%8B%A8%E7%9A%84%E8%BF%87%E7%A8%8B.html
 https://www.right.com.cn/forum/thread-147109-1-1.html
 https://www.jianshu.com/p/9b00b7cfbd88
 opkg update
 opkg install mwan3 
 opkg install luci-app-mwan3 
+
+usb printer:
+-----------------
+opkg update
+opkg install kmod-usb-printer
+opkg install luci-app-p910nd
+opkg install luci-app-usb-printer //或者(这个的界面友好,https://www.right.com.cn/forum/thread-142071-1-1.html)
 
 
 定时更新ipk的脚本：
@@ -2510,6 +2527,7 @@ sudo spctl --master-disable
 dd：
 -------------------
 https://www.cnblogs.com/jikexianfeng/p/6103500.html
+https://my.oschina.net/u/3757085/blog/1928642
 1.将本地的/dev/hdb整盘备份到/dev/hdd
 #dd if=/dev/hdb of=/dev/hdd
 
@@ -2521,6 +2539,13 @@ https://www.cnblogs.com/jikexianfeng/p/6103500.html
 
 lede-.img写入：需要原来是op系统
 dd if=/tmp/Lede-*.img of=/dev/sda
+
+1.查看U盘盘符：diskutil list (Mac)  sudo df -hT (Linux)
+
+2.卸载U盘： diskutil unmount /dev/disk2s1（盘符写成自己的U盘，下同如果用Mac没有把握可以在磁盘工具中卸载）
+
+3.dd命令：sudo dd if=/dev/rdisk2s1 of=系统镜像绝对路径 bs=1m （disk前+r可加快写入速度）（Mac和Linux命令相同，镜像可直接拖入终端中自动填写路径）
+
 
 
 强制苹果手机重启：
@@ -2580,7 +2605,12 @@ DLNA和Miracast
 
 NAS系统搭建
 ----------------
-
+Netgear的ReadyNAS系列
+New HPE ProLiant MicroServer Gen10 with AMD Opteron X3000 APUs (NAS+HTPC)
+OS:OpenMediaVault
+tool:teamviewer, ZeroTier
+https://my.oschina.net/u/3757085/blog/1928642
+https://www.zhihu.com/question/21359049
 
 uci命令
 ----------------
@@ -2632,6 +2662,7 @@ x64 LEDE koolshare:
 https://firmware.koolshare.cn/LEDE_X64_fw867/
 
 X86 LEDE:
+https://www.right.com.cn/FORUM/forum.php?mod=viewthread&tid=252795
 https://downloads.openwrt.org/releases/17.01.4/targets/x86/64/combined-ext4.img.gz
 https://downloads.openwrt.org/releases/18.06.2/targets/x86/64/combined-ext4.img.gz
 
@@ -2713,7 +2744,7 @@ refer to :
 https://wiki.openwrt.org/doc/howto/cron
 
 on.sh
-----------
+------------
 #!/bin/sh
 uci set wireless.@wifi-device[0].disabled=0
 uci set wireless.@wifi-device[1].disabled=0
