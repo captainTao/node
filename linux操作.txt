@@ -2574,7 +2574,7 @@ virtualbox安装opt:
 https://blog.csdn.net/lvshaorong/article/details/80935503
 
 
-unbuntu终端中移动光标位置：
+unbuntu终端terminal中移动光标位置：
 -------------------
 Ctrl+a  光标移动到开始位置
 Ctrl+e  光标移动到最末尾
@@ -2610,6 +2610,9 @@ New HPE ProLiant MicroServer Gen10 with AMD Opteron X3000 APUs (NAS+HTPC)
 OS:OpenMediaVault
 tool:teamviewer, ZeroTier
 https://my.oschina.net/u/3757085/blog/1928642
+https://www.zhihu.com/question/21359049
+
+owncloud:
 https://www.zhihu.com/question/21359049
 
 uci命令
