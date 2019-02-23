@@ -1,6 +1,22 @@
 #!/bin/bash
 #by Captain on 2/13/2019
 
+
+#！/bin/sh
+# This is to show what a example looks like.
+echo "Our first example"
+echo # This inserts an empty line in output
+echo "We are currently in the following directory."
+/bin/pwd
+echo
+echo "This directory contains the following files"
+/bin/ls
+
+/bin/pwd 显示当前路径
+pwd你会常用，前面加/bin/表示这个命令的绝对路径
+/bin/ls 显示当前目录下的内容
+
+
 变量
 ------------------
 your_name="www.baidu.com"                #变量 your_name 赋值
@@ -208,6 +224,16 @@ else
    echo ${dire}"不存在"
 fi
 
+##另外，Shell还提供了与( -a )、或( -o )、非( ! )三个逻辑操作符用于将测试条件连接起来，其优先级为："!"最高，"-a"次之，"-o"最低。例如：
+dire1="./bash1"
+dire2="./bash2"
+if test -e ${dire1} -o -e ${dire2}
+then
+   echo ${dire1}"或"${dire2}"至少有一个存在"
+else
+   echo ${dire1}"或"${dire2}"都不存在"
+fi
+
 
 
 []
@@ -241,3 +267,136 @@ echo ${length}
 note(){
 这是一个注释，这个可以临时调用或者不调用达到注释的目的
 }
+
+
+if语句
+------------------
+if [[ condition ]]; then
+	#statements
+fi
+
+
+if [[ condition ]]; then
+	#statements
+else
+	#statements
+fi
+
+
+if [[ condition ]]; then
+	#statements
+elif [[ condition ]]; then
+	#statements
+elif [[ condition ]]; then
+	#statements
+else
+	#statements
+fi
+
+
+#!/bin/sh
+a=10
+b=20
+if [ $a == $b ]
+then
+echo "a is equal to b"
+elif [ $a -gt $b ]
+then
+echo "a is greater than b"
+elif [ $a -lt $b ]
+then
+echo "a is less than b"
+else
+echo "None of the condition met"
+fi
+
+#运行结果：
+a is less than b
+
+if也可以写成一行：
+if test $[2*3] -eq $[1+5]; then echo 'The two numbers are equal!'; fi;
+
+
+
+case语句
+------------------
+case 值 in
+模式1)
+command1
+command2
+command3
+;;
+模式2）
+command1
+command2
+command3
+;;
+*)
+command1
+command2
+command3
+;;
+esac
+
+
+echo 'Input a number between 1 to 4'
+echo 'Your number is:\c'
+read aNum
+case $aNum in
+1) echo 'You select 1'
+;;
+2) echo 'You select 2'
+;;
+3) echo 'You select 3'
+;;
+4) echo 'You select 4'
+;;
+*) echo "You number $aNum is not between 1 to 4"  # *) echo You number ${aNum} is not between 1 to 4
+;;
+esac
+
+
+
+for语句
+------------------
+for (( i = 0; i < 10; i++ )); do
+	#statements
+done
+
+for i in words; do
+	#statements
+done
+
+
+for loop in 1 2 3 4 5
+do
+echo "The value is: $loop"
+done
+
+#显示以bash开头的文件
+#!/bin/bash
+for FILE in $HOME/.bash*
+do
+echo $FILE
+done
+
+
+while语句
+------------------
+while [[ condition ]]; do
+	#statements
+done
+
+COUNTER=0
+while [ $COUNTER -lt 5 ]
+do
+COUNTER='expr $COUNTER+1'
+echo $COUNTER
+done
+
+
+until语句
+------------------
+until [[ condition ]]; do
+	#statements
+done
