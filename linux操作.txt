@@ -549,7 +549,7 @@ uci commit dhcp
 uci set dhcp.@dnsmasq[0].cachesize=10000
 uci commit dhcp
 
-opkg install coreutils-base64 ca-certificates ca-bundle curl
+opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls
 
 cd ~
 # China-List
@@ -585,7 +585,9 @@ opkg install libustream-mbedtls coreutils-base64
 # GNU wget
 opkg update
 opkg install wget coreutils-base64
-
+#https certificate
+opkg update
+opkg install ca-certificates ca-bundle
 --------------------------------至此已经够用了
 后面部分为自定义chinalist和gfwlist
 这部分需要用dnsmasq-full替换掉dnsmasq
@@ -2815,3 +2817,4 @@ http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1095
 a.把父网和子网的掩码都改成255.255.0.0  （LAN口设置）
 b.最简单的就是 在两个路由器上分别配置指向对面的静态路由
 c.还可以用其他协议啊，比如OSPF，RIPV2这些
+
