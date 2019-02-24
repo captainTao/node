@@ -398,6 +398,8 @@ http://openwrt-dist.sourceforge.net/
 a.方法一：一键脚本 （网络直连sourceforge.net和downloads.lede-project.org没有问题，可以试试ping不丢包）
 
 wget -qO- http://openwrt-dist.sourceforge.net/auto_install.sh | sh
+#下面为我自己写的：
+wget -qO- 'https://raw.githubusercontent.com/captainTao/node/master/3800/auto_install.sh' | sh
 # 执行此步骤时候按照提示，选择安装shadowsocks,chinadns以及dns-forwarder
 opkg install ip-full iptables-mod-tproxy
 
@@ -2818,3 +2820,17 @@ a.把父网和子网的掩码都改成255.255.0.0  （LAN口设置）
 b.最简单的就是 在两个路由器上分别配置指向对面的静态路由
 c.还可以用其他协议啊，比如OSPF，RIPV2这些
 
+
+usb挂载,NAS-SMB 在op:
+-----------------
+https://wizju.com/post/123/
+#分区1挂载到 /smb1目录
+mkdir /smb1
+mount -t ext4 /dev/sda1 /smb1 -o noatime,async 
+
+#分区2挂载到 /smb2目录 
+mkdir /smb2
+mount /dev/sda2 /smb2 -o noatime,rw,async
+
+umount /smb1  #取消挂载
+umount /smb2  #取消挂载
