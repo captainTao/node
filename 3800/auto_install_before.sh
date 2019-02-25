@@ -68,3 +68,5 @@ if echo ${INS_SV} | grep -qi "^y"; then
 		opkg install luci-app-shadowvpn
 	fi
 fi
+
+:set fileformat=unix

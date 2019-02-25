@@ -31,10 +31,7 @@ if !(grep -q "openwrt_dist" /etc/opkg/customfeeds.conf); then
 fi
 
 opkg update
-opkg install libustream-openssl ca-bundle ca-certificates
-# if echo "$INSTALLED" | grep -q "luci"; then
-# 	LuCI=yes
-# fi
+
 if echo "$INSTALLED" | grep -q "luci"; then
 	LuCI=yes
 fi
@@ -91,3 +88,4 @@ if echo ${INS_UP} | grep -qi "^y"; then
 	opkg install kmod-usb-printer && wget -q "https://raw.githubusercontent.com/captainTao/node/master/3800/luci-app-usb-printer_svn-r9961-1_all.ipk" && opkg install luci-app-usb-printer_svn-r9961-1_all.ipk
 fi
 
+:set fileformat=unix
