@@ -90,7 +90,3 @@ fi
 if echo ${INS_UP} | grep -qi "^y"; then
 	opkg install kmod-usb-printer && wget -q 'https://raw.githubusercontent.com/captainTao/node/master/3800/luci-app-usb-printer_svn-r9961-1_all.ipk' && opkg install luci-app-usb-printer_svn-r9961-1_all.ipk
 fi
-
-# if [[ condition ]]; then
-# 	#statements
-# fi
