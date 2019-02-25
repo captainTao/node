@@ -3,7 +3,7 @@
 # update by captain, on 02/24/2019
 
 # opkg update
-# opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls
+# opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls  #如果要用https,就需要tls
 
 INSTALLED=$(opkg list-installed)
 
@@ -41,7 +41,7 @@ read -p "Install the shadowsocks-libev [Y/n]?" INS_SS
 read -p "Install the simple-obfs [Y/n]?" INS_SO
 read -p "Install the ShadowVPN [Y/n]?" INS_SV
 read -p "Install the usb-storage [Y/n]?" INS_US   #symlink: https://wizju.com/post/123/
-read -p "Install the usb-storage-3.0 addition [Y/n]?" INS_UA
+read -p "Install the usb-storage-3.0 addition [Y/n]?" INS_USS
 read -p "Install the usb-printer [Y/n]?" INS_UP
 
 if echo ${INS_CD} | grep -qi "^y"; then
@@ -80,7 +80,7 @@ if echo ${INS_US} | grep -qi "^y"; then
 	opkg install kmod-usb-core kmod-scsi-core kmod-scsi-generic kmod-usb-uhci kmod-usb-ohci kmod-usb2 kmod-usb-storage kmod-usb-storage-extras kmod-fs-ext4 kmod-fs-msdos kmod-fs-ntfs kmod-fs-vfat mount-utils
 fi
 
-if echo ${INS_UA} | grep -qi "^y"; then
+if echo ${INS_USS} | grep -qi "^y"; then
 	opkg install kmod-usb3
 fi
 
