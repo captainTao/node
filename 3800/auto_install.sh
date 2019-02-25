@@ -35,7 +35,7 @@ opkg install libustream-openssl ca-bundle ca-certificates
 # if echo "$INSTALLED" | grep -q "luci"; then
 # 	LuCI=yes
 # fi
-if [[ echo "$INSTALLED" | grep -q "luci" ]]; then
+if echo "$INSTALLED" | grep -q "luci"; then
 	LuCI=yes
 fi
 read -p "Install the ChinaDNS [Y/n]?" INS_CD
@@ -45,7 +45,7 @@ read -p "Install the simple-obfs [Y/n]?" INS_SO
 read -p "Install the ShadowVPN [Y/n]?" INS_SV
 read -p "Install the usb-storage [Y/n]?" INS_US   #symlink: https://wizju.com/post/123/
 read -p "Install the usb-storage-3.0 addition [Y/n]?" INS_UA
-read -p "Install the usb-printer [Y/n]? " INS_UP
+read -p "Install the usb-printer [Y/n]?" INS_UP
 
 if echo ${INS_CD} | grep -qi "^y"; then
 	opkg install ChinaDNS
