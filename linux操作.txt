@@ -403,6 +403,12 @@ wget -qO- 'https://raw.githubusercontent.com/captainTao/node/master/3800/auto_in
 # 执行此步骤时候按照提示，选择安装shadowsocks,chinadns以及dns-forwarder
 opkg install ip-full iptables-mod-tproxy
 
+op资源下载出错的时候：
+-----------------------
+*** Failed to download the package list from http://openwrt-dist.sourceforge.net/packages/luci/Packages.gz
+删除或者注释掉 /etc/opkg.conf 中的 `option check_signature 1`然后重启
+
+
 此一键脚本的手动步骤：
 首先添加 a65535 的 gpg key，只有这样，第三方的包才能通过签名验证：
 wget -qO /tmp/openwrt-dist.pub http://openwrt-dist.sourceforge.net/openwrt-dist.pub
@@ -2834,3 +2840,4 @@ mount /dev/sda2 /smb2 -o noatime,rw,async
 
 umount /smb1  #取消挂载
 umount /smb2  #取消挂载
+

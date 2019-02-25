@@ -2,8 +2,9 @@
 # according to cokebar's shell script, symlink: https://cokebar.info/archives/664
 # update by captain, on 02/24/2019
 
-opkg update
-opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls
+# opkg update
+# opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls
+
 INSTALLED=$(opkg list-installed)
 
 for a in $(opkg print-architecture | awk '{print $2}'); do
@@ -76,7 +77,7 @@ if echo ${INS_SV} | grep -qi "^y"; then
 	fi
 fi
 
-if echo ${INS_US} | grep -qi "^y"; then     
+if echo ${INS_US} | grep -qi "^y"; then 
 	opkg install kmod-usb-core kmod-scsi-core kmod-scsi-generic kmod-usb-uhci kmod-usb-ohci kmod-usb2 kmod-usb-storage kmod-usb-storage-extras kmod-fs-ext4 kmod-fs-msdos kmod-fs-ntfs kmod-fs-vfat mount-utils
 fi
 
@@ -84,6 +85,10 @@ if echo ${INS_UA} | grep -qi "^y"; then
 	opkg install kmod-usb3
 fi
 
-# if echo ${INS_UP} | grep -qi "^y"; then
-# 	opkg install kmod-usb-printer && wget -q 'https://raw.githubusercontent.com/captainTao/node/master/3800/luci-app-usb-printer_svn-r9961-1_all.ipk' && opkg install luci-app-usb-printer_svn-r9961-1_all.ipk
+if echo ${INS_UP} | grep -qi "^y"; then
+	opkg install kmod-usb-printer && wget -q 'https://raw.githubusercontent.com/captainTao/node/master/3800/luci-app-usb-printer_svn-r9961-1_all.ipk' && opkg install luci-app-usb-printer_svn-r9961-1_all.ipk
+fi
+
+# if [[ condition ]]; then
+# 	#statements
 # fi
