@@ -32,10 +32,12 @@ fi
 
 opkg update
 opkg install libustream-openssl ca-bundle ca-certificates
-if echo "$INSTALLED" | grep -q "luci"; then
+# if echo "$INSTALLED" | grep -q "luci"; then
+# 	LuCI=yes
+# fi
+if [[ echo "$INSTALLED" | grep -q "luci" ]]; then
 	LuCI=yes
 fi
-
 read -p "Install the ChinaDNS [Y/n]?" INS_CD
 read -p "Install the DNS-Forwarder [Y/n]?" INS_DF
 read -p "Install the shadowsocks-libev [Y/n]?" INS_SS
