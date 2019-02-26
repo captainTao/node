@@ -508,8 +508,7 @@ wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -
 d.更新完成后，记得重启ss
 
 e.配置代理(本地端口1080)
-f
-.额外优化：开启tcp fast open
+f.额外优化：开启tcp fast open
 修改 /etc/sysctl.conf ，加入如下一行：
 net.ipv4.tcp_fastopen = 3
 然后执行如下命令生效：
@@ -963,7 +962,21 @@ https://www.cnblogs.com/liuzhengliang/p/4609632.html
 grep 是搜索
 例如： ps -ef | grep java
 表示查看所有进程里 CMD 是 java 的进程信息
+-e显示所有进程，-f为全格式显示
 
+
+管道命令：
+----------
+who | tr 'a-z' 'A-Z' > who.out          #who的内容转换为大写，并输出到who.out
+cat test.sh|tr 'a-z' 'A-Z'>test.out     #test.sh的内容转换为大写，并输出到test.out,需要先把原文内容cat出来
+
+tr命令：
+----------
+echo {1..100}|tr ' ' '+'|bc
+的结果为5050
+echo {1..100}可以生成1 2 3 4 ... 100
+tr为替换字符,这儿把空格替换为+号
+bc为linux的一个计算器
 
 2、ps -aux | grep java
 ps-aux 显示所有状态
@@ -1587,7 +1600,7 @@ ln /etc/issue.bak issue.bak.hard
 echo "xxx" > /etc/host   : 写入文件
 echo "xxx" >> /etc/host   : 在文件末尾进行追加
 
-wanghaitao:~$: echo -e 'ab\bc'       :\b删除
+wanghaitao:~$: echo -e 'ab\bc'       :\b删除, -e字符会对后面单引号的内容进行解释
 ac
 wanghaitao:~$: echo -e 'a\tb\tc\nd\te\tf'      :\t tab \n换行
 a b c
@@ -1597,6 +1610,10 @@ a b c
 d e f
 :\x表示16进制，后面可以跟两位16进制数； \0表示8进制,后面可以跟3位8进制数据
 
+echo 'uname -a'   #单引号，只能单纯的输出
+uname -a
+echo `uname -a`   #uname -a 是个命令，所以要用反引号
+Darwin wanghaitao-MacBook.local 17.7.0 Darwin Kernel Version 17.7.0: Thu Dec 20 21:47:19 PST 2018; root:xnu-4570.71.22~1/RELEASE_X86_64 x86_64
 
 
 > echo
@@ -2007,7 +2024,8 @@ ifconfig eth0 192.168.2.223 //配置eth0的ip
 ----------------
 mail 用户: 发邮件，可以用户不在线,ctrl + D结束并发送
 用户登陆，并输入mail可以查看邮件列表； 输入序列号查看邮件内容； 删除邮件：d 序列号；重查看邮件列表 h； 退出mail,q键
-
+mail -s "help" root #给root用户发help的主题
+echo -e 'Hello, I am '$USER ',The system version is here,please help me to check it,thanks!\n' `uname -a`|mail -s "help" root
 
 > last, lastlog, history
 ----------------
