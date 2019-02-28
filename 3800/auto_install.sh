@@ -77,7 +77,7 @@ if echo ${INS_SV} | grep -qi "^y"; then
 fi
 
 if echo ${INS_US} | grep -qi "^y"; then
-	opkg install kmod-usb-core kmod-scsi-core kmod-scsi-generic kmod-usb-uhci kmod-usb-ohci kmod-usb2 kmod-usb-storage kmod-usb-storage-extras kmod-fs-ext4 kmod-fs-msdos kmod-fs-ntfs kmod-fs-vfat mount-utils
+	opkg install kmod-usb-core kmod-scsi-core kmod-scsi-generic kmod-usb-uhci kmod-usb-ohci kmod-usb2 kmod-usb-storage kmod-usb-storage-extras kmod-fs-ext4 kmod-fs-msdos kmod-fs-ntfs kmod-fs-vfat kmod-fs-hfs kmod-fs-hfsplus mount-utils
 fi
 
 if echo ${INS_USS} | grep -qi "^y"; then

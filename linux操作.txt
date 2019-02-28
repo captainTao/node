@@ -929,6 +929,7 @@ echo '11@22@33' | xargs -p -d '@'  echo
 -I {}
 复制所有图片文件到/data/images 目录下:
 ls *.jpg | xargs -n1 -I cp {} /data/images  
+
 rm删除多文件，可能有错误信息，用xargs去避免，xargs -0将\0作为定界符。
 find . -type f -name "*.log" -print0 | xargs -0 rm -f
 统计一个源代码目录中所有php文件的行数： 
@@ -2682,6 +2683,8 @@ reboot -f
 http://koolshare.cn/thread-116123-1-1.html
 Intel 82559网卡
 intel 82576网卡
+j3160
+4口d525。双口d2550加交换机都可以。都不贵。内存1g就够了。固件装u盘。其他没什么，lede刷上去用就是了。
 97w的电源
 使用树莓派、Intel Atom平台（典型的N3160等）之类极其廉价的通用计算硬件来作为路由器。
 软路由，可以使用一般的PC系统来手动配置多个网络接口间的路由转发，较为傻瓜式的可以使用Windows的网络共享，
