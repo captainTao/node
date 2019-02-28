@@ -627,14 +627,24 @@ nameserver 127.0.0.1
 9.添加eMule设置
 10.VPN:N2N-v2-vpn,openvpn,Ipsecvpn,pptpvpn
 
+
 mwan:
 -----------------
-https://www.polarxiong.com/archives/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE%E8%8B%8F%E5%B7%9E%E7%A7%BB%E5%8A%A8%E5%AE%BD%E5%B8%A6%E5%A4%9A%E6%8B%A8%E7%9A%84%E8%BF%87%E7%A8%8B.html
-https://www.right.com.cn/forum/thread-147109-1-1.html
+多线多拨：
 https://www.jianshu.com/p/9b00b7cfbd88
+https://www.right.com.cn/forum/thread-147109-1-1.html
+https://blog.csdn.net/lvshaorong/article/details/61916525
+https://www.polarxiong.com/archives/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE%E8%8B%8F%E5%B7%9E%E7%A7%BB%E5%8A%A8%E5%AE%BD%E5%B8%A6%E5%A4%9A%E6%8B%A8%E7%9A%84%E8%BF%87%E7%A8%8B.html
 opkg update
-opkg install mwan3 
-opkg install luci-app-mwan3 
+opkg install mwan3 uci-app-mwan3    #多线多拨
+mwan3 status
+
+单线多拨：
+https://blog.csdn.net/lvshaorong/article/details/70568791
+opkg update
+opkg install kmod-macvlan mwan3 luci-app-mwan3    #单线多拨
+mwan3 status
+
 
 usb printer:
 -----------------
@@ -954,7 +964,7 @@ xargs当做参数传递：
 xargs命令可以通过管道接受字符串，并将接收到的字符串通过空格分割成许多参数(默认情况下是通过空格分割) 然后将参数传递给其后面的命令，作为后面命令的命令行参数
 
 
-查看进程：
+ps查看进程：
 -----------------------
 https://www.cnblogs.com/liuzhengliang/p/4609632.html
 
@@ -2858,4 +2868,27 @@ mount /dev/sda2 /smb2 -o noatime,rw,async
 
 umount /smb1  #取消挂载
 umount /smb2  #取消挂载
+
+
+Android-7.0不能charles抓包：
+---------------------
+https://www.charlesproxy.com/documentation/using-charles/ssl-certificates/
+https://juejin.im/post/5aa9f35b51882555731bd922
+<network-security-config>
+  <!-- debug用 -->
+  <debug-overrides> 
+    <trust-anchors> 
+      <!-- Trust user added CAs while debuggable only -->
+      <certificates src="user" /> 
+    </trust-anchors> 
+  </debug-overrides> 
+  <!-- debug和release用 -->
+  <base-config cleartextTrafficPermitted="true">
+      <trust-anchors>
+          <certificates src="system" />
+          <certificates src="user" />
+      </trust-anchors>
+  </base-config>
+</network-security-config>
+
 
