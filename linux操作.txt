@@ -2895,3 +2895,13 @@ https://juejin.im/post/5aa9f35b51882555731bd922
 </network-security-config>
 
 
+搭建gitlab
+---------------------
+https://about.gitlab.com/install/
+ubuntu:
+sudo apt-get update
+sudo apt-get install -y curl openssh-server ca-certificates
+sudo apt-get install -y postfix
+# During Postfix installation a configuration screen may appear. Select 'Internet Site' and press enter. Use your server's external DNS for 'mail name' and press enter. If additional screens appear, continue to press enter to accept the defaults.
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+sudo EXTERNAL_URL="http://gitlab.example.com" apt-get install gitlab-ee
