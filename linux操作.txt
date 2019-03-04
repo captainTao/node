@@ -889,6 +889,9 @@ https://blog.csdn.net/he643042156/article/details/53197516
 shell     13870 579   1905284 28952          0 7f9987c1c8 R com.android.commands.monke
 >: adb shell ps | grep monkey | awk '{print $2}'| sed -n '1p'| cut -c 1-5 | xargs adb shell kill
 
+sed '1d'删除第一行，展示其他行
+sed '1!d'展示第一行
+npm outdated | awk '{print $1}'|sed '1d'|xargs npm update
 
 sed -n '2p' example.log  显示第二行
 sed '/he/d' example.log  删除内容有he字符的行，这个是复制一个文件，然后删除，而不会删除原来的文件；
