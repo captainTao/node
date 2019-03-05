@@ -2908,3 +2908,12 @@ sudo apt-get install -y postfix
 # During Postfix installation a configuration screen may appear. Select 'Internet Site' and press enter. Use your server's external DNS for 'mail name' and press enter. If additional screens appear, continue to press enter to accept the defaults.
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 sudo EXTERNAL_URL="http://gitlab.example.com" apt-get install gitlab-ee
+
+mac OS U盘安装：
+---------------------
+https://support.apple.com/zh-cn/HT201372
+Mojave：*
+sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
+High Sierra：*
+sudo /Applications/Install\ macOS\ High\ Sierra.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
+
