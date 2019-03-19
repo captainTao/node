@@ -15,7 +15,7 @@ for ipk in $(opkg list-upgradable | awk '$1!~/^kmod|^Multiple/{print $1}'); do
 	opkg upgrade $ipk
 done
 # 另外一种更新方法：
-# opkg list-upgradable | awk -F ' - ' '{print $1}' | xargs opkg upgrade
+# opkg update && opkg list-upgradable | awk -F ' - ' '{print $1}' | xargs opkg upgrade
 
 # 更新chinadns
 echo "start to update chinadns..."
