@@ -2,8 +2,8 @@
 # according to cokebar's shell script, symlink: https://cokebar.info/archives/664
 # update by captain, on 02/24/2019
 
-# opkg update
-# opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls  #如果要用https,就需要tls
+opkg update
+opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls  #如果要用https,就需要tls
 
 INSTALLED=$(opkg list-installed)
 
@@ -30,7 +30,7 @@ if !(grep -q "openwrt_dist" /etc/opkg/customfeeds.conf); then
 	echo "src/gz openwrt_dist_luci http://openwrt-dist.sourceforge.net/packages/luci" >>/etc/opkg/customfeeds.conf
 fi
 
-opkg update
+# opkg update
 
 if echo "$INSTALLED" | grep -q "luci"; then
 	LuCI=yes
