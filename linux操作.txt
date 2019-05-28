@@ -885,9 +885,9 @@ ls -a | grep -E "a[d|c]"   egrep或者-E也支持竖线
 > sed, awk, cut, xargs
 ---------------------------
 https://blog.csdn.net/he643042156/article/details/53197516
->: adb shell ps | grep monkey                   
+adb shell ps | grep monkey                   
 shell     13870 579   1905284 28952          0 7f9987c1c8 R com.android.commands.monke
->: adb shell ps | grep monkey | awk '{print $2}'| sed -n '1p'| cut -c 1-5 | xargs adb shell kill
+adb shell ps | grep monkey | awk '{print $2}'| sed -n '1p'| cut -c 1-5 | xargs adb shell kill
 
 sed '1d'删除第一行，展示其他行
 sed '1!d'展示第一行
