@@ -8,7 +8,10 @@ shadow            shadow-           shadowsocks.json  shells
 3.chmod +x shadowsocksR.sh 与数字的区别
 
 4.删除，文件名用正则表达式
-
+5.查看一个文件夹文件的个数
+6.移动一个文件夹下所有文件
+mv    /usr/lib/*    /zone
+mv    /usr/lib/*.txt    /zone
 
 RAM，ROM
 闪存：ROM, read-only memory
@@ -3344,3 +3347,90 @@ warning: You appear to have cloned an empty repository.
 要方便管理公钥，用Gitosis；
 要像SVN那样变态地控制权限，用Gitolite。
 
+
+
+搭建个人博客
+---------------------
+github.io + hexo
+https://github.com/probberechts/hexo-theme-cactus
+https://zhuanlan.zhihu.com/p/26625249
+1.node,npm环境
+2.npm install -g hexo-cli
+3.新建仓库 username.github.io 
+4.git clone到本地
+5.进入文件夹,git clone https://github.com/probberechts/hexo-theme-cactus.git themes/cactus
+6.配置主题，hexo generate, hexo server
+7.hexo常用命令：
+npm install hexo -g #安装Hexo
+npm update hexo -g #升级
+hexo init #初始化博客
+
+命令简写
+hexo n "我的博客" == hexo new "我的博客" #新建文章
+hexo g == hexo generate #生成
+hexo s == hexo server #启动服务预览
+hexo d == hexo deploy #部署
+
+hexo server #Hexo会监视文件变动并自动更新，无须重启服务器
+hexo server -s #静态模式
+hexo server -p 5000 #更改端口
+hexo server -i 192.168.1.1 #自定义 IP
+hexo clean #清除缓存，若是网页正常情况下可以忽略这条命令
+
+8.站点配置文件：
+deploy:
+  type: git
+  repo: git@github.com:captainTao/captainTao.github.io.git
+  branch: master
+9.推送
+npm install hexo-deployer-git --save
+hexo clean 
+hexo g 
+hexo d
++jekyll
+https://blog.csdn.net/tyyytcj/article/details/80880018
+10.绑定域名godaddy
+
+
+
+起一个访问本地资源的node服务
+--------------------------
+1.新建一个目录，test为例，进入test
+2.npm init,然后一路回车，文件夹会多一个package.json
+3.npm install koa koa-static, 文件夹会多package-lock.json 和一个node_modules目录
+4.拷贝要发布的文件夹到test目录下的一个子目录下面，比如 test/tools
+（一般不把文件夹拷贝到test根目录下，这样就没有了二级目录）
+备注：
+vue中如果要设置二级目录的话，
+需要在router.js中设置：
+mode: 'history',
+base: '/datafilter/',
+
+需要在vue.config.js中设置：
+publicPath: '/datafilter/',   
+
+如果是放根目录下的话，base和publicPath的值设置为'/'既可或者不设置这两个参数
+
+
+5.新建一个server.js,内容如下：
+
+const Koa = require('koa')
+const path = require('path')
+const staticFiles = require('koa-static')
+// 定义一个内核
+const app = new Koa()
+// 读取本地文件的目录
+let main = staticFiles(path.resolve(__dirname, "./tools"))
+// 内核读取哪些文件，这里为html
+app.use(main, {extensions: ['html']})
+// 启动服务 监听
+app.listen(4050, () =>{
+    console.log('server is running at http://localhost:4050')
+})
+
+6.启动服务
+node server.js
+
+7.浏览器访问地址：
+http://localhost:4050/     根目录
+http://localhost:4050/datafilter/    二级目录
