@@ -3,12 +3,20 @@ wanghaitao:~$: cat .bash_profile
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
-export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
-export PATH="/usr/local/opt/python@2/bin:$PATH"
-export PATH="/Users/captain/Desktop/:$PATH" #桌面程序追加到终端
+#export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
+#export PATH="/usr/local/opt/python@2/bin:$PATH"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+export PATH="/usr/local/opt/python/bin:$PATH"
+export PATH="/Applications/VirtualBox.app/Contents/MacOS:$PATH"
+export PATH="/usr/local/opt/node@10/bin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/node@10/lib"
+export CPPFLAGS="-I/usr/local/opt/node@10/include"
 
 #配置java环境
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-12.0.2.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-13.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 
@@ -18,11 +26,16 @@ export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/tools/bin
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
-#配置mac bash的前缀
+#配置mac bash前缀
 export PS1="\t \W: "
 
 #配置ls的目录的颜色
-export CLICOLOR=1 
+export CLICOLOR=1
+
+#配置openssl
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
 //////////////////////////////////////////////////////////////
 
@@ -154,17 +167,17 @@ wanghaitao:~$: cat /etc/hosts
 # localhost is used to configure the loopback interface
 # when the system is booting.  Do not change this entry.
 ##
-127.0.0.1	localhost
-255.255.255.255	broadcasthost
-::1             localhost
-0.0.0.0 account.jetbrains.com
+127.0.0.1        localhost
+255.255.255.255	 broadcasthost
+::1              localhost
+0.0.0.0    account.jetbrains.com
+0.0.0.0    www.jetbrains.com
+127.0.0.1    license.sublimehq.com
+127.0.0.1    license.sublimetext.com
+127.0.0.1    www.sublimetext.com
+127.0.0.1    45.55.255.55
+127.0.0.1    45.55.41.223
+127.0.0.1    liveupdate.mac.sandai.net
 199.193.116.104 astrill.com
 199.193.116.104 www.astrill.com
 199.193.116.104 members.astrill.com
-127.0.0.1 license.sublimehq.com
-127.0.0.1 license.sublimetext.comßß
-127.0.0.1 45.55.255.55
-127.0.0.1 45.55.41.223
-127.0.0.1 www.sublimetext.com
-127.0.0.1 license.sublimehq.com
-127.0.0.1 liveupdate.mac.sandai.net
