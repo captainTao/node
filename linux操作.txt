@@ -644,6 +644,7 @@ mwan3 status
 
 单线多拨：
 https://blog.csdn.net/lvshaorong/article/details/70568791
+http://www.360doc.com/content/18/0814/06/21175922_778090733.shtml
 opkg update
 opkg install kmod-macvlan mwan3 luci-app-mwan3    #单线多拨
 mwan3 status
@@ -2564,6 +2565,7 @@ do
 done  
 echo
 
+
 mac允许安装三方来源
 -------------------
 sudo spctl --master-disable
@@ -3078,7 +3080,7 @@ git clone -b v2.8.1 https://git.oschina.net/oschina/android-app.git
 
 =========================================================================
 四、分支管理：
-1.#创建dev分支：-b表示创建并切换
+1.#创建dev分支：创建并切换, -b表示创建
 $ git checkout -b dev
 上面的命令相当于：
 $ git branch dev 创建分支
@@ -3389,6 +3391,7 @@ hexo g
 hexo d
 +jekyll
 https://blog.csdn.net/tyyytcj/article/details/80880018
+http://jekyllthemes.org/
 10.绑定域名godaddy
 
 
@@ -3473,6 +3476,8 @@ F2 下一个书签
 Shift+F2 上一个书签
 
 推荐插件：
+https://packagecontrol.io/browse/popular
+
 Emmet (Zen Coding)插件，zenCoding是一种快速的html、css编写方式。默认用tab键.
 
 GBK to UTF8
@@ -3485,7 +3490,9 @@ colorpicker
 顾名思义，选颜色用，快捷键CTRL+Alt+C
 
 pretty json
-格式化json
+格式化json 
+- Windows: <kbd>ctrl+alt+j</kbd>
+- OS X: <kbd>cmd+ctrl+j</kbd>
 
 
 主题：
@@ -3493,3 +3500,173 @@ Theme-Nil主题
 
 其他设置：
 1.设置tab键为4个空格
+
+
+
+atom
+----------------
+https://www.hangge.com/blog/cache/detail_1149.html
+
+Crtl+Shift+M       开启Markdown实时预览
+Command+Shift+P    打开命令窗口，可以运行各种菜单功能
+Command + T        快速多文件切换
+Command + F        文件内查找和替换
+Command + Shift + F    多文件查找和替换
+Command + [    对选中内容向左缩进
+Command + ]    对选中内容向右缩进
+Command + \    显示或隐藏目录树
+Crtl + m       相应括号之间，html tag之间等跳转
+Crtl + Alt + B   格式化代码（需要安装atom-beautify）
+Crtl + `        调起CLI命令行界面（需要安装terminal-panel）
+
+
+常用插件：
+minimap
+minimap是一个预览全部代码的一个插件，同时能方便的移动到指定的文件位置。
+
+atom-beautify
+atom-beautify是一个格式化代码的插件，支持HTML, CSS, JavaScript, PHP, Python, Ruby, Java, C, C++, C#, Objective-C,CoffeeScript, TypeScript, SQL等多种语言。
+安装后可以使用 Crtl + Alt + B 快捷键进行格式化。
+
+autocomplete-* 系列
+autocomplete-*系列包含各个语言的代码自动补全功能，你需要什么语言的就可以下载该语言相关的插件即可
+autocomplete-paths：填写路径的时候有Sug提示
+autocomplete-php：php代码提示补全
+autocomplete-java：java代码提示补全
+
+pigments
+pigments是项目文件中，样式显色显示的的插件。在Atom中的下载量可是相当的高。对于前端人员来讲还是很重要的一个插件。
+
+terminal-panel
+用于执行命令并显示输出。打开终端面板快捷键：Ctrl + `
+
+docblockr
+可以帮助我们方便快速地写注释
+
+avascript-snippets
+让我们书写js时使用各种缩写，自动补全代码。
+
+file-icons
+让文件前面有彩色图片，使文件类型看得更加清除舒服
+
+
+
+本地搭建gitbook
+--------------------
+https://blog.csdn.net/Iron_Ye/article/details/83254911
+https://yuzeshan.gitbooks.io/gitbook-studying/content/publish/gitbook.html
+部署服务器：
+https://www.jianshu.com/p/a109b2baa519
+mac:
+https://www.jianshu.com/p/9f24f8e27fc6
+
+// 检查npm是否安装成功
+ npm -v
+// 检查node是否存在
+ node -v
+// 安装Gitbook命令
+sudo npm install -g gitbook-cli
+// 检查是否安装成功
+gitbook -v
+
+
+cd demo
+# 初始化之后会看到两个文件，README.md ，SUMMARY.md
+gitbook init
+# 生成静态站点，当前目录会生成_book目录，即web静态站点
+gitbook build ./
+# 启动web站点，默认浏览地址：http://localhost:4000
+gitbook serve ./
+
+
+linux:
+https://www.jianshu.com/p/ec1e7d2c76c6
+
+
+
+
+
+tree:
+---------------------
+
+
+
+
+MarkDown语法
+---------------------
+https://blog.csdn.net/Iron_Ye/article/details/83254911
+网页转换为md格式： http://ksria.com/simpread/
+
+Markdown 是一种「电子邮件」风格的「标记语言」,Gitbook就是采用这种语言规范来编辑。
+
+标题
+# 一级标题（H1）
+## 二级标题（H2）
+### 三级标题（H3）
+...依次类推
+
+注：# 和「一级标题」之间建议保留一个字符的空格，这是最标准的 Markdown 写法。
+列表
+*,+,-符号的作用一样，都是表示无序列表
+
+列表格式在MarkDown中比较常见
+// - 和文本之间有空格
+- 文本1
+- 文本2
+- 文本3
+
+如果希望有序列
+1.文本
+2.文本
+3.文本
+
+插入链接和图片
+// 文本链接
+[显示文本](链接地址)
+// 图片链接
+/**! [](图片链接地址):注意不能中间有空格，我这里因为简书原因，连代码块区域都检查图片*/
+
+引用
+// > 和文本之间有空格
+> 文本
+粗体和斜体
+1.斜体表示：*文本*
+2.粗体表示：**文本**
+表格
+// 每列使用“|”隔开，每行标题和内容使用“| ----- |”隔开
+1. 默认靠左对齐: | ----- |
+2. 靠右对齐：| -----: |
+3. 居中显示：| :-----: |
+
+| Table1 | Table2 | Table3 |
+| ------ |:------:| ------:|
+| 靠左   | 居中   | 靠右   |
+| 靠左   | 居中   | 靠右   |
+| 靠左   | 居中   | 靠右   |
+预览
+
+Table1  Table2  Table3
+靠左  居中  靠右
+靠左  居中  靠右
+靠左  居中  靠右
+代码块区域（阴影区）
+```中间换行 ```表示
+
+分割线
+三个以上的*或者-符号表示
+
+
+
+
+内网搭建云盘
+-------------
+owncloud
+kiftd
+
+内网dns服务器搭建
+----------------
+
+
+分布式系统搭建
+-------------
+go-fastdfs
