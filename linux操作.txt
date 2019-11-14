@@ -388,7 +388,7 @@ bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-serve
 
 ===============================================================
 
-https://cokebar.info/archives/664
+
 http://openwrt-dist.sourceforge.net/
 ---------------------------------------------------------------路由终端翻墙
 
@@ -601,7 +601,15 @@ opkg install ca-certificates ca-bundle
 --------------------------------至此已经够用了
 后面部分为自定义chinalist和gfwlist
 这部分需要用dnsmasq-full替换掉dnsmasq
+
 opkg remove dnsmasq && opkg install dnsmasq-full
+# 使用ipset,用了dnsmasq-full:
+sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -s ss_spec_dst_bp -o /etc/dnsmasq.d/accelerated-domains.china.conf
+# 使用ipset,用了dnsmasq-full:
+sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -s ss_spec_dst_fw -o /etc/dnsmasq.d/dnsmasq_gfwlist.conf
+
+dnsmasq.d目录下自定义：
+custom_bypass.conf和custom_forward.conf文件
 
 
 验证dnsmasq配置以及其他优化：
@@ -864,6 +872,8 @@ grep -v '^$' /etc/rsyslog.conf | grep -v '^#'
 6、--color==auto  搜索出的关键词用颜色显示
 7、-i标识不区分大小写
 grep -i multiuser /etc/inittab      grep是在文件的内容中查找，查找multiuser， -i是不区分大小写，
+
+-q的参数意思是：静默安装，quiet的意思
 
 > grep lili /etc/passwd
 lili:x:502:502::/home/lisi:/bin/bash    显示lili的ID为502
@@ -1767,6 +1777,15 @@ passwd (5)           - the password file
 wangsirlemon@c77:~$ whatis ls
 ls (1)               - list directory contents
 
+
+
+> date:
+--------------
+date
+
+date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"
+#DATE: 2019-11-14
+#TIME: 09:26:11
 
 > apropos:
 ---------------

@@ -9,7 +9,7 @@ cp /etc/chinadns_chnroute.txt ./backupfile
 cp -r /etc/dnsmasq.d/. ./backupfile
 
 #更新所有ipk
-echo "start to update the latest ipk..."
+echo "start to update the outdated ipk..."
 opkg update
 for ipk in $(opkg list-upgradable | awk '$1!~/^kmod|^Multiple/{print $1}'); do
 	opkg upgrade $ipk
@@ -31,8 +31,16 @@ curl -L -o gfwlist2dnsmasq.sh https://github.com/cokebar/gfwlist2dnsmasq/raw/mas
 chmod +x gfwlist2dnsmasq.sh
 
 # China-list  114可以换成ISP的dns,这样运营商分配最近的服务器
+# 不使用ipset,用了精简版的dnsmasq:
 sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -o /etc/dnsmasq.d/accelerated-domains.china.conf
+# 使用ipset,用了dnsmasq-full:
+# sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -s ss_spec_dst_bp -o /etc/dnsmasq.d/accelerated-domains.china.conf
+
 # GfwList
+# 不使用ipset,用了精简版的dnsmasq:
 sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -o /etc/dnsmasq.d/dnsmasq_gfwlist.conf
+# 使用ipset,用了dnsmasq-full:
+# sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -s ss_spec_dst_fw -o /etc/dnsmasq.d/dnsmasq_gfwlist.conf
+
 # Restart dnsmasq
 /etc/init.d/dnsmasq restart
