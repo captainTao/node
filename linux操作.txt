@@ -3806,6 +3806,33 @@ ifuse --container [bundleID] [挂载点]
 大数据打点写的位置
 /Library/Caches/Feedback/logger..
 
+
+appium
+----------
+1.安装jdk,appium,adb
+2.xcode,libimobiledevice，appium
+brew install -v --HEAD --fetch --build-from-source usbmuxd libimobiledevice ideviceinstaller
+3.设置webdriver
+server的webdriver路径：
+/usr/local/lib/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent
+桌面版本 webdriver位置
+/Applications/Appium.app/Contents/Resources/app/node_modules/appium-webdriveragent
+
+执行：sh Scripts/bootstrap.sh
+
+webdriver出问题了：
+删除原来的webdriver
+webdriver目录下clone webdriver
+git clone https://github.com/facebook/WebDriverAgent.git
+./Scripts/bootstrap.sh
+
+xcode打开然后更改bundle,目标选择WebDriverAgentRunner，执行Product/Test
+
+查看苹果设备：
+instruments -s devices
+
+
+
 ios打包
 ------------
 fastlane
@@ -3814,3 +3841,67 @@ fastlane
 后端接口图形化工具
 --------------
 kibana
+
+
+jenkins
+--------
+要搭建jenkins持续构建集成环境，首先要安装tomcat和JDK；
+
+
+一、Tomcat是其中一个开源的且免费的java Web服务器，是Apache软件基金会的项目;
+1.配置java环境，配置Tomcat之前需要配置java环境；
+2.brew install tomcat
+
+
+首先保证brew命令能够正常使用；
+
+1. 搜索tomcat是否存在：
+brew search tomcat
+
+2. 安装tomcat：
+brew install tomcat
+
+3. 检查是否安装成功：
+catalina -h
+
+4. 运行tomcat：
+catalina run
+
+或者：
+sudo sh startup.sh //启动
+sudo sh shutdown.sh //关闭
+
+Tomcat的默认端口是8080，如果运行成功可通过http://localhost:8080访问
+webapp的根目录(CATALINA_HOME)为:/usr/local/Cellar/tomcat/7.0.33/libexec/webapps/ROOT/
+
+
+Jenkins安装简介：
+https://www.cnblogs.com/zhouxihi/p/10290869.html
+Jenkins是一个开源的自动化服务器。由Java和上百个插件组成，支持编译，测试，部署任意的自动化项目
+源网站： http://blog.csdn.net/taishanduba/article/details/50452601
+http://www.jianshu.com/p/b4efe5a3b442    
+http://www.cnblogs.com/zhanggui/p/6227832.html
+使用： http://blog.csdn.net/potato512/article/details/52289136
+
+1.homebrew 安装 Jenkins
+brew install jenkins
+
+2.链接 launchd 配置文件
+ln -sfv /usr/local/opt/jenkins/*.plist ~/Library/LaunchAgents
+如果要其他机器也可以访问，把ip地址改为广播地址:<string>--httpListenAddress=0.0.0.0</string>
+
+3.修改完成,执行命令行:
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist
+
+4.命令行启动Jenkins
+jenkins
+brew services start jenkins
+5.打开浏览器,输入 localhost:8080 就可看到Jenkins的web界面
+
+6.Jenkins的一些操作
+http://localhost:8080/exit     //退出Jenkins
+http://localhost:8080/restart  //重启
+http://localhost:8080/reload   //重新加载
+http://localhost:8080/updateCenter  //插件更新中心
+ln -sfv /usr/local/opt/jenkins/*.plist ~/Library/LaunchAgents  开机自动启动
+
