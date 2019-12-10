@@ -102,10 +102,26 @@ set completeopt=preview,menu
 set guifont=Menlo:h16:cANSI
 
 "syntax enable         " 语法高亮
-"set nu!               " 显示行号
-"设置光标样式为竖线vertical bar
-" Change cursor shape between insert and normal mode in iTerm2.app
 
+"设置光标样式为竖线vertical bar
+"Mode Settings
+
+let &t_SI.="\e[5 q" "SI = INSERT mode
+let &t_SR.="\e[4 q" "SR = REPLACE mode
+let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+
+"Cursor settings:
+
+"  1 -> blinking block
+"  2 -> solid block
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar
+
+"let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+"let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 
 //////////////////////////////////////////////////////////////
