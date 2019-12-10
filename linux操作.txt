@@ -2928,17 +2928,45 @@ https://juejin.im/post/5aa9f35b51882555731bd922
 搭建gitlab
 ---------------------
 https://about.gitlab.com/install/
+https://www.cnblogs.com/dqcer/p/9596813.html
 ubuntu:
 sudo apt-get update
 sudo apt-get install -y curl openssh-server ca-certificates
+
+#install Postfix to send notification emails
 sudo apt-get install -y postfix
 # During Postfix installation a configuration screen may appear. Select 'Internet Site' and press enter. Use your server's external DNS for 'mail name' and press enter. If additional screens appear, continue to press enter to accept the defaults.
+
+#Add the GitLab package repository
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 sudo EXTERNAL_URL="http://gitlab.example.com" apt-get install gitlab-ee
+
+#Please configure a URL for your GitLab instance by setting `external_url`
+configuration in /etc/gitlab/gitlab.rb file.
+#Then, you can start your GitLab instance by running the following command:
+  sudo gitlab-ctl reconfigure
+
+登录ip地址，进去设置密码，用户名默认root,502则内存不足，多刷新几次即可
+
+#查看默认账户名和密码
+cd /opt/gitlab/bin/
+gitlab-rails console production
+u=User.where(id:1).first #查询用户账号信息并赋值给u
+u.password=12345678   #设置该用户名的密码，密码这里不要使用引号，不然会无法登录成功
+u.password_confirmation=12345678  #确认密码
+u.save! #保存
+exit  #退出
+
+添加git账户：
+git config --global user.name "Administrator"
+git config --global user.email "admin@example.com"
 
 mac OS U盘安装：
 ---------------------
 https://support.apple.com/zh-cn/HT201372
+// 将MyVolume 替换为您的宗卷名称
+Catalina: *
+sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
 Mojave：*
 sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
 High Sierra：*
@@ -3905,3 +3933,272 @@ http://localhost:8080/reload   //重新加载
 http://localhost:8080/updateCenter  //插件更新中心
 ln -sfv /usr/local/opt/jenkins/*.plist ~/Library/LaunchAgents  开机自动启动
 
+
+
+cocoapods
+---------
+# 安装：
+安装brew
+安装ruby
+安装cocoapods：
+sudo gem install cocoapods 
+
+vim Podfile
+pod install
+
+
+# 升级pod
+https://www.jianshu.com/p/9fe5278a5018
+
+1、首先在终端执行：
+$ sudo gem update --system
+结果显示：
+bad response Not Found 404 (https://gems.ruby-china.org/specs.4.8.gz)
+因为连接不到镜像，需要更换镜像
+
+2、更换镜像
+首先执行以下命令，获取到当前的镜像，并删除
+$ gem sources -l 
+$ gem sources --remove  https://ruby.taobao.org/
+添加新的镜像：
+$ gem source -a https://gems.ruby-china.com
+再次查看当前镜像：
+$ gem sources -l 
+结果若是如下，则为替换成功：
+*** CURRENT SOURCES ***
+https://gems.ruby-china.com
+再次升级cocoapods，以下两种方式，也可都选择：
+$ sudo gem update --system
+$ sudo gem install cocoapods -n/usr/local/bin
+完成！
+
+
+ubuntu安装deb文件(命令)
+---------------------
+ 1.cd 到安装包的目录
+ 2.sudo dpkg -i file.deb（如果是red hat linux的rpm格式，用rpm -ivh file.rpm）
+
+
+mac nginx
+---------
+https://www.cnblogs.com/tandaxia/p/8810648.html
+1.xcode-select --install
+2.安装brew
+3.brew install nginx
+4.sudo nginx
+// 默认为本地的8080端口
+// http://localhost:8080/
+5.自定义
+vim /usr/local/etc/nginx/nginx.conf
+第一行添加：设置访问权限( user root owner; )，不然等会访问网站会出现403错误
+在server中更改设置的端口，和网站路径，默认打开的网页
+
+6.保存退出，并重启
+sudo nginx -s reload
+
+
+wget
+-------
+wget url  #下载文件
+
+
+ubuntu18.04安装owecloud
+-----------------------
+https://doc.owncloud.com/server/admin_manual/installation/ubuntu_18_04.html
+
+root用户运行
+apt-get update && apt-get upgrade
+
+1.首先，确保所有已安装的软件包都是最新的，并且APT存储库中提供PHP 7.3。为此，请按照以下说明进行操作：
+apt install software-properties-common && \
+  add-apt-repository ppa:ondrej/php && \
+  apt update && \
+  apt upgrade -y
+
+2.创建一个帮助程序脚本以简化occ命令的运行。
+FILE="/usr/local/bin/occ"
+/bin/cat <<EOM >$FILE
+#! /bin/bash
+
+cd /var/www/owncloud
+sudo -u www-data /usr/bin/php /var/www/owncloud/occ "\$@"
+EOM
+2.1使助手脚本可执行：
+chmod +x /usr/local/bin/occ
+
+3.安装所需的软件包
+apt install -y \
+  apache2 \
+  libapache2-mod-php7.3 \
+  mariadb-server \
+  openssl \
+  php-imagick php7.3-common php7.3-curl \
+  php7.3-gd php7.3-imap php7.3-intl \
+  php7.3-json php7.3-mbstring php7.3-mysql \
+  php-ssh2 php7.3-xml php7.3-zip \
+  php-apcu php-redis redis-server \
+  wget
+
+4.安装推荐的软件包
+apt install -y \
+  ssh bzip2 rsync curl jq \
+  inetutils-ping smbclient\
+  php-smbclient coreutils php7.3-ldap
+
+// Ubuntu 18.04包含smbclient 4.7.6，其已知限制为仅使用SMB协议的版本1
+
+5.配置Apache
+
+5.1更改文件根
+sed -i "s#html#owncloud#" /etc/apache2/sites-available/000-default.conf
+service apache2 restart
+
+
+5.2创建虚拟主机配置
+FILE="/etc/apache2/sites-available/owncloud.conf"
+sudo /bin/cat <<EOM >$FILE
+Alias /owncloud "/var/www/owncloud"
+
+<Directory /var/www/owncloud>
+  Options +FollowSymlinks
+  AllowOverride All
+
+ <IfModule mod_dav.c>
+  Dav off
+ </IfModule>
+
+ SetEnv HOME /var/www/owncloud
+ SetEnv HTTP_HOME /var/www/owncloud
+</Directory>
+EOM
+
+5.3启用虚拟主机配置
+a2ensite owncloud.conf
+service apache2 reload
+
+5.4配置数据库
+mysql -u root -e "CREATE DATABASE IF NOT EXISTS owncloud; \
+GRANT ALL PRIVILEGES ON owncloud.* \
+  TO owncloud@localhost \
+  IDENTIFIED BY 'password'";
+
+5.5启用推荐的Apache模块
+echo "Enabling Apache Modules"
+
+a2enmod dir env headers mime rewrite setenvif
+service apache2 reload
+
+6.设置ownCloud
+
+6.1下载ownCloud
+cd /var/www/
+wget https://download.owncloud.org/community/owncloud-10.3.1.tar.bz2 && \
+tar -xjf owncloud-10.3.1.tar.bz2 && \
+chown -R www-data. owncloud
+
+6.2安装ownCloud
+occ maintenance:install \
+    --database "mysql" \
+    --database-name "owncloud" \
+    --database-user "owncloud" \
+    --database-pass "password" \
+    --admin-user "admin" \
+    --admin-pass "admin"
+
+6.3配置ownCloud的可信域
+myip=$(hostname -I|cut -f1 -d ' ')
+occ config:system:set trusted_domains 1 --value="$myip"
+
+6.4设置Cron作业
+echo "*/15  *  *  *  * /usr/bin/php -f /var/www/owncloud/cron.php" \
+  > /var/spool/cron/crontabs/www-data
+chown www-data.crontab /var/spool/cron/crontabs/www-data
+chmod 0600 /var/spool/cron/crontabs/www-data
+
+6.5如果您需要从LDAP或Active Directory服务器同步用户，请添加此额外的Cron作业。
+echo "*/15  *  *  *  * /usr/bin/php -f /var/www/owncloud/cron.php" > /var/spool/cron/crontabs/www-data
+chown www-data.crontab  /var/spool/cron/crontabs/www-data
+chmod 0600  /var/spool/cron/crontabs/www-data
+
+
+6.6配置缓存和文件锁定
+执行以下命令：
+
+occ config:system:set \
+   memcache.local \
+   --value '\OC\Memcache\APCu'
+
+occ config:system:set \
+   memcache.locking \
+   --value '\OC\Memcache\Redis'
+
+occ config:system:set \
+   redis \
+   --value '{"host": "127.0.0.1", "port": "6379"}' \
+   --type json
+
+6.7配置日志轮换
+执行此命令以设置日志轮转。
+
+FILE="/etc/logrotate.d/owncloud"
+sudo /bin/cat <<EOM >$FILE
+/var/www/owncloud/data/owncloud.log {
+  size 10M
+  rotate 12
+  copytruncate
+  missingok
+  compress
+  compresscmd /bin/gzip
+}
+EOM
+
+7.完成安装
+FILE="/usr/local/bin/ocpermissions"
+
+/bin/cat <<EOM >$FILE
+#!/bin/bash
+
+ocpath="{install-directory}"
+datadir="{install-directory}/data"
+htuser="{webserver-user}"
+htgroup="{webserver-group}"
+rootuser="root"
+
+printf "Creating any missing directories"
+sudo -u "${htuser}" mkdir -p "$ocpath/assets"
+sudo -u "${htuser}" mkdir -p "$ocpath/updater"
+sudo -u "${htuser}" mkdir -p "$datadir"
+
+printf "Update file and directory permissions"
+sudo find "${ocpath}/" -type f -print0 | xargs -0 chmod 0640
+sudo find "${ocpath}/" -type d -print0 | xargs -0 chmod 0750
+
+printf "Set web server user and group as ownCloud directory user and group"
+sudo chown -R "${rootuser}:${htgroup}" "${ocpath}/"
+sudo chown -R "${htuser}:${htgroup}" "${ocpath}/apps/"
+sudo chown -R "${htuser}:${htgroup}" "${ocpath}/apps-external/"
+sudo chown -R "${htuser}:${htgroup}" "${ocpath}/assets/"
+sudo chown -R "${htuser}:${htgroup}" "${ocpath}/config/"
+sudo chown -R "${htuser}:${htgroup}" "${datadir}"
+sudo chown -R "${htuser}:${htgroup}" "${ocpath}/updater/"
+sudo chmod +x "${ocpath}/occ"
+
+printf "Set web server user and group as .htaccess user and group"
+if [ -f "${ocpath}/.htaccess" ]; then
+  sudo chmod 0644 "${ocpath}/.htaccess"
+  sudo chown "${rootuser}:${htgroup}" "${ocpath}/.htaccess"
+fi
+
+if [ -f "${datadir}/.htaccess" ]; then
+  sudo chmod 0644 "${datadir}/.htaccess"
+  sudo chown "${rootuser}:${htgroup}" "${datadir}/.htaccess"
+fi
+
+EOM
+
+# Make the script executable
+sudo chmod +x /usr/local/bin/ocpermissions
+
+ocpermissions
+
+8.现在已安装ownCloud。您可以通过将Web浏览器指向您自己的cloud安装来确认可以使用。直接访问ip地址
