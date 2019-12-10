@@ -3558,6 +3558,26 @@ Theme-Nil主题
 其他设置：
 1.设置tab键为4个空格
 
+我的sublime个人设置
+{
+    "font_size": 13,
+    "ignored_packages":
+    [
+        "Vintage"
+    ],
+    "tab_size": 4,
+    "theme": "Default.sublime-theme",
+    "translate_tabs_to_spaces": true,
+    "word_wrap": "true"
+}
+sublime安装的插件：
+brackethighlighter
+html-css-js prettify
+jsformat
+pretty json
+python3
+sublimelinter
+vue syntax highlight
 
 
 atom
@@ -3859,6 +3879,17 @@ xcode打开然后更改bundle,目标选择WebDriverAgentRunner，执行Product/T
 查看苹果设备：
 instruments -s devices
 
+我的appium ios配置：
+{
+  "deviceName": "PG-0193",
+  "platformVersion": "13.1",
+  "udid": "3e2f4023988f2e674b26ee7a8b55d65fbd034260",
+  "automationName": "XCUITest",
+  "noReset": false,
+  "platformName": "iOS",
+  "bundleId": "com.vstudio.salad",
+  "autoLaunch": false
+}
 
 
 ios打包
