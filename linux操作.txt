@@ -3890,6 +3890,8 @@ instruments -s devices
   "bundleId": "com.vstudio.salad",
   "autoLaunch": false
 }
+// 官方文档：
+https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/caps.md
 
 
 ios打包
