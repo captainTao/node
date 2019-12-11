@@ -857,6 +857,20 @@ note: -n, -e一起使用，user列的属性是用户的id号，不是用户名
 service network restart :重启网络服务
 */ 
 
+mac:
+netstat -anp tcp | grep 80
+lsof -i :80
+结束占用80端口的所有服务和进程：
+lsof -P | grep ':80' | awk '{print $2}' | xargs kill -9
+
+mac下使用netstat 命令区别于liunx
+如果要查询tcp ,udp 协议的，必须加要加 tcp ,udp
+netstat lnp tcp
+netsta lnp udp
+
+linux 下：
+netstat lntp
+netstat lnup
 
 > grep
 -----------------------
@@ -2681,7 +2695,7 @@ tool:teamviewer, ZeroTier
 https://my.oschina.net/u/3757085/blog/1928642
 https://www.zhihu.com/question/21359049
 
-owncloud:
+NAS服务:
 https://www.zhihu.com/question/21359049
 
 uci命令
@@ -4035,7 +4049,7 @@ wget
 wget url  #下载文件
 
 
-ubuntu18.04安装owecloud
+ubuntu18.04安装owncloud
 -----------------------
 https://doc.owncloud.com/server/admin_manual/installation/ubuntu_18_04.html
 
