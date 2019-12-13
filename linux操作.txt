@@ -872,6 +872,7 @@ linux 下：
 netstat lntp
 netstat lnup
 
+
 > grep
 -----------------------
 cat vsftpd.conf | grep -v '^#'   // 查看xx.conf文件中首字符不是#的行
@@ -2447,6 +2448,17 @@ cd, pushd, popd
 [root@localhost shell_test]#
 
 
+> 烧录iso
+--------------
+查找U盘
+diskutil list
+卸载查找的U盘
+diskutil unmountDisk /dev/disk2
+烧录，bs为每次烧录的文件大小
+sudo dd if=cn_windows_8_1_x64_dvd_2707237.iso of=/dev/disk1 bs=1m
+弹出磁盘
+diskutil eject /dev/disk2
+
 
 > 历史命令调用
 ---------------------
@@ -3970,7 +3982,7 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.jenkins.plist
 
 4.命令行启动Jenkins
 jenkins
-brew services start jenkins
+// brew services start jenkins
 5.打开浏览器,输入 localhost:8080 就可看到Jenkins的web界面
 
 6.Jenkins的一些操作
@@ -4032,7 +4044,8 @@ https://www.cnblogs.com/tandaxia/p/8810648.html
 1.xcode-select --install
 2.安装brew
 3.brew install nginx
-4.sudo nginx
+4.sudo nginx // 启动
+// 或者启动：cd /usr/local/nginx && sudo ./nginx 
 // 默认为本地的8080端口
 // http://localhost:8080/
 5.自定义
@@ -4043,6 +4056,13 @@ vim /usr/local/etc/nginx/nginx.conf
 6.保存退出，并重启
 sudo nginx -s reload
 
+7.检查nginx配置是否正确
+(sudo) nginx -t
+
+8.kill掉nginx
+ps -ef | grep nginx
+sudo kill -QUIT 主进程号
+sudo kill -TERM 主进程号
 
 wget
 -------
