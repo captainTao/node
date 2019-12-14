@@ -65,6 +65,10 @@ dnsmasq:
 https://wzyboy.im/post/874.html      //dnsmasq的作用
 https://www.jianshu.com/p/1df2e506a546      //配置dnsmasq
 
+https://blog.51cto.com/longlei/2065967    // 详细配置
+https://www.cnblogs.com/taoyuxuan/p/11205491.html
+https://www.cnblogs.com/studio313/p/6278698.html
+
 验证dnsmasq配置：
 
 修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d
