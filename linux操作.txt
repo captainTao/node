@@ -2448,18 +2448,6 @@ cd, pushd, popd
 [root@localhost shell_test]#
 
 
-> 烧录iso
---------------
-查找U盘
-diskutil list
-卸载查找的U盘
-diskutil unmountDisk /dev/disk2
-烧录，bs为每次烧录的文件大小
-sudo dd if=cn_windows_8_1_x64_dvd_2707237.iso of=/dev/disk1 bs=1m
-弹出磁盘
-diskutil eject /dev/disk2
-
-
 > 历史命令调用
 ---------------------
 上下箭头
