@@ -619,6 +619,11 @@ custom_bypass.conf和custom_forward.conf文件
 min-cache-ttl=1800
 建议不要过大，3600以内吧，否则可能会有副作用
 
+这儿可以自定义局域网域名：
+address=/gitlab.camera360.com/10.1.12.42
+// 双向解析
+ptr-record=192.168.111.113.in-addr.arps,www.lyh1.com
+
 /etc/dnsmasq.d目录下有两个文件：
 accelerated-domains.china.conf  dnsmasq_gfwlist.conf
 
