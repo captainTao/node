@@ -21,6 +21,10 @@ RAM，ROM
 5.目前速度最快的还是SSR客户端加HAPROXY的服务器,国内的阿里云服务器架设haproxy再跳转到海外服务器
 6.ss+GoQuiet:goquiet是ss一个插件，可以将ss流量混淆为普通的https
 
+
+不错的安装教程网站：
+https://www.digitalocean.com/community/tutorials
+
 > cp
 ------------------
 拷贝一个文件夹下所有文件
@@ -29,12 +33,17 @@ cp -r /etc/asl/ ./test
 cp -r /etc/asl/. ./test
 
 
-
 > rm
 ------------------
 删除文件下的所有文件
 rm *     文件夹下没有文件夹
 rm -r *   文件夹下有文件夹
+
+
+mv
+------
+mv A B  重命名
+mv cc /A/bb 移动并重命名
 
 /////////////////////////////////////////////////////////////////// 
 
@@ -1912,7 +1921,9 @@ tar -jcf janpan.tar.bz2 Japan  //用tar来压缩gz
 
 解压：
 tar -zxf xx.tar   :一般用这个命令比较多，不用显示详细信息
+tar -zxf xx.tar.gz 
 tar -jxf janpan.tar.bz2   //用tar来解压gz
+
 
 参数：
 -x :解包
@@ -4266,3 +4277,156 @@ sudo chmod +x /usr/local/bin/ocpermissions
 ocpermissions
 
 8.现在已安装ownCloud。您可以通过将Web浏览器指向您自己的cloud安装来确认可以使用。直接访问ip地址
+
+
+
+
+
+mysql
+---------
+ubuntu 18.04安装mysql
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04
+
+sudo apt update
+sudo apt install mysql-server
+sudo mysql_secure_installation
+
+查看用户验证以及权限：
+sudo mysql
+// 查看所有用户的验证方法
+mysql> SELECT user,authentication_string,plugin,host FROM mysql.user;
+// 更改root用户通过密码验证，用密码登录需要mysql -u root -p
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+// 重新加载用户授权列表
+mysql> FLUSH PRIVILEGES;
+
+// 创建用户
+mysql> CREATE USER 'sammy'@'localhost' IDENTIFIED BY 'password';
+mysql> CREATE USER 'captain'@'localhost' IDENTIFIED BY 'zhuniu1211';
+
+// 用户授权
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'captain'@'localhost' WITH GRANT OPTION;
+
+// 测试mysql的安装
+systemctl status mysql.service
+
+// 如果mysql没有运行，则可以使用来启动它
+sudo systemctl start mysql
+
+//以captain用户来查看mysql版本
+sudo mysqladmin -p -u captain version
+sudo mysqladmin -p -u root version
+
+
+
+搭建bugzilla
+-------------
+https://zhuanlan.zhihu.com/p/90560505
+https://www.jianshu.com/p/79da946bc6ee?tdsourcetag=s_pctim_aiomsg
+https://www.bugzilla.org/docs/
+
+ubuntu18.04LTS
+我们采用Apache 2 HTTP Server + MySQL Server的环境配置BugZilla
+
+1.切换到root用户并更新
+apt-get update && apt-get upgrade
+
+2.安装apache2，开发包（要使用 mysql数据库，需要先安装开发包，才能安装DBD::mysql模块）
+apt-get install apache2 libmysqld-dev libmysqlclient-dev make gcc -y
+// 如果有条件，强烈建议使用HTTPS配置Apache HTTP服务器（比如Let's encrypt）
+https://letsencrypt.org/
+
+3.安装mysql
+sudo apt install mysql-server
+sudo mysql_secure_installation
+
+4.邮件发送功能
+apt-get install libnet-ssleay-perl libcrypt-ssleay-perl -y
+
+5.安装bugzilla
+wget https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-5.0.6.tar.gz
+https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-5.0.6.tar.gz
+tar -zxf bugzilla-5.0.6.tar.gz
+
+6.移动bugzilla到/var/www/html文件夹
+mv bugzilla-5.0.6.tar.gz /var/www/html/bugzilla
+
+7.安装缺失的依赖
+cd /var/www/html/bugzilla
+perl install-module.pl --all
+
+8.安装完成后check
+perl checksetup.pl    // 这个需要安装gcc和make
+
+有很多依赖第7步安装不上(这个是参考官网给的)
+apt-get install libappconfig-perl libdate-calc-perl libtemplate-perl  build-essential libdatetime-timezone-perl libdatetime-perl libemail-sender-perl libemail-mime-perl libemail-mime-modifier-perl libdbi-perl libdbd-mysql-perl libcgi-pm-perl libmath-random-isaac-perl libmath-random-isaac-xs-perl  libapache2-mod-perl2 libapache2-mod-perl2-dev libchart-perl libxml-perl libxml-twig-perl perlmagick libgd-graph-perl libtemplate-plugin-gd-perl libsoap-lite-perl libhtml-scrubber-perl libjson-rpc-perl libdaemon-generic-perl libtheschwartz-perl libtest-taint-perl libauthen-radius-perl libfile-slurp-perl libencode-detect-perl libmodule-build-perl libnet-ldap-perl libauthen-sasl-perl libfile-mimeinfo-perl libhtml-formattext-withlinks-perl libgd-dev libmysqlclient-dev graphviz python-sphinx
+
+9.进入mysql设置database;
+//root用户pw模式登陆（密码有的会默认设置为root, 或者空）
+mysql -u root -p
+//root用户登陆
+mysql
+
+// 创建表
+mysql> create database bugs;
+// 授权用户，密码根据mysql设置来（密码强度，密码）
+mysql> grant all on bugs.* to root@localhost identified by "123456";
+// 或者下面这样授权
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'captain'@'localhost' WITH GRANT OPTION;
+// 修改mysql用户密码
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY'newpassword';
+
+// 重新加载授权
+mysql> FLUSH PRIVILEGES;
+// 退出数据库
+mysql> exit;
+
+10.在bugzilla文件夹中设置localconfig
+vim localconfig
+可能更改如下参数：然后保存
+$webservergroup = 'www-data';
+$db_driver = 'mysql';
+$db_name = 'bugs';   //mysql中创建的database名称
+$db_user = 'captain';  //mysql数据库用户
+$db_pass = 'zhuniu1211';
+$db_port = 3306; //可以通过netstat或者lsof来查看db监听端口，默认3306
+
+11.重新检查第8步
+perl checksetup.pl
+
+12.配置apache2
+vim /etc/apache2/apache2.conf
+在Directory的地方添加：
+<Directory /var/www/html/>
+    AddHandler cgi-script .cgi
+    Options +ExecCGI
+    DirectoryIndex index.cgi index.html
+    AllowOverride All
+</Directory>
+
+保存并退出
+ln -s /etc/apache2/mods-available/cgi.load cgi.load
+a2enmod cgi headers expires
+
+13.首次访问
+http://<ip address>/bugzilla/
+
+//不知道下面这个功能是否是： 注释掉初次访问一直要提示设置域名
+编辑Bugzilla目录下的.htaccess文件,用“#”注释掉文件开始部分的“Options -Indexes”这一行
+
+14.其他设置：
+你也可以在左侧email选项卡中配置使用你最喜爱的邮件服务商发送邮件，比如：
+
+mail_delivery_method: SMTP
+mailfrom: new_gmail_address@gmail.com
+smtpserver: http://smtp.gmail.com:465
+smtp_username: new_gmail_address@gmail.com
+smtp_password: new_gmail_password
+smtp_ssl: On
+如果你的电子邮件提供商（比如gmail或outlook）需要STARTTLS认证，请在BugZilla/Mailer.pl文件的第165行中，将"ssl"=>……改为=>"STARTTLS"
+
+如果你配置了HTTPS，强烈建议在左侧选项卡最后一栏“高级”中开启HTTPS严格传输安全（HSTS）。
+
+关于其他优化和设置，后续有需求可以慢慢研究！
+
+
