@@ -1239,6 +1239,13 @@ root@c77:~# usermod -d /data/ftp ftpuser  // 设置为用户的主目录
 
 
 
+> tee
+--------
+ls | tee /Users/captain/Desktop/i.txt
+ls的内容输出并写到i.txt中（默认会覆盖）
+-a参数会追加
+
+
 > lsof
 -----------------------
 http://www.cnblogs.com/peida/archive/2013/02/26/2932972.html
@@ -3786,6 +3793,7 @@ go-fastdfs
 博客，个人论坛
 -------------
 wordpress
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lamp-on-ubuntu-16-04
 gitbook
 github.io
 
@@ -4408,6 +4416,10 @@ vim /etc/apache2/apache2.conf
 ln -s /etc/apache2/mods-available/cgi.load cgi.load
 a2enmod cgi headers expires
 
+重启apache2
+sudo systemctl restart apache2
+// systemctl reload apache2
+
 13.首次访问
 http://<ip address>/bugzilla/
 
@@ -4430,3 +4442,172 @@ smtp_ssl: On
 关于其他优化和设置，后续有需求可以慢慢研究！
 
 
+设置ssh防火墙
+------------
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04
+
+创建新用户，并添加到sudo组
+adduser sammy
+usermod -aG sudo sammy
+
+防火墙列表
+ufw app list
+允许防火墙
+ufw allow OpenSSH
+ufw allow in "Apache Full"
+打开防火墙
+ufw enable
+防火墙状态
+ufw status
+
+
+查看外网ip
+sudo apt install curl
+curl http://icanhazip.com
+
+
+ubuntu18.04安装owncloud
+-----------------------
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-owncloud-on-ubuntu-18-04
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04
+
+1.新增一个用户，防火墙允许ssh
+2.安装apache2,允许apache full
+sudo apt update && sudo apt install apache2
+3.安装mysql,见sql安装选项卡
+4.安装php
+sudo apt install php libapache2-mod-php php-mysql
+sudo vim /etc/apache2/mods-enabled/dir.conf
+移动index.php到第一个位置，像下面这样
+<IfModule mod_dir.c>
+    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+重启apache2
+sudo systemctl restart apache2
+检测apache2的状态
+sudo systemctl status apache2
+
+附apt一些命令
+apt search php- | less
+// apt show package_name
+apt show php-cli
+
+5.设置虚拟主机（推荐）
+----------------
+创建目录
+// mkdir /var/www/your_domain
+mkdir /var/www/datafilter
+使用$USER环境变量分配目录的所有权
+chown -R $USER:$USER /var/www/datafilter
+设置权限
+chmod -R 755 /var/www/datafilter
+编辑index
+nano /var/www/your_domain/index.html
+
+<html>
+    <head>
+        <title>Welcome to Your_domain!</title>
+    </head>
+    <body>
+        <h1>Success!  The your_domain server block is working!</h1>
+    </body>
+</html>
+
+
+新建主机虚拟文件：
+sudo nano /etc/apache2/sites-available/your_domain.conf
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName your_domain
+    ServerAlias www.your_domain
+    DocumentRoot /var/www/your_domain
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+启用新的主机文件
+sudo a2ensite your_domain.conf
+禁用默认站点
+sudo a2dissite 000-default.conf
+
+测试配置的主机文件是否错误
+sudo apache2ctl configtest
+
+重启apache2
+sudo systemctl restart apache2
+
+测试apache2应该正常访问
+http://your_domain
+
+6.测试php服务：
+----------
+编辑php文件
+sudo nano /var/www/your_domain/info.php
+
+<?php
+phpinfo();
+?>
+
+访问http://your_domain/info.php正常
+如果把info.php改成index.php,则http://your_domain为php里面的内容
+
+测试完成后删除php文件
+sudo rm /var/www/your_domain/info.php
+
+
+7.owncloud开始
+--------------
+下载cloud公钥
+wget https://download.owncloud.org/download/repositories/10.3.2/Ubuntu_18.04/Release.key
+sudo apt-key add Release.key
+创建owncloud.list文件
+echo 'deb http://download.owncloud.org/download/repositories/10.3.2/Ubuntu_18.04/ /' | tee /etc/apt/sources.list.d/owncloud.list
+使用包管理器来查找并安装ownCloud，还将安装一些其他PHP库
+sudo apt update
+sudo apt install php-bz2 php-curl php-gd php-imagick php-intl php-mbstring php-xml php-zip owncloud-files
+
+创建主机文件，可以编辑默认的
+vim /etc/apache2/sites-enabled/server_domain_or_IP.conf
+<VirtualHost *:80>
+    . . .
+    DocumentRoot /var/www/owncloud
+    . . .
+</VirtualHost>
+
+//我配置下面这样：
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName owncloud
+    ServerAlias www.owncloud
+    DocumentRoot /var/www/owncloud
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+检测apache2语法：
+apache2ctl configtest
+重新加载并更新：
+sudo systemctl reload apache2
+
+8.配置mysql数据库
+
+mysql>
+
+CREATE DATABASE owncloud;
+GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'owncloud_database_password';
+GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'Zhuniu1210*';
+
+FLUSH PRIVILEGES;
+exit;
+
+9.配置cloud;
+https://server_domain_or_IP
+
+设置管理员账户，密码
+填入之前设置的数据库名，数据库用户以及访问密码
+数据库主机保留为localhost：
+然后完成设置
+
+自定义插件设置：
+https://marketplace.owncloud.com/
