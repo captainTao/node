@@ -4343,8 +4343,8 @@ ocpermissions
 
 
 
-mysql
----------
+mysql安装
+----------
 ubuntu 18.04安装mysql
 https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04
 
@@ -4792,7 +4792,7 @@ define('FS_METHOD', 'direct');
 
 安装OpenLiteSpeed Web Server
 -------------------------------
-https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-openlitespeed-ubuntu-1804
+https://www.digitalocean.com/community/tutorials/how-to-install-the-openlitespeed-web-server-on-ubuntu-18-04
 添加签名
 wget -qO - https://rpms.litespeedtech.com/debian/lst_repo.gpg | sudo apt-key add -
 添加存储库信息
@@ -4825,7 +4825,7 @@ https://server_domain_or_IP:7080
 wordpress OpenLiteSpeed server
 -------------------------------
 未成功
-https://www.digitalocean.com/community/tutorials/how-to-install-the-openlitespeed-web-server-on-ubuntu-18-04
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-openlitespeed-ubuntu-1804
 1.ubuntu初始化-普通用户登录
 2.安装openlite server
 3.安装mysql,步骤可以见上面选项卡
