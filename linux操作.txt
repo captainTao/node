@@ -31,6 +31,7 @@ https://www.digitalocean.com/community/tutorials
 cp -r /etc/asl/ test  推荐这种
 cp -r /etc/asl/ ./test
 cp -r /etc/asl/. ./test
+cp -a : 留原文件属性的前提下复制文件 
 
 
 > rm
@@ -782,6 +783,54 @@ free -m
 > virsh list --all: //查看运行的虚拟机 
 
 
+> curl
+------------
+https://www.cnblogs.com/zxqblogrecord/p/8900219.html
+获取页面内容
+curl http://www.baidu.com
+显示http头
+curl -I http://www.baidu.com
+显示头和内容
+curl -i http://www.baidu.com
+内容输出到本地
+curl https://www.baidu.com > index.html
+curl 自带的 -o/-O 选项将内容保存到文件中。
+-o（小写的 o）：结果会被保存到命令行中提供的文件名
+-O（大写的 O）：URL 中的文件名会被用作保存输出的文件名
+curl -o index.html https://www.baidu.com
+curl -O http://www.hbygxh.org/html/2018/gyzxx_0309/857.html #结果，文件名为857.html 的文件里保存着内容
+指定多个链接
+curl -O http://www.baidu.com/page/2/ -O http://www.baidu.com/page/3/
+-L获取重定向的内容
+curl -L http://codebelief.com
+-A自定义agent
+curl -A "Mozilla/5.0 (Android; Mobile; rv:35.0) Gecko/35.0 Firefox/35.0" https://www.baidu.com
+-H自定义header
+curl -H "Referer: www.example.com" -H "User-Agent: Custom-User-Agent" http://www.baidu.com
+-H可以传递header
+curl -H "Cookie: JSESSIONID=D0112A5063D938586B659EF8F939BE24" http://www.example.com
+-c可以save cookie
+curl -c "cookie-saved-name" http://www.example.com
+-b发送自定义cookie
+curl -b "JSESSIONID=D0112A5063D938586B659EF8F939BE24" http://www.example.com
+-b可以读取本地cookie
+curl -b "cookie-local-name" http://www.example.com
+-d 发送post
+在使用 -d 的情况下，如果省略 -X，则默认为 POST 方式
+curl -d "userName=tom&passwd=123456" http://www.example.com/login
+get请求
+curl -d "somedata" -X GET http://www.example.com/api
+get也可以直接用-G
+curl -d "somedata" -G http://www.example.com/api
+从文件中读取 data
+curl -d "@data.txt" http://www.example.com/login
+
+带cookie登录
+curl -c "cookie-login" -d "userName=tom&passwd=123456" http://www.example.com/login
+curl -b "cookie-login" http://www.example.com/login
+
+
+
 shell sleep：
 -------------------
 https://blog.csdn.net/tiwoo/article/details/51094913
@@ -1136,6 +1185,10 @@ service http start  // 红帽系统的专用
 
 源码包用service管理
 RPM包只能用绝对路径启动服务
+
+停止apache2服务
+service apache2 stop
+
 
 
 > df
@@ -4303,8 +4356,12 @@ sudo mysql_secure_installation
 sudo mysql
 // 查看所有用户的验证方法
 mysql> SELECT user,authentication_string,plugin,host FROM mysql.user;
+// 查看当前的host及用户信息匹配顺序，先host顺序匹配、后user顺序匹配
+SELECT authentication_string, host, user,account_locked FROM mysql.user ORDER BY host desc ,user desc;
+
 // 更改root用户通过密码验证，用密码登录需要mysql -u root -p
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zhuniu1211';
 // 重新加载用户授权列表
 mysql> FLUSH PRIVILEGES;
 
@@ -4314,7 +4371,8 @@ mysql> CREATE USER 'captain'@'localhost' IDENTIFIED BY 'zhuniu1211';
 
 // 用户授权
 mysql> GRANT ALL PRIVILEGES ON *.* TO 'captain'@'localhost' WITH GRANT OPTION;
-
+部分数据库授权
+GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'Zhuniu1210*';
 // 测试mysql的安装
 systemctl status mysql.service
 
@@ -4475,6 +4533,8 @@ https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mys
 2.安装apache2,允许apache full
 sudo apt update && sudo apt install apache2
 3.安装mysql,见sql安装选项卡
+sudo apt update && sudo apt install mysql-server
+sudo mysql_secure_installation
 4.安装php
 sudo apt install php libapache2-mod-php php-mysql
 sudo vim /etc/apache2/mods-enabled/dir.conf
@@ -4611,3 +4671,222 @@ https://server_domain_or_IP
 
 自定义插件设置：
 https://marketplace.owncloud.com/
+
+
+ubuntu18.04初始化设置
+-------------------
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04
+1.root登录
+apt-get update && apt-get upgrade
+2.创建新用户
+adduser captain
+添加到sudo组
+usermod -aG sudo captain
+3.设置ssh防火墙
+ufw app list
+ufw allow OpenSSH
+ufw allow in "Apache Full"
+ufw enable
+ufw status
+4.普通用户ssh登录
+ssh captain@your_server_ip
+
+
+
+
+wordpress apache2 ubuntu18.04:
+-----------------------------
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-managed-database-ubuntu-18-04
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lamp-on-ubuntu-16-04
+ubuntu18.04
+1.新增一个用户，防火墙允许ssh
+2.安装apache2,允许apache full
+sudo apt update && sudo apt install apache2
+3.安装mysql,见sql安装选项卡
+sudo apt update && sudo apt install mysql-server
+sudo mysql_secure_installation
+mysql>
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zhuniu1211';
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+FLUSH PRIVILEGES;
+exit;
+
+4.安装php
+sudo apt install php libapache2-mod-php php-mysql
+5.移动index.php到第一个位置
+sudo vim /etc/apache2/mods-enabled/dir.conf
+sudo systemctl restart apache2
+sudo systemctl status apache2
+6.创建数据库
+mysql> 
+CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+GRANT ALL ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'zhuniu1211';
+
+7.php扩展
+sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
+
+// ubuntu 16.04安装的这个
+sudo apt-get install php-curl php-gd php-mbstring php-mcrypt php-xml php-xmlrpc
+// 下面这个应该不用装,这是安装php73的时候才安装的扩展
+sudo apt update && sudo apt install lsphp73-common lsphp73-curl lsphp73-imagick lsphp73-imap lsphp73-json lsphp73-memcached lsphp73-mysql lsphp73-opcache lsphp73-redis
+
+sudo systemctl restart apache2
+
+8.调整Apache的配置以允许.htaccess覆盖和重写
+
+新建wordpress站点
+cd /etc/apache2/sites-available/
+vim wordpress.conf
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName wordpress
+    ServerAlias www.wordpress
+    DocumentRoot /var/www/wordpress
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+启用新站点
+sudo a2ensite wordpress.conf
+sudo a2dissite 000-default.conf
+
+设置apache路径
+sudo vim /etc/apache2/apache2.conf
+<Directory /var/www/wordpress/>
+    AllowOverride All
+</Directory>
+
+sudo a2enmod rewrite
+apache2ctl configtest
+systemctl reload apache2
+
+9.下载wordpress
+cd /tmp
+curl -O https://wordpress.org/latest.tar.gz
+tar -zxf latest.tar.gz
+
+touch /tmp/wordpress/.htaccess
+cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+mkdir /tmp/wordpress/wp-content/upgrade
+
+sudo cp -a /tmp/wordpress/. /var/www/wordpress
+更改权限
+sudo chown -R www-data:www-data /var/www/wordpress
+sudo find /var/www/wordpress/ -type d -exec chmod 750 {} \;
+sudo find /var/www/wordpress/ -type f -exec chmod 640 {} \;
+
+从WordPress密钥生成器获取安全值
+curl -s https://api.wordpress.org/secret-key/1.1/salt/
+把上述生成的秘钥结果替换到下面这个文件
+sudo vim /var/www/wordpress/wp-config.php
+
+替换：文档中相关字段
+DB_NAME, DB_USER, DB_PASSWORD, DB_HOST(需要加上端口号，一般为3306)
+加入：写入系统文件的方法为direct：
+define('FS_METHOD', 'direct');
+
+10.额外设置（可选），设置wordpress与mysql通信ssl/tsl
+11.访问 https://server_domain_or_IP
+
+
+
+
+安装OpenLiteSpeed Web Server
+-------------------------------
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-openlitespeed-ubuntu-1804
+添加签名
+wget -qO - https://rpms.litespeedtech.com/debian/lst_repo.gpg | sudo apt-key add -
+添加存储库信息
+sudo add-apt-repository 'deb http://rpms.litespeedtech.com/debian/ bionic main'
+安装OpenLiteSpeed服务器及其PHP
+sudo apt install openlitespeed lsphp73
+创建php软链接
+sudo ln -sf /usr/local/lsws/lsphp73/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp5
+设置OpenLiteSpeed的管理员密码，默认123456
+sudo /usr/local/lsws/admin/misc/admpass.sh
+lswsctrl验证OpenLiteSpeed服务是否开启
+sudo /usr/local/lsws/bin/lswsctrl status
+如果没开启用下面命令开启
+sudo /usr/local/lsws/bin/lswsctrl start
+防火墙打开对应端口
+//主页面
+sudo ufw allow 8088
+//配置页面，都可以在/usr/local/lsws目录下找到
+sudo ufw allow 7080
+访问默认的OpenLiteSpeed网页
+http://server_domain_or_IP:8088
+https://server_domain_or_IP:7080
+
+与OpenLiteSpeed相关的所有内容都可以在该/usr/local/lsws目录下找到。
+
+默认虚拟主机的文档根目录（将在其中提供文件的位置）位于/usr/local/lsws/DEFAULT/html。可以在/usr/local/lsws/DEFAULT目录下找到此虚拟主机的配置和日志。
+
+
+
+wordpress OpenLiteSpeed server
+-------------------------------
+未成功
+https://www.digitalocean.com/community/tutorials/how-to-install-the-openlitespeed-web-server-on-ubuntu-18-04
+1.ubuntu初始化-普通用户登录
+2.安装openlite server
+3.安装mysql,步骤可以见上面选项卡
+4.创建数据库
+CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+创建接入此数据库的用户
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpressuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY 'zhuniu1210';
+FLUSH PRIVILEGES;
+exit;
+
+5.安装php扩展
+sudo apt install lsphp73-common lsphp73-curl lsphp73-imagick lsphp73-imap lsphp73-json lsphp73-memcached lsphp73-mysql lsphp73-opcache lsphp73-redis
+
+6.下载wordpress
+cd /tmp
+curl -O https://wordpress.org/latest.tar.gz
+tar -zxf latest.tar.gz
+
+创建文件并移动到服务器工作目录下
+touch /tmp/wordpress/.htaccess
+cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+mkdir /tmp/wordpress/wp-content/upgrade
+sudo cp -a /tmp/wordpress/. /usr/local/lsws/Example/html/wordpress
+
+设置权限
+sudo chown -R nobody:nogroup /usr/local/lsws/Example/html/wordpress
+sudo find /usr/local/lsws/Example/html/wordpress/ -type d -exec chmod 750 {} \;
+sudo find /usr/local/lsws/Example/html/wordpress/ -type f -exec chmod 640 {} \;
+
+设置key和配置文件
+curl -s https://api.wordpress.org/secret-key/1.1/salt/
+sudo vim /usr/local/lsws/Example/html/wordpress/wp-config.php
+把上述生成的秘钥结果替换到这个文件
+替换：文档中相关字段
+DB_NAME, DB_USER, DB_PASSWORD, DB_HOST(需要加上端口号，一般为3306)
+加入：写入系统文件的方法为direct：
+define('FS_METHOD', 'direct');
+
+7.https://server_domain_or_IP:7080
+设置OpenLiteSpeed
+
+选项卡：server configuration  --> External APP
+更改如下
+Name:lsphp73
+Address:uds://tmp/lshttpd/lsphp73.sock
+Command:$SERVER_ROOT/lsphp73/bin/lsphp
+
+选项卡：Virtual Hosts  --> General
+General Edit
+Document Root: $VH_ROOT/html/wordpress/
+index Files: index.php, index.html
+
+选项卡：Virtual Hosts  --> Rewrite
+Enable Rewrite: yes
+Auto Load from .htaccess: yes
+
+选项卡：Virtual Hosts  --> Security
+删除最下面Realm list中的 SampleProtectAreas
+
+选项卡：Virtual Hosts  --> Context
+删除与/protected/相关的context
+
+右上重启，然后进入http://server_domain_or_IP进行设置
