@@ -70,16 +70,76 @@ openDNS:
 ipk文件用opkg install来安装
 
 
+homebrew
+---------
+brew services list  #查看服务的启动状态
+brew services run mysql # 启动mysql 服务
+brew services start mysql # 启动 mysql 服务，并注册开机自启
+brew services stop mysql # 停止 mysql 服务，并取消开机自启
+brew services restart mysql # 重启 mysql 服务，并注册开机自启
+brew services cleanup # 清除已卸载应用的无用配置
+
+launchctl list也是开机启动的服务，brew services 是 launchctl 的一个子集
+
+
+mac dnsmasq
+---------------
+https://www.jianshu.com/p/3dd22d7d86b2
+https://blog.csdn.net/hekewangzi/article/details/81077546
+
+1.brew install dnsmqsq
+
+2.brew services start(restart) dnsmasq
+
+/*
+重启：
+sudo launchctl stop homebrew.mxcl.dnsmasq
+sudo launchctl start homebrew.mxcl.dnsmasq
+
+开机启动：
+sudo cp -fv /usr/local/opt/dnsmasq/*.plist /Library/LaunchDaemons
+sudo lauchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+
+cp /usr/local/opt/dnsmasq/dnsmasq.conf.example /usr/local/etc/dnsmasq.conf
+测试应该没有这个example文件,有对应的dnsmasq文件
+*/
+
+3.sudo vim /etc/dnsmasq.hosts   //新建host文件，不会影响本机的host
+127.0.0.1        localhost                                                                         
+255.255.255.255  broadcasthost
+::1              localhost
+192.168.3.234    salad, salad.com
+
+4.vim /usr/local/etc/resolv.dnsmasq.conf  //指定上级dns服务器
+nameserver  114.114.114.114
+
+5.vim /usr/local/etc/dnsmasq.conf
+#no-hosts
+addn-hosts=/etc/dnsmasq.hosts                        //指定需要解析的hosts文件位置
+resolv-file=/usr/local/etc/resolv.dnsmasq.conf    //指定上级dns文件
+strict-order
+listen-address=127.0.0.1,x.x.x.x                  //监听需要解析域名的地址,xxx为本机内网地址
+address=/salada.com/192.168.3.234
+#cache-size=0  # 默认为150条,这个是禁用
+#no-negcache  # 不缓存未知域名缓存，默认情况下dnsmasq缓存未知域名并直接返回为客户端
+#clear-on-reload  # 重启后清空缓存
+
+6.强制刷新dns,随系统版本而不一样
+sudo killall -HUP mDNSResponder
+sudo killall mDNSResponderHelper
+sudo dscacheutil -flushcache
+
+
 dnsmasq:
 -------------
+功能强大的dns服务器还有BIND9
 https://wzyboy.im/post/874.html      //dnsmasq的作用
-https://www.jianshu.com/p/1df2e506a546      //配置dnsmasq
-
 https://blog.51cto.com/longlei/2065967    // 详细配置
 https://www.cnblogs.com/taoyuxuan/p/11205491.html
 https://www.cnblogs.com/studio313/p/6278698.html
 
 验证dnsmasq配置：
+dnsmasq工作在53端口
 
 修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d
 /etc/dnsmasq.d目录下有两个文件：
@@ -87,6 +147,57 @@ accelerated-domains.china.conf  dnsmasq_gfwlist.conf
 
 /etc/resolv.conf    //设置本地DNS
 nameserver 127.0.0.1
+
+
+dns解析流程：
+------------
+/etc/hosts => /etc/dnsmasq.d/xx.conf => /etc/dnsmasq.conf => 上游dns resolv.dnsmasq.conf
+
+dnsmasq先去解析hosts文件， 再去解析/etc/dnsmasq.d/下的*.conf文件，并且这些文件的优先级要高于dnsmasq.conf，我们自定义的resolv.dnsmasq.conf中的DNS也被称为上游DNS，这是最后去查询解析的；
+
+如果不想用hosts文件做解析，我们可以在/etc/dnsmasq.conf中加入no-hosts这条语句，这样的话就直接查询上游DNS了，
+如果我们不想做上游查询，就是不想做正常的解析，我们可以加入no-reslov这条语句。
+
+
+
+查看dns配置文件语法是否正确：
+dnsmasq --test
+
+
+自定义dns格式：（可以屏蔽广告，也可以自定义局域网ip解析）
+--------------
+address=/ad.youku.com/127.0.0.1
+
+
+
+dnsmasq参数说:
+--------------
+resolv-file=/etc/resolv.dnsmasq.conf
+定义dnsmasq从哪里获取上游DNS服务器的地址， 默认从/etc/resolv.conf获取。
+
+strict-order
+表示严格按照resolv-file文件中的顺序从上到下进行DNS解析，直到第一个解析成功为止。
+
+listen-address=129.168.x.x,127.0.0.1
+定义dnsmasq监听的地址，默认是监控本机的所有网卡上。
+
+address=/long.com/192.168.115.10
+启用泛域名解析，即自定义解析a记录，
+例如：address=/long.com/192.168.115.10 访问long.com时的所有域名都会被解析成192.168.115.10
+
+bogus-nxdomain
+对于任何被解析到此 IP 的域名，将响应 NXDOMAIN 使其解析失效，
+可以多次指定通常用于对于访问不存在的域名，禁止其跳转到运营商的广告站点
+
+server=/cn/114.114.114.114
+server=/taobao.com/114.114.114.114
+server=/taobaocdn.com/114.114.114.114
+#国外指定DNS
+server=/google.com/223.5.5.5
+
+指定使用哪个DNS服务器进行解析，对于不同的网站可以使用不同的域名对应解析。
+例如：server=/google.com/8.8.8.8 #表示对于google的服务，使用谷歌的DNS解析。
+
 
 
 pdnsd:
@@ -925,8 +1036,10 @@ service network restart :重启网络服务
 */ 
 
 mac:
+sudo lsof -i -P | grep -i "listen"  #查看所有进程监听的端口
+
 netstat -anp tcp | grep 80
-lsof -i :80
+lsof -i :80  #查看80端口
 结束占用80端口的所有服务和进程：
 lsof -P | grep ':80' | awk '{print $2}' | xargs kill -9
 
@@ -2041,8 +2154,13 @@ whois .baidu.com
 
 
 > nslookup
-查询dns，解析结果
 -----------------
+查询dns，解析结果,效果跟dig类似,
+效果类似：ping/dig/host/nslookup来进行测试是否dns服务正常运行，
+这里需要注意的一点是：
+如果你本机使用了host，那么ping会先查询本机的/etc/hosts文件，然后才查询dns服务器；
+而其他三个命令则是直接查询dns服务器，无视/etc/hosts的配置。
+
 nslookup domain [dns-server]
 nslookup facebook.com 8.8.8.8  //157.240.13.35
 nslookup -vc facebook.com 8.8.8.8 // -vc是强制使用tcp来查询DNS服务器
@@ -2051,6 +2169,10 @@ nslookup -vc facebook.com 8.8.8.8 // -vc是强制使用tcp来查询DNS服务器
 nslookup baidu.com    //域名
 nslookup 220.181.57.216  //ip
 
+
+强制dns服务器解析
+dig @127.0.0.1 baidu.com 
+或nslookup baidu.com 127.0.0.1
 
 > ping
 查询dns响应时间以及稳定性
@@ -2076,7 +2198,7 @@ ping www.baidu.com
 -6：使用IPv6；
 -h：显示指令帮助信息。
 
-dig www.facebook.com @8.8.8.8 +short  //通过指定DNS解析得到的最终域名157.240.13.35
+dig www.facebook.com @8.8.8.8 +short  //通过指定DNS 8.8.8.8 来解析facebook的ip地址
 
 dig +trace www.scnu.edu.com    
 // 跟踪域名解析； https://blog.csdn.net/a583929112/article/details/66499771
@@ -3108,6 +3230,15 @@ git clean -df
 
 运行后, 工作目录和缓存区回到最近一次commit时候一摸一样的状态，git status会告诉你这是一个干净的工作目录, 又是一个新的开始了！
 
+拉取指定分支代码：
+例如：将gitLab 上的dev分支拉取到本地
+
+1》与远程仓库建立连接：git remote add origin XXXXX.git
+2》使用git branch 查看本地是否具有dev分支
+3》如果没有 git fetch origin dev
+4》git checkout -b dev origin/dev在本地创建分支dev并切换到该分支
+5》git pull origin dev就可以把gitLab上dev分支上的内容都拉取到本地了
+
 =========================================================================
 Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。
 
@@ -4001,8 +4132,11 @@ kibana
 
 jenkins
 --------
-要搭建jenkins持续构建集成环境，首先要安装tomcat和JDK；
+忘记密码：
+jenkins brew安装文件夹:/Users/captain/.jenkins
+https://www.jianshu.com/p/0f828265ceb1
 
+要搭建jenkins持续构建集成环境，首先要安装tomcat和JDK；
 
 一、Tomcat是其中一个开源的且免费的java Web服务器，是Apache软件基金会的项目;
 1.配置java环境，配置Tomcat之前需要配置java环境；
@@ -4132,6 +4266,12 @@ sudo nginx -s reload
 ps -ef | grep nginx
 sudo kill -QUIT 主进程号
 sudo kill -TERM 主进程号
+
+
+问题情况：nginx监听的端口例如是8080，外网开放的端口为80，将80端口NAT到内部的8080端口，这时使用外网地址：http://mydomain/test访问时如果不在域名后面加/，那么域名地址会自动变为http://mydomain:8080/test/。
+
+解决方法：这是因为nginx做了端口重定向，只需要在nginx.conf配置文件的http或server中添加：port_in_redirect off;
+
 
 wget
 -------
@@ -4395,7 +4535,7 @@ ubuntu18.04LTS
 我们采用Apache 2 HTTP Server + MySQL Server的环境配置BugZilla
 
 1.切换到root用户并更新
-apt-get update && apt-get upgrade
+apt update && apt upgrade
 
 2.安装apache2，开发包（要使用 mysql数据库，需要先安装开发包，才能安装DBD::mysql模块）
 apt-get install apache2 libmysqld-dev libmysqlclient-dev make gcc -y
@@ -4415,7 +4555,7 @@ https://ftp.mozilla.org/pub/mozilla.org/webtools/bugzilla-5.0.6.tar.gz
 tar -zxf bugzilla-5.0.6.tar.gz
 
 6.移动bugzilla到/var/www/html文件夹
-mv bugzilla-5.0.6.tar.gz /var/www/html/bugzilla
+mv bugzilla-5.0.6 /var/www/html/bugzilla
 
 7.安装缺失的依赖
 cd /var/www/html/bugzilla
