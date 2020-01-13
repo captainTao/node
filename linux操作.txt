@@ -4662,21 +4662,27 @@ https://blog.csdn.net/xiongjialu/article/details/80110649
 【发生日期】
 '
 
+机器上是这样定义的：
+defaultcontent = "【设备版本】\r\n\r\n【预设条件】\r\n\r\n【操作步骤】\r\n\r\n【预期结果】\r\n\r\n【实际结果】\r\n\r\n【发生概率】\r\n\r\n【发生日期】r\n"
+
 2.自定义回复模板：
-/var/www/html/bugzilla/template/en/default/globaltextarea.html.tmpl
-textarea标签内最后面加入：
-【问题定位】
+/var/www/html/bugzilla/template/en/default/bug/edit.html.tmpl
+查找：[% INCLUDE bug/comment.html.tmpl
+加入：
+defaultcontent = "【问题定位】
 
 【修复方法】
 
 【影响范围】
 
 【回归版本】
+"
 
+defaultcontent = "【问题定位】\r\n\r\n【修复方法】\r\n\r\n【影响范围】\r\n\r\n【回归版本】\r\n"
 
 3.自定义bug详情页面Additional Comment展示在最下面
 /var/www/html/bugzilla/template/en/default/bug/edit.html.tmpl
-把这个相关代码移动到form表单最下面：--[%# *** Additional Comments *** %]附近
+把这个相关代码移动到form表单最下面：[%# *** Additional Comments *** %]上面
   <hr>
 <table>
   <tr>
