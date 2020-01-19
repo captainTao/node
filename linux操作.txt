@@ -6,6 +6,9 @@ shadow            shadow-           shadowsocks.json  shells
 2.ip addr 和ifconfig, ipconfig, curl ip.cn
 
 3.chmod +x shadowsocksR.sh 与数字的区别
+r:4
+w:2
+x:1
 
 4.删除，文件名用正则表达式
 5.查看一个文件夹文件的个数
@@ -343,6 +346,11 @@ uname –r
 看到如下类似如下回显，版本号为4.10.0-20-generic
 
 sudo apt-get update
+
+ssh非22端口访问：
+ssh -p xx user@ip
+https://www.cnblogs.com/cloudiest/p/8485612.html
+
 
 /***********************************/  配置ssh
 
@@ -1633,7 +1641,7 @@ ctrl+v粘贴系统剪切板
 p粘贴,（不选中，默认一行）
 "+y    复制到系统剪贴板(也就是vim的+寄存器） 
 "+p   从系统剪贴板粘贴 
-
+I  多行输入，按Esc生效
 
 insert模式：
 -------------
@@ -2584,6 +2592,43 @@ autoload -U colors && colors
 PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[green]%}%1|%~ %{$reset_color%}%#>"        
 #在行末显示上一命令的返回状态
 RPROMPT="[%{$fg_bold[yellow]%}%?%{$reset_color%}]"
+#自定义terminal头：
+prompt_context () {
+  prompt_segment black default "%* %c:";
+}
+
+
+设置lsColor:
+------------
+https://www.jianshu.com/p/f39ef5e227ea
+http://osxdaily.com/2012/02/21/add-color-to-the-terminal-in-mac-os-x/
+默认：
+export LSCOLORS="exfxcxdxbxegededabagacad"
+自定义：
+export LSCOLORS="Fxfxcxdxcxegbdedabagacad"
+
+
+> oh my zsh
+---------------------
+https://www.jianshu.com/p/9c3439cc3bdb
+
+# curl 安装方式
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+pip install powerline-status --user
+
+cd ~/.oh-my-zsh/custom/plugins/
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+git clone https://github.com/zsh-users/zsh-autosuggestions
+
+vim ~/.zshrc
+plugins=(git
+          zsh-autosuggestions
+          zsh-syntax-highlighting
+)
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zshrc
 
 
 > source
@@ -4273,8 +4318,56 @@ sudo kill -TERM 主进程号
 解决方法：这是因为nginx做了端口重定向，只需要在nginx.conf配置文件的http或server中添加：port_in_redirect off;
 
 
+反向代理软件：nginx, nat123
+nginx是单纯的反向代理，执行效率较高，通过配置文件等方式，可以自行搭建反向代理服务，对于不同的域名可以转发不同的路线服务器。nat123是综合了NAT和反向代理，可以实现HTML走80响应，图片FLASH等走其他加速服务器，速度较快，可以用于解决80端口问题，或直接使用对网站进行加速。
+
+
+nginx反向代理：
+--------------
+https://www.cnblogs.com/ysocean/p/9392908.html
+http://www.nginx.cn/927.html
+nginx.conf中加入：
+    server {
+            listen       80;
+            server_name  book.salad.com;
+            port_redirect off;
+            location / {
+                proxy_pass http://10.1.22.239:8181;
+                index  index.html index.htm index.jsp;
+                proxy_set_header   Host             $host;
+                proxy_set_header   X-Real-IP        $remote_addr;
+                proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+                proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+                proxy_max_temp_file_size 0;
+                proxy_connect_timeout      90;
+                proxy_send_timeout         90;
+                proxy_read_timeout         90;
+                proxy_buffer_size          4k;
+                proxy_buffers              4 32k;
+                proxy_busy_buffers_size    64k;
+                proxy_temp_file_write_size 64k;
+            }
+        }
+
+
+uhttpd
+--------
+/etc/config/uhttpd
+
+openwrt nginx
+--------------
+opkg update && opkg install nginx-ssl
+/etc/nginx/nginx.conf
+
+
+
+nginx负载均衡：
+--------------
+https://blog.csdn.net/qq_35119422/article/details/81505732
+
+
 wget
--------
+-------------
 wget url  #下载文件
 
 
@@ -5098,3 +5191,21 @@ Auto Load from .htaccess: yes
 删除与/protected/相关的context
 
 右上重启，然后进入http://server_domain_or_IP进行设置
+
+
+
+
+
+ubuntu18.04设置ssh:
+---------------------
+https://blog.csdn.net/wgc0802402/article/details/91046196
+
+1. apt-get update && apt-get install openssh-server
+
+2. /etc/init.d/ssh start
+/etc/init.d/ssh restart   #重启SSH服务
+/etc/init.d/ssh stop      #关闭SSH服务
+ps -e | grep sshd      #查看进程
+
+3. vim /etc/ssh/sshd_config
+设置：PermitRootLogin yes
