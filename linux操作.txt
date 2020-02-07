@@ -275,7 +275,13 @@ server=/google.com/127.0.0.1#5353
 就可以了。只不过这个办法需要一条一条手工写进去，费点事。好在路由平时需要配置访问的也就那么几个被墙的站点，差哪个自己填上去就好了。
 
 ------------------------------------------------  参考网址
-佐大论坛：（编译固件）http://www.openwrt.pro/
+编译固件
+佐大论坛：http://www.openwrt.pro/
+https://github.com/coolsnowwolf
+
+op视频：
+https://blog.csdn.net/XinAncao_/article/details/89813406
+
 
 dnsforwarder+SSR:
 https://nwindy.moe/lede-shadowsocksr/
@@ -2900,6 +2906,16 @@ virtualbox安装opt:
 -----------------
 https://blog.csdn.net/lvshaorong/article/details/80935503
 
+openwrt网络配置：
+/etc/config/network
+重启网络配置： /etc/init.d/network restart
+
+安装最新的19.07 op的时候luci报错，You can solve the issue in the meanwhile by installing luci-compat
+
+
+VMware安装openwrt:
+http://www.360doc.com/content/19/0227/05/14775740_817794211.shtml
+
 
 unbuntu终端terminal中移动定位光标位置：
 -------------------
@@ -4335,6 +4351,7 @@ nginx.conf中加入：
                 proxy_pass http://10.1.22.239:8181;
                 index  index.html index.htm index.jsp;
                 proxy_set_header   Host             $host;
+                proxy_set_header   Accept-Encoding  "";
                 proxy_set_header   X-Real-IP        $remote_addr;
                 proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
                 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
@@ -4348,6 +4365,14 @@ nginx.conf中加入：
                 proxy_temp_file_write_size 64k;
             }
         }
+
+
+匹配的顺序优先级如下：
+
+①、准确匹配 server_name
+②、通配符在开始时匹配 server_name 成功
+③、通配符在结尾时匹配 server_name 成功
+④、正则表达式匹配 server_name 成功
 
 
 uhttpd
