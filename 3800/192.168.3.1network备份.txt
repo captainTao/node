@@ -53,3 +53,17 @@ config switch_port
 
 config interface 'wwan'
 	option proto 'dhcp'
+
+config interface '944B'               
+        option proto 'dhcp'
+        
+config interface 'wan'               
+        option ifname 'eth1'         
+        option proto 'pppoe'         
+        option username 'phoneNumber'          
+        option password 'pwd' 
+        option ipv6 'auto'       
+        option keepalive '0'
+        option peerdns '0'           
+        option dns '127.0.0.1'       
+        option auto '0'

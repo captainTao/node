@@ -791,7 +791,7 @@ https://www.right.com.cn/forum/thread-147109-1-1.html
 https://blog.csdn.net/lvshaorong/article/details/61916525
 https://www.polarxiong.com/archives/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BE%E8%8B%8F%E5%B7%9E%E7%A7%BB%E5%8A%A8%E5%AE%BD%E5%B8%A6%E5%A4%9A%E6%8B%A8%E7%9A%84%E8%BF%87%E7%A8%8B.html
 opkg update
-opkg install mwan3 uci-app-mwan3    #多线多拨
+opkg install mwan3 luci-app-mwan3    #多线多拨
 mwan3 status
 
 单线多拨：
