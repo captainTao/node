@@ -802,6 +802,14 @@ opkg install kmod-macvlan mwan3 luci-app-mwan3    #单线多拨
 mwan3 status
 
 
+ip link add link eth1 name vth0 type macvlan
+ifconfig vth0 up
+
+ip link add link eth1 name vth1 type macvlan
+ifconfig vth1 up
+
+
+
 usb printer:
 -----------------
 opkg update
@@ -5234,3 +5242,44 @@ ps -e | grep sshd      #查看进程
 
 3. vim /etc/ssh/sshd_config
 设置：PermitRootLogin yes
+
+
+
+
+ffprobe检查流媒体信息
+----------------------
+https://www.imooc.com/article/37692
+
+安装
+brew install ffmpeg –with-sdl2 –with-freetype –with-openjpeg –with-x265 –with-rubberband –with-tesseract
+
+查看：
+ffprobe xx.mp3
+ffprobe xx.mp4
+1. 输出格式信息
+ffprobe -show_format  pm.mp4 
+2. 输出每个流的具体信息（以JSON格式）
+ffprobe -print_format json  -show_streams pm.mp4 
+3. 显示帧信息
+ffprobe -show_frames pm.mp4
+4. 查看包信息
+ffprobe -show_packets pm.mp4
+
+
+
+比特率，码率
+------------------------------------------------
+https://zhidao.baidu.com/question/584493439.html
+
+比特率(码率,单位bps, bit,per,second)：文件大小*8/时间s
+码率(kbps)=文件大小(字节)X8 /时间(秒)/1000
+1000 bit/s = 1 kbit/s （一千位每秒）
+1000 kbit/s = 1 Mbit/s （一兆或一百万位每秒）
+
+
+采样频率一般共分为22.05KHz、44.1KHz、48KHz三个等级；22.05 KHz只能达到FM广播的声音品质，44.1KHz则是理论上的CD音质界限，48KHz则已达到DVD音质了
+1000 Mbit/s = 1 Gbit/s (一吉比特或十亿位每秒）
+
+人耳听到的频率： 16～20000Hz， 16Hz-20kHz
+为了复原波形，一次振动中，必须有2个点的采样，人耳能够感觉到的最高频率为20kHz。
+因此要满足人耳的听觉要求，则需要至少每秒进行40k次采样，用40kHz表达，这个40kHz就是采样率。我们常见的CD，采样率为44.1kHz。
