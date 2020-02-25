@@ -3033,8 +3033,21 @@ https://downloads.openwrt.org/releases/18.06.2/targets/x86/64/combined-ext4.img.
 TL-WDR4310
 https://item.taobao.com/item.htm?spm=a1z09.2.0.0.dcda2e8dQB88iz&id=541598037417&_u=nbh5k5e8fc3
 
+NetGear R7000 
+price: 549
+https://item.taobao.com/item.htm?spm=a230r.1.14.20.3aa528d98GbBeC&id=561557374395&ns=1&abbucket=14#detail
+CPU:1G双核
+RAM:256MB
+ROM:
+2.4G:
+5G:
+面积：120m^2
+b,g,n,a,ac
+1usb3.0+1usb2.0
+
 NetGear R7500V2
-https://item.taobao.com/item.htm?spm=a230r.1.14.20.27cc2786DGX2EA&id=544968915427&ns=1&abbucket=11#detail
+price: 881
+https://item.taobao.com/item.htm?spm=a230r.1.14.7.3f2d3ce37Gyz8v&id=551400189878&ns=1&abbucket=14#detail
 CPU:1.4G双核
 RAM:256MB、淘宝显示为512MB
 ROM:128MB
@@ -3042,12 +3055,37 @@ ROM:128MB
 5G:800M
 
 NetGear R7800
+price: 865
 CPU:1.7G双核
 RAM:512MB
 ROM:128MB
 2.4G:1730M
 5G:800M
 面积：150m^2
+2usb3.0
+
+NetGear R8500
+price: 722
+https://detail.tmall.com/item.htm?spm=a1z10.5-b-s.w4011-15957426971.74.moMqeO&id=523155214489&rn=f559a93cc03212492719615b9fce507c&abbucket=7&ali_trackid=42_55a9f7ff676e6b09a3d84dbf04bab4dd
+CPU:1.7G双核
+RAM:512MB
+ROM:
+2.4G:
+5G:
+面积：200m^2
+b,g,n,a,ac
+1usb3.0+1usb2.0
+
+NetGear R9000
+CPU:1.7G双核
+RAM:1G
+ROM:
+2.4G:
+5G:
+面积：230m^2
+b,g,n,a,ac
+2usb3.0
+
 
 3800刷不死uboot：
 ----------------------------------
@@ -3279,6 +3317,9 @@ echo "# web" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
+
+# 查看远程仓库地址
+git remote -v
 
 git remote add origin git@github.com:captainTao/web.git
 git push -u origin master
@@ -3995,7 +4036,6 @@ Markdown 是一种「电子邮件」风格的「标记语言」,Gitbook就是采
 
 插入链接和图片
 // 文本链接
-[显示文本](链接地址)
 // 图片链接
 /**! [](图片链接地址):注意不能中间有空格，我这里因为简书原因，连代码块区域都检查图片*/
 
@@ -5285,3 +5325,24 @@ https://zhidao.baidu.com/question/584493439.html
 人耳听到的频率： 16～20000Hz， 16Hz-20kHz
 为了复原波形，一次振动中，必须有2个点的采样，人耳能够感觉到的最高频率为20kHz。
 因此要满足人耳的听觉要求，则需要至少每秒进行40k次采样，用40kHz表达，这个40kHz就是采样率。我们常见的CD，采样率为44.1kHz。
+
+
+
+
+mac下降cer文件转为base64编码的pem：
+-------------------------------
+python的证书放在：
+（通过如下脚本找出位置，然后复制pem到certifi中）
+import certifi
+print(certifi.where())
+
+openssl x509 -inform der -in /Users/captain/Desktop/\*.camera360.com.cer  -pubkey -noout > /Users/captain/Desktop/key.pem
+
+
+oc汇编语言
+-----------
+call 调用函数
+lea 地址传递
+mov 移动,赋值
+%rdi 带有%的是寄存器
+(%rdi) 带小括号的是寻找寄存器的存储空间
