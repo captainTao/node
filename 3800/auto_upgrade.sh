@@ -1,7 +1,12 @@
 #!/bin/sh
 # last update:2019/1/26,captain wang 
 cd ~
+
 # 备份原来的文件
+if [ ! -d "\backupfile" ]; then
+  mkdir \backupfile
+fi
+
 echo "start to backup the previous file..."
 cp generate_dnsmasq_chinalist.sh ./backupfile
 cp gfwlist2dnsmasq.sh ./backupfile

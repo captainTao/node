@@ -13,6 +13,10 @@ x:1
 pycharm格式化快捷键： cmd+alt+l
 
 4.删除，文件名用正则表达式
+
+删除当前目录下所有文件，r递归，f强制：
+rm -rf *
+
 5.查看一个文件夹文件的个数
 6.移动一个文件夹下所有文件
 mv    /usr/lib/*    /zone
@@ -571,6 +575,7 @@ opkg install shadowsocks-libev luci-app-shadowsocks
 opkg install ChinaDNS luci-app-chinadns
 opkg install dns-forwarder luci-app-dns-forwarder
 
+
 b.方法二：手动安装,先安装依赖包，然后安装ipk
 
 依赖列表：
@@ -637,6 +642,13 @@ luci-app-shadowsocks_x.x.x-x_all.ipk
 luci-app-chinadns_x.x.x-x_all.ipk
 luci-app-dns-forwarder_x.x.x-x_all.ipk
 我这儿还需要安装obfs.
+
+4.禁用ipv6
+vim /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+
+sysctl -p
 
 4.luci-ss, chinadns, tcp fast open配置：
 
@@ -743,6 +755,11 @@ opkg install ca-certificates ca-bundle
 后面部分为自定义chinalist和gfwlist
 这部分需要用dnsmasq-full替换掉dnsmasq
 
+安装full依赖
+opkg install dnsmasq-full
+手动下载dnsmaq-full
+https://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a9_vfpv3/base/dnsmasq-full_2.80-1_arm_cortex-a9_vfpv3.ipk
+
 opkg remove dnsmasq && opkg install dnsmasq-full
 # 使用ipset,用了dnsmasq-full:
 sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -s ss_spec_dst_bp -o /etc/dnsmasq.d/accelerated-domains.china.conf
@@ -750,19 +767,26 @@ sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -s ss_spec_dst_bp -o /
 sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -s ss_spec_dst_fw -o /etc/dnsmasq.d/dnsmasq_gfwlist.conf
 
 dnsmasq.d目录下自定义：
-custom_bypass.conf和custom_forward.conf文件
+自定义：custom_bypass.conf
+server=/example.com/114.114.114.114
+ipset=/example.com/ss_spec_dst_bp
 
+自定义custom_forward.conf
+server=/example.com/127.0.0.1#5311
+ipset=/example.com/ss_spec_dst_fw
+
+/etc/init.d/dnsmasq restart
 
 验证dnsmasq配置以及其他优化：
 ------------------------------
-修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d
+修改/etc/dnsmasq.conf, 在文件末尾追加conf-dir=/etc/dnsmasq.d (这一句之前有命名，应该不用设置了)
 可知直接在/etc/dnsmasq.conf里添加一行设置这个值，单位是秒：
-min-cache-ttl=1800
+min-cache-ttl=3600
 建议不要过大，3600以内吧，否则可能会有副作用
 
 这儿可以自定义局域网域名：
 address=/gitlab.camera360.com/10.1.12.42
-// 双向解析
+// 双向解析,待确认
 ptr-record=192.168.111.113.in-addr.arps,www.lyh1.com
 
 /etc/dnsmasq.d目录下有两个文件：
@@ -770,6 +794,15 @@ accelerated-domains.china.conf  dnsmasq_gfwlist.conf
 
 /etc/resolv.conf    //设置本地DNS
 nameserver 127.0.0.1
+
+我的router是这样设置的：
+# Interface cmcc
+nameserver 192.168.2.200
+nameserver 119.29.29.29
+# Interface wan
+nameserver 127.0.0.1
+~
+
 
 其他配置
 -----------------
@@ -4831,7 +4864,7 @@ https://blog.csdn.net/xiongjialu/article/details/80110649
 '
 
 机器上是这样定义的：
-defaultcontent = "【设备版本】\r\n\r\n【预设条件】\r\n\r\n【操作步骤】\r\n\r\n【预期结果】\r\n\r\n【实际结果】\r\n\r\n【发生概率】\r\n\r\n【发生日期】r\n"
+defaultcontent = "【设备版本】\r\n\r\n【预设条件】\r\n\r\n【操作步骤】\r\n\r\n【预期结果】\r\n\r\n【实际结果】\r\n\r\n【发生概率】\r\n\r\n【发生日期】\r\n"
 
 2.自定义回复模板：
 /var/www/html/bugzilla/template/en/default/bug/edit.html.tmpl
@@ -5339,7 +5372,7 @@ print(certifi.where())
 openssl x509 -inform der -in /Users/captain/Desktop/\*.camera360.com.cer  -pubkey -noout > /Users/captain/Desktop/key.pem
 
 
-oc汇编语言
+swfit汇编语言
 -----------
 call 调用函数
 lea 地址传递

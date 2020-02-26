@@ -2,6 +2,9 @@
 #by Captain on 2/13/2019
 
 
+# 判断文件/夹是否存在：
+# https://www.cnblogs.com/fnlingnzb-learner/p/10238101.html
+
 #！/bin/sh
 # This is to show what a example looks like.
 echo "Our first example"
