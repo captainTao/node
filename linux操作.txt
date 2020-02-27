@@ -712,7 +712,9 @@ uci commit dhcp
 uci set dhcp.@dnsmasq[0].cachesize=10000
 uci commit dhcp
 
-opkg install coreutils-base64 ca-certificates ca-bundle curl wget libustream-mbedtls
+# 正常使用dns更新脚本
+opkg install coreutils-base64 ca-certificates ca-bundle curl 
+# opkg install libustream-mbedtls wget #如果要用https,就需要tls
 
 cd ~
 # China-List

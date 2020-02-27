@@ -101,6 +101,8 @@ sysctl -p
 # 更新chinadns
 wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
 
+mkdir /etc/dnsmasq.d
+
 #设置dnsmasq
 uci add_list dhcp.@dnsmasq[0].confdir=/etc/dnsmasq.d
 uci commit dhcp
