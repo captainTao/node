@@ -128,28 +128,60 @@ let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 
 wanghaitao:~$: cat .zshrc 
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.bash_profile
-PROMPT="%* %c: "
-
+#开启颜色
+autoload -U colors && colors
+#在行末显示上一命令的返回状态
+RPROMPT="[%{$fg_bold[yellow]%}%?%{$reset_color%}]"
+prompt_context () {
+  prompt_segment black default "%* %c:";
+}
 # 配置ls颜色 LSCOLORS
-export LSCOLORS="exfxcxdxbxexexabagacad"
-alias ls='ls -G'
+export LSCOLORS="Fxfxcxdxcxegbdedabagacad"
+alias ls='ls -Gh'
 alias cls='clear'
 alias ll='ls -l'
 alias la='ls -a'
 alias grep="grep --color=auto"
 alias rm='rm -i'
 alias lla='ls -al'
+#配置brew环境
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+#export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
+#export PATH="/usr/local/opt/python@2/bin:$PATH"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+export PATH="/usr/local/opt/python/bin:$PATH"
+export PATH="/Applications/VirtualBox.app/Contents/MacOS:$PATH"
+export PATH="/usr/local/opt/node@10/bin:$PATH"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/node@10/lib"
+export CPPFLAGS="-I/usr/local/opt/node@10/include"
 
-#开启颜色
-autoload -U colors && colors
-#在行末显示上一命令的返回状态                                                            
-RPROMPT="[%{$fg_bold[yellow]%}%?%{$reset_color%}]"
-#自定义terminal头：
-prompt_context () {
-  prompt_segment black default "%* %c:";
-}
+#配置java环境
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_152.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-12.0.2.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-13.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+
+#配置android sdk环境
+export ANDROID_HOME=/Users/captain/library/android/sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/tools/bin
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+#配置openssl
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+
+source /Users/captain/.profile
+    
+
+env ZSH=/Users/captain/.oh-my-zsh PGTOOLS_AUTO_CHECK=$PGTOOLS_AUTO_CHECK PGTOOLS_AUTO_DAYS=$PGTOOLS_AUTO_DAYS zsh -f /Users/captain/pg_tools/check_update.sh
+    
 //////////////////////////////////////////////////////////////
 
 wanghaitao:~$: cat .gitconfig
