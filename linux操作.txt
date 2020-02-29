@@ -937,6 +937,29 @@ getconf LONG_BIT
 查看内存:
 free
 free -m
+cat /proc/meminfo
+
+查看cpu使用率：
+top
+
+Mem: 93228K used, 1945084K free, 728K shrd, 18592K buff, 14824K cached
+CPU:   0% usr   0% sys   0% nic  99% idle   0% io   0% irq   0% sirq
+
+cpu状态：
+1、0.0% us — 用户空间占用CPU的百分比。
+2、0.1% sy — 内核空间占用CPU的百分比。
+3、0.0% ni — 改变过优先级的进程占用CPU的百分比
+4、99.8% id — 空闲CPU百分比
+5、0.0% wa — IO等待占用CPU的百分比
+6、0.0% hi — 硬中断（Hardware IRQ）占用CPU的百分比
+7、0.0% si — 软中断（Software Interrupts）占用CPU的百分比
+8、0.0% st— 实时百分比
+
+
+查看cpu型号
+cat /proc/cpuinfo
+
+
 
 查看文件属性：
 > ll
@@ -5381,3 +5404,4 @@ lea 地址传递
 mov 移动,赋值
 %rdi 带有%的是寄存器
 (%rdi) 带小括号的是寻找寄存器的存储空间
+je,jmp 跳转，即switch case语句中使用
