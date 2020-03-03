@@ -307,6 +307,11 @@ https://blog.csdn.net/lvshaorong/article/details/53230545          // openwrt无
 4.无线转有线-从方式三种来中转
 .....
 
+https://openwrt.org/docs/guide-user/network/wifi/relay_configuration
+5.wifi中继/wifi reptear:
+https://openwrt.org/docs/guide-user/network/wifi/relay_configuration
+opkg update && opkg install relayd luci-proto-relay
+
 ------------------------------------------------  搭建参考
 
 https://suiyuanjian.com/124.html                // google vps搭建（主）-ssr
@@ -5397,11 +5402,76 @@ print(certifi.where())
 openssl x509 -inform der -in /Users/captain/Desktop/\*.camera360.com.cer  -pubkey -noout > /Users/captain/Desktop/key.pem
 
 
-swfit汇编语言
------------
-call 调用函数
-lea 地址传递
-mov 移动,赋值
-%rdi 带有%的是寄存器
-(%rdi) 带小括号的是寻找寄存器的存储空间
-je,jmp 跳转，即switch case语句中使用
+ swfit汇编语言
+ -----------
+ call 调用函数
+ lea 地址传递
+ mov 移动,赋值
+ %rdi 带有%的是寄存器
+ (%rdi) 带小括号的是寻找寄存器的存储空间
+ je,jmp 跳转，即switch case语句中使用
+ 
+ 常用的16个寄存器
+ rax, rbx, rcx, rdx, rsi, rdi, rbp, rsp
+ r8, r9, r10, r11, r12,r13, r14, r15
+ 
+ 寄存器用途:
+ rax,rdx常用作函数返回值使用
+ rdi, rsi, rdx, rcx, r8, r0等常用于存放函数参数
+ rsp, rbp用于栈操作
+ rip作为指令指针：
+ 存储着cpu吓一跳要执行的指令的地址
+ 一旦cpu读取一条指令，rip会自动指向下一条指令
+
+
+
+PlistBuddy简单使用
+-----------------
+https://www.jianshu.com/p/2167f755c47e
+
+/usr/libexec/PlistBuddy
+Usage: PlistBuddy [-cxh] <file.plist>
+    -c "<command>" execute command, otherwise run in interactive mode
+    -x output will be in the form of an xml plist where appropriate
+    -h print the complete help info, with command guide
+
+1.打印info.plist文件
+/usr/libexec/PlistBuddy -c "print" info.plist
+
+
+2.添加：
+
+ 添加普通字段：
+ /usr/libexec/PlistBuddy -c 'Add :Version string 1.0' info.plist
+
+ 添加数组字段，分两步走，注意：key之间用 : 隔开，且不能有空格：
+ # 先添加key值
+ /usr/libexec/PlistBuddy -c 'Add :Application array' info.plist
+ # 添加value值
+ /usr/libexec/PlistBuddy -c 'Add :Application: string app1' info.plist
+ /usr/libexec/PlistBuddy -c 'Add :Application: string app2' info.plist
+ /usr/libexec/PlistBuddy -c 'Add :Application: string app3' info.plist
+
+
+ 添加字典字段，分两步走
+ # 先添加key值
+/usr/libexec/PlistBuddy -c 'Add :Person dict' info.plist
+# 添加value值,
+/usr/libexec/PlistBuddy -c 'Add :Age string secret' info.plist
+/usr/libexec/PlistBuddy -c 'Add :Person:Name string yans67' info.plist
+/usr/libexec/PlistBuddy -c 'Add :Person:sex string boy' info.plist
+/usr/libexec/PlistBuddy -c 'Add :Person:weight string 65' info.plist
+
+3.输出某个字段值
+ /usr/libexec/PlistBuddy -c 'Print :Person' info.plist 
+
+
+4.删除字段相应的值
+ /usr/libexec/PlistBuddy -c 'Delete :Version' info.plist
+
+5.修改某个字段的值
+ /usr/libexec/PlistBuddy -c 'Set :Application:1 string "thi is app1"' info.plist
+
+6.合并
+ # 将A.plist 合并到 B.plist中
+ /usr/libexec/PlistBuddy -c 'Merge A.plist'  B.plist
