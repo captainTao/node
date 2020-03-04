@@ -850,6 +850,7 @@ ifconfig vth0 up
 ip link add link eth1 name vth1 type macvlan
 ifconfig vth1 up
 
+把上面的命令放入到开机启动中： /etc/rc.local
 
 
 usb printer:
@@ -904,6 +905,22 @@ else
 		echo '['$LOGTIME'] Network Problem. Do nothing.'
 	fi
 fi  
+
+
+关闭路由器LED脚本
+-------------
+https://blog.csdn.net/weixin_34034670/article/details/89770540
+#!/bin/ash
+for i in `ls /sys/class/leds`
+do
+cd /sys/class/leds
+cd $i
+echo 0 > brightness
+done
+
+保存为：/etc/rc.d/S99turnoffled
+添加执行权限
+
 ///////////////////////////////////////////////////////////////////  ssr结束
 
 
