@@ -30,6 +30,12 @@ RAM，ROM
 5.目前速度最快的还是SSR客户端加HAPROXY的服务器,国内的阿里云服务器架设haproxy再跳转到海外服务器
 6.ss+GoQuiet:goquiet是ss一个插件，可以将ss流量混淆为普通的https
 
+ios工程provisionProfile放的目录：
+/Users/captain/Library/MobileDevice/Provisioning Profiles
+
+pgtools切换环境,进入到项目工程中
+pkg -env xx.cfg
+pkg -e toolchain_developer.cfg
 
 不错的安装教程网站：
 https://www.digitalocean.com/community/tutorials
@@ -307,7 +313,7 @@ https://blog.csdn.net/lvshaorong/article/details/53230545          // openwrt无
 4.无线转有线-从方式三种来中转
 .....
 
-https://openwrt.org/docs/guide-user/network/wifi/relay_configuration
+
 5.wifi中继/wifi reptear:
 https://openwrt.org/docs/guide-user/network/wifi/relay_configuration
 opkg update && opkg install relayd luci-proto-relay
@@ -874,15 +880,6 @@ for ipk in $(opkg list-upgradable | awk '$1!~/^kmod|^Multiple/{print $1}'); do
   opkg upgrade $ipk
 done
 
-# 文件格式说明
-#  ——分钟 (0 - 59)
-# |  ——小时 (0 - 23)
-# | |  ——日   (1 - 31)
-# | | |  ——月   (1 - 12)
-# | | | |  ——星期 (0 - 7)（星期日=0或7）
-# | | | | |
-# * * * * * 被执行的命令
-  0 3 * * 6 /root/autoupgrade.sh
 
 
 ss重连接脚本：
@@ -907,8 +904,8 @@ else
 fi  
 
 
-关闭路由器LED脚本
--------------
+关闭路由器openwrt LED脚本
+-----------------------
 https://blog.csdn.net/weixin_34034670/article/details/89770540
 #!/bin/ash
 for i in `ls /sys/class/leds`
@@ -3278,6 +3275,19 @@ test:
 00 1 * * * wifi down
 30 7 * * * wifi up  
 
+
+定时时间格式
+--------------
+# 文件格式说明
+#  ——分钟 (0 - 59)
+# |  ——小时 (0 - 23)
+# | |  ——日   (1 - 31)
+# | | |  ——月   (1 - 12)
+# | | | |  ——星期 (0 - 7)（星期日=0或7）
+# | | | | |
+# * * * * * 被执行的命令
+  0 3 * * 6 /root/autoupgrade.sh
+
 /////////////////////////////////////////////////////////////////
 
 
@@ -5492,3 +5502,19 @@ Usage: PlistBuddy [-cxh] <file.plist>
 6.合并
  # 将A.plist 合并到 B.plist中
  /usr/libexec/PlistBuddy -c 'Merge A.plist'  B.plist
+
+
+
+ VPN工作在哪一层？
+ ---------------
+常见的虚拟专用网络技术有五种：PPTP协议、L2TP协议、IPsec协议、MPLS技术以及SSL虚拟专用网络技术。
+
+PPTP协议工作在OSI第二层。
+
+L2TP协议工作在OSI第二层以及第三层。
+
+IPsec协议工作在OSI第三层。
+
+MPLS工作在OSI第二层以及第三层。
+
+SSL虚拟专用网络工作在Secure Socket Layer。
