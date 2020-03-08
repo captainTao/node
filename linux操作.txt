@@ -3107,6 +3107,8 @@ https://downloads.openwrt.org/releases/18.06.2/targets/x86/64/combined-ext4.img.
 
 支持路由：
 ------------------
+便携路由器： TL-WR703N， NEXX WT3020F
+
 TL-WDR4310
 https://item.taobao.com/item.htm?spm=a1z09.2.0.0.dcda2e8dQB88iz&id=541598037417&_u=nbh5k5e8fc3
 
@@ -5518,3 +5520,13 @@ IPsec协议工作在OSI第三层。
 MPLS工作在OSI第二层以及第三层。
 
 SSL虚拟专用网络工作在Secure Socket Layer。
+
+
+
+一根网线接两个水晶头
+------------------
+https://zhidao.baidu.com/question/38082424.html
+T568B压制方法：接:1, 2, 3, 6位置
+一组：橙白(1), 橙色(2), 绿白(3), 绿色(6)
+二组：蓝白(1), 蓝色(2), 棕白(3), 棕色(6)
+另外一头按照正常接法接
