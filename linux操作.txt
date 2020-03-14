@@ -12,6 +12,10 @@ x:1
 
 pycharm格式化快捷键： cmd+alt+l
 
+成都移动dns:
+211.137.96.205
+183.221.253.100
+
 4.删除，文件名用正则表达式
 
 删除当前目录下所有文件，r递归，f强制：
@@ -918,6 +922,12 @@ done
 保存为：/etc/rc.d/S99turnoffled
 添加执行权限
 
+
+添加cisco anyconnetc vpn
+-----------------------
+https://openwrt.org/docs/guide-user/services/vpn/openconnect
+ocserv
+luci-app-ocserv
 ///////////////////////////////////////////////////////////////////  ssr结束
 
 
@@ -3786,6 +3796,33 @@ git config --global alias.cm "commit -m"
 git config --global alias.ps "push origin master"
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 git config --global alias.lt 'lg -1'
+
+
+.gitconfig
+-------------
+[user]
+    name = captainTao
+    email = 578628438@qq.com
+[alias]
+    co = checkout
+    br = branch
+    st = status
+    ad = add -A
+    cm = commit -m
+    ps = push origin master
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lt = lg -1
+[color]
+    ui = true
+[filesystem "Oracle Corporation|13|/dev/disk1s1"]
+    timestampResolution = 12000 nanoseconds
+    minRacyThreshold = 0 nanoseconds
+[filesystem "Oracle Corporation|13|/dev/disk1s5"]
+    timestampResolution = 8000 nanoseconds
+    minRacyThreshold = 0 nanoseconds
+[filesystem "Oracle Corporation|1.8.0_231|/dev/disk1s5"]
+    timestampResolution = 1001 milliseconds
+    minRacyThreshold = 0 nanoseconds
 
 =========================================================================
 

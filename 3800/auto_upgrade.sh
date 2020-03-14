@@ -1,6 +1,11 @@
 #!/bin/sh
-# last update:2019/1/26,captain wang 
+# last update:2020/3/14,captain wang 
 cd ~
+
+#三方包签名
+wget -qO /tmp/openwrt-dist.pub http://openwrt-dist.sourceforge.net/openwrt-dist.pub
+opkg-key add /tmp/openwrt-dist.pub
+rm /tmp/openwrt-dist.pub
 
 # 备份原来的文件
 if [ ! -d "\backupfile" ]; then
