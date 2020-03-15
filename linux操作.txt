@@ -5543,9 +5543,15 @@ Usage: PlistBuddy [-cxh] <file.plist>
  /usr/libexec/PlistBuddy -c 'Merge A.plist'  B.plist
 
 
+OSI模型
+---------------
+https://www.jianshu.com/p/9b9438dff7a2
+路由所在的是网络层
+交换机在数据链路层
 
- VPN工作在哪一层？
- ---------------
+
+VPN工作在哪一层？
+---------------
 常见的虚拟专用网络技术有五种：PPTP协议、L2TP协议、IPsec协议、MPLS技术以及SSL虚拟专用网络技术。
 
 PPTP协议工作在OSI第二层。
