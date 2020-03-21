@@ -3874,7 +3874,7 @@ warning: You appear to have cloned an empty repository.
 
 
 
-git log格式
+git log 格式
 -------------------
 https://www.cnblogs.com/liumengdie/p/7885210.html
 
@@ -4390,6 +4390,31 @@ jenkins
 忘记密码：
 jenkins brew安装文件夹:/Users/captain/.jenkins
 https://www.jianshu.com/p/0f828265ceb1
+
+
+jenkins登录无效：
+https://blog.csdn.net/m0_37738114/article/details/80660262
+查看是否存在多个jenkins进行，kill -9 pid掉所有的进程，然后打开想要的
+ps -ef | grep -v grep |grep jenkins 
+
+jenkins不要密码：
+https://www.jianshu.com/p/6591c9bdcca6
+
+
+
+启动和关闭jenkins:
+启动
+sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist
+关闭
+sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+
+
+brew安装jenkins不能被局域网访问：
+https://www.jianshu.com/p/cfe48815e7da
+-------------------------------------
+下面两个文件改127.0.0.1为0.0.0.0
+/Users/captain/Library/LaunchAgents/homebrew.mxcl.jenkins.plist
+/usr/local/opt/jenkins/homebrew.mxcl.jenkins.plist
 
 要搭建jenkins持续构建集成环境，首先要安装tomcat和JDK；
 

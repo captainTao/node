@@ -101,6 +101,7 @@ sysctl -p
 # 更新chinadns
 wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/chinadns_chnroute.txt
 
+# 创建dnsmasq解析的文件夹
 mkdir /etc/dnsmasq.d
 
 #设置dnsmasq
@@ -122,11 +123,14 @@ chmod +x generate_dnsmasq_chinalist.sh
 curl -L -o gfwlist2dnsmasq.sh https://github.com/cokebar/gfwlist2dnsmasq/raw/master/gfwlist2dnsmasq.sh
 chmod +x gfwlist2dnsmasq.sh
 
-# China-list
+# China-list, 建议把114.114.114.114更新为你当前运营商的dns
 sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -o /etc/dnsmasq.d/accelerated-domains.china.conf
 # GfwList
 sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -o /etc/dnsmasq.d/dnsmasq_gfwlist.conf
 # Restart dnsmasq
 
+#设置dns缓存，企业用的话不建议下面选项
 echo "min-cache-ttl=3600" >> /etc/dnsmasq.conf
+
+#重启dnsmasq
 /etc/init.d/dnsmasq restart
