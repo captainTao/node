@@ -705,6 +705,18 @@ a.luci-ss添加服务器
 obfs-local
 obfs=http;obfs-host=www.bing.com
 
+混淆网址选择下面一个即可
+tse3.mm.bing.net
+tse2.mm.bing.net
+tse1.mm.bing.net
+cloudfront.com
+cloudflare.com
+itunes.apple.com
+www.icloud.com
+ajax.microsoft.com
+apps.bdimg.com
+www.bing.com
+
 b.luci-ss设置访问控制
 
 c.更新chinadns
@@ -2036,6 +2048,14 @@ useradd   谁创建这个文件，谁就是这个文件的拥有者，组的缺�
 
 > chgrp:
 ---------------
+https://www.cnblogs.com/tan-y-q/p/10879133.html
+
+改变所有者（chown）和用户组（chgrp）命令
+chown xiaoming abc：改变abc的所有者为xiaoming
+chgrp root abc：改变abc所属的组为root
+chown root ./abc：改变abc这个目录的所有者是root
+chown ‐R root ./abc：改变abc这个目录及其下面所有的文件和目录的所有者是root
+
 改变所属组
 groupadd
 
