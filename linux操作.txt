@@ -4536,6 +4536,33 @@ PPAutoPackageScript
 https://github.com/jkpang/PPAutoPackageScript
 
 
+xcodebuild
+-----------
+https://www.jianshu.com/p/3f43370437d2
+man xcodebuild
+
+xcodebuild archive -workspace 项目名称.xcworkspace 
+                   -scheme 项目名称 
+                   -configuration 构建配置 
+                   -archivePath archive包存储路径 
+                   CODE_SIGN_IDENTITY=证书 
+                   PROVISIONING_PROFILE=描述文件UUID  
+
+-workspace 这个就是项目名
+-scheme 可以通过xcodebuild -list获取
+-configration 一些参数，也可以通过xcodebuild -list获取，一般使用Debug、Release
+-archivePath archive后的路径
+CODE_SIGN_IDENTITY 证书的Inentity
+PROVISIONING_PROFILE 描述文件UUID
+
+
+xcodebuild -exportArchive -archivePath archive文件的地址.xcarchive 
+                          -exportPath 导出的文件夹地址 
+                          -exportOptionsPlist exprotOptionsPlist.plist 
+                          CODE_SIGN_IDENTITY=证书 
+                          PROVISIONING_PROFILE=描述文件UUID  
+
+
 cocoapods
 ---------
 # 安装：
