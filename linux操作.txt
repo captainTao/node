@@ -4530,6 +4530,11 @@ http://localhost:8080/updateCenter  //插件更新中心
 ln -sfv /usr/local/opt/jenkins/*.plist ~/Library/LaunchAgents  开机自动启动
 
 
+jenkins ios打包
+-------------------
+PPAutoPackageScript
+https://github.com/jkpang/PPAutoPackageScript
+
 
 cocoapods
 ---------
