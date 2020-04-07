@@ -263,6 +263,24 @@ vpn:tinc ZeroTier
 防火墙链路：network-->firewall
 需要安装：loading balance
 
+
+
+trojan
+-----------
+A: trojan更新1.15.1了支持透明代理，目前配置文件增加了（”run_type”: “nat”,）nat模式。
+https://trojan-gfw.github.io/trojan/config.html 这个模式和ss很相似，并且恩山上面有人出了一篇教程，是基于这个nat模式的，我尝试配置了一下路由器（OP19.07.2）目前手机端已经成功（使用的是大佬的gfwlist to dnsmasq rule file with ipset），我想大佬可以尝试出一下教程吗！或者优化一下恩山的教程，有个时候没有luci也是可以的。
+附上恩山地址： https://www.right.com.cn/forum/thread-3708391-1-1.html
+
+B: 找到了一个功能非常完整的透明代理的配置脚本，
+目前研究中：https://github.com/zfl9/ss-tproxy
+配合https://github.com/zfl9/chinadns-ng
+
+A: 大佬编译了几个常见的IPK:链接：https://share.weiyun.com/59BH9Tt 密码：g69uwc
+大佬好像有人（openwrt-chinadns-ng和luci）https://github.com/pexcn/openwrt-chinadns-ng/tree/luci
+
+
+trojan本质上就是将加密流量伪装成TLS流量，gost/v2ray等好几种软件已经早已支持此模式了，不过trojan是C++写的，这是它的优势，非常适合路由器；而且甚至有shadowsocks的SIP003插件版本，可以说是挺不错的方案了。
+
 ///////////////////////////////////////////////////////////////////  ssr开始
 
 ------------------------------------------------知识储备
@@ -314,7 +332,8 @@ dnsforwarder相当于DNS的隧道,
 --------------------
 答疑：
 https://cokebar.info/archives/850
-google.com是响应ping操作的。ping不通是因为ping是ICMP协议，不是TCP/UDP；ss只代理TCP和UDP，所以ping是直连了。想要测试延迟可以用TCP ping工具，比如说psping。
+google.com是响应ping操作的。ping不通是因为ping是ICMP协议，不是TCP/UDP；ss只代理TCP和UDP，所以ping是直连了。想要测试延迟可以用TCP ping工具，比如说PsPing(windows, 支持tcp、udp),PaPing(linux,只支持tcp,不支持udp)。
+https://docs.azure.cn/zh-cn/articles/azure-operations-guide/virtual-network/aog-virtual-network-tcp-psping-paping-connectivity
 
 其他网友解答：
 第一项“让路由器本身走shadowsocks”设置好以后路由自身还是可能无法翻墙。我看了一下感觉是这样，虽然在WAN口设置里面已经把DNS修改为127.0.0.1，但是默认查询的端口是53且无法指定，而路由自身访问53端口的请求并没有转发到5353端口，所以不能返回正确的结果。
@@ -595,6 +614,8 @@ http://openwrt-dist.sourceforge.net/
 a.方法一：一键脚本 （网络直连sourceforge.net和downloads.lede-project.org没有问题，可以试试ping不丢包）
 
 wget -qO- http://openwrt-dist.sourceforge.net/auto_install.sh | sh
+上面如果报错，则执行下面：
+wget -qO- http://openwrt-dist.sourceforge.net/auto_install.sh | ash
 #下面为我自己写的：
 wget -qO- 'https://raw.githubusercontent.com/captainTao/node/master/3800/auto_install.sh' | sh
 # 执行此步骤时候按照提示，选择安装shadowsocks,chinadns以及dns-forwarder
@@ -866,6 +887,15 @@ nameserver 119.29.29.29
 nameserver 127.0.0.1
 ~
 
+
+openwrt网络配置：
+/etc/config/network
+重启网络配置： /etc/init.d/network restart
+
+安装最新的19.07 op的时候luci报错，
+You can solve the issue in the meanwhile by installing luci-compat
+
+uci show dhcp可以查看上述的uci配置
 
 其他配置
 -----------------
@@ -2379,6 +2409,15 @@ dig @192.168.10.1 -p 5353 google.com  //确认开启udp转发，ip为路由ip,�
 DNS 完美查询的流程就是： dnsmasq -> ChinaDNS -> ss-tunnel -> 国外DNS服务器(e.g: 8.8.8.8)。
 
 
+> unixbench: 
+----------------
+linux性能测试工具
+https://teddysun.com/245.html
+wget --no-check-certificate https://github.com/teddysun/across/raw/master/unixbench.sh
+chmod +x unixbench.sh
+./unixbench.sh
+
+
 > trace:
 --------------------
 源码位于：\kernel\trace\trace.c
@@ -3057,14 +3096,9 @@ virtualbox安装opt:
 -----------------
 https://blog.csdn.net/lvshaorong/article/details/80935503
 
-openwrt网络配置：
-/etc/config/network
-重启网络配置： /etc/init.d/network restart
-
-安装最新的19.07 op的时候luci报错，You can solve the issue in the meanwhile by installing luci-compat
-
 
 VMware安装openwrt:
+------------------
 http://www.360doc.com/content/19/0227/05/14775740_817794211.shtml
 
 
@@ -4647,6 +4681,7 @@ nginx反向代理：
 --------------
 https://www.cnblogs.com/ysocean/p/9392908.html
 http://www.nginx.cn/927.html
+http://www.21yunwei.com/archives/5044
 nginx.conf中加入：
     server {
             listen       80;
