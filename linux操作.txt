@@ -4539,6 +4539,8 @@ https://github.com/jkpang/PPAutoPackageScript
 xcodebuild
 -----------
 https://www.jianshu.com/p/3f43370437d2
+http://liumh.com/2015/11/25/ios-auto-archive-ipa/
+https://help.apple.com/xcode/mac/current/#/dev23ea8b877
 man xcodebuild
 
 xcodebuild archive -workspace 项目名称.xcworkspace 
@@ -4556,11 +4558,17 @@ CODE_SIGN_IDENTITY 证书的Inentity
 PROVISIONING_PROFILE 描述文件UUID
 
 
+/usr/bin/xcodebuild archive -workspace /Users/jcci/.jenkins/jobs/Salad/workspace/Avatar.xcworkspace -scheme Avatar -configuration Debug only_active_arch=no defines_module=yes -archivePath /Users/jcci/Documents/saladpkg/Avatar.xcarchive -sdk iphoneos
+
+
 xcodebuild -exportArchive -archivePath archive文件的地址.xcarchive 
                           -exportPath 导出的文件夹地址 
                           -exportOptionsPlist exprotOptionsPlist.plist 
                           CODE_SIGN_IDENTITY=证书 
                           PROVISIONING_PROFILE=描述文件UUID  
+
+
+/usr/bin/xcodebuild -exportArchive -exportOptionsPlist /Users/jcci/Documents/saladpkg/ExportOptions_toolchain_distribution.plist -archivePath /Users/jcci/Documents/saladpkg/Avatar.xcarchive -exportPath /Users/jcci/Documents/saladpkg/version_libo_devEggplant-freeStyle/2020-04-03/_toolchain_distribution_Debug2020-04-03_16-15-45
 
 
 cocoapods
