@@ -1,8 +1,12 @@
 {
-  "title": "Camera360 iOS技术文档系统",
+  "root": "./",
+  "title": "技术笔记文档",
   "gitbook": "3.2.3",
-  "author": "marui",
+  "author": "Captain",
+  "authorHomepage": "https://blog.csdn.net/Iron_Ye",
+  "description": "",
   "language": "zh-hans",
+  "copyright": "All Rights Reserved",
   "output.name": "site",
   "styles": {
     "website": "styles/website.css",
@@ -16,12 +20,20 @@
     "-share",
     "-lunr",
     "-highlight",
+    "-search-pro",
+    "-expandable-chapters-small-hasbug",
+    "code",
+    "search-plus",
     "anchor-navigation-ex",
     "splitter",
-    "search-plus",
-    "expandable-chapters-small"
+    "tbfed-pagefooter"
   ],
   "pluginsConfig": {
+    "tbfed-pagefooter": {
+            "copyright":"Copyright &copy Camera360 2019",
+            "modify_label": "修订时间：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+    },
     "theme-default": {
       "showLevel": true
     },
