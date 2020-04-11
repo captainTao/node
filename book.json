@@ -1,0 +1,48 @@
+{
+  "title": "Camera360 iOS技术文档系统",
+  "gitbook": "3.2.3",
+  "author": "marui",
+  "language": "zh-hans",
+  "output.name": "site",
+  "styles": {
+    "website": "styles/website.css",
+    "ebook": "styles/ebook.css",
+    "pdf": "styles/pdf.css",
+    "mobi": "styles/mobi.css",
+    "epub": "styles/epub.css"
+  },
+  "plugins": [
+    "-search",
+    "-share",
+    "-lunr",
+    "-highlight",
+    "anchor-navigation-ex",
+    "splitter",
+    "search-plus",
+    "expandable-chapters-small"
+  ],
+  "pluginsConfig": {
+    "theme-default": {
+      "showLevel": true
+    },
+    "anchor-navigation-ex": {
+      "showLevel": true,
+      "associatedWithSummary": false,
+      "printLog": false,
+      "multipleH1": false,
+      "mode": "float",
+      "float": {
+        "showLevelIcon": false,
+        "level1Icon": "fa fa-hand-o-right",
+        "level2Icon": "fa fa-hand-o-right",
+        "level3Icon": "fa fa-hand-o-right"
+      },
+      "pageTop": {
+        "showLevelIcon": false,
+        "level1Icon": "fa fa-hand-o-right",
+        "level2Icon": "fa fa-hand-o-right",
+        "level3Icon": "fa fa-hand-o-right"
+      }
+    }
+  }
+}
