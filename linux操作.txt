@@ -1815,6 +1815,7 @@ file test.test
 ------------------------------
 https://www.cnblogs.com/yangjig/p/6014198.html
 
+
 visual模式：
 -------------
 按v/V键从normal模式进入；
@@ -1830,6 +1831,16 @@ p粘贴,（不选中，默认一行）
 "+y    复制到系统剪贴板(也就是vim的+寄存器） 
 "+p   从系统剪贴板粘贴 
 I  多行输入，按Esc生效
+
+
+多行输入：
+ctrl + v选择块，I进入编辑模式，输入字符，按esc生效
+
+删除7-19行：
+:7,19d
+
+删除行最前面注释符号：
+ctrl+v选中行头，按x进行删除
 
 insert模式：
 -------------
@@ -4817,6 +4828,31 @@ upstream web  {
     server 192.168.17.69:20003;
 }
 
+
+nginx替换域名：
+------------------
+proxy_cache_key "$host$request_uri";
+upstream baidu {
+     server 103.235.46.39:80 max_fails=3;
+}
+server {
+    listen 80;
+    server_name test.21yunwei.com;
+    location / {
+        proxy_cache_valid  200 302 1h;
+        proxy_cache_valid  404 1m;
+        proxy_redirect http://www.baidu.com/ /;
+        proxy_cookie_domain baidu.com  21yunwei.com;
+        proxy_pass http://baidu;
+        proxy_set_header Host "www.baidu.com";
+        proxy_set_header Accept-Encoding "";
+        proxy_set_header User-Agent $http_user_agent;
+        proxy_set_header Accept-Language "zh-CN";
+        sub_filter www.baidu.com  test.21yunwei.com;
+        sub_filter_once on;
+        sub_filter_types  *;
+    } 
+}
 
 
 uhttpd
