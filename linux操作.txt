@@ -2383,10 +2383,32 @@ dig @127.0.0.1 baidu.com
 --------------------
 ping 114.114.114.114
 
+
 > arping
-类似ping,发送ARP报文
 --------------------
-ping www.baidu.com
+查看ip的MAC地址及IP占用的问题, 类似ping,发送ARP报文
+https://blog.csdn.net/wz_cow/article/details/80870876
+
+arping 192.168.131.155
+
+
+> httping
+--------------------
+它不是发送ICMP请求，而是发送HTTP请求
+http://www.360doc.com/content/16/0702/00/34585279_572396722.shtml
+
+httping -g www.google.com
+httping -l www.baidu.com 
+httping -K www.baidu.com
+httping -g www.google.com -l -c 5 -Y
+
+-g url： 测试的网址
+-l ： 使用ssl连接
+-c ： 跟ping一样，为请求数量
+-K :  使用图形模式
+-G ： GET（默认为HEAD）
+-S :  将时间分开成连接和传输两部分显示
+-Y :  启用颜色输出
 
 > dig:
 查询dns,解析结果，解析时间
