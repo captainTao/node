@@ -4724,8 +4724,8 @@ nginx是单纯的反向代理，执行效率较高，通过配置文件等方式
 nginx反向代理：
 --------------
 https://www.cnblogs.com/ysocean/p/9392908.html
-http://www.nginx.cn/927.html
 http://www.21yunwei.com/archives/5044
+
 nginx.conf中加入：
 
 server {
@@ -4766,12 +4766,57 @@ server {
     }
 
 
-匹配的顺序优先级如下：
+server name:
+-----------------
+1.两个域名之间用空格
+server_name 123.com www.123.com
+2.域名可以用通配符*
+server_name *.123.com www.123.*
+3.可以使用正则表达式， 用“~”作为正则表达式字符串的开始标记：
+server_name ~^www\d+\.123\.com$;
+
+
+server name 匹配的顺序优先级如下：
 
 ①、准确匹配 server_name
 ②、通配符在开始时匹配 server_name 成功
 ③、通配符在结尾时匹配 server_name 成功
 ④、正则表达式匹配 server_name 成功
+
+
+location
+-----------------------
+location [ = | ~ | ~* | ^~] uri {   
+}
+
+1、= ：用于不含正则表达式的 uri 前，要求请求字符串与 uri 严格匹配，如果匹配成功，就停止继续向下搜索并立即处理该请求。
+2、~：用于表示 uri 包含正则表达式，并且区分大小写。
+3、~*：用于表示 uri 包含正则表达式，并且不区分大小写。
+4、^~：用于不含正则表达式的 uri 前，要求 Nginx 服务器找到标识 uri 和请求字符串匹配度最高的 location 后，立即使用此 location 处理请求，而不再使用 location 块中的正则 uri 和请求字符串做匹配。
+
+注意：如果 uri 包含正则表达式，则必须要有 ~ 或者 ~* 标识。
+
+
+
+负载均衡
+-------------------------
+https://blog.csdn.net/qq_33404395/article/details/80567233
+#配置 nginx 的站点为 192.168.17.67
+server {
+    listen       80;
+    server_name  192.168.17.69;
+    location / {
+        proxy_pass   http://web;
+        index  index.html index.htm;
+    }
+}
+# 反向代理 192.168.17.69:20001 ， 192.168.17.69:20002 ， 192.168.17.69:20003 三个站点，并实现负载均衡
+upstream web  {
+    server 192.168.17.69:20001;
+    server 192.168.17.69:20002;
+    server 192.168.17.69:20003;
+}
+
 
 
 uhttpd
