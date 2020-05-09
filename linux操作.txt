@@ -4911,13 +4911,29 @@ uhttpd
 
 mac apache2
 -------------
+https://blog.csdn.net/feiwutudou/article/details/79057647
+
+停止 High Sierra后预装的Apache 2.4，并删除自启动
+sudo apachectl stop
+sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist 2>/dev/null
+
+$ sudo apachectl start
+$ sudo apachectl stop
+$ sudo apachectl -k restart   （-k意味着强制）
+
+安装新的apache：
 brew install apache2
 
+修改配置文件：
 vim /usr/local/etc/httpd/httpd.conf
+/usr/local/etc/httpd/httpd.conf
+
 修改：
-Listen 80 
-DocumentRoot, Directory为目录
-ServerName 127.0.0.1:80
+1. Listen 80 
+2. DocumentRoot, Directory为目录
+3. ServerName 127.0.0.1:80
+4. AllowOverride All （在Document这个里面）
+5. 取消注释mod_rewrite这行
 
 brew services restart httpd/apache2
 或者：
