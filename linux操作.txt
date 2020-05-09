@@ -4902,9 +4902,29 @@ openwrt nginx
 opkg update && opkg install nginx-ssl
 /etc/nginx/nginx.conf
 
+
 uhttpd
 --------
 /etc/config/uhttpd
+
+
+
+mac apache2
+-------------
+brew install apache2
+
+vim /usr/local/etc/httpd/httpd.conf
+修改：
+Listen 80 
+DocumentRoot, Directory为目录
+ServerName 127.0.0.1:80
+
+brew services restart httpd/apache2
+或者：
+sudo apachectl restart
+
+(apache2的目录：/private/etc/apache2/httpd.conf)
+
 
 wget
 -------------
