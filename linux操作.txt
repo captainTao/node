@@ -3731,6 +3731,8 @@ $ git branch -D dev
 $ git branch -m originalName newName
 删除远端分支
 git push origin --delete <branchName>
+git push origin --d <branchName>
+
 
 或者：
 git push origin :<branchName>
@@ -3784,13 +3786,43 @@ $ git push origin HEAD:分支名称     --本地分支名和远端分支名不�
 ----------------------------------------------------
 本地创建新分支，并更改指向
 git checkout -b dev2.6.7
-git branch --set-upstream-to=origin/<分支> dev2.6.7 (git pull能查看帮组)
+git branch --set-upstream-to=origin/<分支> dev2.6.7 (git pull --help能查看帮助)
 git pull <远程> <分支>
 
 远程分支push关联指向：
 git checkout -b dev
-git push --set-upstream origin dev (git push能查看帮组)
+git push --set-upstream origin dev (git push --help能查看帮助)
 git push origin dev
+
+
+为推送至远程同名分支，使用
+git push origin HEAD
+
+不同名分支用：
+git push origin HEAD:remoteName
+
+
+修改分支名(本地/远端)：
+No.1
+1.创建新分支
+ git checkout -b newbranchName
+2.设置追踪
+ git push --set-upstream origin newbranchName
+3.删除本地和远端分支
+ git branch -d branchName
+ git push origin -d <branchName>
+
+No.2
+1.重命名本地分支
+ git branch -m originalName newName
+
+2.修改分支关联
+git branch --unset-upstream [<branchname>]
+git push --set-upstream origin newName
+
+3.删除远端分支
+git push origin --delete <branchName>
+git push origin -d <branchName>
 
 
 13.打标签：
