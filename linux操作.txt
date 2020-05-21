@@ -4946,13 +4946,14 @@ mac php
 ---------
 https://blog.csdn.net/qq285744011/article/details/103729227/
 
-配置mac owncloud
-1.mac自带apache和php服务
-2.brew install apache2 php@7.2 mysql
-3.配置apache文件，sql
-4.下载owncloud，解压到apache工作目录
-5.设置
 
+配置mac owncloud
+-----------------
+1.mac自带apache和php服务,也可以用自带的，我这里先先禁止自带服务
+2.brew install apache2 php@7.2 mysql
+3.配置apache文件，sql(我这里用的8，推荐用5.7或者更早的版本，后面的版本一堆问题)
+4.下载owncloud，解压到apache工作目录
+5.设置其他插件
 
 
 wget
