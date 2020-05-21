@@ -4942,6 +4942,19 @@ sudo apachectl restart
 (apache2的目录：/private/etc/apache2/httpd.conf)
 
 
+mac php
+---------
+https://blog.csdn.net/qq285744011/article/details/103729227/
+
+配置mac owncloud
+1.mac自带apache和php服务
+2.brew install apache2 php@7.2 mysql
+3.配置apache文件，sql
+4.下载owncloud，解压到apache工作目录
+5.设置
+
+
+
 wget
 -------------
 wget url  #下载文件
@@ -5182,6 +5195,36 @@ mysql> CREATE USER 'captain'@'localhost' IDENTIFIED BY 'zhuniu1211';
 mysql> GRANT ALL PRIVILEGES ON *.* TO 'captain'@'localhost' WITH GRANT OPTION;
 部分数据库授权
 GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'Zhuniu1210*';
+
+
+----------------------------------
+
+// http://blog.sina.com.cn/s/blog_7282b74b01030imu.html
+// sql8.x不能直接像上述授权的时候，创建用户，在mac系统通所有版本也不能上述操作
+
+
+// 创建用户并授权1
+CREATE USER 'salad'@'%' IDENTIFIED BY 'salad';
+GRANT ALL PRIVILEGES ON *.* TO 'salad'@'%' WITH GRANT OPTION;
+
+// 创建用户并授权2
+CREATE USER 'foo'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bar';
+GRANT ALL PRIVILEGES ON database_name.* TO'foo'@'localhost';
+// 登出并查看权限
+mysql -u foo -p
+
+// 创建用户并授权3
+CREATE USER 'owncloud'@'localhost' IDENTIFIED BY 'salad';
+grant select,insert,update,delete on owncloud.* to 'owncloud'@'localhost';
+
+
+// 修改user为以前的密码模式
+ALTER USER salad@localhost IDENTIFIED WITH mysql_native_password BY 'salad';
+update mysql.user set authentication_string=, plugin='mysql_native_password' where user='root';
+
+//删除用户
+delete from mysql.user where user='captain';
+
 // 测试mysql的安装
 systemctl status mysql.service
 
@@ -5191,6 +5234,31 @@ sudo systemctl start mysql
 //以captain用户来查看mysql版本
 sudo mysqladmin -p -u captain version
 sudo mysqladmin -p -u root version
+
+
+
+caching_sha2_password改成native_password:
+----------------------------------------
+https://blog.csdn.net/maoxinwen1/article/details/88629313
+// 启动Mysql服务
+mysql.server start
+
+// 登录Mysql(需要输入密码)
+mysql -u root -p
+
+// 选择数据库(这一步不可省略)
+use mysql
+
+// 查看plugin设置
+select host, user, plugin from user;
+
+// 可以看到root的plugin是caching_sha2_password，我们希望改成mysql_native_password
+ALTER USER root@localhost IDENTIFIED WITH mysql_native_password BY 'xxxxx';
+ALTER USER salad@localhost IDENTIFIED WITH mysql_native_password BY 'salad';
+
+// 大功告成，关闭Mysql
+exit
+mysql.server stop
 
 
 
