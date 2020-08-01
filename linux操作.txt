@@ -4779,6 +4779,27 @@ sudo kill -TERM 主进程号
 nginx是单纯的反向代理，执行效率较高，通过配置文件等方式，可以自行搭建反向代理服务，对于不同的域名可以转发不同的路线服务器。nat123是综合了NAT和反向代理，可以实现HTML走80响应，图片FLASH等走其他加速服务器，速度较快，可以用于解决80端口问题，或直接使用对网站进行加速。
 
 
+问题：（bugzilla或者其他server）上传文件提示： NGINX “413 REQUEST ENTITY TOO LARGE
+http://smilejay.com/2015/05/nginx-request-entity-too-large/
+
+解决办法： 
+首先检查Bugzilla本身的附件上传限制大小，在Bugzilla的“Administration -> Parameters -> Attachments”的设置maxattachmentsize参数。发现原来我已将其改为8000(KB）。
+
+然后看Nginx配置文件（比如在这个路径/etc/nginx/conf.d/default.conf），发现里面没有设置client_max_body_size参数，而默认是1MB；
+在server{} 或 http {} 中添加“client_max_body_size 8M;”，
+将Nginx接受客户端requst最大的body大小设置为8MB。
+修改Nginx配置后，用service nginx reload命令重新加载配置或者restart nginx。
+
+如果是使用PHP开发应用，我曾在写“PHP实现文件上传功能”时，介绍了php.ini中设置文件上传大小、post请求大小的限制。
+http://smilejay.com/2014/05/php-upload-files/
+https://www.cnblogs.com/wangluochong/p/5557391.html
+
+upload_max_filesize = 8M    
+post_max_size = 10M    
+memory_limit = 20M  
+
+
+
 nginx反向代理：
 --------------
 https://www.cnblogs.com/ysocean/p/9392908.html
@@ -5877,4 +5898,6 @@ https://www.freehao123.com/ntopng-munin/
 Ntopng和Munin
 
 
+xcode查找内存泄漏：
+https://www.cnblogs.com/iOSv587country/p/4862989.html
 
