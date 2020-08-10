@@ -4994,14 +4994,14 @@ brew install apache2
 
 修改配置文件：
 vim /usr/local/etc/httpd/httpd.conf
-/usr/local/etc/httpd/httpd.conf
+
 
 修改：
 1. Listen 80 
 2. DocumentRoot, Directory为目录
 3. ServerName 127.0.0.1:80
 4. AllowOverride All （在Document这个里面）
-5. 取消注释mod_rewrite这行
+5. 取消注释rewrite_mod这行
 
 brew services restart httpd/apache2
 或者：
@@ -5009,6 +5009,12 @@ sudo apachectl restart
 
 (apache2的目录：/private/etc/apache2/httpd.conf)
 
+
+https://www.jianshu.com/p/d6207118c577
+系统的vhosts目录
+/private/etc/apache2/extra/httpd-vhosts.conf
+homebrew安装的vhost目录
+/usr/local/etc/httpd/extra/httpd-vhosts.conf
 
 mac php
 ---------
@@ -5900,4 +5906,5 @@ Ntopng和Munin
 
 xcode查找内存泄漏：
 https://www.cnblogs.com/iOSv587country/p/4862989.html
-
+https://www.jianshu.com/p/4d94a700de96
+https://blog.csdn.net/iOS_Dong_Shuang/article/details/78970674
