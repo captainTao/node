@@ -4999,8 +4999,8 @@ vim /usr/local/etc/httpd/httpd.conf
 修改：
 1. Listen 80 
 2. DocumentRoot, Directory为目录
-3. ServerName 127.0.0.1:80
-4. AllowOverride All （在Document这个里面）
+3. AllowOverride All （在Document这个里面）
+4. ServerName 127.0.0.1:80
 5. 取消注释rewrite_mod这行
 
 brew services restart httpd/apache2
@@ -5019,6 +5019,37 @@ homebrew安装的vhost目录
 mac php
 ---------
 https://blog.csdn.net/qq285744011/article/details/103729227/
+
+httd.conf中添加：
+LoadModule php7_module /usr/local/opt/php/lib/httpd/modules/libphp7.so
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+
+# 把“DirectoryIndex index.html”修改为：
+DirectoryIndex index.php index.html
+
+
+# 启用以下三行
+LoadModule socache_shmcb_module lib/httpd/modules/mod_socache_shmcb.so
+Include /usr/local/etc/httpd/extra/httpd-vhosts.conf
+Include /usr/local/etc/httpd/extra/httpd-mpm.conf
+
+
+# 找到<Directory />标签，修改其内部的：“Require all denied”为：
+Require all granted
+
+
+# 找到<IfModule mime_module>标签，在内部添加下面的代码，使Apache能解析PHP文件，否则PHP文件只会显示源码而不解析：
+AddType application/x-httpd-php .php
+
+保存，重启apache
+#sudo apachectl restart
+brew services restart apache2
+php -m
+php -i
+
 
 
 配置mac owncloud
