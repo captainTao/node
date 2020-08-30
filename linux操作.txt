@@ -5939,3 +5939,22 @@ xcode查找内存泄漏：
 https://www.cnblogs.com/iOSv587country/p/4862989.html
 https://www.jianshu.com/p/4d94a700de96
 https://blog.csdn.net/iOS_Dong_Shuang/article/details/78970674
+
+
+QQmusic DownloadFile Decoder:(convert QMC File to MP3 or FLAC)
+https://github.com/Presburger/qmc-decoder
+
+
+补码：
+正数的原码，反码，补码是一样的；
+负数在计算机都是以补码的形式存储，这样的目的是为了方便做减法
+它的原码最高位是1，补码是其反码+1
+
+8位的2进制，使用原码或反码表示的范围为[-127, +127]，而使用补码表示的范围为[-128, 127]
+
+java的负数补码表示为十进制：
+1、先对各位取反；
+2、将其转换为十进制数；
+3、加上负号，再减去1。
+例如：
+11111010，最高位为1，是负数，先对各位取反得00000101，转换为十进制数得5，加上负号得-5，再减1得-6。
