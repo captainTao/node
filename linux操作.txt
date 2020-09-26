@@ -1,4 +1,7 @@
 Q&A:
+ios性能测试开源框架：
+MTHawkeye
+
 1.ll 查看文件，过滤文件名
 root@captain:~# ll /etc/sh
 shadow            shadow-           shadowsocks.json  shells
@@ -3418,7 +3421,7 @@ mine:
 notice:
 1.There should be a end-of-line character on the last line of the crontab file. If in doubt, just leave an empty line at the end.
 
-2.f there is no crontab defined (i.e. /etc/crontabs/ is empty), then cron won't start! Make sure you already defined cron jobs before trying to start cron.
+2.if there is no crontab defined (i.e. /etc/crontabs/ is empty), then cron won't start! Make sure you already defined cron jobs before trying to start cron.
 
 /etc/init.d/cron start
 /etc/init.d/cron enable
@@ -3432,6 +3435,7 @@ test:
 00 1 * * * wifi down
 30 7 * * * wifi up  
 
+0 5 * * 1 /root/scheduledTask.sh
 
 定时时间格式
 --------------
@@ -3650,6 +3654,9 @@ $ git reset --hard HEAD^
 
 12.恢复到指定的版本：(--hard后面的序列号为commit hash值的前6位)
 $ git reset --hard 41bb8d
+
+强制回退远端：
+git push --force origin
 
 13.查询每次命令执行的commit id
 $ git reflog
