@@ -403,3 +403,25 @@ until语句
 until [[ condition ]]; do
 	#statements
 done
+
+
+转为大小写
+----------
+#! /bin/sh
+
+echo "iiii"
+string="abcdEEEEE"
+echo $string
+
+#将字符串中的小写字母转换为大写字母
+string="$(echo $string | tr '[:lower:]' '[:upper:]')"
+echo $string
+
+#将字符串中的大写字母转换为小写字母
+string="$(echo $string | tr '[:upper:]' '[:lower:]')"
+echo $string
+
+
+# 方法二
+echo $PATH | awk '{print toupper($0)}'
+echo $PATH | awk '{print tolower($0)}'

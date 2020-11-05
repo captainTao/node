@@ -176,6 +176,14 @@ export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
 export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
+#配置gradle
+export GRADLE_HOME=/Library/Gradle/gradle-6.1.1
+export PATH=$PATH:$GRADLE_HOME/bin
+
+#配置ndk
+export NDK_HOME=/Users/c/Library/Android/sdk/ndk/21.0.6113669
+export PATH=$PATH:$NDK_HOME
+
 source /Users/captain/.profile
     
 
