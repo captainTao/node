@@ -407,8 +407,10 @@ done
 
 转为大小写
 ----------
+# https://www.cnblogs.com/xiaonian8/p/13730126.html
 #! /bin/sh
 
+# 方法一
 echo "iiii"
 string="abcdEEEEE"
 echo $string
@@ -425,3 +427,10 @@ echo $string
 # 方法二
 echo $PATH | awk '{print toupper($0)}'
 echo $PATH | awk '{print tolower($0)}'
+
+# 文件大小写
+awk '{print toupper($0)}' test.txt
+
+#方法三：
+echo $PATH | sed 's/[a-z]/\U&/g'
+echo $PATH | sed 's/[A-Z]/\L&/g'

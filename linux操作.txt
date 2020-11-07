@@ -4431,6 +4431,16 @@ prettyJson: ctrl+alt+j
 eclipse：
 局部搜索：cmd + F
 全局搜索：ctrl + H
+搜索类名：ctrl + shift + R
+
+
+intellij idea:
+
+
+局部搜索：ctrl + F
+全局搜索：ctrl + shift + F
+搜索类名：
+
 
 
 提取ioslog
@@ -5965,3 +5975,91 @@ java的负数补码表示为十进制：
 3、加上负号，再减去1。
 例如：
 11111010，最高位为1，是负数，先对各位取反得00000101，转换为十进制数得5，加上负号得-5，再减1得-6。
+
+
+
+安卓打包：
+--------
+#!/bin/zsh -il
+
+cd ${WORKSPACE}
+echo "项目路径："
+pwd
+
+rm -rf app/build/outputs
+rm -rf output
+mkdir output
+
+./gradlew clean "assemble${env}${type}" --info
+str=app/build/outputs/apk/${env}/${type}
+str="$(echo $str | tr "[:upper:]" "[:lower:]")"
+echo "apk路径："
+echo $str
+cp -r $str/*.apk output
+
+
+
+jenkins获取提交记录：
+------------------
+https://xinle.co/2018/01/04/jenkins-%E8%8E%B7%E5%8F%96-git-%E7%9A%84%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%EF%BC%88change-log%EF%BC%89/
+
+1.下载插件源码进行编译：
+https://github.com/daniel-beck/changelog-environment-plugin
+2.编译环境包括maven, jdk1.8
+编译命令：mvn verify
+3.上传jenkins后执行安装
+文件路径：changelog-environment-plugin-master/target/changelog-environment.hpi
+4.配置jenkins
+勾选 Add Changelog Information to Environment
+Entry Format:
+%3$s(%4$s via %1$s)
+Date Format:
+MM-dd HH:mm:ss
+5.需要传入脚本，使用参数："${SCM_CHANGELOG}"
+
+jenkins周期性构建时间；
+周一到周六，每天早上7：38开始打包，0，7代表是星期天
+H 7 * * 1-6
+
+
+pycharm打不开
+------------
+https://blog.csdn.net/Miao_Hen/article/details/106917757
+
+cd /Applications/PyCharm.app/Contents/MacOS
+./pycharm
+
+查看error,安装提示进行操作
+
+
+sh文件转为大小写
+--------------
+转为大小写
+----------
+# https://www.cnblogs.com/xiaonian8/p/13730126.html
+#! /bin/sh
+
+# 方法一
+echo "iiii"
+string="abcdEEEEE"
+echo $string
+
+#将字符串中的小写字母转换为大写字母
+string="$(echo $string | tr '[:lower:]' '[:upper:]')"
+echo $string
+
+#将字符串中的大写字母转换为小写字母
+string="$(echo $string | tr '[:upper:]' '[:lower:]')"
+echo $string
+
+
+# 方法二
+echo $PATH | awk '{print toupper($0)}'
+echo $PATH | awk '{print tolower($0)}'
+
+# 文件大小写
+awk '{print toupper($0)}' test.txt
+
+#方法三：
+echo $PATH | sed 's/[a-z]/\U&/g'
+echo $PATH | sed 's/[A-Z]/\L&/g'
