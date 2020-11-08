@@ -6012,7 +6012,7 @@ https://github.com/daniel-beck/changelog-environment-plugin
 4.配置jenkins
 勾选 Add Changelog Information to Environment
 Entry Format:
-%3$s(%4$s via %1$s)
+%3$s(at %4$s via %1$s)\n
 Date Format:
 MM-dd HH:mm:ss
 5.需要传入脚本，使用参数："${SCM_CHANGELOG}"
@@ -6063,3 +6063,6 @@ awk '{print toupper($0)}' test.txt
 #方法三：
 echo $PATH | sed 's/[a-z]/\U&/g'
 echo $PATH | sed 's/[A-Z]/\L&/g'
+
+
+dirname xx.x 会返回xx.x的文件夹路径，如果是xx文件夹，则返回当前文件夹的上一级目录
