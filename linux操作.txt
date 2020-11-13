@@ -4450,7 +4450,7 @@ brew install -v --HEAD --fetch --build-from-source usbmuxd libimobiledevice idev
 
 ifuse+libimobiledevice
 https://www.cnblogs.com/zhouxihi/p/10369580.html
-
+https://www.jianshu.com/p/31de4b15b347?version=4.7.2
 Error:
 ideviceinstaller 报错 Could not connect to lockdownd. Exit
 https://www.jianshu.com/p/472f6cbce9c2
