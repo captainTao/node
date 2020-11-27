@@ -4716,6 +4716,17 @@ xcodebuild -exportArchive -archivePath archive文件的地址.xcarchive
 /usr/bin/xcodebuild -exportArchive -exportOptionsPlist /Users/jcci/Documents/saladpkg/ExportOptions_toolchain_distribution.plist -archivePath /Users/jcci/Documents/saladpkg/Avatar.xcarchive -exportPath /Users/jcci/Documents/saladpkg/version_libo_devEggplant-freeStyle/2020-04-03/_toolchain_distribution_Debug2020-04-03_16-15-45
 
 
+xcodebulid报错：
+xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
+
+解决的办法是：
+https://blog.csdn.net/aff60756/article/details/101998919
+
+修改xcode指向的目录 
+
+xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+
 cocoapods
 ---------
 # 安装：
