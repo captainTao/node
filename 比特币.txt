@@ -1,0 +1,8 @@
+哈希算法        输出长度(bit)       输出长度(字节)
+MD5              128 bit            16 bytes
+RipeMD160       160 bits            20 bytes
+SHA-1           160 bits            20 bytes
+SHA-256         256 bits            32 bytes
+SHA-512         512 bits            64 bytes
+
+比特币使用的哈希算法有两种：SHA-256和RipeMD160

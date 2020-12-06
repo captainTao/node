@@ -4586,6 +4586,11 @@ kibana
 
 jenkins
 --------
+遇到的坑：
+---------
+https://www.jianshu.com/p/4d182d7fbf01
+
+
 忘记密码：
 jenkins brew安装文件夹:/Users/captain/.jenkins
 https://www.jianshu.com/p/0f828265ceb1
@@ -6077,3 +6082,92 @@ echo $PATH | sed 's/[A-Z]/\L&/g'
 
 
 dirname xx.x 会返回xx.x的文件夹路径，如果是xx文件夹，则返回当前文件夹的上一级目录
+
+
+
+
+MimeType
+------------
+android和ios的安装文件MIME类型
+.apk:
+application/vnd.android.package-archive
+
+.ipa:
+application/octet-stream.ipa
+
+
+
+发布ipa二维码：
+------------
+https://blog.csdn.net/cs869133193/article/details/82022080
+
+itms-services://?action=download-manifest&url=https://qcsource.c360dn.com//salad_iossalad.plist
+
+
+
+gitlab机器人
+-------------
+http://www.ee-nav.com/572.html
+https://blog.csdn.net/weixin_42829808/article/details/106118834
+
+
+supervisor
+-----------
+#linux安装
+https://www.cnblogs.com/junle/p/5168437.html
+#mac安装
+https://blog.csdn.net/github_39437588/article/details/99716432
+
+brew install supervisor
+
+cd /usr/local/etc
+mkdir supervisor.d
+vim gitlabhook.ini
+内容如下：
+
+[program:gitlabhook]
+directory = /Users/c/Documents/gitlab_webhook
+command = sh run_server.sh
+autostart = true
+startsecs = 5
+autorestart = true
+startretries = 5
+
+;user = captain
+;redirect_stderr = true
+
+;stdout_logfile_backups = 20
+stdout_logfile=/Users/c/Documents/log/gitlabhook.log
+stdout_logfile_maxbytes=10MB
+stderr_logfile=/Users/c/Documents/log/gitlabhook-err.log
+stderr_logfile_maxbytes=10MB
+
+;environment = PATH="$PATH:/usr/local/bin"
+
+
+
+supervisorctl进入管理模式：
+
+reread ;重新加载配置文件
+update ;将配置文件里新增的子进程加入进程组，如果设置了autostart=true则会启动新新增的子进程
+
+status ;查看所有进程状态
+
+status <name> ;查看指定进程状态
+
+start all; 启动所有子进程
+
+start <name>; 启动指定子进程
+
+restart all; 重启所有子进程
+
+restart <name>; 重启指定子进程
+
+stop all; 停止所有子进程
+stop <name>; 停止指定子进程
+
+reload ;重启supervisord
+
+add <name>; 添加子进程到进程组
+
+reomve <name>; 从进程组移除子进程，需要先stop。注意：移除后，需要使用reread和update才能重新运行该进程

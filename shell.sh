@@ -434,3 +434,172 @@ awk '{print toupper($0)}' test.txt
 #方法三：
 echo $PATH | sed 's/[a-z]/\U&/g'
 echo $PATH | sed 's/[A-Z]/\L&/g'
+
+
+
+
+输出时间格式：
+-------------
+https://www.cnblogs.com/janezhao/p/9732157.html
+
+1）原格式输出
+2018年 09月 30日 星期日 15:55:15 CST
+
+time1=$(date)
+echo $time1
+ 
+
+2）时间串输出
+20180930155515
+
+#!bin/bash
+time2=$(date "+%Y%m%d%H%M%S")
+echo $time2
+ 
+
+3）格式化输出
+2018-09-30 15:55:15
+
+#!bin/bash
+time3=$(date "+%Y-%m-%d %H:%M:%S")
+echo $time3
+
+4）
+2018.09.30
+
+#!bin/bash
+time4=$(date "+%Y.%m.%d")
+echo $time4
+
+注意：
+
+1、date后面有一个空格，shell对空格要求严格
+2、变量赋值前后不要有空格
+3、解释
+1 Y显示4位年份，如：2018；y显示2位年份，如：18。
+2 m表示月份；M表示分钟。
+3 d表示天；D则表示当前日期，如：1/18/18(也就是2018.1.18)。
+4 H表示小时，而h显示月份。
+5 s显示当前秒钟，单位为毫秒；S显示当前秒钟，单位为秒。
+
+
+shell截取字符串：
+--------------
+http://c.biancheng.net/view/1120.html
+${string: start :length}    从 string 字符串的左边第 start 个字符开始，向右截取 length 个字符。
+${string: start}    从 string 字符串的左边第 start 个字符开始截取，直到最后。
+${string: 0-start :length}  从 string 字符串的右边第 start 个字符开始，向右截取 length 个字符。
+${string: 0-start}  从 string 字符串的右边第 start 个字符开始截取，直到最后。
+${string#*chars}    从 string 字符串第一次出现 *chars 的位置开始，截取 *chars 右边的所有字符。
+${string##*chars}   从 string 字符串最后一次出现 *chars 的位置开始，截取 *chars 右边的所有字符。
+${string%*chars}    从 string 字符串第一次出现 *chars 的位置开始，截取 *chars 左边的所有字符。
+${string%%*chars}   从 string 字符串最后一次出现 *chars 的位置开始，截取 *chars 左边的所有字符。
+
+
+url="c.biancheng.net"
+echo ${url: 2: 9}
+# biancheng
+
+url="c.biancheng.net"
+echo ${url: 2}  #省略 length，截取到字符串末尾
+# biancheng.net
+
+#!/bin/bash
+从左边开始截取字符：#*, ##*
+url="http://c.biancheng.net/index.html"
+echo ${url#*:}
+# //c.biancheng.net/index.html
+
+url="http://c.biancheng.net/index.html"
+echo ${url#*/}    #结果为 /c.biancheng.net/index.html
+echo ${url##*/}   #结果为 index.html
+
+str="---aa+++aa@@@"
+echo ${str#*aa}   #结果为 +++aa@@@
+echo ${str##*aa}  #结果为 @@@
+
+#!/bin/bash
+# 从右边开始截取：%*, %%*
+url="http://c.biancheng.net/index.html"
+echo ${url%/*}  #结果为 http://c.biancheng.net
+echo ${url%%/*}  #结果为 http:
+
+str="---aa+++aa@@@"
+echo ${str%aa*}  #结果为 ---aa+++
+echo ${str%%aa*}  #结果为 ---
+
+
+
+
+判断文件或者文件夹是否存在：
+---------------------
+https://www.cnblogs.com/DreamDrive/p/7706585.html
+
+-e filename 如果 filename存在，则为真 
+-d filename 如果 filename为目录，则为真 
+-f filename 如果 filename为常规文件，则为真 
+-L filename 如果 filename为符号链接，则为真 
+-r filename 如果 filename可读，则为真 
+-w filename 如果 filename可写，则为真 
+-x filename 如果 filename可执行，则为真 
+-s filename 如果文件长度不为0，则为真 
+-h filename 如果文件是软链接，则为真
+
+
+1.判断文件夹是否存在
+复制代码
+#shell判断文件夹是否存在
+
+#如果文件夹不存在，创建文件夹
+if [ ! -d "/myfolder" ]; then
+  mkdir /myfolder
+fi
+复制代码
+ 
+
+2.判断文件夹是否存在并且是否具有可执行权限
+复制代码
+#shell判断文件,目录是否存在或者具有权限
+folder="/var/www/"
+file="/var/www/log"
+
+# -x 参数判断 $folder 是否存在并且是否具有可执行权限
+if [ ! -x "$folder"]; then
+  mkdir "$folder"
+fi
+复制代码
+ 
+
+3.判断文件夹是否存在
+# -d 参数判断 $folder 是否存在
+if [ ! -d "$folder"]; then
+  mkdir "$folder"
+fi
+ 
+
+4.判断文件是否存在
+# -f 参数判断 $file 是否存在
+if [ ! -f "$file" ]; then
+  touch "$file"
+fi
+ 
+
+5.判断一个变量是否有值
+# -n 判断一个变量是否有值
+if [ ! -n "$var" ]; then
+  echo "$var is empty"
+  exit 0
+fi
+ 
+
+6.判断两个变量是否相等.
+
+# 判断两个变量是否相等
+if [ "$var1" = "$var2" ]; then
+  echo '$var1 eq $var2'
+else
+  echo '$var1 not eq $var2'
+fi
+
+
+
