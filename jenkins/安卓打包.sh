@@ -39,7 +39,7 @@ mkdir output
 str=app/build/outputs/apk/${env}/${type}
 str="$(echo $str | tr "[:upper:]" "[:lower:]")"
 apkPath=$(find $str -name "*.apk")
-if [[ $apkPath ]]; then
+if [[ -e $apkPath ]]; then
     echo "apk路径: "$apkPath
     file_name=$(echo ${apkPath%.apk*}"_"$branch$(date "+_%Y-%m-%d_%H-%M-%S")".apk")
     echo "重命名路径: "$file_name

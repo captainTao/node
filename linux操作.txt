@@ -162,6 +162,7 @@ mac dnsmasq
 ---------------
 https://www.jianshu.com/p/3dd22d7d86b2
 https://blog.csdn.net/hekewangzi/article/details/81077546
+https://blog.csdn.net/wangzhen_csdn/article/details/79791023
 
 1.brew install dnsmqsq
 
@@ -5321,6 +5322,8 @@ smtp_ssl: On
 
 其他设置项目
 ---------------
+bugzilla的系统配置在： bugzilla/data/params.json
+
 下面这些选项修改完之后都需要在bugzilla目录下执行perl checksetup.pl 
 
 1.自定义模板bug写的模板：
