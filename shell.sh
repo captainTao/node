@@ -272,6 +272,14 @@ note(){
 }
 
 
+ipaddr="node1  node2  node3  node4  node5  node6"
+iparr=($ipaddr)
+for i in ${iparr[*]} #遍历每个数据
+do
+    echo $i
+done
+echo ${iparr[0]} # 获取第1个数据
+
 if语句
 ------------------
 if [[ condition ]]; then
@@ -519,7 +527,8 @@ echo ${str#*aa}   #结果为 +++aa@@@
 echo ${str##*aa}  #结果为 @@@
 
 #!/bin/bash
-# 从右边开始截取：%*, %%*
+# 从右边开始截取：%*, 
+# 从左边开始截取  %%*
 url="http://c.biancheng.net/index.html"
 echo ${url%/*}  #结果为 http://c.biancheng.net
 echo ${url%%/*}  #结果为 http:
@@ -602,4 +611,53 @@ else
 fi
 
 
+basename, dirname
+-----------------
+
+str1="app/build/outputs/apk/debug/app-debug.apk"
+echo ${str1%%/*}
+echo "base: "$(basename $str1)
+echo "dir: "$(dirname $str1)
+# base: app-debug.apk
+# dir: app/build/outputs/apk/debug
+
+
+带空格的字符串变成数组
+-------------------
+str="/Users/captain/Desktop/t"
+# str="$(echo $str | tr "[:upper:]" "[:lower:]")"
+apkPath=$(find $str -name "*.txt")
+echo $apkPath
+pathlist=($apkPath)
+for i in ${pathlist[*]}
+do
+    echo $i
+done
+
+
+发送get，post请求
+---------------
+https://www.jb51.cc/linux/694466.html
+
+# curl: 会把请求的内容显示到控制台上
+# get:
+curl www.baidu.com
+# post: -d加参数
+curl -d "param1=value1&param2=value2" www.baidu.com
+# -I
+# 只显示头部信息。
+# -i
+# 显示全部信息。
+# -v
+# 显示解析全过程。
+# 发送格式化json请求
+curl -i -k  -H "Content-type: application/json" -X POST -d '{"version":"6.6.0", "from":"mu", "product_version":"1.1.1.0"}' https://10.10.10.10:80/test
+
+# wget: 会把请求的内容下载本地
+# get:
+wget www.baidu.com
+# get方式并指定下载的文件名
+wget -O wordpress.zip http://www.linuxde.net/download.aspx?id=1080
+# post:
+wget --post-data="user=user1&pass=pass1&submit=Login" http://domain.com/path/p
 

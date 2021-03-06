@@ -2,6 +2,17 @@ Q&A:
 ios性能测试开源框架：
 MTHawkeye
 
+exsi,PVE
+
+BGP
+IPLC专线
+
+视频中搬瓦工VPS：http://bit.ly/3ckoUov
+自用搬瓦工机场：http://bit.ly/387YRNP
+
+BBR一键安装脚本：https://www.94ish.me/1635.html
+
+
 1.ll 查看文件，过滤文件名
 root@captain:~# ll /etc/sh
 shadow            shadow-           shadowsocks.json  shells
@@ -12,6 +23,12 @@ shadow            shadow-           shadowsocks.json  shells
 r:4
 w:2
 x:1
+
+vpn: https://aff.ckh01.com/aff.php?aff=9124
+CKH01
+
+
+显示和隐藏隐藏文件：cmd+shift+.
 
 pycharm格式化快捷键： cmd+alt+l
 
@@ -51,6 +68,11 @@ https://www.digitalocean.com/community/tutorials
 画图软件：
 ProcessON
 visio
+
+u盘制作工具：
+https://www.balena.io/etcher/
+balenaetcher
+
 
 proxmox系统https://www.proxmox.com/en/
 
@@ -612,7 +634,7 @@ iptables -A INPUT -p udp --dport 3389 -j ACCEPT
 
 https://github.com/hwdsl2/setup-ipsec-vpn
 
-apt-get update && apt-get dist-upgrade && reboot
+apt-get update && apt-get dist-upgrade
 wget https://git.io/vpnsetup -O vpnsetup.sh && sudo sh vpnsetup.sh
 
 
@@ -1171,6 +1193,17 @@ ip地址：
 ip addr  :ip地址。ifconfig    // mac
 curl ip.cn : 当前ip地址
 curl cip.cc
+
+设置终端番墙
+-----------
+https://double-c.github.io/2018/10/17/mac-ss-cmd/index.html
+http://locke.ink/post/Mac-Ternimal-Shadowsocks-fanqiang-kexueshangwang/
+
+
+vim .zshrc
+开启控制台翻墙
+alias proxy='export all_proxy=socks5://127.0.0.1:1086'
+alias unproxy='unset all_proxy'
 
 
 > watch 
@@ -2416,16 +2449,30 @@ ping 114.114.114.114
 
 > arping
 --------------------
+brew install arping
+
 查看ip的MAC地址及IP占用的问题, 类似ping,发送ARP报文
 https://blog.csdn.net/wz_cow/article/details/80870876
 
+查看某个IP的MAC地址
 arping 192.168.131.155
+arping www.salad.com
+
+
+查看某个IP的MAC地址，并指定count数量
+arping -c 1 192.168.131.155
+
+
+查看某个MAC地址的IP，要在同一子网才查得到
+arping -c 1 52:54:00:a1:31:89
+
 
 
 > httping
 --------------------
 它不是发送ICMP请求，而是发送HTTP请求
 http://www.360doc.com/content/16/0702/00/34585279_572396722.shtml
+brew install httping
 
 httping -g www.google.com
 httping -l www.baidu.com 
@@ -3266,6 +3313,12 @@ https://downloads.openwrt.org/releases/18.06.2/targets/x86/64/combined-ext4.img.
 
 支持路由：
 ------------------
+R2s: aarch64_generic
+
+0 4 * * * /etc/coremark.sh
+0 5 * * 1 /root/scheduledTask.sh
+
+
 便携路由器： TL-WR703N， NEXX WT3020F
 
 TL-WDR4310
@@ -3400,6 +3453,32 @@ uci commit
 
 scheduled input:
 ------------------
+https://openwrt.org/docs/guide-user/base-system/cron
+
+#读取定时任务信息
+logread -e cron
+
+#查看读取定时任务进程
+ps | grep cron
+
+#定时任务查看：
+在/etc/crontabs/目录下
+
+定时时间格式
+--------------
+# 文件格式说明
+#  ——分钟 (0 - 59)
+# |  ——小时 (0 - 23)
+# | |  ——日   (1 - 31)
+# | | |  ——月   (1 - 12)
+# | | | |  ——星期 (0 - 6)（星期日=0或7）
+# | | | | |
+# * * * * * 被执行的命令
+  0 3 * * 6 /root/autoupgrade.sh
+
+Example:
+*/5 * * * *   Every 5 minutes
+12 */3 * * *  Every 3 hours at 12 minutes
 
 mine:
 
@@ -3438,17 +3517,7 @@ test:
 
 0 5 * * 1 /root/scheduledTask.sh
 
-定时时间格式
---------------
-# 文件格式说明
-#  ——分钟 (0 - 59)
-# |  ——小时 (0 - 23)
-# | |  ——日   (1 - 31)
-# | | |  ——月   (1 - 12)
-# | | | |  ——星期 (0 - 7)（星期日=0或7）
-# | | | | |
-# * * * * * 被执行的命令
-  0 3 * * 6 /root/autoupgrade.sh
+
 
 /////////////////////////////////////////////////////////////////
 
@@ -4587,10 +4656,14 @@ kibana
 
 jenkins
 --------
+定时构建：
+0 10-18/2 * * 1-5
+
+
 遇到的坑：
 ---------
 https://www.jianshu.com/p/4d182d7fbf01
-
+https://www.jianshu.com/p/5f671aca2b5a
 
 忘记密码：
 jenkins brew安装文件夹:/Users/captain/.jenkins
@@ -6104,6 +6177,9 @@ application/octet-stream.ipa
 ------------
 https://blog.csdn.net/cs869133193/article/details/82022080
 
+1.上传原文件.ipa
+2.修改并上传.plist
+3.组装二维码
 itms-services://?action=download-manifest&url=https://qcsource.c360dn.com//salad_iossalad.plist
 
 
@@ -6174,3 +6250,36 @@ reload ;重启supervisord
 add <name>; 添加子进程到进程组
 
 reomve <name>; 从进程组移除子进程，需要先stop。注意：移除后，需要使用reread和update才能重新运行该进程
+
+
+
+安装python虚拟环境
+----------------
+https://www.jianshu.com/p/ee03cff51d02
+
+
+pip install virtualenv
+pip install virtualenvwrapper
+
+
+virtualenv的使用(python的沙盒)
+
+sudo pip install virtualenv(安装沙盒)
+virtualenv test1(创建沙盒test1)
+cd test1
+source bin/activate
+pip install tornado
+
+
+virtualenv -p /usr/local/bin/python3 .env 
+激活虚拟环境 source .env/bin/activate 安装依赖包
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ -r requirements.txt
+
+
+
+pip生成requirements.txt
+
+pip freeze >requirements.txt
+pip install -r requirements.txt
+
+
