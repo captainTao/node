@@ -1,3 +1,17 @@
+
+虫师blog:
+----------
+https://www.cnblogs.com/fnng/archive/2021/03.html
+
+测试教程网
+---------
+http://www.testclass.net/
+
+
+最值得学习的python库；
+http://www.testclass.net/post/2021_python_lib
+
+
 web前端测试：
 
 cypress:
@@ -7,3 +21,63 @@ https://www.jianshu.com/p/55ed1d40f40f
 
 puppeteer
 ---------
+
+
+airtest
+-------
+安装Airtest：http://airtest.netease.com/changelog.html 
+1.USB方式
+a.网上搜索自己手机型号，打开"开发者模式"
+b.进入"开发者模式"选项，选择打开USB调试
+c.手机使用USB连接线连接至电脑
+2.无线连接方法
+a.保证手机和电脑连接至同一个wifi， 打开cmd窗口，输入命令adb tcpip 5555
+b.打开手机，在关于手机->状态信息->找到IP地址，如192.168.1.100
+c.打开Airtest IDE, 修改远程连接信息为connect 192.168.1.100: 5555, 点击connect
+介绍：# Airtest是一款基于图像识别和poco控件识别的一款UI自动化测试工具。
+# Use Javacap 是给部分无法正常看到手机画面、minicap初始化失败的手机或设备用的，所以模拟器看到黑屏、部分特殊的平板等设备可以考虑勾选这个选项
+# Use ADB orientation是屏幕旋转的，如果在安卓手机屏幕旋转方向检测有问题或是部分特殊的平板无法正确显示屏幕方向时可以勾选
+# Use ADB touch是发送adb指令来点击屏幕，效果很差，速度也很慢，不建议勾选
+
+airtest辅助窗
+touch ：点击操作
+wait ：等待某个元素出现
+swipe ：滑动
+exists：检查是否存在某个图片元素
+text ：输入文本
+keyevent：输入手机按键Home/Back/
+snapshot ：截图 sleep ：等待一段时间
+assert_exists：判断是否存在，存在返回true，不存在返回false
+assert_not_exists：判断是否不存在，不存在返回true，存在返回false
+assert_equal ：判断是否相等，相等返回true，不相等返回false
+assert_not_equal：判断是否不相等，不相等返回true，相等返回false
+
+
+搭建ios自动化测试环境
+-------------------
+https://www.cnblogs.com/fnng/p/12616466.html
+
+appium
+https://github.com/appium/python-client
+
+Openatx
+https://github.com/openatx/facebook-wda
+
+
+
+python validation库可以判断json的返回值是否包含某个字段：
+----------------------
+#!/usr/bin/env python3.x
+# -*- coding: utf-8 -*-
+# -*-  -*-
+from jsonschema import validate
+
+schema = {
+   "type" : "object",
+     "properties" : {
+       "price" : {"type" : "number"},
+     "name" : {"type" : "string"},
+    },
+}
+validate(instance={"name" : "Eggs", "price" : 34.99}, schema=schema)
+validate(instance={"name" : "Eggs", "price" : "nononon"}, schema=schema)

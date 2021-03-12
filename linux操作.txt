@@ -3611,6 +3611,8 @@ mac OS U盘安装：
 ---------------------
 https://support.apple.com/zh-cn/HT201372
 // 将MyVolume 替换为您的宗卷名称
+Big Sur*：
+sudo /Applications/Install\ macOS\ Big\ Sur.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
 Catalina: *
 sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
 Mojave：*
@@ -4659,11 +4661,17 @@ jenkins
 定时构建：
 0 10-18/2 * * 1-5
 
+UI好用的老版本：
+http://mirrors.jenkins.io/war-stable/
+Jenkins 2.235.5
 
 遇到的坑：
 ---------
 https://www.jianshu.com/p/4d182d7fbf01
 https://www.jianshu.com/p/5f671aca2b5a
+
+jenkins不要密码：
+https://www.jianshu.com/p/6591c9bdcca6
 
 忘记密码：
 jenkins brew安装文件夹:/Users/captain/.jenkins
@@ -4675,9 +4683,15 @@ https://blog.csdn.net/m0_37738114/article/details/80660262
 查看是否存在多个jenkins进行，kill -9 pid掉所有的进程，然后打开想要的
 ps -ef | grep -v grep |grep jenkins 
 
-jenkins不要密码：
-https://www.jianshu.com/p/6591c9bdcca6
 
+jenkins catalina运行脚本，提示Operation Not Permitted
+----------------------------------------------------
+https://appletoolbox.com/seeing-error-operation-not-permitted-in-macos-mojave/
+
+cmd+r启动
+终端输入命令：
+csrutil disable
+csrutil status
 
 
 启动和关闭jenkins:
@@ -6283,3 +6297,5 @@ pip freeze >requirements.txt
 pip install -r requirements.txt
 
 
+iOS内存abort(Jetsam) 原理探究
+http://satanwoo.github.io/2017/10/18/abort/
