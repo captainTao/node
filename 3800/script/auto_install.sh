@@ -42,6 +42,7 @@ read -p "Install the ChinaDNS [Y/n]?" INS_CD
 read -p "Install the DNS-Forwarder [Y/n]?" INS_DF
 read -p "Install the shadowsocks-libev [Y/n]?" INS_SS
 read -p "Install the simple-obfs [Y/n]?" INS_SO
+read -p "Install the mwan3 [Y/n]?" INS_MWAN
 # read -p "Install the ShadowVPN [Y/n]?" INS_SV
 # read -p "Install the usb-storage [Y/n]?" INS_US   #symlink: https://wizju.com/post/123/
 # read -p "Install the usb-storage-3.0 addition [Y/n]?" INS_USS
@@ -72,6 +73,13 @@ if echo ${INS_SO} | grep -qi "^y"; then
 	opkg install simple-obfs
 fi
 
+if echo ${INS_MWAN} | grep -qi "^y"; then	
+	opkg install kmod-macvlan
+	opkg install mwan3
+	if [ "$LuCI" = "yes" ]; then
+		opkg install luci-app-mwan3
+	fi
+fi
 # 额外安装，暂时关闭
 # if echo ${INS_SV} | grep -qi "^y"; then
 # 	opkg install ShadowVPN
@@ -92,6 +100,11 @@ fi
 # 	opkg install kmod-usb-printer && wget -q "https://raw.githubusercontent.com/captainTao/node/master/3800/luci-app-usb-printer_svn-r9961-1_all.ipk" && opkg install luci-app-usb-printer_svn-r9961-1_all.ipk
 # fi
 
+# 正常使用dns更新脚本
+opkg install coreutils-base64 ca-certificates ca-bundle curl libustream-mbedtls
+# opkg install libustream-mbedtls wget #如果要用https,就需要tls
+
+
 # 禁用ipv6,并开启fast tcp 
 echo "net.ipv6.conf.all.disable_ipv6=1
 net.ipv6.conf.default.disable_ipv6=1
@@ -111,9 +124,6 @@ uci commit dhcp
 uci add_list dhcp.@dnsmasq[0].cachesize=10000
 uci commit dhcp
 
-# 正常使用dns更新脚本
-opkg install coreutils-base64 ca-certificates ca-bundle curl 
-# opkg install libustream-mbedtls wget #如果要用https,就需要tls
 
 cd ~
 # China-List

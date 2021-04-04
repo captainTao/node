@@ -971,6 +971,11 @@ uci show dhcp可以查看上述的uci配置
 
 mwan:
 -----------------
+mwan3 ping的ip:
+208.67.222.222
+208.67.220.220
+
+
 多线多拨：
 https://www.jianshu.com/p/9b00b7cfbd88
 https://www.right.com.cn/forum/thread-147109-1-1.html
