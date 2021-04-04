@@ -7,6 +7,14 @@ exsi,PVE
 BGP
 IPLC专线
 
+
+读取iOS沙盒里面的数据库，用realm studio
+路径： app/Documents/DBRealm
+
+
+查看OOM的文件：jetsam
+
+
 视频中搬瓦工VPS：http://bit.ly/3ckoUov
 自用搬瓦工机场：http://bit.ly/387YRNP
 
@@ -3427,6 +3435,14 @@ mtd -r write xxxx.bin  u-boot
 mtd刷机方法不常用，主要用来刷其它型号的固件，比如tp的4310/4300/3600,这三个型号的路由是一样的硬件，只要硬件一样，固件就可以通用。但我们用第一种方法是不可以直接刷入的。在浏览器刷机会校验固件头，那里有固件的型号，和路由当前系统对不上，会限制刷机。但用mtd方法，则可以突破这种限制，可以使用其它硬件完全相同的固件。
 +-------------------------------------------------------------------------
 
+openwrt scheduledtask
+
+0 5 * * 6 /root/scheduledTask.sh
+*/5 * * * * /root/watchdog.sh
+5  *  *  *  *  /usr/bin/ss-subscribe auto >/dev/null 2>&1
+
+
+
 
 openwrt wifi toggle scheduled
 ------------------------------
@@ -3471,7 +3487,7 @@ ps | grep cron
 # |  ——小时 (0 - 23)
 # | |  ——日   (1 - 31)
 # | | |  ——月   (1 - 12)
-# | | | |  ——星期 (0 - 6)（星期日=0或7）
+# | | | |  ——星期 (0 - 6)（星期日=0）
 # | | | | |
 # * * * * * 被执行的命令
   0 3 * * 6 /root/autoupgrade.sh
@@ -3650,6 +3666,12 @@ git push -u origin master
 git remote add origin git@github.com:captainTao/web.git
 git push -u origin master
 
+# 或者
+git push --set-upstream origin master
+#设置追踪信息
+git branch --set-upstream-to=origin/<分支> master
+
+ 
 …or import code from another repository
 You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
 更换远端地址：
@@ -5970,6 +5992,7 @@ openssl x509 -inform der -in /Users/captain/Desktop/\*.camera360.com.cer  -pubke
 PlistBuddy简单使用
 -----------------
 https://www.jianshu.com/p/2167f755c47e
+https://www.jianshu.com/p/56e0c2dfa212
 
 /usr/libexec/PlistBuddy
 Usage: PlistBuddy [-cxh] <file.plist>
@@ -6012,7 +6035,7 @@ Usage: PlistBuddy [-cxh] <file.plist>
  /usr/libexec/PlistBuddy -c 'Delete :Version' info.plist
 
 5.修改某个字段的值
- /usr/libexec/PlistBuddy -c 'Set :Application:1 string "thi is app1"' info.plist
+ /usr/libexec/PlistBuddy -c 'Set :Application:1 thi is app1' info.plist
 
 6.合并
  # 将A.plist 合并到 B.plist中
