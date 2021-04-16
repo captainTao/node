@@ -15,7 +15,7 @@ Documents/DBRealm/..realm
 路径： app/Documents/DBRealm
 
 查看沙盒：iexplorer
-
+iOS同一个局域网，查看层级视图工具： Reveal
 查看OOM的文件：jetsam
 
 获取tube视频： tubeget 或者 you-get
