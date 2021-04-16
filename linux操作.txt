@@ -7,13 +7,18 @@ exsi,PVE
 BGP
 IPLC专线
 
+原型图： Axure
+ios沙盒数据库查看软件：realm studio 
+Documents/DBRealm/..realm
 
 读取iOS沙盒里面的数据库，用realm studio
 路径： app/Documents/DBRealm
 
+查看沙盒：iexplorer
 
 查看OOM的文件：jetsam
 
+获取tube视频： tubeget 或者 you-get
 
 视频中搬瓦工VPS：http://bit.ly/3ckoUov
 自用搬瓦工机场：http://bit.ly/387YRNP
@@ -6322,3 +6327,17 @@ pip install -r requirements.txt
 
 iOS内存abort(Jetsam) 原理探究
 http://satanwoo.github.io/2017/10/18/abort/
+
+
+
+you-get
+----------
+https://you-get.org/
+下载油管，b站视频用的
+pip install you-get
+brew install you-get
+
+useage
+you-get -i 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
+you-get https://www.youtube.com/watch\?v\=kA3k8LNHX4Y // 默认下载第一个
+you-get --itag=137 https://www.youtube.com/watch\?v\=fnmldw8HpUU  //下载指定tag
