@@ -16,6 +16,6 @@ else
         exit 0
     else
         echo `date +%Y-%m-%d_%H:%M:%S` "reboot device" >> watchdog.log
-        reboot
+#        reboot
     fi
 fi
