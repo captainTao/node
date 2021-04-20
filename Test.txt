@@ -117,3 +117,296 @@ nginx 最大连接数限制了并发，处于等待中,, 解决方案：去掉ng
 三、其他：数据库、JVM、Tomcat等
 
 
+
+
+cookie, session, sessionStorage, localStorage
+---------------------------------------------
+https://zhidao.baidu.com/question/575343552.html
+https://blog.csdn.net/jiangnanqbey/article/details/81709322
+
+1、cookie 和session的区别是：cookie数据保存在客户端，session数据保存在服务器端。
+
+2、两个都可以用来存私密的东西，同样也都有有效期的说法,区别在于session是放在服务器上的，过期与否取决于服务期的设定，cookie是存在客户端的，过去与否可以在cookie生成的时候设置进去。 
+
+(1)、cookie数据存放在客户的浏览器上，session数据放在服务器上 ；
+
+(2)、cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗,如果主要考虑到安全应当使用session ；
+
+(3)、session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能，如果主要考虑到减轻服务器性能方面，应当使用COOKIE ；
+
+(4)、单个cookie在客户端的限制是3K，就是说一个站点在客户端存放的COOKIE不能3K；
+
+(5)、所以将登陆信息等重要信息存放为SESSION;其他信息如果需要保留，可以放在COOKIE中。
+
+3、cookie和session的共同之处在于：cookie和session都是用来跟踪浏览器用户身份的会话方式。
+
+4、cookie 是一种发送到客户浏览器的文本串句柄，并保存在客户机硬盘上，可以用来在某个WEB站点会话间持久的保持数据。
+
+5、session其实指的就是访问者从到达某个特定主页到离开为止的那段时间。 Session其实是利用Cookie进行信息处理的，当用户首先进行了请求后，服务端就在用户浏览器上创建了一个Cookie，当这个Session结束时，其实就是意味着这个Cookie就过期了。 
+
+
+cookie：单个cookie保存的数据不能超过4kb；session大小没有限制。
+
+安全性：cookie：针对cookie所存在的攻击：Cookie欺骗，Cookie截获；session的安全性大于cookie。
+
+原因如下：（1）sessionID存储在cookie中，若要攻破session首先要攻破cookie；
+
+        （2）sessionID是要有人登录，或者启动session_start才会有，所以攻破cookie也不一定能得到sessionID；
+
+        （3）第二次启动session_start后，前一次的sessionID就是失效了，session过期后，sessionID也随之失效。
+
+        （4）sessionID是加密的
+
+        （5）综上所述，攻击者必须在短时间内攻破加密的sessionID，这很难。
+
+缺点：cookie：（1）大小受限
+
+　　　　　　　　（2）用户可以操作（禁用）cookie，使功能受限
+
+　　　　　　　　（3）安全性较低
+
+　　　　　　　　（4）有些状态不可能保存在客户端。
+
+　　　　　　　　（5）每次访问都要传送cookie给服务器，浪费带宽。
+
+　　　　　　　　（6）cookie数据有路径（path）的概念，可以限制cookie只属于某个路径下。
+
+ 　　　　session：（1）Session保存的东西越多，就越占用服务器内存，对于用户在线人数较多的网站，服务器的内存压力会比较大。
+
+　　　　　　　　（2）依赖于cookie（sessionID保存在cookie），如果禁用cookie，则要使用URL重写，不安全
+
+　　　　　　　　（3）创建Session变量有很大的随意性，可随时调用，不需要开发者做精确地处理，所以，过度使用session变量将会导致代码不可读而且不好维护。
+
+
+HTML5的WebStorage提供了两种API：localStorage（本地存储）和sessionStorage（会话存储）。
+
+1、生命周期：localStorage:localStorage的生命周期是永久的，关闭页面或浏览器之后localStorage中的数据也不会消失。localStorage除非主动删除数据，否则数据永远不会消失。
+
+　　　　　　  sessionStorage的生命周期是在仅在当前会话下有效。sessionStorage引入了一个“浏览器窗口”的概念，sessionStorage是在同源的窗口中始终存在的数据。只要这个浏览器窗口没有关闭，即使刷新页面或者进入同源另一个页面，数据依然存在。但是sessionStorage在关闭了浏览器窗口后就会被销毁。同时独立的打开同一个窗口同一个页面，sessionStorage也是不一样的。
+
+2、存储大小：localStorage和sessionStorage的存储数据大小一般都是：5MB
+
+3、存储位置：localStorage和sessionStorage都保存在客户端，不与服务器进行交互通信。
+
+4、存储内容类型：localStorage和sessionStorage只能存储字符串类型，对于复杂的对象可以使用ECMAScript提供的JSON对象的stringify和parse来处理
+
+5、获取方式：localStorage：window.localStorage;；sessionStorage：window.sessionStorage;。
+
+6、应用场景：localStoragese：常用于长期登录（+判断用户是否已登录），适合长期保存在本地的数据。sessionStorage：敏感账号一次性登录；
+
+WebStorage的优点：
+
+（1）存储空间更大：cookie为4KB，而WebStorage是5MB；
+
+（2）节省网络流量：WebStorage不会传送到服务器，存储在本地的数据可以直接获取，也不会像cookie一样美词请求都会传送到服务器，所以减少了客户端和服务器端的交互，节省了网络流量；
+
+（3）对于那种只需要在用户浏览一组页面期间保存而关闭浏览器后就可以丢弃的数据，sessionStorage会非常方便；
+
+（4）快速显示：有的数据存储在WebStorage上，再加上浏览器本身的缓存。获取数据时可以从本地获取会比从服务器端获取快得多，所以速度更快；
+
+（5）安全性：WebStorage不会随着HTTP header发送到服务器端，所以安全性相对于cookie来说比较高一些，不会担心截获，但是仍然存在伪造问题；
+
+（6）WebStorage提供了一些方法，数据操作比cookie方便；
+
+　　　　setItem (key, value) ——  保存数据，以键值对的方式储存信息。
+
+      　　 getItem (key) ——  获取数据，将键值传入，即可获取到对应的value值。
+
+        　　removeItem (key) ——  删除单个数据，根据键值移除对应的信息。
+
+        　　clear () ——  删除所有的数据
+
+        　　key (index) —— 获取某个索引的key
+
+
+
+cookie存放在浏览器端
+
+cookie是和域名，ip绑定在一起，首次登陆后浏览器存放cookie，下次登陆会带上cookie值而不需要重新登陆
+
+session 和 token区别
+
+1. token是开发定义的格式，session是基于框架内的格式
+2. token值不需要占用内存，session值是需要存在服务端（不进行存储无法校验）
+3. token是可以跨平台（比如在电脑端取到token值拿到手机登陆是可以使用）
+
+session不可以跨平台，因为session生成的cookie是和域名 ip绑定在一起，换个平台就失效了
+
+session和cookie区别
+
+同一个用户的信息存在服务端的称为:session
+存储在客户端的称为：cookie
+session和cookie也是同时搭配使用的
+
+
+关于token，session，cookie的概念和区别
+
+1.token是 服务经过计算发给客户端的，服务不保存，每次客户端来请求，经过解密等计算来验证是否是自己下发的
+
+2.session是服务本地保存，发给客户端，客户端每次访问都带着，直接和服务的session比对
+
+3.cookie是保存在客户端上的一些基本信息，服务不保存，每次请求时客户端带上cookie，里面有一些账户密码，浏览记录什么的
+
+
+session
+
+1.用户向服务器发送用户名和密码
+2.服务器验证通过后,在当前对话(session)里面保存相关数据,比如用户角色, 登陆时间等;
+3.服务器向用户返回一个session_id, 写入用户的cookie
+4.用户随后的每一次请求, 都会通过cookie, 将session_id传回服务器
+5.服务端收到 session_id, 找到前期保存的数据, 由此得知用户的身份
+
+
+
+token放哪儿
+---------
+前后端分离，生成了token，这个token保存在哪里比较合适?
+存localstorage里和cookie都可以
+
+
+
+get,post区别
+-------------
+
+
+关系型数据库和非关系型数据库
+-------------------------
+
+链路压测
+-------
+
+
+
+微服务框架
+---------
+https://www.zhihu.com/question/65502802/answer/802678798
+
+常见框架：
+
+Dubbo（java RPC框架，阿里）
+Tars（腾讯C++ TAF： Total Application Framework）
+Motan（新浪：java）
+gRPC （google RPC框架）
+thrift（fb的RPC框架）
+
+RPC (Remote Procedure Call)远程过程调用是一个计算机通信协议
+
+
+
+服务组件化，解耦合，通用功能抽象化，数据库分表化，消息队列机制；
+
+微服务痛点：
+1.定位困难。一出故障后，定位困难，日志分布在多个机器上；
+2.稳定性下降。一个故障，可能导致雪崩效应，整个系统都故障了；
+3.服务器多，部署，管理工作量大。
+4.开发：如何保持多个服务协同合作。
+5.测试：所有功能都会涉及到多个服务，测试服务的调用变得很复杂。
+
+解决问题：
+1.服务雪崩 - 组件监控：内存，网络流量，链接数，磁盘空间，并发数，延迟，失败错误率
+
+微服务架构中组件繁多，各个组件所需要监控的指标不同。
+比如Redis缓存一般监控占用内存值、网络流量，数据库监控连接数、磁盘空间，业务服务监控并发数、响应延迟、错误率等。
+RedisExporter和MySQLExporter，这两个组件分别提供了Redis缓存和MySQL数据库的指标接口。
+小明采用Prometheus作为指标采集器，Grafana配置监控界面和邮件告警。
+
+
+
+2.定位问题 - 链路追踪：记录每个用户请求时，微服务内部产生了多少服务调用，及其调用关系
+
+要实现链路跟踪，每次服务调用会在HTTP的HEADERS中记录至少记录四项数据
+traceId：traceId标识一个用户请求的调用链路。具有相同traceId的调用属于同一条链路。
+spanId：标识一次服务调用的ID，即链路跟踪的节点ID。
+parentId：父节点的spanId。
+requestTime & responseTime：请求时间和响应时间。
+另外，还需要调用日志收集与存储的组件，以及展示链路调用的UI组件。
+
+链路跟踪的理论依据可详见Google的Dapper
+http://bigbully.github.io/Dapper-translation/
+
+
+3.日志分析 - 日志搜索引擎，日志组件和结果UI组件
+
+ELK日志分析组件。ELK是Elasticsearch、Logstash和Kibana三个组件的缩写
+Elasticsearch：搜索引擎，同时也是日志的存储。
+Logstash：日志采集器，它接收日志输入，对日志进行一些预处理，然后输出到Elasticsearch。
+Kibana：UI组件，通过Elasticsearch的API查找数据并展示给用户。
+
+
+4.服务调用权限控制 - 网关
+微服务的调用需要一个把关的东西，也就是网关。在调用者和被调用者中间加一层网关，每次调用时进行权限校验。另外，网关也可以作为一个提供服务接口文档的平台。
+
+
+5.服务注册 - 动态扩容
+
+一般来说，一个服务都会部署多个实例，这样一来能够分担压力提高性能，二来即使一个实例挂了其他实例还能响应。
+新增实例操作为：
+a.部署新实例
+b.将新实例注册到负载均衡或DNS上
+
+6.服务错误 - 熔断、服务降级、限流
+
+
+
+7.微服务架构下，测试分为三个层次：
+
+端到端测试：覆盖整个系统，一般在用户界面机型测试。
+服务测试：针对服务接口进行测试。
+单元测试：针对代码单元进行测试
+
+
+指标接口、链路跟踪注入、日志引流、服务注册发现、路由规则等组件以及熔断、限流等功能都需要在应用服务上添加一些对接代码。
+使用微服务框架可以实现很多自定义的功能。甚至可以将程序调用堆栈信息注入到链路跟踪，实现代码级别的链路跟踪。或者输出线程池、连接池的状态信息，实时监控服务底层状态。
+使用统一的微服务框架有一个比较严重的问题：框架更新成本很高。每次框架升级，都需要所有应用服务配合升级。当然，一般会使用兼容方案，留出一段并行时间等待所有应用服务升级。但是如果应用服务非常多时，升级时间可能会非常漫长。并且有一些很稳定几乎不更新的应用服务，其负责人可能会拒绝升级……因此，使用统一微服务框架需要完善的版本管理方法和开发管理规范。
+
+
+
+另一条路 - Service Mesh
+另一种抽象公共代码的方法是直接将这些代码抽象到一个反向代理组件。每个服务都额外部署这个代理组件，所有出站入站的流量都通过该组件进行处理和转发。这个组件被称为Sidecar。
+
+Sevice Mesh相比于微服务框架的优点在于它不侵入代码，升级和维护更方便。它经常被诟病的则是性能问题。即使回环网络不会产生实际的网络请求，但仍然有内存拷贝的额外成本。另外有一些集中式的流量处理也会影响性能。
+
+微服务不是架构演变的终点。往细走还有Serverless、FaaS等方向
+
+
+Service Mesh 有如下几个特点：
+a.应用程序间通讯的中间层
+b.轻量级网络代理
+c.应用程序无感知
+d.解耦应用程序的重试/超时、监控、追踪和服务发现
+
+应用程序间通讯的中间层
+轻量级网络代理
+应用程序无感知
+解耦应用程序的重试/超时、监控、追踪和服务发现
+
+
+sql查询顺序
+-----------
+原文链接：https://blog.csdn.net/xiashuijun/article/details/77196884
+1.from  // 查询的表
+
+2.where// 查询的条件
+
+3.group by//对结果进行分组
+
+4.select  //得到执行min,max,distinct等聚合函数后的结果
+
+5.having //继续过滤结果
+
+6.order by//对结果进行排序
+
+7.limit//对结果进行分页
+
+
+中间件
+————————————————
+docker不是中间件
+
+kafka, es, mongodb, redis, elasticsearch, MQ, zookeeper
+
+中间件是一类连接软件组件和应用的计算机软件，它包括一组服务。以便于运行在一台或多台机器上的多个软件通过网络进行交互;
+
+Docker就像是一个小货轮，装了一堆集装箱，这些集装箱中就有很多中间件，如nginx,Rmq等等，docker用来管理打包他们，然后发货。
+
+
