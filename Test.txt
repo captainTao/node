@@ -1,3 +1,84 @@
+程序设计模型: 线性模型
+
+
+
+UI自动化测试分两类：
+
+1.POM（Page Object Module），或者简称PO，是一种设计模式
+  业内认为最佳的模型，页面对象模型
+  适合针对单系统定制研发的
+
+  工程结构：
+  1.基类：基于关键字驱动类，实现工具库
+  2.页面对象类：所有页面对象保存（页面核心元素，页面url,页面业务流）
+  3.测试用例类：代码
+  4.测试数据类：测试过程用到的数据
+
+2.关键字驱动(面向对象编程) + 关键字驱动
+  测试最为核心的底层逻辑
+  通过调用特定的关键字，然后基于关键字逻辑实现既定的业务流程
+
+  关键字驱动的代码结构：
+  1.逻辑代码
+  2.测试代码
+  3.测试数据
+
+  适用于多系统复用性进行自动化测试
+
+  selenium常规操作行为：
+    1.创建浏览器对象
+    2.访问url
+    3.元素定位 find_element(name, value)
+    4.输入
+    5.点击
+    6.切换句柄
+    7.悬停
+    8.悬停等待
+    .......
+
+  用关键字驱动来实现roobtframework底层业务
+  rf最为出名的是 关键字驱动+数据驱动，基于表格编程实现自动化
+    1.在excel中填入关键字，和对应参数
+    2.读取excel内容
+    3.基于excel内容执行关键字函数，来实现自动化
+
+
+
+ 
+
+
+
+
+appium
+----------
+自动化框架: appium, robotium, mecaca
+模拟器：夜神，逍遥，雷电
+adb connect 127.0.0.1:62001
+
+from appium import webdriver
+
+info = {
+  'deviceName': '',
+  # 包名
+  'appPackage':'com.tal.kaoyan',
+  # 线程： adb shell dumpsys window | findstr mCurrentFocu
+  'appActivity':'com.tal.kaoyan.ui.activity.SplashActivity',
+  'noRest':False
+}
+driver = webdriver.Remote('http://127.0.0.1:4723/wb/hub',info)
+
+安卓定位工具：appium, uiautomatorviewer
+
+优化内容：
+1.封装常用公共方法成对象
+
+2.用yaml来写配置文件
+import yaml
+
+stream = open('cs_caps.yaml', 'r')
+data = yaml.load(stream, yaml.FullLoader)
+
+
 
 虫师blog:
 ----------
@@ -210,13 +291,13 @@ WebStorage的优点：
 
 　　　　setItem (key, value) ——  保存数据，以键值对的方式储存信息。
 
-      　　 getItem (key) ——  获取数据，将键值传入，即可获取到对应的value值。
+       getItem (key) ——  获取数据，将键值传入，即可获取到对应的value值。
 
-        　　removeItem (key) ——  删除单个数据，根据键值移除对应的信息。
+       removeItem (key) ——  删除单个数据，根据键值移除对应的信息。
 
-        　　clear () ——  删除所有的数据
+       clear () ——  删除所有的数据
 
-        　　key (index) —— 获取某个索引的key
+       key (index) —— 获取某个索引的key
 
 
 
@@ -290,7 +371,12 @@ gRPC （google RPC框架）
 thrift（fb的RPC框架）
 
 RPC (Remote Procedure Call)远程过程调用是一个计算机通信协议
+RPC： 远程，过程，调用
 
+微服务框架：
+层次化: 不同接口的测试方式，mock server
+自动化: 
+可视化：build, test, deploy(docker, ci, cd)
 
 
 服务组件化，解耦合，通用功能抽象化，数据库分表化，消息队列机制；
@@ -381,10 +467,14 @@ d.解耦应用程序的重试/超时、监控、追踪和服务发现
 解耦应用程序的重试/超时、监控、追踪和服务发现
 
 
-sql查询顺序
------------
+sql查询顺序优先级
+----------------
 原文链接：https://blog.csdn.net/xiashuijun/article/details/77196884
+https://www.cnblogs.com/yanpingping/p/10777577.html
 1.from  // 查询的表
+
+on
+join
 
 2.where// 查询的条件
 
@@ -392,11 +482,21 @@ sql查询顺序
 
 4.select  //得到执行min,max,distinct等聚合函数后的结果
 
+avg,sum
+
 5.having //继续过滤结果
+
+select
 
 6.order by//对结果进行排序
 
 7.limit//对结果进行分页
+
+
+
+查找sql中重复的记录：
+https://blog.csdn.net/l1028386804/article/details/51733585
+Select * From 表 Where 重复字段 In (Select 重复字段 From 表 Group By 重复字段 Having Count(*)>1)
 
 
 中间件
@@ -409,4 +509,9 @@ kafka, es, mongodb, redis, elasticsearch, MQ, zookeeper
 
 Docker就像是一个小货轮，装了一堆集装箱，这些集装箱中就有很多中间件，如nginx,Rmq等等，docker用来管理打包他们，然后发货。
 
+1.hadoop:分布式计算平台， 主要有 Yarn、HBase、Hive、ZooKeeper、Avro、Sqoop、Mahout、Crossbow 等。
+2.LVS Linux Virtual Server,负载均衡器，Nginx, HAProxy
+3.Linux-HA,故障集群，Linux-HA,keepalive
+4.静态网站服务器Apache,php
+5.动态服务器， JBoss、Tomcat、Geronimo、JOnAS
 
