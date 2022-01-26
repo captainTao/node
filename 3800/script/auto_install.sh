@@ -102,7 +102,7 @@ fi
 
 # 正常使用dns更新脚本
 opkg install coreutils-base64 ca-certificates ca-bundle curl libustream-mbedtls
-# opkg install libustream-mbedtls wget #如果要用https,就需要tls
+opkg install libustream-mbedtls wget curl  #如果要用https,就需要tls
 
 
 # 禁用ipv6,并开启fast tcp 
