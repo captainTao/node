@@ -2,7 +2,7 @@
 
 # Name:        gfwlist2dnsmasq.sh
 # Desription:  A shell script which convert gfwlist into dnsmasq rules.
-# Version:     0.8.0 (2017.12.25)
+# Version:     0.9.0 (2020.04.09)
 # Author:      Cokebar Chi
 # Website:     https://github.com/cokebar
 
@@ -192,7 +192,7 @@ get_args(){
         if [ -z $IPSET_NAME ]; then
             WITH_IPSET=0
         else
-            IPSET_TEST=$(echo $IPSET_NAME | grep -E '^\w+$')
+            IPSET_TEST=$(echo $IPSET_NAME | grep -E '^\w+(,\w+)*$')
             if [ "$IPSET_TEST" != "$IPSET_NAME" ]; then
                 _red 'Error: Please enter a valid IP set name.\n'
                 exit 1
@@ -243,7 +243,7 @@ process(){
     HEAD_FILTER_PATTERN='s#^(\|\|?)?(https?://)?##g'
     TAIL_FILTER_PATTERN='s#/.*$|%2F.*$##g'
     DOMAIN_PATTERN='([a-zA-Z0-9][-a-zA-Z0-9]*(\.[a-zA-Z0-9][-a-zA-Z0-9]*)+)'
-    HANDLE_WILDCARD_PATTERN='s#^(([a-zA-Z0-9]*\*[-a-zA-Z0-9]*)?(\.))?([a-zA-Z0-9][-a-zA-Z0-9]*(\.[a-zA-Z0-9][-a-zA-Z0-9]*)+)(\*)?#\4#g'
+    HANDLE_WILDCARD_PATTERN='s#^(([a-zA-Z0-9]*\*[-a-zA-Z0-9]*)?(\.))?([a-zA-Z0-9][-a-zA-Z0-9]*(\.[a-zA-Z0-9][-a-zA-Z0-9]*)+)(\*[a-zA-Z0-9]*)?#\4#g'
 
     printf 'Converting GfwList to ' && _green $OUT_TYPE && printf ' ...\n' 
     _yellow '\nWARNING:\nThe following lines in GfwList contain regex, and might be ignored:\n\n'
