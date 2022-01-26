@@ -93,6 +93,13 @@ proxmox系统https://www.proxmox.com/en/
 ESXI
 Ikuai
 
+
+配置安卓开发环境
+-----------------
+brew install android-ndk maven ant gradle
+brew install --cask android-sdk android-platform-tools android-studio
+
+
 > cp
 ------------------
 拷贝一个文件夹下所有文件
@@ -1379,6 +1386,10 @@ echo $PATH| cut -d ':' -f 1,3  以：进行域分割，然后输出第1，第3�
 cut -d
 cut -c 1-5 取字符串的第1到第5个字符串
 cut -c 2- 取字符串第2个到之后的字符串
+
+ps -ef | awk '{print $2}'| sed -n '1, 6p'  #展示1-6行pid
+sed -n '5,10p' filename 查看文件5到10行内容
+
 
 
 > xargs
@@ -3653,6 +3664,16 @@ hello, git：
 ---------------------------------------
 .gitkeep文件  可以保证空文件夹也被上传
 
+
+Q： warning: LF will be replaced by CRLF in
+A: https://blog.csdn.net/man_zuo/article/details/88651416
+最简单的一种办法就是把自动转换功能关掉即可。
+输入命令 ：
+git config core.autocrlf false (仅对当前git仓库有效）
+git config --global core.autocrlf false (全局有效，不推荐设置全局）
+然后重新提交代码即可
+
+
 安装： brew instal git
 添加所有文件： git add -A
 
@@ -3787,6 +3808,20 @@ $ git checkout -- xx.xx
 场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
 场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
 场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。git reset --hard  xx.
+
+放弃暂存区文件
+git rm --cached <文件>
+git rm --cached -r <文件夹>
+
+放弃untracked file
+git clean -f   #删除file
+git clean -fd  #连目录一起删掉
+
+# 在用上述 git clean 前，建议加上 -n 参数来先看看会删掉哪些文件，防止重要文件被误删
+git clean -nxfd
+git clean -nf
+git clean -nfd
+
 
 小结2：
 git checkout 的使用场景：   
@@ -4041,6 +4076,31 @@ build
 # My configurations:
 db.ini
 deploy_key_rsa
+
+
+.gitignore匹配规则
+-----------------
+https://www.jianshu.com/p/1c74f84e56b4
+格式规范
+所有空行或者以注释符号 ＃ 开头的行都会被 Git 忽略
+可以使用标准的 glob 模式匹配
+匹配模式最后跟斜杠(/)说明要忽略的是目录
+要忽略指定模式以外的文件或目录，可以在模式前加上感叹号(!)进行取反
+glob模式
+所谓的 glob 模式是指 shell 所使用的简化了的正则表达式，匹配规则如下：
+"*"：星号匹配零个或多个任意字符
+[]：匹配任何一个列在方括号中的字符，如[ab]匹配a或者匹配b
+"?"：问号匹配一个任意字符
+[n-m]：匹配所有在这两个字符范围内的字符，如[0-9]表示匹配所有0到9的数字
+
+匹配示例
+logs/：忽略当前路径下的logs目录，包含logs下的所有子目录和文件
+/logs.txt：忽略根目录下的logs.txt文件
+*.class：忽略所有后缀为.class的文件
+!/classes/a.class：不忽略classes目录下的a.class文件
+tmp/*.txt：只忽略tmp目录下的.txt文件
+**/foo：可以忽略/foo, a/foo, a/b/foo等
+
 
 
 3.添加被忽略的文件：-f

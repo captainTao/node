@@ -211,7 +211,8 @@ wanghaitao:~$: cat .gitconfig
 
 wanghaitao:.pip$: cat pip.conf 
 [global]
-index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+index-url=http://mirrors.aliyun.com/pypi/simple/
+
 [install]
 trusted-host=mirrors.aliyun.com
 

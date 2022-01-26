@@ -1,3 +1,84 @@
+程序设计模型: 线性模型
+
+
+
+UI自动化测试分两类：
+
+1.POM（Page Object Module），或者简称PO，是一种设计模式
+  业内认为最佳的模型，页面对象模型
+  适合针对单系统定制研发的
+
+  工程结构：
+  1.基类：基于关键字驱动类，实现工具库
+  2.页面对象类：所有页面对象保存（页面核心元素，页面url,页面业务流）
+  3.测试用例类：代码
+  4.测试数据类：测试过程用到的数据
+
+2.关键字驱动(面向对象编程) + 关键字驱动
+  测试最为核心的底层逻辑
+  通过调用特定的关键字，然后基于关键字逻辑实现既定的业务流程
+
+  关键字驱动的代码结构：
+  1.逻辑代码
+  2.测试代码
+  3.测试数据
+
+  适用于多系统复用性进行自动化测试
+
+  selenium常规操作行为：
+    1.创建浏览器对象
+    2.访问url
+    3.元素定位 find_element(name, value)
+    4.输入
+    5.点击
+    6.切换句柄
+    7.悬停
+    8.悬停等待
+    .......
+
+  用关键字驱动来实现roobtframework底层业务
+  rf最为出名的是 关键字驱动+数据驱动，基于表格编程实现自动化
+    1.在excel中填入关键字，和对应参数
+    2.读取excel内容
+    3.基于excel内容执行关键字函数，来实现自动化
+
+
+
+ 
+
+
+
+
+appium
+----------
+自动化框架: appium, robotium, mecaca
+模拟器：夜神，逍遥，雷电
+adb connect 127.0.0.1:62001
+
+from appium import webdriver
+
+info = {
+  'deviceName': '',
+  # 包名
+  'appPackage':'com.tal.kaoyan',
+  # 线程： adb shell dumpsys window | findstr mCurrentFocu
+  'appActivity':'com.tal.kaoyan.ui.activity.SplashActivity',
+  'noRest':False
+}
+driver = webdriver.Remote('http://127.0.0.1:4723/wb/hub',info)
+
+安卓定位工具：appium, uiautomatorviewer
+
+优化内容：
+1.封装常用公共方法成对象
+
+2.用yaml来写配置文件
+import yaml
+
+stream = open('cs_caps.yaml', 'r')
+data = yaml.load(stream, yaml.FullLoader)
+
+
 
 虫师blog:
 ----------
@@ -210,13 +291,13 @@ WebStorage的优点：
 
 　　　　setItem (key, value) ——  保存数据，以键值对的方式储存信息。
 
-      　　 getItem (key) ——  获取数据，将键值传入，即可获取到对应的value值。
+       getItem (key) ——  获取数据，将键值传入，即可获取到对应的value值。
 
-        　　removeItem (key) ——  删除单个数据，根据键值移除对应的信息。
+       removeItem (key) ——  删除单个数据，根据键值移除对应的信息。
 
-        　　clear () ——  删除所有的数据
+       clear () ——  删除所有的数据
 
-        　　key (index) —— 获取某个索引的key
+       key (index) —— 获取某个索引的key
 
 
 
@@ -267,10 +348,70 @@ token放哪儿
 
 get,post区别
 -------------
+https://segmentfault.com/a/1190000023940344
+HTTP协议定义了多种请求方式，具体如下：
+GET：获取资源，用来请求访问已被URI（统一资源标志符，和URL是包含和被包含的关系）识别的资源。
+POST：用来传输实体的主体，虽然GET也可以实现，但是一般不用。
+PUT：传输文件。但是鉴于PUT方法自身不带验证机制，任何人都可以上传文件，存在安全性问题，因此一般网站都不采用该方法。
+HEAD:获得报文首部。和GET请求一样，只是不返回报文主体部分。
+DELETE：删除文件。同样不带验证机制，存在安全性问题。
+OPTIONS:询问指定的请求URI支持哪些方法。
+TRACE:追踪路径，让Web服务器将之前的请求通信环回给客户端的方法。
+CONNECT：要求在与代理服务器通信时建立隧道，实现隧道协议进行TCP通信。
+
+
+POST和GET请求区别的常见误区
+1. 请求参数长度限制：GET请求长度最多1024kb，POST对请求数据没有限制
+关于此点，在HTTP协议中没有对URL长度进行限制，这个限制是不同的浏览器及服务器由于有不同的规范而带来的限制。
+get一般是用来获取数据，post提交数据
+post其实是有大小限制的，只不过是取决于服务器的设置和内存大小。
+
+2. GET请求一定不能用request body传输数据
+GET可以带request body，但不能保证一定能被接收到。如果你用GET服务，在request body偷偷藏了数据，不同服务器的处理方式也是不同的，有些服务器会帮你读出数据，有些服务器直接忽略。
+
+3.POST比GET安全性要高
+这里的安全是相对性，通过GET提交的数据都将显示到URL上，页面会被浏览器缓存，其他人查看历史记录会看到提交的数据，而POST不会。另外GET提交数据还可能会造成CSRF攻击。
+
+4.GET产生一个TCP数据包，POST产生两个TCP数据包
+对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200 OK(返回数据);
+而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 OK(返回数据)。注意，尽管POST请求会分两次，但body 是紧随在 header 后面发送的，根本不存在『等待服务器响应』一说。
+并不是所有浏览器都会在POST中发送两次包，Firefox就只发送一次。
+在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。而在网络环境差的情况下，两次包的TCP在验证数据包完整性上，有非常大的优点。
+
+POST和GET请求的区别小结
+请求参数：GET请求参数是通过URL传递的，多个参数以&连接，POST请求放在request body中。
+请求缓存：GET请求会被缓存，而POST请求不会，除非手动设置。
+收藏为书签：GET请求支持，POST请求不支持。
+安全性：POST比GET安全，GET请求在浏览器回退时是无害的，而POST会再次请求。
+历史记录：GET请求参数会被完整保留在浏览历史记录里，而POST中的参数不会被保留。
+编码方式：GET请求只能进行url编码，而POST支持多种编码方式。
+对参数的数据类型：GET只接受ASCII字符，而POST没有限制。
+
+
+CSRF攻击
+----------
+
+
+安全性测试
+----------
 
 
 关系型数据库和非关系型数据库
 -------------------------
+
+
+DML, DDL, DCL
+----------------
+https://www.jb51.net/article/40359.htm
+
+DML（data manipulation language）：
+它们是SELECT、UPDATE、INSERT、DELETE，就象它的名字一样，这4条命令是用来对数据库里的数据进行操作的语言
+DDL（data definition language）：
+DDL比DML要多，主要的命令有CREATE、ALTER、DROP等，DDL主要是用在定义或改变表（TABLE）的结构，数据类型，表之间的链接和约束等初始化工作上，他们大多在建立表时使用
+DCL（Data Control Language）：
+是数据库控制功能。是用来设置或更改数据库用户或角色权限的语句，包括（grant,deny,revoke等）语句。在默认状态下，只有sysadmin,dbcreator,db_owner或db_securityadmin等人员才有权力执行DCL
+
+
 
 链路压测
 -------
@@ -290,7 +431,12 @@ gRPC （google RPC框架）
 thrift（fb的RPC框架）
 
 RPC (Remote Procedure Call)远程过程调用是一个计算机通信协议
+RPC： 远程，过程，调用
 
+微服务框架：
+层次化: 不同接口的测试方式，mock server
+自动化: 
+可视化：build, test, deploy(docker, ci, cd)
 
 
 服务组件化，解耦合，通用功能抽象化，数据库分表化，消息队列机制；
@@ -381,10 +527,14 @@ d.解耦应用程序的重试/超时、监控、追踪和服务发现
 解耦应用程序的重试/超时、监控、追踪和服务发现
 
 
-sql查询顺序
------------
+sql查询顺序优先级
+----------------
 原文链接：https://blog.csdn.net/xiashuijun/article/details/77196884
+https://www.cnblogs.com/yanpingping/p/10777577.html
 1.from  // 查询的表
+
+on
+join
 
 2.where// 查询的条件
 
@@ -392,11 +542,30 @@ sql查询顺序
 
 4.select  //得到执行min,max,distinct等聚合函数后的结果
 
+avg,sum
+
 5.having //继续过滤结果
+
+select
 
 6.order by//对结果进行排序
 
 7.limit//对结果进行分页
+
+
+
+查找sql中重复的记录：
+https://blog.csdn.net/l1028386804/article/details/51733585
+Select * From 表 Where 重复字段 In (Select 重复字段 From 表 Group By 重复字段 Having Count(*)>1)
+
+
+
+内连接和左连接的区别：
+——————————————————
+联表查询中：
+使用左外连接是以左表为基础,查询出左表的全部和所关联的右表,如果左表的某些数据,在其右表中没有关联会自动初始化值0或null。
+
+而内连接是将两个表中所关联的共有的数据展示出来
 
 
 中间件
@@ -408,5 +577,98 @@ kafka, es, mongodb, redis, elasticsearch, MQ, zookeeper
 中间件是一类连接软件组件和应用的计算机软件，它包括一组服务。以便于运行在一台或多台机器上的多个软件通过网络进行交互;
 
 Docker就像是一个小货轮，装了一堆集装箱，这些集装箱中就有很多中间件，如nginx,Rmq等等，docker用来管理打包他们，然后发货。
+
+1.hadoop:分布式计算平台， 主要有 Yarn、HBase、Hive、ZooKeeper、Avro、Sqoop、Mahout、Crossbow 等。
+2.LVS Linux Virtual Server,负载均衡器，Nginx, HAProxy
+3.Linux-HA,故障集群，Linux-HA,keepalive
+4.静态网站服务器Apache,php
+5.动态服务器， JBoss、Tomcat、Geronimo、JOnAS
+
+
+zipkin: 链路追踪
+————————————————————
+
+
+LDAP
+————————————————
+LDAP统一认证服务
+
+LDAP（Light Directory Access Portocol），它是基于X.500标准的轻量级目录访问协议。
+
+目录是一个为查询、浏览和搜索而优化的数据库，它成树状结构组织数据，类似文件目录一样。
+
+目录数据库和关系数据库不同，它有优异的读性能，但写性能差，并且没有事务处理、回滚等复杂功能，不适于存储修改频繁的数据。所以目录天生是用来查询的，就好象它的名字一样。
+
+LDAP目录服务是由目录数据库和一套访问协议组成的系统。
+
+类似以下的信息适合储存在目录中：
+
+企业员工信息，如姓名、电话、邮箱等；
+公用证书和安全密钥；
+公司的物理设备信息，如服务器，它的IP地址、存放位置、厂商、购买时间等；
+
+LDAP具有如下特点：
+
+a.LDAP的结构用树来表示，而不是用表格；
+b.LDAP可以很快地得到查询结果，不过在写方面，效率比较差；
+c.LDAP提供了静态数据的快速查询方式；
+d.基于Client/Server模型，Server 用于存储数据，Client提供操作目录信息树的工具；
+e.LDAP是一种基于X.500协议的互联网开放标准，LDAP协议是跨平台的互联网协议。
+
+
+LDAP开源系统：YAPI
+
+
+Redis
+----------
+https://blog.csdn.net/ThinkWon/article/details/103522351
+与传统数据库不同的是 Redis 的数据是存在内存中的，所以读写速度非常快,每秒可以处理超过 10万次读写操作，是已知性能最快的Key-Value DB。另外，Redis 也经常用来做分布式锁。除此之外，Redis 支持事务 、持久化、LUA脚本、LRU驱动事件、多种集群方案。
+
+优点:
+读写性能优异， Redis能读的速度是110000次/s，写的速度是81000次/s。
+支持数据持久化，支持AOF和RDB两种持久化方式。
+支持事务，Redis的所有操作都是原子性的，同时Redis还支持对几个操作合并后的原子性执行。
+数据结构丰富，除了支持string类型的value外还支持hash、set、zset、list等数据结构。
+支持主从复制，主机会自动将数据同步到从机，可以进行读写分离。
+
+缺点:
+数据库容量受到物理内存的限制，不能用作海量数据的高性能读写，因此Redis适合的场景主要局限在较小数据量的高性能操作和运算上。
+Redis 不具备自动容错和恢复功能，主机从机的宕机都会导致前端部分读写请求失败，需要等待机器重启或者手动切换前端的IP才能恢复。
+主机宕机，宕机前有部分数据未能及时同步到从机，切换IP后还会引入数据不一致的问题，降低了系统的可用性。
+Redis 较难支持在线扩容，在集群容量达到上限时在线扩容会变得很复杂。为避免这一问题，运维人员在系统上线时必须确保有足够的空间，这对资源造成了很大的浪费。
+
+
+Redis主要有5种数据类型，包括String，List，Set，Zset，Hash，满足大部分的使用要求
+
+
+
+
+sonar（SonarQube）
+——————————————————
+https://www.cnblogs.com/lfpriest/p/13366171.html
+
+sonar是一款静态代码质量分析工具，支持Java、Python、PHP、JavaScript、CSS等25种以上的语言，
+而且能够集成在IDE、Jenkins、Git等服务中，方便随时查看代码质量分析报告
+sonar可以集成pmd、findbugs、checkstyle等插件来扩展使用其他规则来检验代码质量；
+
+
+Artifactory
+------------
+Jfrog的Artifactory是一款Maven仓库服务端软件，可以用来在内网搭建maven仓库，供公司内部公共库的上传和发布，以提高公共代码使用的便利性。
+
+
+ansible
+---------
+ansible是新出现的自动化运维工具，基于Python开发，集合了众多运维工具（puppet、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等功能
+
+
+APM
+----------
+APM（应用性能管理),目前主要的一些 APM 工具有: Cat、Zipkin、Pinpoint、SkyWalking，
+
+SkyWalking
+-----------
+这里主要介绍 SkyWalking,它是一款优秀的国产 APM 工具，包括了分布式追踪、性能指标分析、应用和服务依赖分析等。
+
 
 
