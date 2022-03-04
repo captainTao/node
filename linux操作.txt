@@ -8,7 +8,7 @@ BGP
 IPLC专线
 
 原型图： Axure
-ios沙盒数据库查看软件：realm studio 
+ios沙盒数据库查看软件：realm studio
 Documents/DBRealm/..realm
 
 读取iOS沙盒里面的数据库，用realm studio
@@ -106,7 +106,7 @@ brew install --cask android-sdk android-platform-tools android-studio
 cp -r /etc/asl/ test  推荐这种
 cp -r /etc/asl/ ./test
 cp -r /etc/asl/. ./test
-cp -a : 留原文件属性的前提下复制文件 
+cp -a : 留原文件属性的前提下复制文件
 
 
 > rm
@@ -121,7 +121,7 @@ mv
 mv A B  重命名
 mv cc /A/bb 移动并重命名
 
-/////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////
 
 谷歌DNS:
 8.8.8.8
@@ -224,7 +224,7 @@ cp /usr/local/opt/dnsmasq/dnsmasq.conf.example /usr/local/etc/dnsmasq.conf
 */
 
 3.sudo vim /etc/dnsmasq.hosts   //新建host文件，不会影响本机的host
-127.0.0.1        localhost                                                                         
+127.0.0.1        localhost
 255.255.255.255  broadcasthost
 ::1              localhost
 192.168.3.234    salad, salad.com
@@ -424,7 +424,7 @@ https://blog.csdn.net/XinAncao_/article/details/89813406
 dnsforwarder+SSR:
 https://nwindy.moe/lede-shadowsocksr/
 
-luci-ssr.ipk:  
+luci-ssr.ipk:
 https://github.com/ywb94/openwrt-ssr
 
 
@@ -433,8 +433,8 @@ https://cokebar.info/archives/664           // ss+chnRout
 https://cokebar.info/archives/962           // ss+gfw
 
 https://blog.csdn.net/lvshaorong/article/details/53230545          // openwrt无线中继，桥接，信号放大，访客网络
-1.有线转有线NAT-网络选LAN 
-2.有线转有线中继-网络选WAN 
+1.有线转有线NAT-网络选LAN
+2.有线转有线中继-网络选WAN
 3.无线转无线中继-wifi scan
 4.无线转有线-从方式三种来中转
 .....
@@ -451,7 +451,7 @@ http://godjose.com/2017/06/14/new-article/      // google vps（参考）
 https://teddysun.com/486.html                   // SS一键四选一安装脚本：
 
 https://cokebar.info/archives/664               // Shadowsocks + ChnRoute路由设置（主）
-https://teddysun.com/511.html                   // 秋水libev simple-obfs  
+https://teddysun.com/511.html                   // 秋水libev simple-obfs
 
 
 
@@ -511,7 +511,7 @@ ssh-keygen -t rsa -f gcloud                  // 生成gcloud 名字的钥匙
 ssh-keygen -t rsa -C "578628438@qq.com"      // 使用
 
 
-2.在服务器中添加 public key, 并chmod 600 和 设置.ssh目录权限  
+2.在服务器中添加 public key, 并chmod 600 和 设置.ssh目录权限
 $ echo "" > ~/.ssh/authorized_keys   // server key location,非root用户下
 $ chmod 600 authorized_keys
 $ chmod 700 .ssh    //可选
@@ -526,8 +526,8 @@ $ chmod 700 .ssh    //可选
 4.ssh问题排查：
 如果ping通了仍然不能使用SSH进行连接
 在虚拟机终端运行
-service iptables stop  //关闭防火墙  
-service sshd start     //启动 SSHD 服务  
+service iptables stop  //关闭防火墙
+service sshd start     //启动 SSHD 服务
 
 如果出现Service不存在的情况，说明sshd服务未安装。
 安装并启用sshd
@@ -542,15 +542,15 @@ https://51.ruyo.net/2144.html
 
 首先使用自动SSH连接上去，然后 sudo -i切换到 root
 
-vi /etc/ssh/sshd_config 
+vi /etc/ssh/sshd_config
 #修改以下内容即可
- 
+
 #允许密码登录 将注释去掉
 PermitRootLogin yes
- 
+
 #修改成 yes
 PasswordAuthentication no
- 
+
 #重启SSH即可
 /etc/init.d/sshd restart
 
@@ -567,7 +567,7 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgU
 
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQChXavIw8d9R9WDc25aaHeR9CMHXtr5UT4lgUH0tthFLh3M4/T7F16eDKIm98Ax33VtSecRqJSk3IF9VlYdcn9sWKNg8Nb0REtv1NQgHdKwOj1t+RqyMVxr9eLgdgCTYxpsWhP5Cnx55sOLsXE1xHw9AbFkE+yeflaHcZ3Nv+vwxpSEXJhKJkLG/Z/e7PMEAB5nyWffhtKVxFonrEhB69fiKm1FiZs0ly/QpWcaXfmyIgasiNUe+Rm/6IMz2qhTrFzr2YUqFKAvslvODMUlPf3/RRXbBUr6YJb0ci68aMBhLVUb2GnNMXH6WtfJGpg/r1IW8PCtGg0RyAg4YNvUbLNF 578628438@qq.com" > authorized_keys
 
-wangsirlemon@instance-static:~/.ssh$ chmod 600 authorized_keys 
+wangsirlemon@instance-static:~/.ssh$ chmod 600 authorized_keys
 
 
 /***********************************/ 安装ss,bbr
@@ -589,7 +589,7 @@ wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
 netstat -lntpu
 ps -ef | grep -v grep | grep "server"
 
-验证bbr： 
+验证bbr：
 --------------------
 https://teddysun.com/489.html/comment-page-7
 
@@ -635,7 +635,7 @@ https://doub.io/ss-jc39/         //排查
 
 
 /etc/init.d/shadowsocks status  // ss状态
-/etc/init.d/shadowsocks start   // start   
+/etc/init.d/shadowsocks start   // start
 /etc/init.d/shadowsocks restart  // 重启ss
 ./shadowsocks-libev.sh uninstall   //卸载ss,需要在root中
 
@@ -842,7 +842,7 @@ c.dhcp/dns
 
 d.wan
 network-->interface-->wan-->edit-->advanced
-disable Use DNS servers advertised 
+disable Use DNS servers advertised
 Use custom DNS servers 127.0.0.1
 
 --------------至此已经能科学上网了
@@ -851,7 +851,7 @@ gfwlist,china-list
 
 mkdir /etc/dnsmasq.d
 
-uci get dhcp.@dnsmasq[0].confdir 
+uci get dhcp.@dnsmasq[0].confdir
 如果返回值为 uci: Entry not found 或者其他非  /etc/dnsmasq.d 的值，则执行：
 uci add_list dhcp.@dnsmasq[0].confdir=/etc/dnsmasq.d
 uci commit dhcp
@@ -865,7 +865,7 @@ uci set dhcp.@dnsmasq[0].cachesize=10000
 uci commit dhcp
 
 # 正常使用dns更新脚本
-opkg install coreutils-base64 ca-certificates ca-bundle curl 
+opkg install coreutils-base64 ca-certificates ca-bundle curl
 # opkg install libustream-mbedtls wget #如果要用https,就需要tls
 
 cd ~
@@ -979,6 +979,8 @@ uci show dhcp可以查看上述的uci配置
 8.添加Aria2配置
 9.添加eMule设置
 10.VPN:N2N-v2-vpn,openvpn,Ipsecvpn,pptpvpn
+11.添加去除广告的插件或者host
+
 
 
 mwan:
@@ -1029,7 +1031,7 @@ http://www.dammit.hk/opkg-%E5%85%A8%E9%83%A8%E6%9B%B4%E6%96%B0
 opkg update && opkg list-upgradable | awk -F ' - ' '{print $1}' | xargs opkg upgrade > /tmp/upgrade.log
 
 https://cokebar.info/archives/930
-#!/bin/sh 
+#!/bin/sh
 opkg update
 for ipk in $(opkg list-upgradable | awk '$1!~/^kmod|^Multiple/{print $1}'); do
   opkg upgrade $ipk
@@ -1056,7 +1058,7 @@ else
 	else
 		echo '['$LOGTIME'] Network Problem. Do nothing.'
 	fi
-fi  
+fi
 
 
 关闭路由器openwrt LED脚本
@@ -1079,6 +1081,21 @@ done
 https://openwrt.org/docs/guide-user/services/vpn/openconnect
 ocserv
 luci-app-ocserv
+
+
+
+去广告host
+-----------
+https://www.right.com.cn/forum/thread-336281-1-1.html
+
+输入 cp /etc/hosts /etc/hosts.bak 备份原有 Hosts
+输入 wget https://raw.githubusercontent.com/vokins/yhosts/master/hosts -O /etc/hosts --no-check-certificate 下载屏蔽广告 Hosts
+输入 /etc/init.d/dnsmasq restart 重启 Dnsmasq 使 Hosts 生效
+浏览器打开路由器管理页面，依次点击 [系统] → [计划任务]，在新的一行填写 0 4 * * * wget https://raw.githubusercontent.com/vokins/yhosts/master/hosts -O /etc/hosts --no-check-certificate && /etc/init.d/dnsmasq restart # 每天4点自动更新 Hosts
+
+另去广告插件，效果不太好：
+KoolProxyR plus+、广告屏蔽大师plus+、AdGuard Home
+
 ///////////////////////////////////////////////////////////////////  ssr结束
 
 
@@ -1088,7 +1105,7 @@ luci-app-ocserv
 linux常用：
 --------------------------------
 
-root@captain:~# 
+root@captain:~#
 cat /etc/shadowsocks.json     // ss json配置
 vim /etc/shadowsocks.json
 
@@ -1102,17 +1119,17 @@ apt-get install openssh-server  //apt, wget:下载
 
 /etc/init.d/shadowsocks start   // start ss
 /etc/init.d/shadowsocks restart  // 重启ss
-/etc/init.d/iptables stop    //关闭防火墙（iptables）  
+/etc/init.d/iptables stop    //关闭防火墙（iptables）
 service firewalld stop     // 关闭防火墙
 
 
 查看系统版本：
 lsb_release -a
 
-cat /etc/issue      
+cat /etc/issue
 
 操作系统位数：
-getconf LONG_BIT     
+getconf LONG_BIT
 
 查看内存:
 free
@@ -1146,14 +1163,14 @@ cat /proc/cpuinfo
 > ll /etc/sh    // 类似ls
 
 
-> du 
+> du
 -------------------
 查看文件的可视大小：-h可视， -a:所有
 > du -ah :个别文件的值
 > du -sh :加和的总值
 
 
-> virsh list --all: //查看运行的虚拟机 
+> virsh list --all: //查看运行的虚拟机
 
 
 > curl
@@ -1231,7 +1248,7 @@ alias proxy='export all_proxy=socks5://127.0.0.1:1086'
 alias unproxy='unset all_proxy'
 
 
-> watch 
+> watch
 -------------------
 http://www.cnblogs.com/peida/archive/2012/12/31/2840241.html
 watch -n 1 -d netstat -ant  // 每隔1s高亮显示网络链接数的变化情况
@@ -1279,7 +1296,7 @@ netstat -tnlup | grep 端口号         //查看tcp,udp端口和进程业务
 netstat -lntp          //查看正在监听端口情况
 netstat -nltp
 netstat –apn | grep 8080  // 8080为端口号
-netstat -lntpu   
+netstat -lntpu
 netstat -ltpe   //tcp监听的拥有者
 netstat -rn     //禁用路由解析的路由信息, -r为路由,查看本机路由表
 netstat -i     //打印网络接口信息
@@ -1306,7 +1323,7 @@ note: -n, -e一起使用，user列的属性是用户的id号，不是用户名
 -g: 输出ipv4,ipv6的多播组信息
 
 service network restart :重启网络服务
-*/ 
+*/
 
 mac:
 sudo lsof -i -P | grep -i "listen"  #查看所有进程监听的端口
@@ -1359,7 +1376,7 @@ grep正则表达式扩展
 https://www.cnblogs.com/pythonbz/p/6284190.html
 -E, egrep
 支持字符+,?
-ls -a | grep -E "ab\w+" 
+ls -a | grep -E "ab\w+"
 ls -a | egrep  "abb+"    egrep不带高亮
 ls -a | grep -E "a[d|c]"   egrep或者-E也支持竖线
 
@@ -1367,7 +1384,7 @@ ls -a | grep -E "a[d|c]"   egrep或者-E也支持竖线
 > sed, awk, cut, xargs
 ---------------------------
 https://blog.csdn.net/he643042156/article/details/53197516
-adb shell ps | grep monkey                   
+adb shell ps | grep monkey
 shell     13870 579   1905284 28952          0 7f9987c1c8 R com.android.commands.monke
 adb shell ps | grep monkey | awk '{print $2}'| sed -n '1p'| cut -c 1-5 | xargs adb shell kill
 
@@ -1407,21 +1424,21 @@ name name
 name name
 
 -E/e
-echo '11 22 33 44 55' | xargs -E '33' echo 
+echo '11 22 33 44 55' | xargs -E '33' echo
 输出:(-E或者-e,'33'以前的参数，不能与-d混用，不然无效)
 11 22
 
 -p
 adb shell ps | grep "worker"|xargs -p adb shell kill  -p表示确认，输入y才继续执行，否则不执行
-echo '11@22@33' | xargs -p -d '@'  echo 
+echo '11@22@33' | xargs -p -d '@'  echo
 
 -I {}
 复制所有图片文件到/data/images 目录下:
-ls *.jpg | xargs -n1 -I cp {} /data/images  
+ls *.jpg | xargs -n1 -I cp {} /data/images
 
 rm删除多文件，可能有错误信息，用xargs去避免，xargs -0将\0作为定界符。
 find . -type f -name "*.log" -print0 | xargs -0 rm -f
-统计一个源代码目录中所有php文件的行数： 
+统计一个源代码目录中所有php文件的行数：
 find . -type f -name "*.php" -print0 | xargs -0 wc -l
 查找所有的jpg 文件，并且压缩它们：
 find . -type f -name "*.jpg" -print | xargs tar -czvf images.tar.gz
@@ -1441,7 +1458,7 @@ find . -name "*.txt" -print0
 ./2.txt./3.txt./1.txt
 
 删除文件路径中有空格的文件，比如a 3.txt, gg 4.txt, 因为空格会被rm拆分为两个两个文件。我们用\0来追加在字符的后面
-find ./desktop/test -name '*.txt' -print0 | xargs -0 rm  
+find ./desktop/test -name '*.txt' -print0 | xargs -0 rm
 
 find /Users/captain/Desktop/test -name '*.txt'|cut -c 29- |xargs  echo
 输出
@@ -1551,7 +1568,7 @@ kill -1  [进程号]　　（重启进程）
 
 NO.1:
 [berry@berry:practice] service vpnagentd status
-vpnagentd is stopped 
+vpnagentd is stopped
 [berry@berry:practice] sudo service vpnagentd start
 Starting up Cisco AnyConnect Secure Mobility Client Agent
 [berry@berry:practice] service vpnagentd status
@@ -1608,15 +1625,15 @@ scp username@servername:/path/filename /var/www/local_dir（本地目录）
 
 
 2、上传本地文件到服务器
-scp /path/filename username@servername:/path   
+scp /path/filename username@servername:/path
 
 例如scp /var/www/test.php  root@192.168.0.101:/var/www/  把本机/var/www/目录下的test.php文件上传到192.168.0.101这台服务器上的/var/www/目录中
 
- 
+
 3、从服务器下载整个目录
 scp -r username@servername:/var/www/remote_dir/（远程目录） /var/www/local_dir（本地目录）
 
-例如:scp -r root@192.168.0.101:/var/www/test  /var/www/  
+例如:scp -r root@192.168.0.101:/var/www/test  /var/www/
 
 
 4、上传目录到服务器
@@ -1672,8 +1689,8 @@ ssl_enable=NO
 root@c77:~# useradd ftpuser  //创建一个用户
 root@c77:~# usermod -s /sbin/nologin ftpuser  // 限制该用户只能ftp服务器访问，不能直接登录服务器
 root@c77:~# passwd ftpuser   // 设置用户的访问密码
-Enter new UNIX password: 
-Retype new UNIX password: 
+Enter new UNIX password:
+Retype new UNIX password:
 passwd: password updated successfully
 root@c77:~# mkdir -p /data/ftp/pub      // 在/data中创建相关的目录,/data/ftp 为主目录, 该目录不可上传文件;/data/ftp/pub 文件只能上传到该目录下
 root@c77:~# echo "Welcome to wangsirlemon FTP service." > /data/ftp/welcome.txt  //创建登录欢迎文件
@@ -1709,11 +1726,11 @@ lsof -c mysql = lsof | grep myself
 lsof -p 1       // 通过某个进程号显示该进行打开的文件
 lsof -p 1,2,3   // 列出多个进程号对应的文件信息
 lsof -p ^1      // 列出除了某个进程号，其他进程号所打开的文件信息
--p<进程号> 列出指定进程号所打开的文件 pid:  
+-p<进程号> 列出指定进程号所打开的文件 pid:
 -u  列出UID号进程详情 user
 -h 显示帮助信息
 -v 显示版本信息
-lsof -i: 端口号,列出所有的网络连接   
+lsof -i: 端口号,列出所有的网络连接
 lsof -i tcp: 列出所有tcp 网络连接信息
 lsof -i udp: 列出所有udp 网络连接信息
 lsof -i :3306: 列出谁在使用某个端口
@@ -1728,7 +1745,7 @@ lsof -d description(like 2): 根据文件描述列出对应的文件信息
 lsof -d 2-3     // 根据文件描述范围列出文件信息
 lsof -c sshd -a -d txt     // 列出COMMAND列中包含字符串" sshd"，且文件描符的类型为txt的文件信息
 lsof -i 4 -a -p 1234    // 列出被进程号为1234的进程所打开的所有IPV4 network files
-lsof -i @peida.linux:20,21,22,25,53,80  -r  3  
+lsof -i @peida.linux:20,21,22,25,53,80  -r  3
 // 列出目前连接主机peida.linux上端口为：20，21，22，25，53，80相关的所有文件信息，且每隔3秒不断的执行lsof指令
 
 
@@ -1791,11 +1808,11 @@ cd, pwd
 ..上一级目录，.是当前目录
 rmdir:  删除空目录 (windows中的del )
 
-cp -rp /tmp/bb  /tsd/kh: 
+cp -rp /tmp/bb  /tsd/kh:
 -r为复制目录, -p为复制文件的属性，也可以同时复制多个目录；复制目录同时可以更名
 mv 源 目的: 更名
 
-清除屏幕： ctrl + r或者clear 
+清除屏幕： ctrl + r或者clear
 rm -rf
 
 
@@ -1844,7 +1861,7 @@ shutdown -r now  立刻关闭系统并重新启动
 ----------------
 reboot  -f：强制重新开机，不调用shutdown指令的功能；
 reboot  -i：在重开机之前，先关闭所有网络界面；
-reboot  -n：重开机之前不检查是否有未结束的程序； 
+reboot  -n：重开机之前不检查是否有未结束的程序；
 reboot  -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件
 init 6 :重启
 
@@ -1864,7 +1881,7 @@ id:3:initdefault:     //修改系统默认的运行级别
 runlevel              //查询系统运行级别
 wangsirlemon@c77:~$ runlevel
 N 5                   // N为上一次运行的级别，N标识null, 5表示当前的运行级别
- 
+
 
 > grep
 ----------------
@@ -1909,8 +1926,8 @@ d删,
 y复制,
 ctrl+v粘贴系统剪切板
 p粘贴,（不选中，默认一行）
-"+y    复制到系统剪贴板(也就是vim的+寄存器） 
-"+p   从系统剪贴板粘贴 
+"+y    复制到系统剪贴板(也就是vim的+寄存器）
+"+p   从系统剪贴板粘贴
 I  多行输入，按Esc生效
 
 
@@ -1927,7 +1944,7 @@ insert模式：
 -------------
 i :当前字符追加
 o :下面另起一行
-O :上面另起一行 
+O :上面另起一行
 a :当前字符后追加
 A :当前行末追加
 s :删除当前字符并进入insert
@@ -1961,8 +1978,8 @@ Ctrl + u/d/e/y   向上/下滚动半屏/一行
 
 normal模式：
 -------------
-:set nu  行定位 
-:set number 行定位 
+:set nu  行定位
+:set number 行定位
 :set ruler 右下角显示当前光标位置
 :set nonu
 :n      :定位到哪一行
@@ -2000,8 +2017,8 @@ J : 删除换行符
 https://harttle.land/2016/08/08/vim-search-in-file.html
 
 /搜索   支持正则，/vim$ /vim\$
-?搜索，往前搜  
-n:下一个；N:上一个  3n：后面第三个 
+?搜索，往前搜
+n:下一个；N:上一个  3n：后面第三个
 注意查找回车应当用\n，而替换为回车应当用\r（相当于<CR>）
 /Width\c  \c表示大小写不敏感，\C表示大小写敏感
 
@@ -2028,7 +2045,7 @@ vim使用技巧：
 :!which ls        在不退出vim的状况下查找命令,查找存放在哪一个目录下
 :r !date          可以引入时间到文本中，可以直接导入命令的执行结果
 :map ^P I#<esc>   定义快捷键，在每行的按ctrl+p可以用#注释这一行
-:map ^B 0x        定义快捷键，在每行的按ctrl+b可以取消#注释     
+:map ^B 0x        定义快捷键，在每行的按ctrl+b可以取消#注释
 （格式：map 快捷键 触发命令）录制命令时，先按ctrl+v,再输入快捷键
 同样可以定义快捷键插入邮箱等信息
 :ab mymail sample@example.com     那么以后输入mymail回车之后都会用后面的邮箱地址进行替换（insert模式）
@@ -2051,17 +2068,17 @@ set hlsearch          " 高亮搜索结果
 set wrap              " 自动换行
 set incsearch         " 立即高亮显示当前匹配
 set ignorecase        " 忽略大小写
-set smartcase         " 如果有一个大写字母，则切换到大小写敏感查找  
+set smartcase         " 如果有一个大写字母，则切换到大小写敏感查找
 set showmatch         " 高亮显示对应的括号
 set ruler             " 设置右下坐标
 set confirm           " 在处理未保存或只读文件的时候，弹出确认
 set tabstop=4         " Tab键的宽度
-set cursorline        " 突出显示当前行 
+set cursorline        " 突出显示当前行
 set cursorcolumn      " 突出显示当前列
 set clipboard+=unnamed   " 共享剪贴板
 
 " 语法高亮
-syntax on          
+syntax on
 set fileencodings=utf-8,gb2312,gbk,cp936,latin-1
 set fileencoding=utf-8
 set termencoding=utf-8
@@ -2110,7 +2127,7 @@ POSTOUTING链：用于源地址转换（SNAT）。
 > ln:
 -----------------
 link:
-ln -s /etc/issue.bak issue.bak.soft 
+ln -s /etc/issue.bak issue.bak.soft
 软连接：类似win的快捷方式,文件以l开头,权限为lrwxrwxrwx,所有用户可读写执行,字节大小为一个快捷方式大小，很小；
 
 ln /etc/issue.bak issue.bak.hard
@@ -2127,7 +2144,7 @@ ac
 wanghaitao:~$: echo -e 'a\tb\tc\nd\te\tf'      :\t tab \n换行
 a b c
 d e f
-wanghaitao:~$: echo -e '\x61\t\x62\t\x63\n\x64\t\x65\t\x66'    
+wanghaitao:~$: echo -e '\x61\t\x62\t\x63\n\x64\t\x65\t\x66'
 a b c
 d e f
 :\x表示16进制，后面可以跟两位16进制数； \0表示8进制,后面可以跟3位8进制数据
@@ -2153,7 +2170,7 @@ echo $env
 > chmod:
 -----------------
 chmod [ugoa][+-=][rwx] 文件目录： u:user, g:group, o:other, a:all
-chmod g+w,o-r sys.bakfile: 同时操作多个权限 
+chmod g+w,o-r sys.bakfile: 同时操作多个权限
 chmod g=rwx sys.bak
 chmod 700 sys.bak ：一般操作习惯用数字来表示
 532： r-x-wx-w-
@@ -2206,11 +2223,11 @@ umask 023        更改缺省值
 find[范围][条件]
 find / -name init   //名字为init，为精准搜索， / 为根目录的意思
 find /etc -name *init*    //文件名包含init，*为通配符，类正则
-find /etc -name init？？？   //三个?代表三个字符，？为单个字符 
+find /etc -name init？？？   //三个?代表三个字符，？为单个字符
 find /etc -iname *init*    //-iname不区分大小写
 
 
-find  /etc -size +204800 
+find  /etc -size +204800
 // 查找大于100M的文件，1个数据块为512字节，0.5k; 100M=102400KB=204800块，数据块为linux存储的最小字节；
 // 数字前面+为大于，-为小于,等于前面没有符号
 
@@ -2223,14 +2240,14 @@ find /etc -cmin -5  //查找5min内被修改过的文件和目录,-5为5分钟�
 
 find /etc -size +163840 -a -size -204800   : -a为连接符，且的关系；查找大于80M,小于100M的文件； -o为或
 
-find /etc -name init -exec ls -l {} \;      :查看init文件并显示其详细信息 
--exec/-ok为执行，-ok的区别是会询问是否操作，用y,n来确认    {} \;是固定格式,  
+find /etc -name init -exec ls -l {} \;      :查看init文件并显示其详细信息
+-exec/-ok为执行，-ok的区别是会询问是否操作，用y,n来确认    {} \;是固定格式,
 
 find /etc -name init* -a -type d   :查看名字以init开头的目录
 -type : 文件类型，f文件，d目录，l为链接文件
 
 -inum: i节点查找
-find . -inum 31531 -exec rm {} \; //以i节点查找然后删除，用于删除一些无法打印出来的奇怪字符的文件  
+find . -inum 31531 -exec rm {} \; //以i节点查找然后删除，用于删除一些无法打印出来的奇怪字符的文件
 
 
 > locate:
@@ -2320,7 +2337,7 @@ help umask
 
 查看当前用户
 ----------------
-> who: 查看主机上的用户 
+> who: 查看主机上的用户
 > w: 查看当前用户 -----查看用户的详细信息，比who更详细
 > whoami: 查看当前登录的用户是谁
 > lastlog | head -n 5: 查看主机上的用户
@@ -2332,15 +2349,15 @@ useradd yangmi
 passwd yangmi  //root用户可以设置简单密码，普通用户不能设置简单的密码，管理员可以更改任何人的密码
 
 $ who   //查看当前登录的用户； 登录终端，tty本地终端，pts远程终端，另外可以看到登录时间，还有登录的ip,没有则为本地
-captain  console  Aug  6 08:56 
-captain  ttys000  Aug  6 14:36 
-captain  ttys001  Aug  6 17:26 
+captain  console  Aug  6 08:56
+captain  ttys000  Aug  6 14:36
+captain  ttys001  Aug  6 17:26
 
 wangsirlemon@c77:~$ who
 wangsirlemon pts/0        2018-08-06 07:25 (182.150.28.13)
 
 wangsirlemon@c77:~$ w
- 09:30:25 up 6 days,  7:19,  1 user,  load average: 0.00, 0.00, 0.00     
+ 09:30:25 up 6 days,  7:19,  1 user,  load average: 0.00, 0.00, 0.00
 USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
 wangsirl pts/0    182.150.28.13    07:25    1.00s  0.11s  0.00s w
 
@@ -2372,7 +2389,7 @@ gzip test.tar
 
 解压缩：
 gunzip  xxx.xx
-gzip -d  xxx.xx  
+gzip -d  xxx.xx
 
 
 > tar:
@@ -2390,17 +2407,17 @@ tar -jcf janpan.tar.bz2 Japan  //用tar来压缩gz
 
 解压：
 tar -zxf xx.tar   :一般用这个命令比较多，不用显示详细信息
-tar -zxf xx.tar.gz 
+tar -zxf xx.tar.gz
 tar -jxf janpan.tar.bz2   //用tar来解压gz
 
 
 参数：
 -x :解包
 -c :打包
--f :指定解压文件 
+-f :指定解压文件
 -z :打包/解包，压缩一起做
 -v :详细信息
--j :打包成bzip2格式 
+-j :打包成bzip2格式
 
 
 .tar.xz格式：
@@ -2467,7 +2484,7 @@ nslookup 220.181.57.216  //ip
 
 
 强制dns服务器解析
-dig @127.0.0.1 baidu.com 
+dig @127.0.0.1 baidu.com
 或nslookup baidu.com 127.0.0.1
 
 > ping
@@ -2504,7 +2521,7 @@ http://www.360doc.com/content/16/0702/00/34585279_572396722.shtml
 brew install httping
 
 httping -g www.google.com
-httping -l www.baidu.com 
+httping -l www.baidu.com
 httping -K www.baidu.com
 httping -g www.google.com -l -c 5 -Y
 
@@ -2532,7 +2549,7 @@ httping -g www.google.com -l -c 5 -Y
 
 dig www.facebook.com @8.8.8.8 +short  //通过指定DNS 8.8.8.8 来解析facebook的ip地址
 
-dig +trace www.scnu.edu.com    
+dig +trace www.scnu.edu.com
 // 跟踪域名解析； https://blog.csdn.net/a583929112/article/details/66499771
 // https://blog.csdn.net/crazw/article/details/8986504
 // https://blog.csdn.net/jiajiren11/article/details/80071312
@@ -2546,7 +2563,7 @@ dig @192.168.10.1 -p 5353 google.com  //确认开启udp转发，ip为路由ip,�
 DNS 完美查询的流程就是： dnsmasq -> ChinaDNS -> ss-tunnel -> 国外DNS服务器(e.g: 8.8.8.8)。
 
 
-> unixbench: 
+> unixbench:
 ----------------
 linux性能测试工具
 https://teddysun.com/245.html
@@ -2672,9 +2689,9 @@ rpm -V httpd   //校验指定的包中文件
 [root@localhost ~]# rpm -ivh sudo-1.7.2pl-5.el5. 5.el5 .rpm    
 -i  安装所选择的一个或多个软件包
 -H  用“#”显示完成的进度
--q  查询软件包系统或所选择的一个或多个软件包 
--e 删除所有选择的一个或多个软件包 
--u 把一个已经安装好的软件包升级到新版本 
+-q  查询软件包系统或所选择的一个或多个软件包
+-e 删除所有选择的一个或多个软件包
+-u 把一个已经安装好的软件包升级到新版本
 -v 验证已安装或已选择的一个或多个软件包
 [root@localhost ~]# rpm -ivh sudo   查询sudo软件包是否被安装
  
@@ -2734,7 +2751,7 @@ make clean :清空编译文件
 
 > webmin
 ----------------
-webmin是linux中的图形文件管理后台  
+webmin是linux中的图形文件管理后台
 
 
 
@@ -2767,18 +2784,18 @@ su -- wangsirlemon
 
 setUID=4
 # chmod  u+s /bin/touch       给touch设置一个UID
-# chmod  4755 /bin/touch      
+# chmod  4755 /bin/touch
 # chmod  u-s /bin/touch       取消UID
-# chmod  755  /bin/touch      
+# chmod  755  /bin/touch
 
 setGID=2
-[root@localhost ~]# chmod  g+s /bin/touch  
+[root@localhost ~]# chmod  g+s /bin/touch
 [root@localhost ~]# chmod  2755  /bin/touch
 
 站着位：
 t=1
 粘着位的授权方式：
-[root@localhost test]# chmod  o+t abc  
+[root@localhost test]# chmod  o+t abc
 [root@localhost test]# chmod  1755  abc
 
 
@@ -2795,7 +2812,7 @@ cat /proc/partitions    //分区信息
 ---------------------
 取值范围（-20,19）   -20为最高优先级，启动一个进程，默认优先级为0
 
-nice命令 
+nice命令
 指定程序的运行优先级
 格式：nice -n command
 例如：nice --5 command
@@ -2863,7 +2880,7 @@ job 2 at 2012-05-20 13:43 　　   ctrl+d保存计划并退出
 [root@bogon test]# ls /var/spool/at/
 
 batch用法通at
- 
+
 
 
 crontab:
@@ -2895,9 +2912,9 @@ cat /etc/shells          查看装了哪些shell
 zsh语法高亮：
 https://www.cnblogs.com/weixuqin/p/7029177.html
 https://www.jianshu.com/p/19c0a8890fe0
-  
+
 1. brew install zsh-syntax-highlighting
-2. 根目录下vim .zshrc              
+2. 根目录下vim .zshrc
 3. 在.zshr中添加 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 4. 添加：source ~/.bash_profile
 5. source ~/.zshrc
@@ -2920,9 +2937,9 @@ PROMPT="%* %c: "
 %t %T时间
 
 #开启颜色
-autoload -U colors && colors       
+autoload -U colors && colors
 #配置提示符模式。。 其实配置之前的PS1也是可以的 但是为了尊重说明文档。。。
-PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[green]%}%1|%~ %{$reset_color%}%#>"        
+PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[green]%}%1|%~ %{$reset_color%}%#>"
 #在行末显示上一命令的返回状态
 RPROMPT="[%{$fg_bold[yellow]%}%?%{$reset_color%}]"
 #自定义terminal头：
@@ -3017,9 +3034,9 @@ cd, pushd, popd
 
 [root@localhost etc]# pushd ~/Desktop/shell_test/
 ~/Desktop/shell_test    /etc
-[root@localhost shell_test]# 
+[root@localhost shell_test]#
 
-[root@localhost shell_test]# pushd 
+[root@localhost shell_test]# pushd
 /etc    ~/Desktop/shell_test
 [root@localhost etc]#
 
@@ -3168,14 +3185,14 @@ config on MacOS
 
 shell进度条
 -------------------
-#!/bin/sh  
-b='' 
-for ((i=0;$i<=100;i+=2))  
-do  
-        printf "progress:[%-50s]%d%%\r" $b $i  
-        sleep 0.1  
-        b=#$b  
-done  
+#!/bin/sh
+b=''
+for ((i=0;$i<=100;i+=2))
+do
+        printf "progress:[%-50s]%d%%\r" $b $i
+        sleep 0.1
+        b=#$b
+done
 echo
 
 
@@ -3323,6 +3340,43 @@ j3160
 路由器系统实现基础路由功能以及$$、过滤广告、kms等，
 NAS系统/普通PC系统等更可以搭建NAS、私有云、离线下载、Git服务器、苹果的TimeMachine服务器等等。
 
+
+100-200:
+N1盒子，R2s, d525
+
+200-300:
+矿渣之王锐角云n3450
+惠普的t620plus
+树莓派4B
+GX-420CA
+N3450
+
+300-400:
+i3 4005u
+4010u
+4030u
+z8350
+n4000
+A6-8500B
+dell wyse 3040m小机器
+--------------
+N3160，J4125
+LAN:intel 1225 - N5105，N5095
+400-500:
+3867U
+500-600：
+j4105小主机
+j4205
+600-700:
+J4105，4590T+m93p,
+700-800:
+j4125 intel 1210
+i5 6600T
+dell wyse 5070 j5005
+800+:
+j4125 8125b 2.5G
+Kodlix gk45
+
 Tutorials：
 https://www.youtube.com/watch?v=GFLDe2ihT1U
 https://forum.openwrt.org/t/how-to-install-lede-on-x86/14601
@@ -3353,7 +3407,7 @@ R2s: aarch64_generic
 TL-WDR4310
 https://item.taobao.com/item.htm?spm=a1z09.2.0.0.dcda2e8dQB88iz&id=541598037417&_u=nbh5k5e8fc3
 
-NetGear R7000 
+NetGear R7000
 price: 549
 https://item.taobao.com/item.htm?spm=a230r.1.14.20.3aa528d98GbBeC&id=561557374395&ns=1&abbucket=14#detail
 CPU:1G双核
@@ -3550,7 +3604,7 @@ test:
 18 21 * * 1-5 /etc/wifi/wifion.sh
 
 00 1 * * * wifi down
-30 7 * * * wifi up  
+30 7 * * * wifi up
 
 0 5 * * 1 /root/scheduledTask.sh
 
@@ -3576,9 +3630,9 @@ usb挂载,NAS-SMB 在op:
 https://wizju.com/post/123/
 #分区1挂载到 /smb1目录
 mkdir /smb1
-mount -t ext4 /dev/sda1 /smb1 -o noatime,async 
+mount -t ext4 /dev/sda1 /smb1 -o noatime,async
 
-#分区2挂载到 /smb2目录 
+#分区2挂载到 /smb2目录
 mkdir /smb2
 mount /dev/sda2 /smb2 -o noatime,rw,async
 
@@ -3592,12 +3646,12 @@ https://www.charlesproxy.com/documentation/using-charles/ssl-certificates/
 https://juejin.im/post/5aa9f35b51882555731bd922
 <network-security-config>
   <!-- debug用 -->
-  <debug-overrides> 
-    <trust-anchors> 
+  <debug-overrides>
+    <trust-anchors>
       <!-- Trust user added CAs while debuggable only -->
-      <certificates src="user" /> 
-    </trust-anchors> 
-  </debug-overrides> 
+      <certificates src="user" />
+    </trust-anchors>
+  </debug-overrides>
   <!-- debug和release用 -->
   <base-config cleartextTrafficPermitted="true">
       <trust-anchors>
@@ -3702,7 +3756,7 @@ git push --set-upstream origin master
 #设置追踪信息
 git branch --set-upstream-to=origin/<分支> master
 
- 
+
 …or import code from another repository
 You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
 更换远端地址：
@@ -3771,13 +3825,13 @@ git diff             #是工作区(work dict)和暂存区(stage)的比较
 git diff --cached    #是暂存区(stage)和分支(master)的比较
 git diff HEAD        #查看工作区和版本库里面最新版本的区别
 
-9.再重现add，之后再commit一次；也可以直接用git commit -a 
+9.再重现add，之后再commit一次；也可以直接用git commit -a
 (use "git add" and/or "git commit -a")
 
 10.查看提交的历史记录；
 $ git log
 
-11.回退上一个版本： 
+11.回退上一个版本：
 $ git reset --hard HEAD^
 上上个版本用HEAD^^,前100个版本用HEAD~100
 
@@ -3824,7 +3878,7 @@ git clean -nfd
 
 
 小结2：
-git checkout 的使用场景：   
+git checkout 的使用场景：
 一、放弃工作区的更改：1.修改了文件，2.删除了文件；
 二、创建并切换分支 git checkout -b xx
 三、切换分支 git checkout xx
@@ -4248,7 +4302,7 @@ https://github.com/probberechts/hexo-theme-cactus
 https://zhuanlan.zhihu.com/p/26625249
 1.node,npm环境
 2.npm install -g hexo-cli
-3.新建仓库 username.github.io 
+3.新建仓库 username.github.io
 4.git clone到本地
 5.进入文件夹,git clone https://github.com/probberechts/hexo-theme-cactus.git themes/cactus
 6.配置主题，hexo generate, hexo server
@@ -4276,8 +4330,8 @@ deploy:
   branch: master
 9.推送
 npm install hexo-deployer-git --save
-hexo clean 
-hexo g 
+hexo clean
+hexo g
 hexo d
 +jekyll
 https://blog.csdn.net/tyyytcj/article/details/80880018
@@ -4300,7 +4354,7 @@ mode: 'history',
 base: '/datafilter/',
 
 需要在vue.config.js中设置：
-publicPath: '/datafilter/',   
+publicPath: '/datafilter/',
 
 如果是放根目录下的话，base和publicPath的值设置为'/'既可或者不设置这两个参数
 
@@ -4380,7 +4434,7 @@ colorpicker
 顾名思义，选颜色用，快捷键CTRL+Alt+C
 
 pretty json
-格式化json 
+格式化json
 - Windows: <kbd>ctrl+alt+j</kbd>
 - OS X: <kbd>cmd+ctrl+j</kbd>
 
@@ -4401,7 +4455,8 @@ Theme-Nil主题
     "tab_size": 4,
     "theme": "Default.sublime-theme",
     "translate_tabs_to_spaces": true,
-    "word_wrap": "true"
+    "word_wrap": "true",
+    "trim_trailing_white_space_on_save": true
 }
 sublime安装的插件：
 brackethighlighter
@@ -4411,6 +4466,7 @@ pretty json
 python3
 sublimelinter
 vue syntax highlight
+DeleteBlankLines
 
 
 atom
@@ -4777,7 +4833,7 @@ https://www.jianshu.com/p/0f828265ceb1
 jenkins登录无效：
 https://blog.csdn.net/m0_37738114/article/details/80660262
 查看是否存在多个jenkins进行，kill -9 pid掉所有的进程，然后打开想要的
-ps -ef | grep -v grep |grep jenkins 
+ps -ef | grep -v grep |grep jenkins
 
 
 jenkins catalina运行脚本，提示Operation Not Permitted
@@ -4837,7 +4893,7 @@ Jenkins安装简介：
 https://www.cnblogs.com/zhouxihi/p/10290869.html
 Jenkins是一个开源的自动化服务器。由Java和上百个插件组成，支持编译，测试，部署任意的自动化项目
 源网站： http://blog.csdn.net/taishanduba/article/details/50452601
-http://www.jianshu.com/p/b4efe5a3b442    
+http://www.jianshu.com/p/b4efe5a3b442
 http://www.cnblogs.com/zhanggui/p/6227832.html
 使用： http://blog.csdn.net/potato512/article/details/52289136
 
@@ -4877,12 +4933,12 @@ http://liumh.com/2015/11/25/ios-auto-archive-ipa/
 https://help.apple.com/xcode/mac/current/#/dev23ea8b877
 man xcodebuild
 
-xcodebuild archive -workspace 项目名称.xcworkspace 
-                   -scheme 项目名称 
-                   -configuration 构建配置 
-                   -archivePath archive包存储路径 
-                   CODE_SIGN_IDENTITY=证书 
-                   PROVISIONING_PROFILE=描述文件UUID  
+xcodebuild archive -workspace 项目名称.xcworkspace
+                   -scheme 项目名称
+                   -configuration 构建配置
+                   -archivePath archive包存储路径
+                   CODE_SIGN_IDENTITY=证书
+                   PROVISIONING_PROFILE=描述文件UUID
 
 -workspace 这个就是项目名
 -scheme 可以通过xcodebuild -list获取
@@ -4895,11 +4951,11 @@ PROVISIONING_PROFILE 描述文件UUID
 /usr/bin/xcodebuild archive -workspace /Users/jcci/.jenkins/jobs/Salad/workspace/Avatar.xcworkspace -scheme Avatar -configuration Debug only_active_arch=no defines_module=yes -archivePath /Users/jcci/Documents/saladpkg/Avatar.xcarchive -sdk iphoneos
 
 
-xcodebuild -exportArchive -archivePath archive文件的地址.xcarchive 
-                          -exportPath 导出的文件夹地址 
-                          -exportOptionsPlist exprotOptionsPlist.plist 
-                          CODE_SIGN_IDENTITY=证书 
-                          PROVISIONING_PROFILE=描述文件UUID  
+xcodebuild -exportArchive -archivePath archive文件的地址.xcarchive
+                          -exportPath 导出的文件夹地址
+                          -exportOptionsPlist exprotOptionsPlist.plist
+                          CODE_SIGN_IDENTITY=证书
+                          PROVISIONING_PROFILE=描述文件UUID
 
 
 /usr/bin/xcodebuild -exportArchive -exportOptionsPlist /Users/jcci/Documents/saladpkg/ExportOptions_toolchain_distribution.plist -archivePath /Users/jcci/Documents/saladpkg/Avatar.xcarchive -exportPath /Users/jcci/Documents/saladpkg/version_libo_devEggplant-freeStyle/2020-04-03/_toolchain_distribution_Debug2020-04-03_16-15-45
@@ -4911,7 +4967,7 @@ xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer dire
 解决的办法是：
 https://blog.csdn.net/aff60756/article/details/101998919
 
-修改xcode指向的目录 
+修改xcode指向的目录
 
 xcode-select -s /Applications/Xcode.app/Contents/Developer
 
@@ -4967,7 +5023,7 @@ https://www.cnblogs.com/tandaxia/p/8810648.html
 2.安装brew
 3.brew install nginx
 4.sudo nginx // 启动
-// 或者启动：cd /usr/local/nginx && sudo ./nginx 
+// 或者启动：cd /usr/local/nginx && sudo ./nginx
 // 默认为本地的8080端口
 // http://localhost:8080/
 5.自定义
@@ -4999,7 +5055,7 @@ nginx是单纯的反向代理，执行效率较高，通过配置文件等方式
 问题：（bugzilla或者其他server）上传文件提示： NGINX “413 REQUEST ENTITY TOO LARGE
 http://smilejay.com/2015/05/nginx-request-entity-too-large/
 
-解决办法： 
+解决办法：
 首先检查Bugzilla本身的附件上传限制大小，在Bugzilla的“Administration -> Parameters -> Attachments”的设置maxattachmentsize参数。发现原来我已将其改为8000(KB）。
 
 然后看Nginx配置文件（比如在这个路径/etc/nginx/conf.d/default.conf），发现里面没有设置client_max_body_size参数，而默认是1MB；
@@ -5011,9 +5067,9 @@ http://smilejay.com/2015/05/nginx-request-entity-too-large/
 http://smilejay.com/2014/05/php-upload-files/
 https://www.cnblogs.com/wangluochong/p/5557391.html
 
-upload_max_filesize = 8M    
-post_max_size = 10M    
-memory_limit = 20M  
+upload_max_filesize = 8M
+post_max_size = 10M
+memory_limit = 20M
 
 
 
@@ -5035,7 +5091,7 @@ server {
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_hide_header "Cache-Control";
         }
-        
+
 server {
         listen       80;
         server_name  book.salad.com;
@@ -5082,7 +5138,7 @@ server name 匹配的顺序优先级如下：
 location
 -----------------------
 https://segmentfault.com/a/1190000020334967
-location [ = | ~ | ~* | ^~ | /] uri {   
+location [ = | ~ | ~* | ^~ | /] uri {
 }
 
 1、= ：用于不含正则表达式的 uri 前，要求请求字符串与 uri 严格匹配，如果匹配成功，就停止继续向下搜索并立即处理该请求。
@@ -5139,7 +5195,7 @@ server {
         sub_filter www.baidu.com  test.21yunwei.com;
         sub_filter_once on;
         sub_filter_types  *;
-    } 
+    }
 }
 
 
@@ -5214,7 +5270,7 @@ vim /usr/local/etc/httpd/httpd.conf
 
 
 修改：
-1. Listen 80 
+1. Listen 80
 2. DocumentRoot, Directory为目录
 3. AllowOverride All （在Document这个里面）
 4. ServerName 127.0.0.1:80
@@ -5507,7 +5563,7 @@ smtp_ssl: On
 ---------------
 bugzilla的系统配置在： bugzilla/data/params.json
 
-下面这些选项修改完之后都需要在bugzilla目录下执行perl checksetup.pl 
+下面这些选项修改完之后都需要在bugzilla目录下执行perl checksetup.pl
 
 1.自定义模板bug写的模板：
 https://blog.csdn.net/xiongjialu/article/details/80110649
@@ -5516,7 +5572,7 @@ https://blog.csdn.net/xiongjialu/article/details/80110649
 替换后为：defaultcontent = '【设备版本】
 
 【预设条件】
-  
+
 【操作步骤】
 
 【预期结果】
@@ -5792,7 +5848,7 @@ sudo vim /etc/apache2/mods-enabled/dir.conf
 sudo systemctl restart apache2
 sudo systemctl status apache2
 6.创建数据库
-mysql> 
+mysql>
 CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 GRANT ALL ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'zhuniu1211';
 
@@ -6000,9 +6056,9 @@ brew install ffmpeg –with-sdl2 –with-freetype –with-openjpeg –with-x265 
 ffprobe xx.mp3
 ffprobe xx.mp4
 1. 输出格式信息
-ffprobe -show_format  pm.mp4 
+ffprobe -show_format  pm.mp4
 2. 输出每个流的具体信息（以JSON格式）
-ffprobe -print_format json  -show_streams pm.mp4 
+ffprobe -print_format json  -show_streams pm.mp4
 3. 显示帧信息
 ffprobe -show_frames pm.mp4
 4. 查看包信息
@@ -6048,11 +6104,11 @@ openssl x509 -inform der -in /Users/captain/Desktop/\*.camera360.com.cer  -pubke
  %rdi 带有%的是寄存器
  (%rdi) 带小括号的是寻找寄存器的存储空间
  je,jmp 跳转，即switch case语句中使用
- 
+
  常用的16个寄存器
  rax, rbx, rcx, rdx, rsi, rdi, rbp, rsp
  r8, r9, r10, r11, r12,r13, r14, r15
- 
+
  寄存器用途:
  rax,rdx常用作函数返回值使用
  rdi, rsi, rdx, rcx, r8, r0等常用于存放函数参数
@@ -6102,7 +6158,7 @@ Usage: PlistBuddy [-cxh] <file.plist>
 /usr/libexec/PlistBuddy -c 'Add :Person:weight string 65' info.plist
 
 3.输出某个字段值
- /usr/libexec/PlistBuddy -c 'Print :Person' info.plist 
+ /usr/libexec/PlistBuddy -c 'Print :Person' info.plist
 
 
 4.删除字段相应的值
@@ -6382,7 +6438,7 @@ source bin/activate
 pip install tornado
 
 
-virtualenv -p /usr/local/bin/python3 .env 
+virtualenv -p /usr/local/bin/python3 .env
 激活虚拟环境 source .env/bin/activate 安装依赖包
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ -r requirements.txt
 
