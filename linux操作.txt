@@ -6466,3 +6466,9 @@ useage
 you-get -i 'https://www.youtube.com/watch?v=jNQXAC9IVRw'
 you-get https://www.youtube.com/watch\?v\=kA3k8LNHX4Y // 默认下载第一个
 you-get --itag=137 https://www.youtube.com/watch\?v\=fnmldw8HpUU  //下载指定tag
+
+
+
+-----
+截屏：cmd+shift+3/4
+录屏: cmd+shift+5
