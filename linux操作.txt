@@ -4156,6 +4156,10 @@ tmp/*.txt：只忽略tmp目录下的.txt文件
 **/foo：可以忽略/foo, a/foo, a/b/foo等
 
 
+.gitignore添加文件后，仍然会被追踪
+--------------------------------
+是因为在加入到.gitignore之前，文件已经被git追踪
+解决办法：(例如.idea).gitignore中添加.idea，清除.idea的git缓存，git rm -r --cached 文件名，然后再进行git comit和push即可
 
 3.添加被忽略的文件：-f
 $ git add -f App.class
