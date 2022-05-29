@@ -5447,6 +5447,17 @@ ALTER USER salad@localhost IDENTIFIED WITH mysql_native_password BY 'salad';
 exit
 mysql.server stop
 
+windows链接虚拟机
+-----------------
+mstsc
+
+mysql链接数据库
+--------------
+一、MySQL 连接本地数据库，用户名为“root”，密码“123”（注意：“-p”和“123” 之间不能有空格）
+C:>mysql -h localhost -u root -p123
+
+二、MySQL 连接远程数据库（192.168.0.201），端口“3306”，用户名为“root”，密码“123”
+C:>mysql -h 192.168.0.201 -P 3306 -u root -p123
 
 
 搭建bugzilla
