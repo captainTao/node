@@ -6438,9 +6438,14 @@ source bin/activate
 pip install tornado
 
 
+创建虚拟环境
 virtualenv -p /usr/local/bin/python3 .env
-激活虚拟环境 source .env/bin/activate 安装依赖包
+激活虚拟环境
+source .env/bin/activate
+安装依赖包
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ -r requirements.txt
+取消激活
+deactivate
 
 
 
