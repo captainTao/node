@@ -3967,7 +3967,7 @@ $ git merge --no-ff -m "merge with no-ff" dev
 
 7.用git log --graph命令可以看到分支合并图。
 
-8.临时存储工作现场
+8.临时存储工作现场（暂存）
 $ git stash
 
 9.工作现场的恢复：
@@ -6488,7 +6488,16 @@ you-get https://www.youtube.com/watch\?v\=kA3k8LNHX4Y // 默认下载第一个
 you-get --itag=137 https://www.youtube.com/watch\?v\=fnmldw8HpUU  //下载指定tag
 
 
-
+mac
 -----
 截屏：cmd+shift+3/4
 录屏: cmd+shift+5
+
+git忽略本地文件的的修改
+----------------------
+忽略跟踪：
+git update-index --assume-unchanged xxx.xx
+恢复跟踪：
+git update-index --no-assume-unchanged xxx.xx
+查看当当被忽略和已经纳入版本管理的文件
+git ls-files -v | grep -e "^[hsmrck]"
