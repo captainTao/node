@@ -1,0 +1,18 @@
+3800刷不死uboot：
+----------------------------------
+1.winscp登录路由器，放wndr3800.bin文件的temp文件下
+2.putty登录路由器
+3.cd /tmp，执行mtd -r write wndr3800.bin u-boot
+4.重启
+5.断电，按住复位键，插电，等10s以上进入不死界面
+
+
+
+刷固件：(.bin为升级文件，一般luci界面升级用， .img为uboot界面刷的固件)
+mtd -r write  /tmp/_ar71xx_.bin firmware
+
+
+3800刷原厂：
+----------------------------------
+1.直接在不死界面更新uboot.bin文件
+2.或者在路由器终端中执行mtd -r write uboot.bin u-boot
