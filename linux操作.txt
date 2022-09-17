@@ -70,6 +70,15 @@ RAM，ROM
 ios工程provisionProfile放的目录：
 /Users/captain/Library/MobileDevice/Provisioning Profiles
 
+
+低版本xcode支持高版本ios
+---------------------
+xcode本地路径：
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport
+github获取地址：
+https://github.com/iGhibli/iOS-DeviceSupport/tree/master/DeviceSupport
+https://gitee.com/Han0/iOSDeviceSupport/tree/master/DeviceSupport
+
 pgtools切换环境,进入到项目工程中
 pkg -env xx.cfg
 pkg -e toolchain_developer.cfg
@@ -6472,6 +6481,11 @@ pip install -r requirements.txt
 
 iOS内存abort(Jetsam) 原理探究
 http://satanwoo.github.io/2017/10/18/abort/
+
+
+https://cloud.tencent.com/developer/article/1558379
+symbolicatecrash路径：
+"/Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash"
 
 
 
