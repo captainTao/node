@@ -199,6 +199,7 @@ locust
 --------
 locust性能指标
 https://blog.csdn.net/BearStarX/article/details/91801964
+https://docs.locust.io/en/stable/retrieving-stats.html
 
 Response Time
 Throughput
