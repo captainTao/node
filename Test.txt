@@ -743,3 +743,8 @@ https://blog.csdn.net/write6/article/details/78702977
 静态测试：
 动态测试：语句覆盖，判定(分支)覆盖，条件覆盖，判定条件覆盖（分支条件覆盖），条件组合覆盖，路径覆盖
 
+
+
+windows链接shell工具
+-------------------
+MobaXterm
