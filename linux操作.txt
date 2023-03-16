@@ -739,6 +739,11 @@ zlib # base
 对应下载地址：
 查看CPU型号：
 opkg print-architecture | awk '{print $2}'
+或者：
+opkg print-architecture | awk '{print $2}' | grep -v all | grep -v noarch
+
+打印结果为：cpu架构-cpu型号
+
 
 依赖ipk：
 http://downloads.openwrt.org/releases/18.06.1/packages/mips_24kc/base/
@@ -790,6 +795,14 @@ luci-app-shadowsocks_x.x.x-x_all.ipk
 luci-app-chinadns_x.x.x-x_all.ipk
 luci-app-dns-forwarder_x.x.x-x_all.ipk
 我这儿还需要安装obfs.
+
+
+建议的加密算法
+------------
+chacha20-ietf-poly1305、xchacha20-ietf-poly1305
+加速 aes-128-gcm、aes-192-gcm、aes-256-gcm
+
+obfs:tls
 
 4.禁用ipv6
 vim /etc/sysctl.conf
@@ -1133,19 +1146,28 @@ service firewalld stop     // 关闭防火墙
 
 
 查看系统版本：
+------------
 lsb_release -a
 
 cat /etc/issue
 
+
 操作系统位数：
-getconf LONG_BIT
+--------------
+getconf LONG_BIT   #输出64即为64位
+uname -a   #输出x86_64则为64位
+arch  #输出x86_64则为64位
+
 
 查看内存:
+--------
 free
 free -m
 cat /proc/meminfo
 
+
 查看cpu使用率：
+------------
 top
 
 Mem: 93228K used, 1945084K free, 728K shrd, 18592K buff, 14824K cached
@@ -1163,11 +1185,13 @@ cpu状态：
 
 
 查看cpu型号
+-----------
 cat /proc/cpuinfo
 
 
 
 查看文件属性：
+-------------
 > ll
 > ll /etc/sh    // 类似ls
 
@@ -2169,6 +2193,23 @@ Darwin wanghaitao-MacBook.local 17.7.0 Darwin Kernel Version 17.7.0: Thu Dec 20 
 echo $PATH
 echo $env
 
+临时：
+新增环境变量（关闭终端失效）
+export PATH=$PATH:新添加的路径
+PATH=$PATH:新添加的路径
+
+export PATH=$PATH:/usr/local/bin
+
+删除环境变量（关闭终端失效）
+重新赋值即可
+echo $PATH
+路径1:路径2:路径3:路径4
+删除路径4：
+export PATH=路径1:路径2:路径3
+
+永久：
+在当前shell中，如.bashrc中添加语句，然后source或者重启
+export PATH=$PATH:新增路径
 
 
 > ls -i:
@@ -2385,6 +2426,7 @@ wangsirl pts/0    182.150.28.13    07:25    1.00s  0.11s  0.00s w
 .zip       zip -r      unzip
 .bz2       bzip2       bunzip2
 .tar.bz2   tar -cjf    tar -xjf
+.rar       rar a filename *    unrar a filename.rar test
 
 
 > gzip:
@@ -2463,6 +2505,20 @@ tar -cjvf janpan.tar.bz2 Japan  //用tar来压缩gz
 bunzip2 [-k] janpan.tar.bz2
 tar -xjvf janpan.tar.bz2   //用tar来解压gz,只能解压tar压缩后的gz
 
+
+
+
+.rar
+--------
+yum install rar
+rar a filename *      //所有文件压缩为一个rar包，名为filename.rar
+unrar a filename.rar test    // 将filename.rar文件解压到 ./test
+
+centos7安装rar
+wget --no-check-certificate  https://www.rarlab.com/rar/rarlinux-x64-621.tar.gz
+tar -zxf rarlinux-x64-621.tar.gz
+cd rar
+make
 
 
 网络管理命令：
@@ -6492,7 +6548,7 @@ symbolicatecrash路径：
 you-get
 ----------
 https://you-get.org/
-下载油管，b站视频用的
+下载youtube视频，b站视频用的
 pip install you-get
 brew install you-get
 
@@ -6515,3 +6571,496 @@ git update-index --assume-unchanged xxx.xx
 git update-index --no-assume-unchanged xxx.xx
 查看当当被忽略和已经纳入版本管理的文件
 git ls-files -v | grep -e "^[hsmrck]"
+
+
+
+trojan:
+---------
+ipk download path
+https://downloads.openwrt.org/snapshots/packages/x86_64/packages/
+
+
+windows shell工具
+-----------------
+final shell
+
+
+查看防火墙状态
+------------
+ufw status
+ufw allow 8388  添加允许8388端口访问
+
+
+cent os软件
+-------------
+yum -y install gcc  安装gcc
+yum remove gcc   卸载gcc
+echo $PATH 输出执行路径
+
+
+安装shadowsocks：
+-----------------
+https://github.com/shadowsocks/shadowsocks-libev
+apt install shadowsocks-libev
+查看shadowsocks状态：
+systemctl status shadowsocks-libev.service
+编辑ss配置文件：
+vim /etc/shadowsocks-libev/config.json
+重启shadowsocks：
+systemctl restart shadowsocks-libev.service
+查看shadowsocks运行日志：
+journalctl -u shadowsocks-libev.service -f
+
+防火墙设置：
+查看状态：ufw status
+开放端口：ufw allow 8388
+拒绝端口：ufw deny 8388
+删除规则：ufw delete allow 8388
+关闭防火墙：ufw disable
+启动防火墙：ufw enable
+
+
+ss v2ray plugin
+-----------------
+https://github.com/shadowsocks/v2ray-plugin
+apt install shadowsocks-v2ray-plugin
+dpkg -L shadowsocks-v2ray-plugin  #查看shadow...插件包释放的内容
+在ss中添加插件
+vim /etc/shadowsocks-libev/config.json
+最后一行添加：
+"plugin": "shadowsocks-v2ray-plugin",
+"plugin_ opts": "server"
+
+
+shadowsocks-windows
+---------------------
+https://github.com/shadowsocks/shadowsocks-windows
+
+
+
+
+
+v2ray一键脚本:
+-------------
+https://www.v2ray.com/
+https://github.com/233boy/v2ray/tree/master
+服务器：
+https://github.com/233boy/v2ray/wiki/V2Ray%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B
+bash <(curl -s -L https://git.io/v2ray.sh)
+
+V2Ray 配置文件路径：/etc/v2ray/config.json
+Caddy 配置文件路径：/etc/caddy/Caddyfile
+脚本配置文件路径: /etc/v2ray/233blog_v2ray_backup.conf
+
+
+win客户端：
+https://github.com/233boy/v2ray/wiki/V2RayN%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B
+mac客户端：
+https://github.com/Cenmrev/V2RayX/releases
+各种客户端：
+https://www.v2ray.com/awesome/tools.html
+
+
+trojan一键脚本:
+--------------
+https://v2rayssr.com/trojan-2.html
+https://v2rayssr.com/
+https://github.com/V2RaySSR/trojansh
+1.检查VPS的SELinux处于关闭状态
+/usr/sbin/sestatus -v      ##如果返回参数为enabled即为开启，disabled为关闭
+
+若是开启状态，如何关闭SELinux服务？
+修改 /etc/selinux/config 文件
+将 SELINUX=enforcing 改为 SELINUX=disabled
+重启VPS以后SELinux即为关闭状态
+
+
+2.安装依赖基础环境
+
+yum -y install wget    ##ContOS Yum 安装 wget
+apt-get install wget   ##Debian Ubuntu 安装 wget
+
+
+3.安装trojan:
+本过程安装了sudo/nginx/wget/unzip/zip/curl/tar/trojan
+现在你访问 http://cc.cloud 应该有伪装站点的存在了
+伪装站点目录在 /usr/share/nginx/html 可自行更换网站
+Trojan配置文件在 /usr/local/etc/trojan
+nginx配置在：/etc/nginx/nginx.conf
+nginx重启：
+sudo nginx -s reload
+systemctl restart nginx
+检测没有问题之后可以进行下一部分安装
+wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan1.sh" && chmod +x trojan1.sh && ./trojan1.sh
+
+检测到证书文件正常签发
+证书文件的目录为 /usr/local/etc/trojan
+已经设置证书为自动续签
+可以进行第三部分脚本的操作
+wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan2.sh" && chmod +x trojan2.sh && ./trojan2.sh
+
+你的Trojan配置信息存放在：/usr/local/etc/trojan/配置.txt
+Trojan服务重启命令：systemctl restart trojan
+wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan3.sh" && chmod +x trojan3.sh && ./trojan3.sh
+
+若需修改密码或忘记密码,请访问VPS: /usr/local/etc/trojan/config.json
+推荐Win客户端下载：https://www.v2rayssr.com/trojanwin.html
+推荐安卓客户端软件：https://github.com/apache/ignite/releases
+
+4.安装BBRPLUS加速 (这个不可用)
+wget -N --no-check-certificate "https://github.com/ylx2016/Linux-NetSpeed/releases/download/sh/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
+
+用下面这个：
+wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+
+
+
+trojan其他搭建参考：
+----------------
+https://ssr.tools/1416
+https://ssrvps.org/archives/3248
+
+
+trojan客户端
+------------
+trojan:
+https://itlanyan.com/trojan-clients-download/
+
+
+trojan-go:
+-------------
+https://github.com/p4gefau1t/trojan-go
+
+（VPS）vultr新用户赠送100美金：https://vps.bulianglin.com/
+（FinalShell）管理VPS工具：http://www.hostbuf.com/t/988.html
+（trojan-go）https://github.com/p4gefau1t/trojan-go
+trojan-go官方文档：https://p4gefau1t.github.io/trojan-go/
+
+1.下载解压trojan-go的linux 64编译包
+mkdir trojan
+cd trojan
+wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
+unzip xx.zip
+
+2.trojan目录下新建config.json
+trojan配置文件,修改相关参数：
+{
+    "run_type": "server",
+    "local_addr": "0.0.0.0",
+    "local_port": 443,
+    "remote_addr": "192.83.167.78",
+    "remote_port": 80,
+    "password": [
+        "your_awesome_password"
+    ],
+    "ssl": {
+        "cert": "server.crt",
+        "key": "server.key"
+    }
+}
+
+3.申请证书：
+    安装acme：curl https://get.acme.sh | sh
+    安装socat：
+    apt install socat (ubuntu/debian)
+    yum -y install socat (centos)
+    添加软链接：
+    ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
+    ln -s  /root/.acme.sh/acme.sh /usr/local/sbin/acme.sh   （centos）
+
+    注册账号： acme.sh --register-account -m my@example.com
+    开放80端口：ufw allow 80
+    申请证书： acme.sh --issue -d 你的域名 --standalone -k ec-256
+    安装证书： acme.sh --installcert -d 你的域名 --ecc --key-file /root/trojan/server.key --fullchain-file /root/trojan/server.crt
+
+    如果默认CA无法颁发，则可以切换下列CA：
+    切换 Let’s Encrypt：acme.sh --set-default-ca --server letsencrypt
+    切换 Buypass：acme.sh --set-default-ca --server buypass
+    切换 ZeroSSL：acme.sh --set-default-ca --server zerossl
+
+
+自签证书：
+    生成私钥：openssl ecparam -genkey -name prime256v1 -out ca.key
+    生成证书：openssl req -new -x509 -days 36500 -key ca.key -out ca.crt  -subj "/CN=bing.com"
+
+4.trojan后台运行：
+nohup ./trojan-go > trojan.log 2>&1 &
+
+
+
+vmess+ws+tls+nginx
+----------------------
+https://www.youtube.com/watch?v=y8s5UivMNcE
+
+1.v2ray一键安装脚本：
+https://github.com/v2fly/fhs-install-v2ray
+启动v2ray: systemctl start v2ray
+开机自启v2ray：systemctl enable v2ray
+
+// 安裝執行檔和 .dat 資料檔
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+//移出执行脚本
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
+
+vms config.json
+----------------
+example:
+https://www.v2ray.com/en/welcome/start.html
+https://github.com/xesina/v2ray-config-examples/blob/master/http-vmess-vmess/client.json
+
+json位置：/usr/local/etc/v2ray/config.json
+service位置：/etc/systemd/system/v2ray.service
+linux随机生成uuid : cat /proc/sys/kernel/random/uuid
+
+如果出现如下错误：
+--------------------
+01.系统服务service有点问题：
+vim /etc/systemd/system/v2ray.service
+删除service中User=nobody
+systemctl daemon-reload
+
+02.加入配置后出错，回退版本到v4.45.0
+curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+bash install-release.sh --version v4.45.0
+
+systemctl enable v2ray
+systemctl start v2ray
+systemctl status v2ray
+
+vmess+tcp:
+-----------
+{
+  "inbounds": [{
+    "port": 10086,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [{
+      "id": "57bfda14-0528-4f0b-b65d-543dbd8ed2bd",
+      "alterId": 0
+       }]
+    }
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  }]
+}
+加密方式推荐：zero
+
+2.申请证书
+安装acme：curl https://get.acme.sh | sh
+    安装socat：
+    apt install socat (ubuntu/debian)
+    yum -y install socat (centos)
+    添加软链接：
+    ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh (ubuntu)
+    ln -s  /root/.acme.sh/acme.sh /usr/local/sbin/acme.sh   （centos）
+
+    注册账号： acme.sh --register-account -m my@example.com
+    开放80端口：ufw allow 80
+    申请证书： acme.sh --issue -d 你的域名 --standalone -k ec-256
+    安装证书： acme.sh --installcert -d 你的域名 --ecc --key-file /usr/local/etc/v2ray/server.key --fullchain-file /usr/local/etc/v2ray/server.crt
+
+    如果默认CA无法颁发，则可以切换下列CA：
+    切换 Let’s Encrypt：acme.sh --set-default-ca --server letsencrypt
+    切换 Buypass：acme.sh --set-default-ca --server buypass
+    切换 ZeroSSL：acme.sh --set-default-ca --server zerossl
+
+3.vmess config.json
+======================
+vmess+tcp+tls (vmess+ws+tls)
+-------------------
+{
+    "inbounds": [{
+        "port": 10086,
+        "protocol": "vmess",
+        "settings": {
+            "clients": [{
+                "id": "57bfda14-0528-4f0b-b65d-543dbd8ed2bd",
+                "alterId": 0
+            }]
+        },
+        "streamSettings": {
+            "network": "tcp",
+            "security": "tls",
+            "tlsSettings": {
+                "certificates": [{
+                    "certificateFile": "usr/local/etc/v2ray/server.crt",
+                    "keyFile": "usr/local/etc/v2ray/server.key"
+                }]
+            }
+
+        }
+    }],
+    "outbounds": [{
+        "protocol": "freedom",
+        "settings": {}
+    }]
+}
+
+
+
+
+vless+trojan+xtls+nginx
+------------------------
+关闭防火墙：ufw disable
+
+xray官方一键安装脚本：bash -c "$(curl -L github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+启动v2ray：systemctl start xray.service
+重启v2ray：systemctl restart xray.service
+v2ray状态：systemctl status xray.service
+
+申请证书：
+ 安装acme：curl https://get.acme.sh| sh
+ 安装socat：apt install socat
+ 添加软链接：ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
+ 切换CA机构：acme.sh --set-default-ca --server letsencrypt
+ 申请证书： acme.sh  --issue -d 你的域名  --standalone -k ec-256
+ 安装证书： acme.sh --installcert -d 你的域名 --ecc  --key-file   /usr/local/etc/xray/server.key   --fullchain-file /usr/local/etc/xray/server.crt
+
+xray配置文件：
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "72bac1c4-02de-49b4-e498-fa8767638c23",
+                        "flow": "xtls-rprx-direct"
+                    }
+                ],
+                "decryption": "none",
+                "fallbacks": [
+                    {
+                        "dest": 8388
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "xtls",
+                "xtlsSettings": {
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/usr/local/etc/xray/server.crt",
+                            "keyFile": "/usr/local/etc/xray/server.key"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "port": 8388,
+            "listen": "127.0.0.1",
+            "protocol": "trojan",
+            "settings": {
+                "clients": [
+                    {
+                        "password": "111"
+                    }
+                ],
+                "fallbacks": [
+                    {
+                        "dest": "180.76.138.44:80"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none"
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom"
+        }
+    ]
+}
+
+
+
+CF优选面板，CDN加速，拥塞算法：
+--------------------------
+x-ui面板：https://github.com/vaxilu/x-ui
+CF优选IP：https://github.com/XIU2/CloudflareSpe...
+CF官网：https://cloudflare.com
+CF-CDN-IP段：https://www.cloudflare.com/zh-cn/ips/
+
+安装nginx：apt install nginx
+配置nginx：vim /etc/nginx/nginx.conf
+重新加载nginx配置：systemctl reload nginx.service
+
+nginx配置：
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+  worker_connections 768;
+}
+
+http {
+
+ server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+   ssl_protocols         TLSv1.2 TLSv1.3;
+   ssl_ciphers           ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+   ssl_prefer_server_ciphers off;
+
+    location / {
+  proxy_pass https://www.bing.com; #伪装网址
+  proxy_ssl_server_name on;
+  proxy_redirect off;
+  sub_filter_once off;
+  sub_filter "www.bing.com" $server_name;
+  proxy_set_header Host "www.bing.com";
+  proxy_set_header Referer $http_referer;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header User-Agent $http_user_agent;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto https;
+  proxy_set_header Accept-Encoding "";
+  proxy_set_header Accept-Language "zh-CN";
+    }
+
+   location /ray {
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:8388;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+   location /xui {
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:9999;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+   }
+ }
+}
+
+查询当前使用的 TCP 拥塞控制算法
+sysctl net.ipv4.tcp_congestion_control
+查询当前Linux版本
+uname -r
+
+启用BBR TCP拥塞控制算法
+echo "net.core.default_qdisc=fq" （需要替换为尖括号） /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr"（需要替换为尖括号） /etc/sysctl.conf
+sysctl -p
