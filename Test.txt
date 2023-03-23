@@ -749,3 +749,13 @@ windows链接shell工具
 -------------------
 MobaXterm
 https://blog.csdn.net/qq_43307074/article/details/127577575
+
+
+
+测试网站性能
+-----------
+1.https://pagespeed.web.dev/?utm_source=psi&utm_medium=redirect
+2.自带的audit /lighthouse
+3.Network DOMcontentLoaded
+
+工具： httperf loadrunner

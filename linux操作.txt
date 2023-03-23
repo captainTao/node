@@ -6682,6 +6682,8 @@ apt-get install wget   ##Debian Ubuntu 安装 wget
 
 
 3.安装trojan:
+wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan1.sh" && chmod +x trojan1.sh && ./trojan1.sh
+
 本过程安装了sudo/nginx/wget/unzip/zip/curl/tar/trojan
 现在你访问 http://cc.cloud 应该有伪装站点的存在了
 伪装站点目录在 /usr/share/nginx/html 可自行更换网站
@@ -6691,21 +6693,45 @@ nginx重启：
 sudo nginx -s reload
 systemctl restart nginx
 检测没有问题之后可以进行下一部分安装
-wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan1.sh" && chmod +x trojan1.sh && ./trojan1.sh
 
+
+wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan2.sh" && chmod +x trojan2.sh && ./trojan2.sh
 检测到证书文件正常签发
 证书文件的目录为 /usr/local/etc/trojan
 已经设置证书为自动续签
 可以进行第三部分脚本的操作
-wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan2.sh" && chmod +x trojan2.sh && ./trojan2.sh
 
+
+申请不下来，手动申请证书：再执行第2部分脚本
+------------------------------------
+安装socat：
+apt install socat (ubuntu/debian)
+yum -y install socat (centos)
+
+安装acme：curl https://get.acme.sh | sh
+添加软链接：
+ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh  (ubuntu)
+ln -s  /root/.acme.sh/acme.sh /usr/local/sbin/acme.sh   （centos）
+
+注册账号： acme.sh --register-account -m my@example.com
+开放80端口：ufw allow 80
+申请证书： acme.sh --issue -d 你的域名 --standalone -k ec-256
+
+如果默认CA无法颁发，则可以切换下列CA：
+切换 Let’s Encrypt：acme.sh --set-default-ca --server letsencrypt
+切换 Buypass：acme.sh --set-default-ca --server buypass
+切换 ZeroSSL：acme.sh --set-default-ca --server zerossl
+
+
+wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan3.sh" && chmod +x trojan3.sh && ./trojan3.sh
 你的Trojan配置信息存放在：/usr/local/etc/trojan/配置.txt
 Trojan服务重启命令：systemctl restart trojan
-wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan3.sh" && chmod +x trojan3.sh && ./trojan3.sh
+
 
 若需修改密码或忘记密码,请访问VPS: /usr/local/etc/trojan/config.json
 推荐Win客户端下载：https://www.v2rayssr.com/trojanwin.html
 推荐安卓客户端软件：https://github.com/apache/ignite/releases
+
 
 4.安装BBRPLUS加速 (这个不可用)
 wget -N --no-check-certificate "https://github.com/ylx2016/Linux-NetSpeed/releases/download/sh/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
@@ -6759,13 +6785,30 @@ trojan配置文件,修改相关参数：
     }
 }
 
+用本机ng:
+{
+    "run_type": "server",
+    "local_addr": "0.0.0.0",
+    "local_port": 443,
+    "remote_addr": "127.0.0.1",
+    "remote_port": 80,
+    "password": [
+        "your_awesome_password"
+    ],
+    "ssl": {
+        "cert": "/root/trojan/server.crt",
+        "key": "/root/trojan/server.key"
+    }
+}
+
 3.申请证书：
-    安装acme：curl https://get.acme.sh | sh
     安装socat：
     apt install socat (ubuntu/debian)
     yum -y install socat (centos)
+
+    安装acme：curl https://get.acme.sh | sh
     添加软链接：
-    ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
+    ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh  (ubuntu)
     ln -s  /root/.acme.sh/acme.sh /usr/local/sbin/acme.sh   （centos）
 
     注册账号： acme.sh --register-account -m my@example.com
@@ -6787,6 +6830,55 @@ trojan配置文件,修改相关参数：
 nohup ./trojan-go > trojan.log 2>&1 &
 
 
+nginx监听443端口
+----------------
+https://blog.csdn.net/finally_vince/article/details/127884546
+
+user  root;
+worker_processes  1;
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+events {
+    worker_connections  1024;
+}
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log  /var/log/nginx/access.log  main;
+    sendfile        on;
+    #tcp_nopush     on;
+    keepalive_timeout  120;
+    client_max_body_size 20m;
+    #gzip  on;
+    server {
+        listen       80;
+        server_name  你的域名;
+        root /usr/share/nginx/html;
+        index index.php index.html index.htm;
+        rewrite ^/(.*)$ https://${server_name}/$1 permanent;
+    }
+   server {
+        listen 443 ssl;
+        server_name 你的域名;
+        root html;
+        index index.html index.htm;
+
+        ssl_certificate /usr/local/etc/trojan/cert.crt;
+        ssl_certificate_key /usr/local/etc/trojan/private.key;
+        ssl_session_timeout 10m;
+        ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+        ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+        ssl_prefer_server_ciphers on;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index index.html index.htm;
+        }
+    }
+}
 
 vmess+ws+tls+nginx
 ----------------------
@@ -6802,30 +6894,21 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 //移出执行脚本
 bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
 
+systemctl enable v2ray; systemctl start v2ray
+
+
 vms config.json
 ----------------
 example:
-https://www.v2ray.com/en/welcome/start.html
-https://github.com/xesina/v2ray-config-examples/blob/master/http-vmess-vmess/client.json
+https://github.com/v2fly/v2ray-examples
 
 json位置：/usr/local/etc/v2ray/config.json
 service位置：/etc/systemd/system/v2ray.service
 linux随机生成uuid : cat /proc/sys/kernel/random/uuid
 
-如果出现如下错误：
---------------------
-01.系统服务service有点问题：
-vim /etc/systemd/system/v2ray.service
-删除service中User=nobody
-systemctl daemon-reload
 
-02.加入配置后出错，回退版本到v4.45.0
-curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
-bash install-release.sh --version v4.45.0
-
-systemctl enable v2ray
-systemctl start v2ray
-systemctl status v2ray
+vmess config.json file content
+==============================
 
 vmess+tcp:
 -----------
@@ -6847,11 +6930,76 @@ vmess+tcp:
 }
 加密方式推荐：zero
 
+
+vmess+tcp+tls (vmess+ws+tls)
+----------------------------
+{
+    "inbounds": [{
+        "port": 10086,
+        "protocol": "vmess",
+        "settings": {
+            "clients": [{
+                "id": "57bfda14-0528-4f0b-b65d-543dbd8ed2bd",
+                "alterId": 0
+            }]
+        },
+        "streamSettings": {
+            "network": "tcp",   //ws的时候改成ws
+            "security": "tls",
+            "tlsSettings": {
+                "certificates": [{
+                    "certificateFile": "/usr/local/etc/v2ray/server.crt",
+                    "keyFile": "/usr/local/etc/v2ray/server.key"
+                }]
+            }
+
+        }
+    }],
+    "outbounds": [{
+        "protocol": "freedom",
+        "settings": {}
+    }]
+}
+
+
+vmess+ws+tls+web
+-----------------------
+{
+    "inbounds": [
+        {
+            "port": 10086,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "5252f97d-1287-ca9c-8fb1-6fa880d161eb",
+                        "alterId": 0
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "wsSettings": {
+                    "path": "/ray"
+                }
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "settings": {}
+        }
+    ]
+}
+
 2.申请证书
-安装acme：curl https://get.acme.sh | sh
+
     安装socat：
     apt install socat (ubuntu/debian)
     yum -y install socat (centos)
+    安装acme：curl https://get.acme.sh | sh
     添加软链接：
     ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh (ubuntu)
     ln -s  /root/.acme.sh/acme.sh /usr/local/sbin/acme.sh   （centos）
@@ -6866,39 +7014,72 @@ vmess+tcp:
     切换 Buypass：acme.sh --set-default-ca --server buypass
     切换 ZeroSSL：acme.sh --set-default-ca --server zerossl
 
-3.vmess config.json
-======================
-vmess+tcp+tls (vmess+ws+tls)
--------------------
-{
-    "inbounds": [{
-        "port": 10086,
-        "protocol": "vmess",
-        "settings": {
-            "clients": [{
-                "id": "57bfda14-0528-4f0b-b65d-543dbd8ed2bd",
-                "alterId": 0
-            }]
-        },
-        "streamSettings": {
-            "network": "tcp",
-            "security": "tls",
-            "tlsSettings": {
-                "certificates": [{
-                    "certificateFile": "usr/local/etc/v2ray/server.crt",
-                    "keyFile": "usr/local/etc/v2ray/server.key"
-                }]
-            }
 
+系统服务service有点问题：
+vim /etc/systemd/system/v2ray.service
+删除service中User=nobody
+systemctl daemon-reload
+
+3.安装nginx
+apt install nginx
+yum -y install nginx (centos)
+
+配置nginx：vim /etc/nginx/nginx.conf
+重新加载nginx配置：systemctl reload nginx.service
+ng站点目录在 /usr/share/nginx/html 可自行更换网站
+
+
+4.替换nginx的配置文件/etc/nginx/nginx.conf 中http{}里面的内容
+
+    server {
+        listen       443 ssl;
+        listen       [::]:443 ssl;
+        server_name  你的域名;
+
+        ssl_certificate      /usr/local/etc/v2ray/server.crt;
+        ssl_certificate_key  /usr/local/etc/v2ray/server.key;
+
+        ssl_session_cache    shared:MozSSL:10m;
+        ssl_session_timeout  1d;
+        ssl_session_tickets off;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+        ssl_ciphers  ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS;
+        ssl_prefer_server_ciphers  off;
+
+        location / {
+            proxy_pass https://www.bing.com;
+            proxy_redirect off;
+            sub_filter_once off;
+            sub_filter "www.bing.com" $server_name;
+            proxy_set_header Host "www.bing.com";
+            proxy_set_header Referer $http_referer;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header User-Agent $http_user_agent;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto https;
+            proxy_set_header Accept-Encoding "";
+            proxy_set_header Accept-Language "zh-CN";
+                  }
+
+        location /ray {
+            proxy_redirect off;
+            proxy_pass http://127.0.0.1:8388;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                      }
         }
-    }],
-    "outbounds": [{
-        "protocol": "freedom",
-        "settings": {}
-    }]
-}
 
+    server {
+        listen 80;
+        listen [::]:80
+        server_name 你的域名;
+        rewrite ^/(.*)$ https://${server_name}/$1 permanent;
 
+    }
 
 
 vless+trojan+xtls+nginx
@@ -7064,3 +7245,40 @@ uname -r
 echo "net.core.default_qdisc=fq" （需要替换为尖括号） /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr"（需要替换为尖括号） /etc/sysctl.conf
 sysctl -p
+
+
+socks5明文服务器搭建
+------------------
+ubuntu:
+https://sunpma.com/724.html
+
+wget --no-check-certificate https://raw.github.com/Lozy/danted/master/install.sh -O install.sh
+bash install.sh  --port=端口 --user=用户名 --passwd=密码
+
+
+使用：
+一般使用IP和用户名密码即可使用
+如果需要固定IP或IP段，可以修改配置文件设置白名单
+
+vi /etc/danted/sockd.conf
+修改以下代码，改成你需要设置的白名单IP或IP段即可，然后重启使其生效；
+
+client pass {
+        from: 0.0.0.0/0  to: 0.0.0.0/0
+}
+
+卸载：
+bash install.sh --uninstall
+
+
+cmd:
+
+service sockd start     /etc/init.d/sockd start 启动socks5服务器守护进程
+service sockd stop      /etc/init.d/sockd stop  停止socks5服务器守护进程
+service sockd restart   /etc/init.d/sockd restart   重新启动socks5服务器守护进程
+service sockd reload    /etc/init.d/sockd reload    重新加载socks5服务器守护进程
+service sockd status    /   系统进程状态
+service sockd state     /etc/init.d/sockd state 运行状态
+service sockd tail      /etc/init.d/sockd tail  sock 日志
+service sockd adduser   /etc/init.d/sockd adduser   添加pam-auth用户：service sockd adduser NAME PASSWORD
+service sockd deluser   /etc/init.d/sockd deluser   删除pam-auth用户：service sockd deluser NAME
