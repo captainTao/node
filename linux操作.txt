@@ -6862,6 +6862,9 @@ http {
     }
    server {
         listen 443 ssl;
+        #配置HTTPS的默认访问端口为443。
+        #如果未在此处配置HTTPS的默认访问端口，可能会造成Nginx无法启动。
+        #如果您使用Nginx 1.15.0及以上版本，请使用listen 443 ssl代替listen 443和ssl on。
         server_name 你的域名;
         root html;
         index index.html index.htm;
@@ -7247,8 +7250,12 @@ echo "net.ipv4.tcp_congestion_control=bbr"（需要替换为尖括号） /etc/sy
 sysctl -p
 
 
-socks5明文服务器搭建
+socks5服务器搭建
 ------------------
+
+
+一键搭建（1G内存的电脑运行不了，需要编译）
+---------------------------------
 ubuntu:
 https://sunpma.com/724.html
 
@@ -7282,3 +7289,45 @@ service sockd state     /etc/init.d/sockd state 运行状态
 service sockd tail      /etc/init.d/sockd tail  sock 日志
 service sockd adduser   /etc/init.d/sockd adduser   添加pam-auth用户：service sockd adduser NAME PASSWORD
 service sockd deluser   /etc/init.d/sockd deluser   删除pam-auth用户：service sockd deluser NAME
+
+
+手动搭建
+----------
+https://linuxhint.com/set-up-a-socks5-proxy-on-ubuntu-with-dante/
+
+root用户操作
+
+1.安装服务
+apt install dante-server
+danted -v
+2.备份原文件
+cd /etc
+mv danted.conf danted.conf.bak
+3.新建conf
+vim danted.conf --save
+---------------------
+internal: eth0 port = 1080
+external: eth0
+
+socksmethod: username
+
+user.unprivileged: nobody
+user.privileged: root
+
+client pass {
+from: 0.0.0.0/0 to: 0.0.0.0/0
+log: error
+}
+
+socks pass {
+from: 0.0.0.0/0 to: 0.0.0.0/0
+command: connect
+log: error
+socksmethod: username
+}
+4.启动服务
+service danted start
+5.新建账户
+adduser example
+
+
