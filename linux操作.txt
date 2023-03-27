@@ -1952,6 +1952,14 @@ visual模式：
 按v/V键从normal模式进入；
 使用j,k,h,l 或者方向箭头进行选择，9k或者9方向箭头移动9行，其他依次类推
 ggVG 选中全部的文本， 其中gg为跳到行首，V选中整行，G末尾
+
+h:左移动一位 j:下一行，k上一行，l右移一位
+$ 跳转到行尾
+0 跳到行行首
+gg为跳到最开始第一行第一位
+G末尾
+:10 跳转到第10行
+
 Ctrl + v   从光标当前位置开始，选中光标起点和终点所构成的矩形区域，再按一下Ｃtrl + v结束。
 
 选中之后可以进行：
@@ -1972,6 +1980,7 @@ ctrl + v选择块，I进入编辑模式，输入字符，按esc生效
 
 删除行最前面注释符号：
 ctrl+v选中行头，按x进行删除
+
 
 insert模式：
 -------------
@@ -2428,6 +2437,8 @@ wangsirl pts/0    182.150.28.13    07:25    1.00s  0.11s  0.00s w
 .tar.bz2   tar -cjf    tar -xjf
 .rar       rar a filename *    unrar a filename.rar test
 
+
+unzip -0 xx.zip -d path  //解压zip文件到制定目录
 
 > gzip:
 -----------------
@@ -6753,6 +6764,11 @@ trojan:
 https://itlanyan.com/trojan-clients-download/
 
 
+自启动文件夹.sevice
+-------------------
+/etc/systemd/system
+
+
 trojan-go:
 -------------
 https://github.com/p4gefau1t/trojan-go
@@ -6830,6 +6846,28 @@ trojan配置文件,修改相关参数：
 nohup ./trojan-go > trojan.log 2>&1 &
 
 
+5.其他：
+设置trojan-go.service
+vim /etc/systemd/system/trojan-go.service
+------------
+[Unit]
+Description=trojan-go
+Documentation=https://github.com/p4gefau1t/trojan-go
+After=network.target nss-lookup.target
+
+[Service]
+User=nobody
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/trojan-go/trojan-go -config /usr/local/etc/trojan-go/config.json
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
+
 nginx监听443端口
 ----------------
 https://blog.csdn.net/finally_vince/article/details/127884546
@@ -6860,7 +6898,7 @@ http {
         index index.php index.html index.htm;
         rewrite ^/(.*)$ https://${server_name}/$1 permanent;
     }
-   server {
+    server {
         listen 443 ssl;
         #配置HTTPS的默认访问端口为443。
         #如果未在此处配置HTTPS的默认访问端口，可能会造成Nginx无法启动。
@@ -6882,6 +6920,8 @@ http {
         }
     }
 }
+
+
 
 vmess+ws+tls+nginx
 ----------------------
@@ -7062,7 +7102,7 @@ ng站点目录在 /usr/share/nginx/html 可自行更换网站
             proxy_set_header X-Forwarded-Proto https;
             proxy_set_header Accept-Encoding "";
             proxy_set_header Accept-Language "zh-CN";
-                  }
+            }
 
         location /ray {
             proxy_redirect off;
@@ -7073,7 +7113,7 @@ ng站点目录在 /usr/share/nginx/html 可自行更换网站
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                      }
+            }
         }
 
     server {
@@ -7204,19 +7244,19 @@ http {
    ssl_prefer_server_ciphers off;
 
     location / {
-  proxy_pass https://www.bing.com; #伪装网址
-  proxy_ssl_server_name on;
-  proxy_redirect off;
-  sub_filter_once off;
-  sub_filter "www.bing.com" $server_name;
-  proxy_set_header Host "www.bing.com";
-  proxy_set_header Referer $http_referer;
-  proxy_set_header X-Real-IP $remote_addr;
-  proxy_set_header User-Agent $http_user_agent;
-  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  proxy_set_header X-Forwarded-Proto https;
-  proxy_set_header Accept-Encoding "";
-  proxy_set_header Accept-Language "zh-CN";
+    proxy_pass https://www.bing.com; #伪装网址
+    proxy_ssl_server_name on;
+    proxy_redirect off;
+    sub_filter_once off;
+    sub_filter "www.bing.com" $server_name;
+    proxy_set_header Host "www.bing.com";
+    proxy_set_header Referer $http_referer;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header User-Agent $http_user_agent;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header Accept-Encoding "";
+    proxy_set_header Accept-Language "zh-CN";
     }
 
    location /ray {
@@ -7252,10 +7292,8 @@ sysctl -p
 
 socks5服务器搭建
 ------------------
-
-
 一键搭建（1G内存的电脑运行不了，需要编译）
----------------------------------
+-------
 ubuntu:
 https://sunpma.com/724.html
 
@@ -7330,4 +7368,24 @@ service danted start
 5.新建账户
 adduser example
 
+
+nginx安装和卸载
+--------------
+1.安装
+sudo apt-get update
+sudo apt-get install nginx
+
+2.卸载
+# 删除除了配置文件以外的所有文件。
+sudo apt-get remove nginx nginx-common
+# 删除所有与nginx有关的东西，包括配置文件。
+sudo apt-get purge nginx nginx-common
+# 在上面命令结束后执行，主要是删除与Nginx有关的且不再被使用的依赖包。
+sudo apt-get autoremove
+# 删除两个主要的包。
+sudo apt-get remove nginx-full nginx-common
+
+3.验证是否卸载成功
+#重启nginx,重启失败，说明已成功卸载nginx
+sudo service nginx restart
 
