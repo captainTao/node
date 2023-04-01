@@ -936,6 +936,8 @@ opkg install dnsmasq-full
 手动下载dnsmaq-full
 https://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a9_vfpv3/base/dnsmasq-full_2.80-1_arm_cortex-a9_vfpv3.ipk
 
+https://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/dnsmasq-full_2.80-16.3_x86_64.ipk
+
 opkg remove dnsmasq && opkg install dnsmasq-full
 # 使用ipset,用了dnsmasq-full:
 sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -s ss_spec_dst_bp -o /etc/dnsmasq.d/accelerated-domains.china.conf
@@ -989,6 +991,12 @@ You can solve the issue in the meanwhile by installing luci-compat
 
 uci show dhcp可以查看上述的uci配置
 
+luci UI报错
+-----------
+opkg update
+opkg install luci luci-base luci-compat
+
+
 其他配置
 -----------------
 1.设置wifi定时任务 // 见模块：openwrt wifi toggle scheduled
@@ -1002,6 +1010,8 @@ uci show dhcp可以查看上述的uci配置
 9.添加eMule设置
 10.VPN:N2N-v2-vpn,openvpn,Ipsecvpn,pptpvpn
 11.添加去除广告的插件或者host
+12.对未格式化磁盘进行扩容
+13.添加samba局域网共享
 
 
 
@@ -1117,6 +1127,85 @@ https://www.right.com.cn/forum/thread-336281-1-1.html
 
 另去广告插件，效果不太好：
 KoolProxyR plus+、广告屏蔽大师plus+、AdGuard Home
+
+
+openwrt对未格式化磁盘进行扩容
+-----------------------
+https://blog.csdn.net/ls0111/article/details/128769859
+https://forum.openwrt.org/t/howto-resizing-root-partition-on-x86/140631
+https://blog.kobin.cn/blog/network/n2/1603.html
+
+这里以x86 squashfs系统为例：
+opkg update
+opkg install lsblk fdisk losetup f2fs-tools
+
+# opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk
+
+fdisk -l  #查看磁盘信息
+fdisk /dev/sda  #查看对应未分区磁盘, 注意fdisk后参数是磁盘名称，是要根据实际情况填写
+# 删除第2个分区，输入d
+d
+# 选择第2个分区，根据实际情况填写
+2
+# 输入n创建新分区
+n
+# 选择primary分区类型
+p
+# 分区编号选择2，一般默认即可
+2
+# 输入分区起始位置，该位置要与删除分区的起始位置相同,起始位置可以在fdisk -l中查看到
+# 输入创建分区大小，例如+3G，也可以直接回车默认最大
+# 不要删除标识！不要删除标识！不要删除标识！选择n！
+n
+# 输入w写入磁盘
+w
+
+fdisk -l #查看分区效果
+这里不用重新设置losetup和resize2fs
+
+#调整根文件系统的大小，一行一行执行
+LOOP="$(losetup -n -O NAME | sort | sed -n -e "1p")"
+ROOT="$(losetup -n -O BACK-FILE ${LOOP} | sed -e "s|^|/dev|")"
+OFFS="$(losetup -n -O OFFSET ${LOOP})"
+LOOP="$(losetup -f)"
+losetup -o ${OFFS} ${LOOP} ${ROOT}
+fsck.f2fs -y -f ${LOOP}
+mount ${LOOP} /mnt
+umount ${LOOP}
+resize.f2fs ${LOOP}
+#重启生效
+reboot
+
+
+
+openwrt添加samba局域网共享
+-----------------------
+https://doc.embedfire.com/openwrt/user_manal/zh/latest/User_Manual/openwrt/samba.html
+
+opkg update
+opkg install shadow-useradd luci-app-samba4
+
+useradd samba #添加名为samba的用户
+smbpasswd -a samba #为用户samba创建smb服务的密码
+
+mkdir -p /mnt/smbfs #创建一个文件夹用于samba共享
+chown -R samba:samba /mnt/smbfs #使用户samba获得文件夹权限
+
+网络中添加配置
+
+
+samba用户操作
+------------
+
+useradd samba #添加名为samba的用户
+
+smbpasswd -a samba #为用户samba创建smb服务的密码
+
+查看samba服务器中已拥有哪些用户：
+pdbedit -L
+
+删除samba服务中的某个用户
+smbpasswd -x   用户名
 
 ///////////////////////////////////////////////////////////////////  ssr结束
 
@@ -1732,6 +1821,30 @@ root@c77:~# usermod -d /data/ftp ftpuser  // 设置为用户的主目录
 
 
 
+查看用户
+----------
+查看用户
+cat /etc/passwd
+
+查看用户组
+cat /etc/group
+
+查看当前活跃的用户列表
+w
+
+#对于 cat /etc/passwd 的替换（cat的信息tai杂乱）
+cat /etc/passwd|grep -v nologin|grep -v halt|grep -v shutdown|awk -F":" '{ print $1"|"$3"|"$4 }'|more
+
+
+删除用户
+--------
+删除linux某个用户
+userdel   用户名
+
+删除linux中某个用户所有信息
+userdel -r  用户名
+
+
 > tee
 --------
 ls | tee /Users/captain/Desktop/i.txt
@@ -1898,6 +2011,7 @@ reboot  -n：重开机之前不检查是否有未结束的程序；
 reboot  -w：仅做测试，并不真正将系统重新开机，只会把重开机的数据写入/var/log目录下的wtmp记录文件
 init 6 :重启
 
+openwrt关机命令： poweroff
 
 系统运行级别：
 ---------------
@@ -3466,9 +3580,13 @@ https://firmware.koolshare.cn/LEDE_X64_fw867/
 
 X86 LEDE:
 https://www.right.com.cn/FORUM/forum.php?mod=viewthread&tid=252795
-https://downloads.openwrt.org/releases/17.01.4/targets/x86/64/combined-ext4.img.gz
-https://downloads.openwrt.org/releases/18.06.2/targets/x86/64/combined-ext4.img.gz
+https://downloads.openwrt.org/releases/19.07.9/targets/x86/64/openwrt-19.07.9-x86-64-combined-squashfs.img.gz
 
+combined-ext4.img.gz（rootfs工作区存储格式为ext4。）
+combined-squashfs.img.gz（squashfs相当于可以恢复出厂设置的固件，如果使用中配置错误，可直接恢复默认设置。）
+generic-rootfs.tar.gz（rootfs的镜像，不带引导，可自行定义用grub或者syslinux来引导。）
+rootfs-ext4.img.gz（rootfs的镜像，不带引导，可自行定义用grub或者syslinux来引导，需要存储区是ext4。）
+rootfs-squashfs.img.gz（rootfs的镜像，不带引导，可自行定义用grub或者syslinux来引导，如果使用中配置错误，可直接恢复默认设置。）
 
 支持路由：
 ------------------

@@ -1,5 +1,5 @@
 #!/bin/sh
-# last update:2020/1/4,captain wang 
+# last update:2020/1/4,captain wang
 cd ~
 # chinadns
 echo "start to update chinadns..."
@@ -20,7 +20,7 @@ echo "start to update China-list, GfwList..."
 # sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -s ss_spec_dst_bp -o /etc/dnsmasq.d/accelerated-domains.china.conf
 
 # with not-full dnsmasq--suggested:
-sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -o /etc/dnsmasq.d/accelerated-domains.china.conf
+sh generate_dnsmasq_chinalist.sh -d 183.221.253.100 -p 53 -o /etc/dnsmasq.d/accelerated-domains.china.conf
 
 
 # GfwList

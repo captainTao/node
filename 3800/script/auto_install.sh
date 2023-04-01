@@ -73,7 +73,7 @@ if echo ${INS_SO} | grep -qi "^y"; then
 	opkg install simple-obfs
 fi
 
-if echo ${INS_MWAN} | grep -qi "^y"; then	
+if echo ${INS_MWAN} | grep -qi "^y"; then
 	opkg install kmod-macvlan
 	opkg install mwan3
 	if [ "$LuCI" = "yes" ]; then
@@ -105,7 +105,7 @@ opkg install coreutils-base64 ca-certificates ca-bundle curl libustream-mbedtls
 opkg install libustream-mbedtls wget curl  #如果要用https,就需要tls
 
 
-# 禁用ipv6,并开启fast tcp 
+# 禁用ipv6,并开启fast tcp
 echo "net.ipv6.conf.all.disable_ipv6=1
 net.ipv6.conf.default.disable_ipv6=1
 net.ipv4.tcp_fastopen = 3" >> /etc/sysctl.conf
@@ -134,13 +134,13 @@ curl -L -o gfwlist2dnsmasq.sh https://github.com/cokebar/gfwlist2dnsmasq/raw/mas
 chmod +x gfwlist2dnsmasq.sh
 
 # China-list, 建议把114.114.114.114更新为你当前运营商的dns
-sh generate_dnsmasq_chinalist.sh -d 114.114.114.114 -p 53 -o /etc/dnsmasq.d/accelerated-domains.china.conf
+sh generate_dnsmasq_chinalist.sh -d 183.221.253.100 -p 53 -o /etc/dnsmasq.d/accelerated-domains.china.conf
 # GfwList
 sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -o /etc/dnsmasq.d/dnsmasq_gfwlist.conf
 # Restart dnsmasq
 
 #设置dns缓存，企业用的话不建议下面选项
-echo "min-cache-ttl=3600" >> /etc/dnsmasq.conf
+#echo "min-cache-ttl=3600" >> /etc/dnsmasq.conf
 
 #重启dnsmasq
 /etc/init.d/dnsmasq restart
