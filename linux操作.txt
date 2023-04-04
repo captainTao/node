@@ -1478,6 +1478,23 @@ linux 下：
 netstat lntp
 netstat lnup
 
+> ss
+---------------
+获取socket统计信息，输出跟netstat很像
+类似还有 cat /proc/net/tcp
+
+ss -ntulp
+参数：
+-t: tcp
+-u: udp
+-l: listen
+-a: all
+-n: number数字格式
+-p: 显示pid
+-m: 内存
+-o: 计时器信息
+-r: -resovle 把ip解释为域名，把端口解释为协议
+
 
 > grep
 -----------------------
