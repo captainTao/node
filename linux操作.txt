@@ -878,6 +878,10 @@ uci get dhcp.@dnsmasq[0].confdir
 uci add_list dhcp.@dnsmasq[0].confdir=/etc/dnsmasq.d
 uci commit dhcp
 
+对应的删除操作为：
+uci del_list dhcp.@dnsmasq[0].confdir=/etc/dnsmasq.d
+uci commit dhcp
+
 uci get dhcp.@dnsmasq[0].cachesize  //获取缓存条数
 如果返回值为 uci: Entry not found ，则执行（缓存条数酌情设置）：
 uci add_list dhcp.@dnsmasq[0].cachesize=10000
@@ -933,7 +937,7 @@ opkg install ca-certificates ca-bundle
 
 安装full依赖
 opkg install dnsmasq-full
-手动下载dnsmaq-full
+手动下载dnsmasq-full
 https://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a9_vfpv3/base/dnsmasq-full_2.80-1_arm_cortex-a9_vfpv3.ipk
 
 https://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/dnsmasq-full_2.80-16.3_x86_64.ipk
@@ -1012,6 +1016,7 @@ opkg install luci luci-base luci-compat
 11.添加去除广告的插件或者host
 12.对未格式化磁盘进行扩容
 13.添加samba局域网共享
+14.配置静态路由
 
 
 
@@ -1206,6 +1211,15 @@ pdbedit -L
 
 删除samba服务中的某个用户
 smbpasswd -x   用户名
+
+
+配置静态路由：
+-------------
+https://cloud.tencent.com/developer/article/1631304
+https://openwrt.org/docs/guide-user/network/routing/routes_configuration
+network -static routers -add
+     路由的网段                     路由的ip地址
+lan, 192.168.3.0/24 255.255.255.0 192.168.2.207
 
 ///////////////////////////////////////////////////////////////////  ssr结束
 
@@ -7507,3 +7521,7 @@ sudo apt-get remove nginx-full nginx-common
 #重启nginx,重启失败，说明已成功卸载nginx
 sudo service nginx restart
 
+
+旁路由
+--------
+https://www.youtube.com/watch?v=w7rwNF2Q3lM
