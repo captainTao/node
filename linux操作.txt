@@ -2776,15 +2776,59 @@ chmod +x unixbench.sh
 ./unixbench.sh
 
 
+> hostname
+----------------
+查看主机hostname
+
+
 > trace:
 --------------------
 源码位于：\kernel\trace\trace.c
 
 
+> route -n:
+--------------------
+查看当前路由表
+
+
+> 设置静态路由static router:
+--------------------------
+https://blog.csdn.net/csdn_T996/article/details/124111153
+添加静态路由
+route add -net 192.168.200.0/24 gw 192.168.190.1
+删除静态路由
+route del -net 192.168.200.0/24
+添加默认网关
+route add default gw 192.168.190.1
+删除默认网关
+route del default gw 192.168.190.1
+
+查看网络信息
+------------
+netstat -alntpur
+ping
+ifconfig
+ping -c 5 -i 0.5 192.168.190.1  #预设值为0.5s一次
+nslookup
+
+
+/etc/resolv.conf
+-----------------
+DNS配置信息，最多可以指定3个不同的，超过3个以上被忽略
+nameserver 114.114.114.114
+nameserver 19.168.190.1
+
+/etc/hosts
+--------------
+主机网络映射文件
+xx.xx.xx.xx  域名
+
+
 > traceroute
 -----------------------
 http://man.linuxde.net/traceroute
-traceroute www.baidu.com          // 默认参数为-q, 默认三次探测数据包向每个网关发送三个数据包，网关响应返回的时间
+traceroute www.baidu.com          // 默认参数为-q, 默认三次探测数据包向每个网关发送三个数据包，网关响应返回的时间，对于无法响应的结点，连接状态将显示为“*”
+
 traceroute www.google.com
 
 -d：使用Socket层级的排错功能；
@@ -3824,7 +3868,6 @@ test:
 子网访问父网的局域网
 -------------------
 https://gist.github.com/willwhui/eb4df8c41110f0c10286001be19bb12e
-http://vod.sjtu.edu.cn/help/Article_Print.asp?ArticleID=1095
 ~: route  /route -n
 ~: route add -net 192.168.1.0 netmask 255.255.255.0 gw 192.168.31.231
 //* 目的ip=192.168.10.0，掩码：255.255.255.0，下一跳：路由器Y自身ip
