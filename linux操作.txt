@@ -618,6 +618,9 @@ net.core.default_qdisc = fq
 lsmod | grep bbr
 返回值有 tcp_bbr 模块即说明 bbr 已启动。注意：并不是所有的 VPS 都会有此返回值，若没有也属正常。
 
+查询当前使用的 TCP 拥塞控制算法
+sysctl net.ipv4.tcp_congestion_control
+
 
 ss,ssr问题排查：
 --------------------------------------
@@ -1017,6 +1020,9 @@ opkg install luci luci-base luci-compat
 12.对未格式化磁盘进行扩容
 13.添加samba局域网共享
 14.配置静态路由
+15.设置动态ddns
+16.启动socks5代理
+17.内网穿透
 
 
 
@@ -1098,8 +1104,8 @@ else
 fi
 
 
-关闭路由器openwrt LED脚本
------------------------
+关闭led 路由器openwrt LED脚本
+------------------------
 https://blog.csdn.net/weixin_34034670/article/details/89770540
 #!/bin/ash
 for i in `ls /sys/class/leds`
@@ -1220,6 +1226,112 @@ https://openwrt.org/docs/guide-user/network/routing/routes_configuration
 network -static routers -add
      路由的网段                     路由的ip地址
 lan, 192.168.3.0/24 255.255.255.0 192.168.2.207
+
+
+设置动态DNS
+----------
+opkg update
+opkg install ddns-scripts
+opkg install ddns-scripts_xxxxx     //供应商指定的ddns包
+opkg install wget ca-certificates
+opkg install curl ca-bundle
+
+
+设置为socks5 server
+-----------------
+opkg install socksify
+opkg install srelay 3proxy goproxy
+
+
+sockd
+-------
+http://www.inet.no/dante/doc/1.4.x/config/server.html
+opkg update
+opkg install sockd
+
+vim /etc/sockd.conf
+-----------------
+internal: eth0 port = 1080
+external: eth0
+
+socksmethod: username
+
+user.unprivileged: nobody
+user.privileged: root
+
+client pass {
+from: 0.0.0.0/0 to: 0.0.0.0/0
+log: error
+}
+
+socks pass {
+from: 0.0.0.0/0 to: 0.0.0.0/0
+command: connect
+log: error
+socksmethod: username
+}
+
+运行：
+sockd -D
+可以把此命令写入到开机命令中去
+
+加入开机启动项：
+/etc/init.d/中加入脚本 vim sockd：
+
+#!/bin/sh /etc/rc.common
+START=95
+STOP=15
+
+start() {
+    sockd -D
+}
+
+创建软连接，加入到/etc/rc.d目录
+> /etc/init.d/sockd enable
+启动
+> /etc/init.d/sockd start
+
+
+
+用microsocks
+------------
+这个里面有microsocks的包
+https://github.com/xiaorouji/openwrt-passwall/releases/download/4.63-5/passwall_packages_ipk_x86_64.zip
+
+命令直接执行
+> microsocks -p 都口号 -u 用户名 -P 密码 &>/dev/null &
+
+加入开机启动项：
+/etc/init.d/中加入脚本 vim socks5：
+
+#!/bin/sh /etc/rc.common
+START=95
+STOP=15
+
+start() {
+microsocks -p 1788 -u open -P socks5 &>/dev/null &
+}
+
+创建软连接，加入到/etc/rc.d目录
+> /etc/init.d/socks5 enable
+启动
+> /etc/init.d/socks5 start
+
+
+
+内网穿透
+-----------
+DingTalk Design CLI、花生壳、Natap 等工具
+
+
+花生壳
+https://service.oray.com/question/20547.html
+https://hsk.oray.com/download
+安装软件程序：
+opkg install phtunnel.ipk
+
+安装界面程序：
+opkg install phtunnel-luci-app.ipk
 
 ///////////////////////////////////////////////////////////////////  ssr结束
 
@@ -3508,7 +3620,22 @@ Virtualbox安装img:
 转换img文件为vdi,然后用已经存在的磁盘进行加载
 VBoxManage convertdd file.img file.vdi
 
+在转为vdi的过程中报如下错；
+VBoxManage: error: VD: The given disk size 20408912 is not aligned on a sector boundary (512 bytes)
+说明转换的size不是512的整数倍
+即20408912/512不是整数，我们调整给你磁盘为512的整数，并且适当大一些，留一点空间
+int(20408912/512) *512*10 = 这个为我们最后调整的size大小
+
+下面为调整的命令
+dd if=openwrt1.img of=openwrt.img bs=204093440 conv=sync
+
+
 StarWind V2V Image Converter可以把img转换为vmdk,win中使用
+
+转img为vmdk
+-------------
+brew install qemu
+qemu-img convert -f raw 原镜像文件名.img -O vmdk 新镜像文件名.vmdk
 
 
 virtualbox安装opt:
@@ -3519,6 +3646,36 @@ https://blog.csdn.net/lvshaorong/article/details/80935503
 VMware安装openwrt:
 ------------------
 http://www.360doc.com/content/19/0227/05/14775740_817794211.shtml
+
+
+虚拟机旁路由：
+-------------
+https://www.bilibili.com/video/BV1vt4y1x72t/?spm_id_from=333.337.search-card.all.click&vd_source=a1dfcf74d6c6fdf658e1330446307e56
+
+1.设置虚拟机的lan ip为电脑网络的同网段
+2.设置虚拟机的网络为桥接模式，bridge
+3.设置虚拟机lan口的网关为主路由，dns解析地址为主路由，关闭旁路由dhcp
+
+4.防火墙：
+关闭SYN-flood防御
+关闭FullCore-NAT
+启用lan -> wan的Ip动态伪装
+保存设置
+
+5.非嵌入式设置：
+网关和DNS设置为旁路由即可
+
+windows的子网前缀设置为24
+
+
+旁路由设置
+--------
+https://www.youtube.com/watch?v=w7rwNF2Q3lM
+
+
+将dmg转为iso
+------------
+hdiutil convert xx.dmg -format UDTO -o xx.iso
 
 
 unbuntu终端terminal中移动定位光标位置：
@@ -3564,6 +3721,8 @@ https://www.zhihu.com/question/21359049
 
 NAS服务:
 https://www.zhihu.com/question/21359049
+
+目前主流的文件共享方案有FTP、SFTP、SMB、NFS和WebDav
 
 uci命令
 ----------------
@@ -7503,7 +7662,7 @@ vi /etc/danted/sockd.conf
 client pass {
         from: 0.0.0.0/0  to: 0.0.0.0/0
 }
-
+http://openwrt-dist.sourceforge.net/packages/luci/Packages.sig
 卸载：
 bash install.sh --uninstall
 
@@ -7555,6 +7714,7 @@ command: connect
 log: error
 socksmethod: username
 }
+
 4.启动服务
 service danted start
 5.新建账户
@@ -7582,6 +7742,15 @@ sudo apt-get remove nginx-full nginx-common
 sudo service nginx restart
 
 
-旁路由
---------
-https://www.youtube.com/watch?v=w7rwNF2Q3lM
+
+centos 安装apache
+-----------------
+安装Apache:
+# yum -y install httpd
+添力linux用户＆设置密码：
+# adduser -d /var/www/html siteadmin
+# passwd siteadmin
+修改目录权限
+# chown -Rf siteadmin.siteadmin /var/www/html
+启动Apache:
+# service httpd start
