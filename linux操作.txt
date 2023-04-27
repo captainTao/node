@@ -1249,6 +1249,7 @@ http://www.inet.no/dante/doc/1.4.x/config/server.html
 opkg update
 opkg install sockd
 
+
 vim /etc/sockd.conf
 -----------------
 internal: eth0 port = 1080
@@ -1317,6 +1318,7 @@ microsocks -p 1788 -u open -P socks5 &>/dev/null &
 启动
 > /etc/init.d/socks5 start
 
+也可以直接把开机启动命令放/etc/rc.local
 
 
 内网穿透
@@ -7219,6 +7221,31 @@ RestartSec=10
 WantedBy=multi-user.target
 
 
+设置trojan为ws的传输：
+https://p4gefau1t.github.io/trojan-go/basic/full-config/
+
+用ws配置：
+{
+    "run_type": "server",
+    "local_addr": "0.0.0.0",
+    "local_port": 443,
+    "remote_addr": "127.0.0.1",
+    "remote_port": 80,
+    "password": [
+        "your_awesome_password"
+    ],
+    "ssl": {
+        "cert": "/root/trojan/server.crt",
+        "key": "/root/trojan/server.key"
+    },
+    "websocket": {
+        "enabled": true,
+        "path": "/down",
+        "host": "hostname.com"
+    }
+}
+
+
 nginx监听443端口
 ----------------
 https://blog.csdn.net/finally_vince/article/details/127884546
@@ -7656,7 +7683,7 @@ bash install.sh  --port=端口 --user=用户名 --passwd=密码
 一般使用IP和用户名密码即可使用
 如果需要固定IP或IP段，可以修改配置文件设置白名单
 
-vi /etc/danted/sockd.conf
+vim /etc/danted/sockd.conf
 修改以下代码，改成你需要设置的白名单IP或IP段即可，然后重启使其生效；
 
 client pass {
@@ -7754,3 +7781,27 @@ centos 安装apache
 # chown -Rf siteadmin.siteadmin /var/www/html
 启动Apache:
 # service httpd start
+
+
+ubuntu搭建http服务器
+-------------------
+sudo apt-get update
+apt-get install tinyproxy
+
+vim /etc/tinyproxy/tinyproxy.conf
+
+Port 8888 #预设是8888 Port,你可以更改
+Allow 127.0.0.1 #将127.0.0.1改成你自己的IP
+#例如你的IP 是1.2.3.4,你改成Allow 1.2.3.4,那只有你才可以连上这个Proxy
+#若你想任何IP都可以链接到Proxy在Allow前面打#注释
+
+打开关闭和重启服务
+也可以使用systemctl
+service tinyproxy start/restart/stop
+
+链接测试：
+在另外一台客户机测试
+curl -x <IP>:<PORT> www.baidu.com
+
+备注：
+微信使用的网络代理可以是socks5或者http服务器，但整理效果来看socks5链接速度大于http
