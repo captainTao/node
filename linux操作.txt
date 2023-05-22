@@ -7754,3 +7754,17 @@ centos 安装apache
 # chown -Rf siteadmin.siteadmin /var/www/html
 启动Apache:
 # service httpd start
+
+
+windows ssh协议
+----------------
+workbench
+putty
+finalshell
+secureCRT
+xshell
+
+
+SFTP协议
+-----------
+filezilla
