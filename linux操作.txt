@@ -7783,7 +7783,7 @@ centos 安装apache
 # service httpd start
 
 
-<<<<<<< HEAD
+
 windows ssh协议
 ----------------
 workbench
