@@ -7708,7 +7708,7 @@ service sockd adduser   /etc/init.d/sockd adduser   添加pam-auth用户：servi
 service sockd deluser   /etc/init.d/sockd deluser   删除pam-auth用户：service sockd deluser NAME
 
 
-手动搭建
+手动搭建socks5(目前用的这个)
 ----------
 https://linuxhint.com/set-up-a-socks5-proxy-on-ubuntu-with-dante/
 
