@@ -5692,6 +5692,7 @@ https://blog.csdn.net/feiwutudou/article/details/79057647
 sudo apachectl stop
 sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist 2>/dev/null
 
+管理apache服务
 $ sudo apachectl start
 $ sudo apachectl stop
 $ sudo apachectl -k restart   （-k意味着强制）
@@ -5706,28 +5707,69 @@ vim /usr/local/etc/httpd/httpd.conf
 修改：
 1. Listen 80
 2. DocumentRoot, Directory为目录
-3. AllowOverride All （在Document这个里面）
-4. ServerName 127.0.0.1:80
-5. 取消注释rewrite_mod这行
+3. 如下文件内容AllowOverride 改为All
+# AllowOverride controls what directives may be placed in .htaccess files.
+# It can be "All", "None", or any combination of the keywords:
+#   AllowOverride FileInfo AuthConfig Limit                                         
+#
+AllowOverride All （在Document这个里面）
+
+4. 取消注释mod_rewrite.so这行
+5. ServerName 127.0.0.1:80 (或者改为localhost)
+
 
 brew services restart httpd/apache2
 或者：
 sudo apachectl restart
 
-(apache2的目录：/private/etc/apache2/httpd.conf)
+
+apache工作目录：/usr/local/var/www/
 
 
+mac自带apache和php服务
+---------------------
+https://blog.csdn.net/qq_41659353/article/details/121769393
+
+apache:
+启动: sudo apachectl start
+自带apache的配置文件： sudo vi /etc/apache2/httpd.conf
+
+php:
+配置 apache 配置文件
+1、输入 sudo vi /etc/apache2/httpd.conf
+2、找到 #LoadModule php7_module libexec/apache2/libphp7.so 将 # 删除保存
+
+启用Php
+1、复制php.ini
+在终端中输入cd /etc/后回车，然后输入sudo cp php.ini.default php.ini即可
+2、检测php是否成功
+新建一个文件，命名为test.php，里面内容为<?php echo"PHP启用成功啦！"?>
+将文件拖入/etc/Library/WebServer/Documents/目录下，这是Apache的默认访问目录
+然后在浏览器中输入http://localhost/test.php看到“PHP启用成功啦！”的文字，就代表成功了。
+
+修改 apache 默认根目录
+打开配置文件, 找到 DocumentRoot 以及 标签
+sudo vi /etc/apache2/httpd.conf
+修改成自己的项目目录
+DocumentRoot "/Users/chenyang/Code/Web"
+<Directory "/Users/chenyang/Code/Web">
+
+
+
+vhost
+-------
 https://www.jianshu.com/p/d6207118c577
 系统的vhosts目录
 /private/etc/apache2/extra/httpd-vhosts.conf
 homebrew安装的vhost目录
 /usr/local/etc/httpd/extra/httpd-vhosts.conf
 
+
 mac php
 ---------
 https://blog.csdn.net/qq285744011/article/details/103729227/
 
-httd.conf中添加：
+/usr/local/etc/httpd/httpd.conf中添加：
 LoadModule php7_module /usr/local/opt/php/lib/httpd/modules/libphp7.so
 <FilesMatch \.php$>
     SetHandler application/x-httpd-php
@@ -5757,6 +5799,24 @@ brew services restart apache2
 php -m
 php -i
 
+
+安装不维护的php
+--------------
+https://blog.csdn.net/lxy4239/article/details/129497198
+//将第三方仓库加入brew
+brew tap shivammathur/php
+//安装PHP
+brew install shivammathur/php/php@7.4
+
+//替换Mac自带PHP环境并刷新环境变量
+Linking /usr/local/Cellar/php@7.4/7.4.29.reinstall... 25 symlinks created.
+
+If you need to have this software first in your PATH instead consider running:
+ echo 'export PATH="/usr/local/opt/php@7.4/bin:$PATH"' >> ~/.zshrc
+ echo 'export PATH="/usr/local/opt/php@7.4/sbin:$PATH"' >> ~/.zshrc ```
+//刷新执行
+source ~/.zshrc
+php -v
 
 
 配置mac owncloud
