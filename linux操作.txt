@@ -5726,6 +5726,32 @@ sudo apachectl restart
 apache工作目录：/usr/local/var/www/
 
 
+vhost位置
+----------
+https://www.jianshu.com/p/d6207118c577
+系统的vhosts目录
+/private/etc/apache2/extra/httpd-vhosts.conf
+homebrew安装的vhost目录
+/usr/local/etc/httpd/extra/httpd-vhosts.conf
+
+
+格式：
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName owncloud
+    ServerAlias www.owncloud
+    DocumentRoot /usr/local/var/www/owncloud
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+检测apache2语法：
+apache2ctl configtest
+重新加载并更新：
+sudo systemctl reload apache2
+
+
+
 mac自带apache和php服务
 ---------------------
 https://blog.csdn.net/qq_41659353/article/details/121769393
@@ -5754,15 +5780,6 @@ sudo vi /etc/apache2/httpd.conf
 DocumentRoot "/Users/chenyang/Code/Web"
 <Directory "/Users/chenyang/Code/Web">
 
-
-
-vhost
--------
-https://www.jianshu.com/p/d6207118c577
-系统的vhosts目录
-/private/etc/apache2/extra/httpd-vhosts.conf
-homebrew安装的vhost目录
-/usr/local/etc/httpd/extra/httpd-vhosts.conf
 
 
 mac php
@@ -5825,6 +5842,8 @@ php -v
 2.brew install apache2 php@7.2 mysql
 3.配置apache文件，sql(我这里用的8，推荐用5.7或者更早的版本，后面的版本一堆问题)
 4.下载owncloud，解压到apache工作目录
+下载地址：
+https://download.owncloud.com/server/stable/?sort=time&order=desc
 5.设置其他插件
 
 owncloud登录背景图的路径： owncloud/core/img/backgroud
@@ -5835,6 +5854,14 @@ wget
 -------------
 wget url  #下载文件
 
+mac mysql
+----------
+系统安装的mysql，非brew安装
+dmg下载网址：
+https://downloads.mysql.com/archives/community/
+catalina最高支持5.7.29
+安装：
+https://www.cnblogs.com/liyihua/p/12306159.html
 
 
 mysql安装
@@ -5875,7 +5902,7 @@ GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'Zhuniu1210*';
 // sql8.x不能直接像上述授权的时候，创建用户，在mac系统通所有版本也不能上述操作
 
 
-// 创建用户并授权1 (注意用户名和密码不能一直，不然报错。) ---推荐这个，sql8是先创建用户，再授权. 8之前的版本可以创建同时并授权
+// 创建用户并授权1 (注意用户名和密码不能一致，不然报错。) ---推荐这个，sql8是先创建用户，再授权. 8之前的版本可以创建同时并授权
 CREATE USER 'foo'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bar';
 GRANT ALL PRIVILEGES ON database_name.* TO 'owncloud'@'localhost' WITH GRANT OPTION;
 
