@@ -5847,7 +5847,12 @@ https://download.owncloud.com/server/stable/?sort=time&order=desc
 5.设置其他插件
 
 owncloud登录背景图的路径： owncloud/core/img/backgroud
-域名配置地址：owncloud/config/config.php  array()里面增加域名
+域名配置地址：owncloud/config/config.php  'trusted_domains' array()里面增加域名
+array (
+    0 => 'localhost',
+    1 => '192.168.3.113',
+    2 => 'mynas.com',
+  ),
 
 
 wget
