@@ -6,7 +6,7 @@ calculable, foreseeable
 resemble, favor
 outstanding debts 未偿还的债务
 substitude fuel 代用燃料
-devote to, commit oneself to, bend oneself to 
+devote to, commit oneself to, bend oneself to
 indifferent, neutral, insignificant
 speak evil of,说 话
 evil spirit 恶魔，妖精
@@ -15,7 +15,7 @@ ancient chinese 古汉语
 ancient times, ancient city
 from generation to generation 代代相传
 power generation 发电设备,发电量
-demonstrate, prove, give evidence of 
+demonstrate, prove, give evidence of
 apply oneself 致力于
 apply for a job
 without reservation 毫无保留地
@@ -91,7 +91,7 @@ cooling down
 heating up
 As mentioned,
 it certainly doesn’t hurt to try it
-file a petition 提交请愿书 
+file a petition 提交请愿书
 be more likely to 更可能
 I will be much more willing to help you
 it will help me fund new equipment and devices that will help further my android development. Every single donation is appreciated
@@ -170,7 +170,7 @@ paper mill
 plant, mill
 economic prosperity 经济繁荣
 common prosperity 共同富裕
-equivalent, substantial, 
+equivalent, substantial,
 ahead of schedule 提前
 on schedule 准时
 generate profit/electricity
@@ -199,7 +199,7 @@ remain, maintain
 adversity, adversely, advisory, dilemma, diploma
 respire(v),inspire(v), breathe(v),breath(n)
 counsel(v,n.忠告建议), conseling(v,n.咨询服务) concil(n.会议)
-consistent(adj.一致性的), conscience(n.良心), consensus(n.一致, 合意), conscious(adj.意识清楚的), consciousness(n.意识), consent(v,n.同意), 
+consistent(adj.一致性的), conscience(n.良心), consensus(n.一致, 合意), conscious(adj.意识清楚的), consciousness(n.意识), consent(v,n.同意),
 conscientious(adj,勤勉认真的，细心负责的)
 setting, circumstance, context
 deliver, publicize
@@ -349,7 +349,7 @@ in the mood 兴致勃勃
 in no mood to do...
 complaint center 投诉中心
 interracial marriage 异族通婚
-mutual benefit 
+mutual benefit
 new/proccessing technique
 pull the trigger
 sustainable development/growth
@@ -363,7 +363,7 @@ blood donation
 snack bar 小吃店
 go into exile 流放
 in stock
-stock with 
+stock with
 out of stock
 make a pledge/vow 宣誓
 cash pledge 押金
@@ -433,7 +433,7 @@ depressed area 贫穷地区
 depressed market 萧条市场
 obstacle course 障碍训练
 gambling house/debts/ben 赌场，债务
-theory,理论 therapy治疗 
+theory,理论 therapy治疗
 authoritative information/source  ../权威人士，来源
 smooth operation正常运转
 smooth muscle 平滑肌
@@ -721,7 +721,7 @@ fishing tackle,渔具
 >tackle box 工具箱，钓鱼盒
 ministry of finace
 public finace 财政学
-international finace 
+international finace
 financial system/management/crisis
 in fine.最终
 monetary penaty/policy. 罚款/货币政策

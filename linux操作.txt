@@ -5692,6 +5692,7 @@ https://blog.csdn.net/feiwutudou/article/details/79057647
 sudo apachectl stop
 sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist 2>/dev/null
 
+管理apache服务
 $ sudo apachectl start
 $ sudo apachectl stop
 $ sudo apachectl -k restart   （-k意味着强制）
@@ -5706,28 +5707,86 @@ vim /usr/local/etc/httpd/httpd.conf
 修改：
 1. Listen 80
 2. DocumentRoot, Directory为目录
-3. AllowOverride All （在Document这个里面）
-4. ServerName 127.0.0.1:80
-5. 取消注释rewrite_mod这行
+3. 如下文件内容AllowOverride 改为All
+# AllowOverride controls what directives may be placed in .htaccess files.
+# It can be "All", "None", or any combination of the keywords:
+#   AllowOverride FileInfo AuthConfig Limit                                         
+#
+AllowOverride All （在Document这个里面）
+
+4. 取消注释mod_rewrite.so这行
+5. ServerName 127.0.0.1:80 (或者改为localhost)
+
 
 brew services restart httpd/apache2
 或者：
 sudo apachectl restart
 
-(apache2的目录：/private/etc/apache2/httpd.conf)
+
+apache工作目录：/usr/local/var/www/
 
 
+vhost位置
+----------
 https://www.jianshu.com/p/d6207118c577
 系统的vhosts目录
 /private/etc/apache2/extra/httpd-vhosts.conf
 homebrew安装的vhost目录
 /usr/local/etc/httpd/extra/httpd-vhosts.conf
 
+
+格式：
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName owncloud
+    ServerAlias www.owncloud
+    DocumentRoot /usr/local/var/www/owncloud
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+检测apache2语法：
+apache2ctl configtest
+重新加载并更新：
+sudo systemctl reload apache2
+
+
+
+mac自带apache和php服务
+---------------------
+https://blog.csdn.net/qq_41659353/article/details/121769393
+
+apache:
+启动: sudo apachectl start
+自带apache的配置文件： sudo vi /etc/apache2/httpd.conf
+
+php:
+配置 apache 配置文件
+1、输入 sudo vi /etc/apache2/httpd.conf
+2、找到 #LoadModule php7_module libexec/apache2/libphp7.so 将 # 删除保存
+
+启用Php
+1、复制php.ini
+在终端中输入cd /etc/后回车，然后输入sudo cp php.ini.default php.ini即可
+2、检测php是否成功
+新建一个文件，命名为test.php，里面内容为<?php echo"PHP启用成功啦！"?>
+将文件拖入/etc/Library/WebServer/Documents/目录下，这是Apache的默认访问目录
+然后在浏览器中输入http://localhost/test.php看到“PHP启用成功啦！”的文字，就代表成功了。
+
+修改 apache 默认根目录
+打开配置文件, 找到 DocumentRoot 以及 标签
+sudo vi /etc/apache2/httpd.conf
+修改成自己的项目目录
+DocumentRoot "/Users/chenyang/Code/Web"
+<Directory "/Users/chenyang/Code/Web">
+
+
+
 mac php
 ---------
 https://blog.csdn.net/qq285744011/article/details/103729227/
 
-httd.conf中添加：
+/usr/local/etc/httpd/httpd.conf中添加：
 LoadModule php7_module /usr/local/opt/php/lib/httpd/modules/libphp7.so
 <FilesMatch \.php$>
     SetHandler application/x-httpd-php
@@ -5758,6 +5817,24 @@ php -m
 php -i
 
 
+安装不维护的php
+--------------
+https://blog.csdn.net/lxy4239/article/details/129497198
+//将第三方仓库加入brew
+brew tap shivammathur/php
+//安装PHP
+brew install shivammathur/php/php@7.4
+
+//替换Mac自带PHP环境并刷新环境变量
+Linking /usr/local/Cellar/php@7.4/7.4.29.reinstall... 25 symlinks created.
+
+If you need to have this software first in your PATH instead consider running:
+ echo 'export PATH="/usr/local/opt/php@7.4/bin:$PATH"' >> ~/.zshrc
+ echo 'export PATH="/usr/local/opt/php@7.4/sbin:$PATH"' >> ~/.zshrc ```
+//刷新执行
+source ~/.zshrc
+php -v
+
 
 配置mac owncloud
 -----------------
@@ -5765,16 +5842,31 @@ php -i
 2.brew install apache2 php@7.2 mysql
 3.配置apache文件，sql(我这里用的8，推荐用5.7或者更早的版本，后面的版本一堆问题)
 4.下载owncloud，解压到apache工作目录
+下载地址：
+https://download.owncloud.com/server/stable/?sort=time&order=desc
 5.设置其他插件
 
 owncloud登录背景图的路径： owncloud/core/img/backgroud
-域名配置地址：owncloud/config/config.php  array()里面增加域名
+域名配置地址：owncloud/config/config.php  'trusted_domains' array()里面增加域名
+array (
+    0 => 'localhost',
+    1 => '192.168.3.113',
+    2 => 'mynas.com',
+  ),
 
 
 wget
 -------------
 wget url  #下载文件
 
+mac mysql
+----------
+系统安装的mysql，非brew安装
+dmg下载网址：
+https://downloads.mysql.com/archives/community/
+catalina最高支持5.7.29
+安装：
+https://www.cnblogs.com/liyihua/p/12306159.html
 
 
 mysql安装
@@ -5815,7 +5907,7 @@ GRANT ALL ON owncloud.* to 'owncloud'@'localhost' IDENTIFIED BY 'Zhuniu1210*';
 // sql8.x不能直接像上述授权的时候，创建用户，在mac系统通所有版本也不能上述操作
 
 
-// 创建用户并授权1 (注意用户名和密码不能一直，不然报错。) ---推荐这个，sql8是先创建用户，再授权. 8之前的版本可以创建同时并授权
+// 创建用户并授权1 (注意用户名和密码不能一致，不然报错。) ---推荐这个，sql8是先创建用户，再授权. 8之前的版本可以创建同时并授权
 CREATE USER 'foo'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bar';
 GRANT ALL PRIVILEGES ON database_name.* TO 'owncloud'@'localhost' WITH GRANT OPTION;
 
@@ -7708,7 +7800,7 @@ service sockd adduser   /etc/init.d/sockd adduser   添加pam-auth用户：servi
 service sockd deluser   /etc/init.d/sockd deluser   删除pam-auth用户：service sockd deluser NAME
 
 
-手动搭建
+手动搭建socks5(目前用的这个)
 ----------
 https://linuxhint.com/set-up-a-socks5-proxy-on-ubuntu-with-dante/
 
