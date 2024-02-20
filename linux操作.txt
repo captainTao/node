@@ -7924,6 +7924,31 @@ curl -x <IP>:<PORT> www.baidu.com
 微信使用的网络代理可以是socks5或者http服务器，但整理效果来看socks5链接速度大于http
 
 
+windows vnc软件
+-------------------
+https://www.laozuo.org/3854.html
+VNC Viewer（https://www.laozuo.org/1382.html）-有绿色版
+TightVNC（www.tightvnc.com）
+RealVNC -有破解和绿色版
+Ultra VNC （www.uvnc.com/downloads/ultravnc.html）
+TigerVNC（tigervnc.org）
+
+
+右键菜单切换到win10
+--------------------
+cmd运行：
+reg add HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32 /f /ve
+taskkill /f /im explorer.exe & start explorer.exe
+
+
+
+右键菜单切换到win11
+------------------
+cmd运行：
+reg.exe delete "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /va /f
+taskkill /f /im explorer.exe & start explorer.exe
+
+
 
 Excel:
 ===========================
@@ -7957,3 +7982,4 @@ https://support.microsoft.com/zh-cn/office/%E6%A3%80%E6%9F%A5%E5%8D%95%E5%85%83%
 https://zh-cn.extendoffice.com/excel/formulas/excel-formula-contains-specific-text.html
 isnumber(search(C3,B3)) not in case sensitive
 isnumber(find(C3,B3)) in case sensitive
+
