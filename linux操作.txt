@@ -510,6 +510,14 @@ ssh -p xx user@ip
 https://www.cnblogs.com/cloudiest/p/8485612.html
 
 
+
+mac中ssh连不上服务器
+-----------------
+在.ssh目录中建立文件 config,并输入下面内容
+Host *
+HostkeyAlgorithms +ssh-rsa
+PubkeyAcceptedKeyTypes +ssh-rsa
+
 /***********************************/  配置ssh
 
 google vps默认配置的密码登录和root登录为关闭状态，默认只能使用ssh，如需要开启，需要配置：https://mapgun.com/archives/2235
