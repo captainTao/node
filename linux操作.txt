@@ -5691,6 +5691,33 @@ uhttpd
 /etc/config/uhttpd
 
 
+centos 安装apache
+-----------------
+安装Apache:
+# yum -y install httpd
+添加linux用户＆设置密码：
+# adduser -d /var/www/html siteadmin
+# passwd siteadmin
+修改目录权限
+# chown -Rf siteadmin.siteadmin /var/www/html
+
+启动Apache:
+# service httpd start
+
+优雅的重启
+service httpd graceful
+service httpd graceful - stop
+
+设置为开机启动
+chkconfig httpd on
+安装目录
+/etc/httpd
+查看模块
+httpd -M
+查看静态编译程序的模块：
+httpd -l
+
+
 
 mac apache2
 -------------
@@ -7870,21 +7897,6 @@ sudo apt-get remove nginx-full nginx-common
 sudo service nginx restart
 
 
-
-centos 安装apache
------------------
-安装Apache:
-# yum -y install httpd
-添力linux用户＆设置密码：
-# adduser -d /var/www/html siteadmin
-# passwd siteadmin
-修改目录权限
-# chown -Rf siteadmin.siteadmin /var/www/html
-启动Apache:
-# service httpd start
-
-
-
 windows ssh协议
 ----------------
 workbench
@@ -7990,4 +8002,5 @@ https://support.microsoft.com/zh-cn/office/%E6%A3%80%E6%9F%A5%E5%8D%95%E5%85%83%
 https://zh-cn.extendoffice.com/excel/formulas/excel-formula-contains-specific-text.html
 isnumber(search(C3,B3)) not in case sensitive
 isnumber(find(C3,B3)) in case sensitive
+
 

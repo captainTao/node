@@ -764,3 +764,10 @@ https://blog.csdn.net/qq_43307074/article/details/127577575
 性能测试工具
 ------------
 nmon
+
+
+
+压力测试工具ab
+------------
+例：并发量为16， 请求为1w次
+ab - c 16 - n 10000 http://192.168.3.107/index.html 
