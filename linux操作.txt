@@ -5712,6 +5712,8 @@ service httpd graceful - stop
 chkconfig httpd on
 安装目录
 /etc/httpd
+工作目录：
+/var/www/html
 查看模块
 httpd -M
 查看静态编译程序的模块：
@@ -5828,7 +5830,7 @@ LoadModule php7_module /usr/local/opt/php/lib/httpd/modules/libphp7.so
 </FilesMatch>
 
 
-# 把“DirectoryIndex index.html”修改为：
+# 把“DirectoryIndex index.html”修改为：(这个是指定默认首页的，还可以添加比如abc.html)
 DirectoryIndex index.php index.html
 
 
