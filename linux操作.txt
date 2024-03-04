@@ -948,7 +948,27 @@ opkg install ca-certificates ca-bundle
 
 安装full依赖
 opkg install dnsmasq-full
-手动下载dnsmasq-full
+
+opkg install dnsmasq-full
+Installing dnsmasq-full (2.80-16.3) to root...
+Downloading http://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/dnsmasq-full_2.80-16.3_x86_64.ipk
+Installing libgmp10 (6.1.2-2) to root...
+Downloading http://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/libgmp10_6.1.2-2_x86_64.ipk
+Installing libnettle7 (3.5.1-1) to root...
+Downloading http://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/libnettle7_3.5.1-1_x86_64.ipk
+Installing libnfnetlink0 (1.0.1-3) to root...
+Downloading http://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/libnfnetlink0_1.0.1-3_x86_64.ipk
+Installing kmod-nf-conntrack-netlink (4.14.267-1) to root...
+Downloading http://downloads.openwrt.org/releases/19.07.9/targets/x86/64/packages/kmod-nf-conntrack-netlink_4.14.267-1_x86_64.ipk
+Installing libnetfilter-conntrack3 (2018-05-01-3ccae9f5-2) to root...
+Downloading http://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/libnetfilter-conntrack3_2018-05-01-3ccae9f5-2_x86_64.ipk
+Configuring libnfnetlink0.
+Configuring kmod-nf-conntrack-netlink.
+Configuring libnetfilter-conntrack3.
+Configuring libgmp10.
+Configuring libnettle7.
+
+也可以手动下载dnsmasq-full
 https://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a9_vfpv3/base/dnsmasq-full_2.80-1_arm_cortex-a9_vfpv3.ipk
 
 https://downloads.openwrt.org/releases/19.07.9/packages/x86_64/base/dnsmasq-full_2.80-16.3_x86_64.ipk
