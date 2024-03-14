@@ -392,6 +392,17 @@ echo $FILE
 done
 
 
+for...do...done
+----------------------
+卸载应用
+#!/bin/bash
+for var in us.pinguo.storm us.pinguo.filmFlex us.pinguo.catoon
+do
+   adb uninstall $var
+done
+
+
+
 while语句
 ------------------
 while [[ condition ]]; do

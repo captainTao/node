@@ -1,3 +1,17 @@
+接口测试httprunner
+抓包工具mitmproxy
+框架RF
+
+bmall请求带地区ip,字段的key是localIp
+
+iOS flex库
+
+熟悉java，熟悉java框架：spring/ibatis/Maven；
+
+
+-----------------------------
+
+
 程序设计模型: 线性模型
 
 
@@ -74,15 +88,39 @@ UI自动化测试分两类：
 
 
 
+> adb shell
+---------------
+adb shell monkey -p vStudio.Android.Camera360 -v -v -v 100000 >/users/captain/desktop/log.txt
+adb shell monkey -p vStudio.Android.Camera360 --ignore-crashes -v -v -v 10000000 >/users/captain/desktop/log.txt
+adb shell monkey -p camera360.lite.beauty.selfie.camera -v -v -v 100000 >/users/captain/desktop/log.txt
+adb shell monkey -p camera360.lite.beauty.selfie.camera --ignore-crashes -v -v -v 100000 >/users/captain/desktop/log.txt
+adb shell monkey -p vStudio.Android.Camera360 --ignore-crashes -v -v -v 100000 >/users/captain/desktop/log.txt
+adb shell monkey -p us.pinguo.selfie -v -v -v 100000 >/users/captain/desktop/log.txt
+adb shell monkey -p us.pinguo.april_collage -v -v -v 100000 >/users/captain/desktop/log.txt
+
+adb shell pm clear vStudio.Android.Camera360
+
+adb shell ps | grep monkey
+
+adb shell ps | grep monkey | awk '{print $2}'| sed -n '1p'| cut -c 1-5 | xargs adb shell kill
 
 
 
+android相关下载网址：
+-------------------
+http://www.androiddevtools.cn/
 
 
 appium
 ----------
 自动化框架: appium, robotium, mecaca
 模拟器：夜神，逍遥，雷电
+
+
+appium自动化网址：
+http://www.cnblogs.com/fnng/p/4540731.html
+
+
 adb connect 127.0.0.1:62001
 
 from appium import webdriver
@@ -771,3 +809,23 @@ nmon
 ------------
 例：并发量为16， 请求为1w次
 ab - c 16 - n 10000 http://192.168.3.107/index.html 
+
+
+
+接口测试
+-----------
+api文档包括接口业务，地址，端口，入参和结果，错误码
+
+编写用例：
+正例：（接口对内部系统）
+  输入正常的参数没借口正常返回
+反例：（接口暴露在外）
+  鉴权异常：为空，错误，过期...
+  参数异常：为空，长度异常，类型异常，其他业务异常..
+  其他异常：黑名单，调用次数限制，分页场景。
+  兼容性：一个接口被多端调用，版本兼容
+
+无人值守，持续集成，报告输出到企微，钉钉。
+
+
+

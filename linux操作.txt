@@ -102,12 +102,39 @@ proxmox系统https://www.proxmox.com/en/
 ESXI
 Ikuai
 
+显示资源库
+----------
+终端运行下面命令
+chflags nohidden ~/Library
+
 
 配置安卓开发环境
 -----------------
 brew install android-ndk maven ant gradle
 brew install --cask android-sdk android-platform-tools android-studio
 
+> date:
+--------------
+date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"
+#DATE: 2019-11-14
+#TIME: 09:26:11
+
+wanghaitao-MacBook:~ captain$ date
+2018年 4月 2日 星期一 11时05分00秒 CST              //当前时间
+wanghaitao-MacBook:~ captain$ date +%Y-%m-%d
+2018-04-02                                       //格式化当前时间
+wanghaitao-MacBook:~ captain$ date -v -2H
+2018年 4月 2日 星期一 09时01分29秒 CST              //2小时前时间
+wanghaitao-MacBook:~ captain$ date -v -1d
+2018年 4月 1日 星期日 11时01分05秒 CST              //1天前时间
+wanghaitao-MacBook:~ captain$ date -r 1522637526
+2018年 4月 2日 星期一 10时52分06秒 CST              //转换时间戳
+wanghaitao-MacBook:~ captain$ date +%s
+1522638431                                       //转换为时间戳
+wanghaitao-MacBook:~ captain$ date -v +1d +%s
+1522725196                                       //转换一天后的时间为时间戳
+wanghaitao-MacBook:~ captain$ date -r 1522725196
+2018年 4月 3日 星期二 11时13分16秒 CST
 
 > cp
 ------------------
@@ -1404,6 +1431,13 @@ uname -a   #输出x86_64则为64位
 arch  #输出x86_64则为64位
 
 
+看mac系统位数
+--------------
+打开终端，输入命令 uname -a 回车
+  x86_64 表示系统为64位
+  i686 表示系统32位的
+
+
 查看内存:
 --------
 free
@@ -2643,15 +2677,6 @@ wangsirlemon@c77:~$ whatis ls
 ls (1)               - list directory contents
 
 
-
-> date:
---------------
-date
-
-date "+DATE: %Y-%m-%d%nTIME: %H:%M:%S"
-#DATE: 2019-11-14
-#TIME: 09:26:11
-
 > apropos:
 ---------------
 apropos services   :简略查看某个服务的帮助信息 //注意不用绝对路径
@@ -3605,7 +3630,12 @@ echo
 
 mac允许安装三方来源
 -------------------
+https://www.macmj.com/21.html
+
 sudo spctl --master-disable
+绕过公证：
+sudo xattr -rd com.apple.quarantine /Applications/xxxxxx.app
+sudo xattr -rd com.apple.quarantine  应用名路劲
 
 
 dd：
