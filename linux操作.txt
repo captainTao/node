@@ -1053,10 +1053,24 @@ You can solve the issue in the meanwhile by installing luci-compat
 
 uci show dhcp可以查看上述的uci配置
 
+
 luci UI报错
 -----------
 opkg update
 opkg install luci luci-base luci-compat
+
+重启shadowsocks报错 （22.03.x版本）
+---------------------------------
+openwrt iptables-restore v1.8.7 (legacy): iptables-restore: unable to initialize table 'nat'
+
+解决方案：
+opkg install kmod-ipt-conntrack kmod-ipt-nat kmod-ipt-nat-extra
+
+
+安装中文语言
+-------------
+opkg update && opkg install luci-i18n-base-zh-cn
+
 
 
 其他配置
