@@ -3702,6 +3702,7 @@ int(20408912/512) *512*10 = 这个为我们最后调整的size大小
 
 下面为调整的命令
 dd if=openwrt1.img of=openwrt.img bs=204093440 conv=sync
+调整后才进行上方的转换工作
 
 
 StarWind V2V Image Converter可以把img转换为vmdk,win中使用
@@ -3715,6 +3716,12 @@ qemu-img convert -f raw 原镜像文件名.img -O vmdk 新镜像文件名.vmdk
 virtualbox安装opt:
 -----------------
 https://blog.csdn.net/lvshaorong/article/details/80935503
+1.VBoxManage转换img file为vdi文件
+2.virtualbox中创建host-only网络，需要跟装的op在同一个网段
+3.创建vm,使用现有磁盘，浏览选择vdi文件
+4.设置vm的网络，网卡一位host-only网络，选择创建的网段，网卡二选择NAT或者桥架网络，用于WAN口
+5.启动，然后在虚拟机中vim /etc/config/network, 编辑网络管理地址为创建的网段其中一个地址
+6.浏览器登录修改后的管理地址，进行安装管理
 
 
 VMware安装openwrt:
