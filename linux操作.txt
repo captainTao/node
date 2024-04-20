@@ -157,6 +157,23 @@ mv
 mv A B  重命名
 mv cc /A/bb 移动并重命名
 
+
+锁定hosts
+--------
+锁定hosts:
+sudo chflags uchg /etc/hosts
+sudo chflags schg /etc/hosts
+或者
+sudo chflags nouchg /etc/hosts
+sudo chflags noschg /etc/hosts
+
+解除锁定
+sudo chflags -hv noschg /etc/hosts
+或者
+sudo chflags nouchg /etc/hosts
+sudo chflags noschg /etc/hosts
+
+
 ///////////////////////////////////////////////////////////////////
 
 谷歌DNS:
