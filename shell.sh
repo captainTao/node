@@ -271,6 +271,16 @@ note(){
 这是一个注释，这个可以临时调用或者不调用达到注释的目的
 }
 
+单行注释：
+# 这是被注释掉的多行文本
+# 这里可以写任何内容，Shell会忽略它
+
+
+多行注释：
+: <<COMMENT
+这是被注释掉的多行文本
+这里可以写任何内容，Shell会忽略它
+COMMENT
 
 ipaddr="node1  node2  node3  node4  node5  node6"
 iparr=($ipaddr)
