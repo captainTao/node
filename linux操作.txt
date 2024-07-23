@@ -8094,3 +8094,25 @@ isnumber(search(C3,B3)) not in case sensitive
 isnumber(find(C3,B3)) in case sensitive
 
 
+
+mac终端设置代理：
+---------------
+https://www.jianshu.com/p/0ad19c5e7def
+1.先打开软件，查看本地sock的代理端口和地址；
+我的代理软件客户端端口号是1086，故在~/.zshrc中添加
+alias proxy='export all_proxy=socks5://127.0.0.1:1086'
+alias unproxy='unset all_proxy'
+然后保存，生效
+source ~/.zshrc
+
+2.开始测试
+curl ipinfo.io
+//可以看到ip在国内
+紧接着执行代理模式
+proxy
+再次执行测试ip命令
+curl ipinfo.io
+可以查看到ip切换到了国外
+
+3.如果需要关闭，则执行
+unproxy即可
