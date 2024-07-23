@@ -7081,6 +7081,18 @@ add <name>; 添加子进程到进程组
 reomve <name>; 从进程组移除子进程，需要先stop。注意：移除后，需要使用reread和update才能重新运行该进程
 
 
+配置pip国内镜像源
+-----------------
+mkdir .pip
+vim pip.conf
+编辑内容为一下，保存生效。
+
+[global]
+index-url=http://mirrors.aliyun.com/pypi/simple/
+
+[install]
+trusted-host=mirrors.aliyun.com
+
 
 安装python虚拟环境
 ----------------
@@ -7108,6 +7120,16 @@ source .env/bin/activate
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ -r requirements.txt
 取消激活
 deactivate
+
+
+另外一种创建虚拟环境的方法：
+------------------------
+# 创建虚拟环境
+$ mkdir myproject
+$ cd myproject
+$ python3 -m venv .venv
+# 激活虚拟环境
+. .venv/bin/activate
 
 
 
