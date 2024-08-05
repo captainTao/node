@@ -108,6 +108,24 @@ Ikuai
 chflags nohidden ~/Library
 
 
+mysql
+-------
+ mysql
+We've installed your MySQL database without a root password. To secure it run:
+    mysql_secure_installation
+
+MySQL is configured to only allow connections from localhost by default
+
+To connect run:
+    mysql -u root
+
+To start mysql now and restart at login:
+  brew services start mysql
+Or, if you don't want/need a background service you can just run:
+  /opt/homebrew/opt/mysql/bin/mysqld_safe --datadir\=/opt/homebrew/var/mysql
+
+  
+
 配置安卓开发环境
 -----------------
 brew install android-ndk maven ant gradle
@@ -7137,6 +7155,63 @@ pip生成requirements.txt
 
 pip freeze >requirements.txt
 pip install -r requirements.txt
+
+
+
+更新所有pip过期的包
+----------------
+pip install pip-review
+pip-review --local --interactive
+
+
+在stackoverflow上有人提供了批量更新的办法，一个循环就搞定（注意--upgrade后面的空格）
+import pip
+from subprocess import call
+for dist in pip.get_installed_distributions():
+     call("pip install --upgrade " + dist.project_name, shell=True)
+
+
+
+系统里过期的python库，可以用pip命令
+pip list  #列出所有安装的库
+pip list --outdated #列出所有过期的库
+pip list  --format json
+pip list --outdated --format json
+对于列出的过期库，pip也提供了更新的命令
+1 pip install --upgrade 库名 
+但此命令不支持全局全部库升级。
+
+
+
+更新pip:
+-------------
+pip install --upgrade pip
+
+python -m pip install -U pip
+
+Pip and setuptools have been installed. To update them
+  pip install --upgrade pip setuptools
+
+
+列出安装的packages:
+pip freeze
+
+
+一键更新所有pip的包：
+------------------
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import pip
+from subprocess import call
+
+for dist in pip.get_installed_distributions():
+  call("pip install --upgrade " + dist.project_name, shell=True)
+
+
+pip安装的文件目录：
+/usr/local/lib/python2.7/site-packages
+
 
 
 iOS内存abort(Jetsam) 原理探究
