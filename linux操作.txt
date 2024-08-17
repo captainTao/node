@@ -7,6 +7,10 @@ exsi,PVE
 BGP
 IPLC专线
 
+数据库软件：
+----------
+DBeaver, navicat, idea
+
 原型图： Axure
 ios沙盒数据库查看软件：realm studio
 Documents/DBRealm/..realm
@@ -121,6 +125,9 @@ To connect run:
 
 To start mysql now and restart at login:
   brew services start mysql
+To restart mysql after an upgrade:
+  brew services restart mysql
+
 Or, if you don't want/need a background service you can just run:
   /opt/homebrew/opt/mysql/bin/mysqld_safe --datadir\=/opt/homebrew/var/mysql
 
