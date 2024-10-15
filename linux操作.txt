@@ -68,8 +68,22 @@ RAM，ROM
 内存: RAM, random access memory
 网关，子网掩码，ICMP,DNS
 
-5.目前速度最快的还是SSR客户端加HAPROXY的服务器,国内的阿里云服务器架设haproxy再跳转到海外服务器
-6.ss+GoQuiet:goquiet是ss一个插件，可以将ss流量混淆为普通的https
+7.目前速度最快的还是SSR客户端加HAPROXY的服务器,国内的阿里云服务器架设haproxy再跳转到海外服务器
+8.ss+GoQuiet:goquiet是ss一个插件，可以将ss流量混淆为普通的https
+
+9.IPv6简写规则：
+每组前面的0的可以省略不写
+完整：2403:A200:A200:1100:0000:0000:0F00:0003
+简写：2403:A200:A200:1100:0000:0000:F00:3
+
+连续为0的一组或多组，可以用 :: 代替，注意一个IP中只能用一次 ::
+完整：2403:A200:A200:1100:0000:0000:0F00:0003
+简写：2403:A200:A200:1100::F00:3
+
+如果一组中全为0，又不想用 :: 代替，每组中要保留1个0
+完整：2403:A200:A200:0000:AFFF:0000:0000:0003
+简写：2403:A200:A200:0:AFFF::3
+
 
 ios工程provisionProfile放的目录：
 /Users/captain/Library/MobileDevice/Provisioning Profiles
@@ -7169,6 +7183,9 @@ pip install -r requirements.txt
 ----------------
 pip install pip-review
 pip-review --local --interactive
+
+或者：
+pip list --outdated | awk '{print $1}' | xargs -n1 pip install -U
 
 
 在stackoverflow上有人提供了批量更新的办法，一个循环就搞定（注意--upgrade后面的空格）
