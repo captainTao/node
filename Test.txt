@@ -634,7 +634,7 @@ sql查询顺序优先级
 ----------------
 原文链接：https://blog.csdn.net/xiashuijun/article/details/77196884
 https://www.cnblogs.com/yanpingping/p/10777577.html
-1.from  // 查询的表
+1.from // 查询的表
 
 on
 join
@@ -643,7 +643,7 @@ join
 
 3.group by//对结果进行分组
 
-4.select  //得到执行min,max,distinct等聚合函数后的结果
+4.select //得到执行min,max,distinct等聚合函数后的结果
 
 avg,sum
 
@@ -768,6 +768,7 @@ ansible是新出现的自动化运维工具，基于Python开发，集合了众�
 APM
 ----------
 APM（应用性能管理),目前主要的一些 APM 工具有: Cat、Zipkin、Pinpoint、SkyWalking，
+
 
 SkyWalking
 -----------

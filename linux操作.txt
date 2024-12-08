@@ -5005,6 +5005,10 @@ pretty json
 格式化json
 - Windows: <kbd>ctrl+alt+j</kbd>
 - OS X: <kbd>cmd+ctrl+j</kbd>
+Preference -> Key Bindings中设置如下
+[
+  { "keys": ["ctrl+command+j"], "command": "pretty_json" },
+]
 
 
 主题：
