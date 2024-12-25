@@ -2547,14 +2547,75 @@ set guifont=Menlo:h16:cANSI
 
 > iptables
 ----------------------
-防火墙：
-http://man.linuxde.net/iptables
-iptables -L -n -v: 查看已经添加的规则
-INPUT链：处理输入数据包。
-OUTPUT链：处理输出数据包。
-PORWARD链：处理转发数据包。
-PREROUTING链：用于目标地址转换（DNAT）。
-POSTOUTING链：用于源地址转换（SNAT）。
+https://developer.aliyun.com/article/888704
+
+iptables -D INPUT -p tcp -m state --state NEW -m tcp --dport 9999 -j ACCEPT
+iptables -D INPUT -p udp -m state --state NEW -m udp --dport 9999 -j ACCEPT
+iptables -I INPUT -p tcp -m multiport --dports 2080,7025,9999,2099 -j DROP
+
+上面命令的恢复命令是:
+iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 9999 -j ACCEPT
+iptables -A INPUT -p udp -m state --state NEW -m udp --dport 9999 -j ACCEPT
+iptables -D INPUT -p tcp -m multiport --dports 2080,7025,9999,2099 -j DROP
+
+
+
+iptables 默认维护着 4 个表和 5 个链
+所有的防火墙策略规则都被分别写入这些表与链中。
+**“四表”**是指 iptables 的功能，默认的 iptable s规则表有 filter 表（过滤规则表）、nat 表（地址转换规则表）、mangle（修改数据标记位规则表）、raw（跟踪数据表规则表）：
+1. filter 表：控制数据包是否允许进出及转发，可以控制的链路有 INPUT、FORWARD 和 OUTPUT。
+2. nat 表：控制数据包中地址转换，可以控制的链路有 PREROUTING、INPUT、OUTPUT 和 POSTROUTING。
+3. mangle：修改数据包中的原数据，可以控制的链路有 PREROUTING、INPUT、OUTPUT、FORWARD 和 POSTROUTING。
+4. raw：控制 nat 表中连接追踪机制的启用状况，可以控制的链路有 PREROUTING、OUTPUT。
+**“五链”**是指内核中控制网络的 NetFilter 定义的 5 个规则链。每个规则表中包含多个数据链：
+1. INPUT（入站数据过滤）、处理输入数据包。
+2. OUTPUT（出站数据过滤）、处理转发数据包。
+3. FORWARD（转发数据过滤）、处理转发数据包。
+4. PREROUTING（路由前过滤）用于目标地址转换（DNAT）
+5. 和POSTROUTING（路由后过滤），用于源地址转换（SNAT）
+
+
+语法：
+iptables [-t table] command [match] [target]
+
+-t： 用于指定所要操作的表，不指定则默认 filter 表
+command：具体的命令动作，比如对指定链添加/删除规则
+match：对所要处理包的匹配规则
+target：数据包的处理动作
+
+
+match
+------------
+1、通用匹配
+iptables -L -n -v 或者 
+iptables -nvL  查看已添加的iptables规则
+
+
+每个链由一条条的规则组成，对于一个链可以添加规则、删除规则、检测是否存在该条规则等操作，相应的命令选项如下：
+命令
+说明
+-A
+iptables -A chain rule-specification 在指定链表chain末尾添加规则
+-C
+iptables -C chain rule-specification 检测是否存在该规则
+-D
+iptables -D chain rule-specification 删除指定规则，需要将规则完整的写出来
+-D
+iptables -D chain rulenum 删除指定规则序号对应的那条规则，上面的rulenum 可通过 iptables -L –line-numbers 显示，每个链表的第一条规则对应序号1
+-I
+iptables -I chain [rulenum] rule-specification 向指定链表的对应规则序号前面插入规则，如果不指定 rulenum，则默认是序号1
+-R
+iptables -R chain rulenum rule-specification 替换规则
+-L
+iptables -L [chain] 显示所有的规则，一般紧跟使用-n 选项，避免转换成主机名形式；跟-v选项可以看更详细的信息。默认显示所有链（[] 中括号表示该参数是可选的）
+-S
+iptables -S [chain] 显示所有的规则
+-F
+iptables -F [chain] 默认删除所有链表里的规则
+-P
+iptables -P chain target 指定该链表的默认操作（DROP和ACCEPT
+
+
 
 
 > ln:
@@ -7265,6 +7326,12 @@ you-get https://www.youtube.com/watch\?v\=kA3k8LNHX4Y // 默认下载第一个
 you-get --itag=137 https://www.youtube.com/watch\?v\=fnmldw8HpUU  //下载指定tag
 
 
+
+windows录屏小工具;
+-----------------
+ScreenToGif
+gifcam
+
 mac
 -----
 截屏：cmd+shift+3/4
@@ -8241,3 +8308,16 @@ curl ipinfo.io
 
 3.如果需要关闭，则执行
 unproxy即可
+
+
+
+常用网络测试工具
+------------------
+wireshark
+tcpdump
+iptables
+curl
+nslookup
+netstat
+iperf
+nc
