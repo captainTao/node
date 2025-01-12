@@ -111,6 +111,7 @@ select * from students where id<5 and age>20;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
+
 数据库知识点：
 1.增删改查，排序，过滤，总结，分组,统计
 2.对数据存储的理解
@@ -184,6 +185,11 @@ select * from students where contry is not null;
 查询前五条数据：
 select * from students limit 5; // 从第0条开始取5个数据
 select age from students limit 3,5; // 从第三条开始取5个数据
+
+
+正则表达式查询：
+
+SELECT * FROM orders WHERE order_number REGEXP '^[A-Z]{3}-[0-9]{4}$';
 
 统计count:
 select count(*) from students where sex = '女';

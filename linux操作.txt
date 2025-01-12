@@ -126,8 +126,28 @@ Ikuai
 chflags nohidden ~/Library
 
 
+redis
+---------------------
+安装
+brew  install redis
+启动软件
+brew services start redis
+redis-server /usr/local/etc/redis.conf
+redis-server
+
+链接redis
+redis-cli -h 127.0.0.1 -p 6379   #默认auth为空
+redis-cli #会链接本地redis
+
+关闭
+redis-cli shutdown
+强制终止redis
+sudo pkill redis-server
+
+
+
 mysql
--------
+---------------------
  mysql
 We've installed your MySQL database without a root password. To secure it run:
     mysql_secure_installation
@@ -439,10 +459,135 @@ A: 大佬编译了几个常见的IPK:链接：https://share.weiyun.com/59BH9Tt �
 
 trojan本质上就是将加密流量伪装成TLS流量，gost/v2ray等好几种软件已经早已支持此模式了，不过trojan是C++写的，这是它的优势，非常适合路由器；而且甚至有shadowsocks的SIP003插件版本，可以说是挺不错的方案了。
 
+openwrt镜像
+-------------
+openwrt的镜像推荐使用LEAN的镜像，插件多，支持的设备多，更适合国内朋友
+
+
+
+ubuntu安装docker
+-----------------
+https://linux.cn/article-16531-1.html
+
+方法一：使用 Ubuntu 的仓库安装 Docker
+sudo apt update
+sudo apt install docker.io docker-compose
+#  Docker 包被命名为 docker.io，因为在 Docker 出现之前就已经存在一个名为 docker（用于 Dockerlet 应用）的过渡包。因此，Docker 包必须被命名为其他名称。
+docker -v
+
+
+方法 2：在 Ubuntu 中安装最新稳定版本的 Docker
+
+卸载以前的docker
+sudo apt remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
+安装依赖
+sudo apt install ca-certificates curl gnupg lsb-release
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+docker -v
+
+
+
+
+centos  docker安装ss
+----------------
+安装docker版ss相关命令(以Cent0s7系统为例)
+1、安装 epel 源
+yum install epel-release
+2、安装docker运行必须的依赖程序
+yum install -y yum-utils device-mapper-persistent-data lvm2
+3、安装docker的yum源
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+4、安装docker程序
+yum -y install docker-ce
+5、启动docker程序
+systemctl start docker
+6、设置docker程序开机启动
+systemctl enable docker
+
+=======ss安装===============
+7、从托管仓库拉取ss的docker镜像
+docker pull shadowsocks/shadowsocks-libev
+8、创建容器并运行
+docker run --privileged --restart=always -tid -e PASSWORD=captaincc -e METHOD=aes-256-gcm -p 3399:8388 -p 3399:8388/udp shadowsocks/shadowsocks-libev
+
+
+===kcptun安装配置相关===
+7、从托管仓库拉取kcptun的docker镜像
+docker pull xtaci/kcptun
+
+
+8.创建配置文件
+服务器本地新建kcp配置
+mkdir /kcptun
+cd /kcptun
+vim config.json
+
+{
+  "listen":":20001",  #kcp的监听端口
+  "target":"x.x.x.x:20000"  #xxxx是vps的公网ip地址，20000是ss的服务端口
+  "key":"qazwsxedc",  kcp的秘钥
+  "crypt":"aes-192",   kcp加密方式
+  "mode":"fast3",
+  "autoexpire":60
+}
+
+{
+  "listen":":20001",
+  "target":"xxxx:3399",
+  "key":"312",
+  "crypt":"salsa20",
+  "mode":"fast3",
+  "autoexpire":60
+}
+
+9、创建容器并运行
+docker run -p 20001:20001 -p 20001:20001/udp -v /kcptun:/kcptun -d --restart=always xtaci/kcptun server -c "/kcptun/config.json"
+
+
+
+
+客户端使用
+
+windows
+---------
+插件下载地址：
+https://github.com/xtaci/kcptun/releases
+
+windows3个版本：32,64，arm
+kcptun-windows-amd64-20241227.tar.gz
+
+插件：
+client_windows_amd64.exe
+插件参数：
+===Windows配置使用kcptun参数(部分参数根据需求自定义修改)===
+-l %SS LOCAL HOST%:%SS LOCAL PORT% -I %SS REMOTE HOST%:%SS REMOTE_PORT% --key qazwsxedc --crypt aes-192 --mode fast3 --autoexpire 60
+
+mac:
+---------
+===Mac配置使用kcptun参数(部分参数根据需求自定义修改)===
+mac客户端的插件都不需要去下载的
+插件：
+kcptun
+插件参数：
+key=312;crypt=salsa20;mode=fast3;autoexpire=60
+
+
+
+
 ///////////////////////////////////////////////////////////////////  ssr开始
 
 ------------------------------------------------知识储备
-ss-server、ss-local(socks5)、ss-tunnel(udp relay)、ss-redir(ss) 解释
+ss-server、ss-local(socks5)、ss-tunnel(udp relay)、ss-redir(ss)解释
 https://www.zfl9.com/ss-redir.html
 
 浅谈vpn,ss,proxy的区别：
@@ -688,6 +833,7 @@ wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
 --------------------
 netstat -lntpu
 ps -ef | grep -v grep | grep "server"
+
 
 验证bbr：
 --------------------
@@ -1114,6 +1260,24 @@ luci UI报错
 -----------
 opkg update
 opkg install luci luci-base luci-compat
+
+
+kcptun luci界面报错
+----------------------
+kcptun ipk客户端下载页面
+https://github.com/kuoruan/openwrt-kcptun
+https://github.com/kuoruan/openwrt-kcptun/releases/tag/v20210103-1
+
+luci下载页面
+https://ssr.tools/626
+或者：
+https://github.com/AlexZhuo/luci-app-kcptun
+https://github.com/kuoruan/luci-app-kcptun/releases/tag/v1.5.3-1
+
+
+opkg update
+opkg install luci-lib-ipkg
+
 
 重启shadowsocks报错 （22.03.x版本）
 ---------------------------------
@@ -1600,6 +1764,21 @@ curl -d "@data.txt" http://www.example.com/login
 带cookie登录
 curl -c "cookie-login" -d "userName=tom&passwd=123456" http://www.example.com/login
 curl -b "cookie-login" http://www.example.com/login
+
+
+
+
+安装 netstat：
+------------------
+如果你使用的是基于 Debian 的系统（如 Ubuntu），可以使用以下命令安装：
+
+sudo apt-get update
+sudo apt-get install net-tools
+
+如果你使用的是基于 Red Hat 的系统（如 CentOS），可以使用以下命令安装：
+
+sudo yum update
+sudo yum install net-tools
 
 
 
@@ -2584,8 +2763,6 @@ match：对所要处理包的匹配规则
 target：数据包的处理动作
 
 
-match
-------------
 1、通用匹配
 iptables -L -n -v 或者 
 iptables -nvL  查看已添加的iptables规则
@@ -5644,10 +5821,24 @@ $ sudo gem install cocoapods -n/usr/local/bin
 完成！
 
 
+mongodb
+---------------
+mac安装
+$ brew install mongodb-atlas
+$ atlas setup
+
+
+
 ubuntu安装deb文件(命令)
 ---------------------
  1.cd 到安装包的目录
  2.sudo dpkg -i file.deb（如果是red hat linux的rpm格式，用rpm -ivh file.rpm）
+
+
+linux nginx
+--------------
+hmtl文件夹：
+/usr/share/nginx/html
 
 
 mac nginx
@@ -7347,6 +7538,12 @@ git update-index --no-assume-unchanged xxx.xx
 git ls-files -v | grep -e "^[hsmrck]"
 
 
+XLTS性能最好
+---------------------
+
+https://github.com/XTLS/Xray-core
+
+
 
 trojan:
 ---------
@@ -7577,7 +7774,7 @@ trojan配置文件,修改相关参数：
     "ssl": {
         "cert": "/root/trojan/server.crt",
         "key": "/root/trojan/server.key"
-    }
+    }   
 }
 
 3.申请证书：
@@ -7715,6 +7912,9 @@ vmess+ws+tls+nginx
 ----------------------
 https://www.youtube.com/watch?v=y8s5UivMNcE
 
+vmess 的额外iD不能设置为0,这样可以使用到最新的加密方法，没有漏洞
+
+
 1.v2ray一键安装脚本：
 https://github.com/v2fly/fhs-install-v2ray
 启动v2ray: systemctl start v2ray
@@ -7850,6 +8050,7 @@ vmess+ws+tls+web
 vim /etc/systemd/system/v2ray.service
 删除service中User=nobody
 systemctl daemon-reload
+systemctl restart v2ray
 
 3.安装nginx
 apt install nginx
