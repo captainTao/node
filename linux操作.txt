@@ -499,7 +499,7 @@ docker -v
 
 
 centos  docker安装ss
-----------------
+----------------------
 安装docker版ss相关命令(以Cent0s7系统为例)
 1、安装 epel 源
 yum install epel-release
@@ -582,6 +582,139 @@ kcptun
 key=312;crypt=salsa20;mode=fast3;autoexpire=60
 
 
+docker nginx
+----------------
+
+docker run -d -p 80:80 -p 443:443 --name my-nginx \
+-v /nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
+-v /usr/local/etc/xray:/etc/nginx/ssl \
+-v /nginx/html:/usr/share/nginx/html \
+nginx
+
+
+/usr/local/etc/xray存放证书
+/nginx/conf/nginx.conf存放配置文件
+/nginx/html存放html
+
+
+只运行80端口
+docker run -d -p 80:80 --name my-nginx \
+-v /nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
+-v /usr/local/etc/xray:/etc/nginx/ssl \
+-v /nginx/html:/usr/share/nginx/html \
+nginx
+
+
+
+docker nginx compose
+---------------------
+version: '3'
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /path/to/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - /path/to/html:/usr/share/nginx/html
+      - /path/to/ssl:/etc/nginx/ssl
+
+
+本地nginx.conf配置
+（配置了443和80，80端口重定向到443端口）
+--------------------------------------
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf;
+        server {
+        listen 443 ssl;
+        server_name fresh.publicvm.com ;
+
+        ssl_certificate /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html index.htm;
+            }
+    }
+
+    server {
+        listen 80;
+        server_name fresh.publicvm.com ;
+        return 301 https://$host$request_uri;
+    }
+}
+
+
+如果只有80端口工作，则配置为：
+--------------------------
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf;
+
+    server {
+        listen       80;
+        server_name  fresh.publicvm.com;
+        root /usr/share/nginx/html;
+        index index.php index.html index.htm;
+    }
+}
 
 
 ///////////////////////////////////////////////////////////////////  ssr开始
@@ -3059,6 +3192,8 @@ wangsirl pts/0    182.150.28.13    07:25    1.00s  0.11s  0.00s w
 
 
 unzip -0 xx.zip -d path  //解压zip文件到制定目录
+
+
 
 > gzip:
 -----------------
@@ -7538,12 +7673,6 @@ git update-index --no-assume-unchanged xxx.xx
 git ls-files -v | grep -e "^[hsmrck]"
 
 
-XLTS性能最好
----------------------
-
-https://github.com/XTLS/Xray-core
-
-
 
 trojan:
 ---------
@@ -8114,12 +8243,23 @@ ng站点目录在 /usr/share/nginx/html 可自行更换网站
     }
 
 
+XLTS性能最好
+-----------------------
+https://github.com/XTLS/Xray-core
+
+
+uuid生成
+-----------------------
+https://www.uuidgenerator.net/
+
+
 vless+trojan+xtls+nginx
 ------------------------
 关闭防火墙：ufw disable
 
 xray官方一键安装脚本：bash -c "$(curl -L github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 启动v2ray：systemctl start xray.service
+停止v2ray: systemctl stop xray.service
 重启v2ray：systemctl restart xray.service
 v2ray状态：systemctl status xray.service
 
