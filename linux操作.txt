@@ -4916,6 +4916,13 @@ b.用git stash pop，恢复的同时把stash内容也删了：
 10.可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：
 $ git stash apply stash@{0}
 
+删除指定的stash:
+git stash list
+git stash drop stash@{1}
+
+删除所有的stash:
+git stash clear
+
 11.查看远程仓库信息：
 $ git remote
 $ git remote -v
