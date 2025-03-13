@@ -4820,7 +4820,14 @@ git checkout 的使用场景：
 二、创建并切换分支 git checkout -b xx
 三、切换分支 git checkout xx
 
-
+合并master最新的代码：
+--------------------
+git checkout <your-branch>
+git status
+git fetch origin
+git merge origin/master
+git add .
+git commit -m "Merged master into current branch"
 =========================================================================
 二、配置github,上传本地git
 
