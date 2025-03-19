@@ -4722,6 +4722,9 @@ git clean -df
 4》git checkout -b dev origin/dev在本地创建分支dev并切换到该分支
 5》git pull origin dev就可以把gitLab上dev分支上的内容都拉取到本地了
 
+
+git fetch origin <branch_name>
+git checkout <branch_name>
 =========================================================================
 Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。
 
@@ -4844,6 +4847,8 @@ $ ssh -T git@github.com
 4，配置github邮箱、用户名
 $ git config --global user.name 'captainTao'
 $ git config --global user.email '578628438@qq.com'
+
+git commit --amend --reset-author --no-edit
 
 5.上传建立的仓库：
 $ git remote add origin git@github.com:captainTao/Hello-git.git
