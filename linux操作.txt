@@ -7682,8 +7682,20 @@ mac
 截屏：cmd+shift+3/4
 录屏: cmd+shift+5
 
-git忽略本地文件的的修改
+git忽略文件的修改
 ----------------------
+.gitignore
+----------
+# 忽略所有的log文件
+*.log
+
+# 忽略特定目录
+/path/to/directory/
+
+
+git update-index
+------------------
+如果你想忽略已经被跟踪的文件的修改，可以使用以下命令：
 忽略跟踪：
 git update-index --assume-unchanged xxx.xx
 恢复跟踪：
@@ -7691,6 +7703,11 @@ git update-index --no-assume-unchanged xxx.xx
 查看当当被忽略和已经纳入版本管理的文件
 git ls-files -v | grep -e "^[hsmrck]"
 
+
+使用skip-worktree标志：这是另一种忽略文件修改的方法，适用于已经被跟踪的文件：
+git update-index --skip-worktree [文件路径]
+如果你想恢复对该文件的跟踪，可以使用：
+git update-index --no-skip-worktree [文件路径]
 
 
 trojan:
