@@ -8698,3 +8698,9 @@ nslookup
 netstat
 iperf
 nc
+
+
+postman delete upload team file
+-------------------------------
+https://cloudy-shadow-854681.postman.co/billing/add-ons/overview
+refer:https://community.postman.com/t/how-to-delete-files-uploaded-to-the-postman-team/58600
