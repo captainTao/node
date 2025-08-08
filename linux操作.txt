@@ -884,7 +884,7 @@ PubkeyAcceptedKeyTypes +ssh-rsa
 google vps默认配置的密码登录和root登录为关闭状态，默认只能使用ssh，如需要开启，需要配置：https://mapgun.com/archives/2235
 
 1.生成ssh key;
-ssh-keygen -t [rsa|dsa]                      // 默认用此方法  refer: https://blog.csdn.net/dongwuming/article/details/9705595
+ssh-keygen -t [rsa|dsa]                      // 推荐用rsa方法，dsa方法已经过时，默认用此方法  refer: https://blog.csdn.net/dongwuming/article/details/9705595
 ssh-keygen -t rsa -f gcloud                  // 生成gcloud 名字的钥匙
 ssh-keygen -t rsa -C "578628438@qq.com"      // 使用
 
@@ -4827,8 +4827,12 @@ git checkout 的使用场景：
 --------------------
 git checkout <your-branch>
 git status
+
 git fetch origin
 git merge origin/master
+
+上面两步骤可以合并为 git pull origin master
+
 git add .
 git commit -m "Merged master into current branch"
 =========================================================================
@@ -8704,3 +8708,10 @@ postman delete upload team file
 -------------------------------
 https://cloudy-shadow-854681.postman.co/billing/add-ons/overview
 refer:https://community.postman.com/t/how-to-delete-files-uploaded-to-the-postman-team/58600
+
+查看ssh 支持的加密方式
+--------------------
+ssh -Q kex       # 查看支持的 KEX 算法
+ssh -Q cipher    # 查看支持的加密算法
+ssh -Q mac       # 查看支持的 MAC 算法
+ssh -Q key       # 查看支持的主机密钥算法
