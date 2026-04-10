@@ -4655,6 +4655,10 @@ hello, git：
 ---------------------------------------
 .gitkeep文件  可以保证空文件夹也被上传
 
+强制推送本地到远端
+git push -f
+or:
+git push origin feature/UIPM-35910 --force
 
 Q： warning: LF will be replaced by CRLF in
 A: https://blog.csdn.net/man_zuo/article/details/88651416
@@ -4816,6 +4820,19 @@ git clean -nxfd
 git clean -nf
 git clean -nfd
 
+远端有文件，但本地文件的修改再也不进行推送和显示了
+-----------------------------------------------
+git update-index --skip-worktree xxx.xx
+
+忽略已经推送到远端的文件
+----------------------------
+.gitignore中加文件
+
+git rm --cached <文件>
+git rm --cached -r <文件夹>
+
+git commit -m "ignore local config files"
+git push
 
 小结2：
 git checkout 的使用场景：
@@ -4835,6 +4852,9 @@ git merge origin/master
 
 git add .
 git commit -m "Merged master into current branch"
+
+取消合并代码：
+git merge --abort
 =========================================================================
 二、配置github,上传本地git
 
