@@ -4785,6 +4785,22 @@ $ git reset --hard 41bb8d
 强制回退远端：
 git push --force origin
 
+master不支持回退时候
+---------------
+# 1. 基于 master 创建回退分支
+git checkout master
+git pull
+git checkout -b revert-to-target
+
+# 2. 用目标版本的代码覆盖
+git checkout <目标commit-hash> -- .
+git add -A
+git commit -m "Revert to <目标commit-hash>"
+
+# 3. 推送分支
+git push origin revert-to-target
+
+
 13.查询每次命令执行的commit id
 $ git reflog
 
@@ -4942,6 +4958,9 @@ $ git merge --no-ff -m "merge with no-ff" dev
 
 8.临时存储工作现场（暂存）
 $ git stash
+
+把 untracked 文件暂存起来（-u 包含 untracked 文件）
+git stash -u
 
 9.工作现场的恢复：
 完成其他工作后，先切换到以前保存的现场分支；
