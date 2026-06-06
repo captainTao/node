@@ -8754,3 +8754,12 @@ ssh -Q kex       # 查看支持的 KEX 算法
 ssh -Q cipher    # 查看支持的加密算法
 ssh -Q mac       # 查看支持的 MAC 算法
 ssh -Q key       # 查看支持的主机密钥算法
+
+
+devops
+---------------
+os,java,docker,gitlab
+jenkins
+sonarQube
+harbor
+kubernets
