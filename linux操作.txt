@@ -8763,3 +8763,8 @@ jenkins
 sonarQube
 harbor
 kubernets
+
+
+不用admin权限安装msi
+----------------------
+msiexec /i C:\Users\wanhait\Downloads\7z2601-x64.msi ALLUSERS=2 MSIINSTALLPERUSER=1
