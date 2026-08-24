@@ -8744,3 +8744,16 @@ jenkins
 sonarQube
 harbor
 kubernets
+
+
+卸载clash后上不了网
+------------------
+重置DNS:
+sudo dscacheutil -flushcache
+sudo killall -HUP mDNSResponder
+networksetup -setdnsservers Wi-Fi empty
+
+删除残留，如果没清理干净
+sudo rm -rf ~/.config/clash*
+sudo rm -rf ~/Library/Application\ Support/Clash*
+sudo rm -rf ~/Library/Preferences/*clash*
