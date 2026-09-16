@@ -1389,6 +1389,17 @@ You can solve the issue in the meanwhile by installing luci-compat
 uci show dhcp可以查看上述的uci配置
 
 
+查看正在使用的dns
+-----------------
+cat /etc/resolv.conf 
+有些版本是
+cat /tmp/resolv.conf.d/resolv.conf.auto
+或者直接可以
+nslookup www.baidu.com
+或者
+ubus call network.interface.wan status | jsonfilter -e '@["dns-server"][*]'
+
+
 luci UI报错
 -----------
 opkg update

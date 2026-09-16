@@ -3,9 +3,12 @@
 # update by captain, on 02/24/2019
 
 #三方包签名
-wget -qO /tmp/openwrt-dist.pub http://openwrt-dist.sourceforge.net/openwrt-dist.pub
-opkg-key add /tmp/openwrt-dist.pub
-rm /tmp/openwrt-dist.pub
+# wget -qO /tmp/openwrt-dist.pub http://openwrt-dist.sourceforge.net/openwrt-dist.pub
+# opkg-key add /tmp/openwrt-dist.pub
+# rm /tmp/openwrt-dist.pub
+grep -n "openwrt_dist\|openwrt-dist" /etc/opkg/*.conf /etc/opkg/customfeeds.conf 2>/dev/null
+sed -i '/openwrt_dist/d' /etc/opkg/customfeeds.conf
+sed -i '/openwrt-dist/d' /etc/opkg/customfeeds.conf
 
 INSTALLED=$(opkg list-installed)
 
@@ -34,6 +37,8 @@ fi
 
 opkg update
 opkg install libgcc ip-full ipset iptables-mod-tproxy libpthread zlib
+#升级系统后，需要安装这些插件
+opkg install iiptables iptables-mod-nat-extra kmod-ipt-nat kmod-ipt-mangle kmod-ipt-raw kmod-nf-nat kmod-nf-conntrack
 
 if echo "$INSTALLED" | grep -q "luci"; then
 	LuCI=yes
@@ -103,6 +108,7 @@ fi
 # 正常使用dns更新脚本
 opkg install coreutils-base64 ca-certificates ca-bundle curl libustream-mbedtls
 opkg install libustream-mbedtls wget curl  #如果要用https,就需要tls
+opkg install luci luci-base luci-compat
 
 
 # 禁用ipv6,并开启fast tcp
@@ -143,4 +149,4 @@ sh gfwlist2dnsmasq.sh -d 127.0.0.1 -p 5311 -o /etc/dnsmasq.d/dnsmasq_gfwlist.con
 #echo "min-cache-ttl=3600" >> /etc/dnsmasq.conf
 
 #重启dnsmasq
-/etc/init.d/dnsmasq restart
+# /etc/init.d/dnsmasq restart
